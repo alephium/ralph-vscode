@@ -28,8 +28,8 @@ Initial release of ...
 
 ## Contribution
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/suyanlong/ralph-vscode/blob/main/CHANGELOG.md)
 
 ## License
 
-[GNU3](LICENSE)
+[GNU3]([LICENSE](https://github.com/suyanlong/ralph-vscode/blob/main/LICENSE))

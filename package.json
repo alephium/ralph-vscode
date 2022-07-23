@@ -1,14 +1,40 @@
 {
-  "name": "ralph",
-  "displayName": "ralph",
-  "description": "ralph",
+  "name": "ralph-vscode",
+  "displayName": "ralph vscode",
+  "description": "ralph vscode",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.69.0"
+    "vscode": "^1.69.0",
+    "node": ">=v17.6.0"
   },
   "keywords": [
-    "ralph"
+    "ralph",
+    "RALPH",
+    "Ralph",
+    "plugin",
+    "prettier",
+    "alephium"
   ],
+  "publisher": "592938410",
+  "author": {
+    "name": "suyanlong",
+    "email": "syl416419@gmail.com"
+  },
+  "contributors": [
+    {
+      "email": "syl416419@gmail.com",
+      "name": "suyanlong"
+    }
+  ],
+  "license": "GUN3",
+  "bugs": {
+    "url": "https://github.com/suyanlong/ralph-vscode/issues"
+  },
+  "homepage": "https://github.com/suyanlong/ralph-vscode#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suyanlong/ralph-vscode.git"
+  },
   "categories": [
     "Programming Languages",
     "Snippets",
@@ -16,7 +42,7 @@
     "Linters",
     "Other"
   ],
-  "icon": "./image/logo.png",
+  "icon": "logo.png",
   "contributes": {
     "languages": [
       {
@@ -45,5 +71,8 @@
         "path": "./snippets/snippets.code-snippets"
       }
     ]
-  }
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {}
 }
