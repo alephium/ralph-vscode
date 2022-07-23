@@ -44,6 +44,10 @@
             "name": "keyword.event.ralph"
           },
           {
+            "match": "\\b(@using|using|!)\\b",
+            "name": "keyword.annotation.ralph"
+          },
+          {
             "match": "\\b(struct|TxScript|TxContract|Contract|AssetScript|enum)\\b",
             "name": "keyword.struct.ralph"
           }

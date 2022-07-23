@@ -82,6 +82,13 @@
 		"description": "if {}"
 	},
 	//----------------------------------------------------------------------------------------------------------------
+	"@using($1)": {
+		"prefix": "using",
+		"body": [
+		  "@using($1)"
+		],
+		"description": "using"
+	},
 	"import $1": {
 		"prefix": "import",
 		"body": [
@@ -746,7 +753,7 @@
 		],
 		"description": "panic!"
 	},
-	"lockApprovedAssets(address: Address, tokenId: ByteVec, amount: U256) -> ()": {
+	"lockApprovedAssets!(address: Address, tokenId: ByteVec, amount: U256) -> ()": {
 		"prefix": "lockApprovedAssets!",
 		"body": [
 			"lockApprovedAssets!($1, $2, $3)"
@@ -886,7 +893,7 @@
 // nullAddress!() -> (Address)
 // contractIdToAddress!(contractId: ByteVec) -> (Address)
 // panic!([input: U256])
-// lockApprovedAssets(address: Address, tokenId: ByteVec, amount: U256) -> ()
+// lockApprovedAssets!(address: Address, tokenId: ByteVec, amount: U256) -> ()
 // burnToken!() -> (Address, ByteVec, U256)
 // migrateWithState!(codeCompiled: ByteVec, state: ByteVec) // Deprecated
 // migrateWithFields!(codeCompiled: ByteVec, field: ByteVec)

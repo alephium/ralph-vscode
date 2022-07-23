@@ -173,3 +173,14 @@ TxContract Governance<undoneSequenceCodeHash: ByteVec, eventEmitterId: ByteVec>(
         return [#00; 19], 0, 0
     }
 }
+
+
+isCalledFromTxScript!(
+    
+)
+
+
+while () {
+
+}
+
