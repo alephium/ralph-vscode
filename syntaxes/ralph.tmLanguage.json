@@ -1,129 +1,129 @@
 {
-    "name": "ralph",
-    "scopeName": "source.ral",
-    "patterns": [
-      { "include": "#keywords" },
-      { "include": "#operators" },
-      { "include": "#types" },
-      { "include": "#number" },
-      { "include": "#constant" }
-    ],
-    "repository": {
-      "keywords": {
-        "patterns": [
-          {
-            "name": "keyword.control.ralph",
-            "match": "\\b(if|else|while|for|return)\\b"
-          },
-          {
-            "match": "\\b(import)\\b",
-            "name": "keyword.import.ralph"
-          },
-          {
-            "match": "\\b(alph)\\b",
-            "name": "keyword.alph.ralph"
-          },
-          {
-            "match": "\\b(let|mut|const)\\b",
-            "name": "keyword.let.ralph"
-          },
-          {
-            "match": "\\b(fn|pub|payable)\\b",
-            "name": "keyword.function.ralph"
-          },
-          {
-            "match": "\\b(extends|Abstract|implements)\\b",
-            "name": "keyword.extends.ralph"
-          },
-          {
-            "match": "\\bInterface\\b",
-            "name": "keyword.Interface.ralph"
-          },
-          {
-            "match": "\\b(event|emit)\\b",
-            "name": "keyword.event.ralph"
-          },
-          {
-            "match": "\\b(@using|using|!)\\b",
-            "name": "keyword.annotation.ralph"
-          },
-          {
-            "match": "\\b(struct|TxScript|TxContract|Contract|AssetScript|enum)\\b",
-            "name": "keyword.struct.ralph"
-          }
-        ]
-      },
-      "operators": {
-        "comment": "Note that the order here is very important!",
-        "patterns": [
-          {
-            "match": "(\\*|&)(?=\\w)",
-            "name": "keyword.operator.address.ralph"
-          },
-          {
-            "match": "\\-\\-",
-            "name": "keyword.operator.decrement.ralph"
-          },
-          {
-            "match": "\\+\\+",
-            "name": "keyword.operator.increment.ralph"
-          },
-          {
-            "match": "(==|!=|<=|>=|<(?!<)|>(?!>))",
-            "name": "keyword.operator.comparison.ralph"
-          },
-          {
-            "match": "(&&|\\|\\||!)",
-            "name": "keyword.operator.logical.ralph"
-          },
-          {
-            "match": "(=|\\+=|\\-=|\\|=|\\^=|\\*=|/=|:=|%=|<<=|>>=|&\\^=|&=)",
-            "name": "keyword.operator.assignment.ralph"
-          },
-          {
-            "match": "(\\+|\\-|\\*|/|%)",
-            "name": "keyword.operator.arithmetic.ralph"
-          },
-          {
-            "match": "(&(?!\\^)|\\||\\^|&\\^|<<|>>)",
-            "name": "keyword.operator.arithmetic.bitwise.ralph"
-          },
-          {
-            "match": "\\.\\.\\.",
-            "name": "keyword.operator.ellipsis.ralph"
-          }
-        ]
-      },
-      "types": {
-        "patterns": [
-          {
-            "comment": "numeric types",
-            "match": "(?<![A-Za-z])(Bool|I256|U256|Address|ByteVec)\\b",
-            "captures": {
-              "1": {
-                "name": "entity.name.type.numeric.ralph"
-              }
+  "name": "ralph",
+  "scopeName": "source.ral",
+  "patterns": [
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#number" },
+    { "include": "#constant" }
+  ],
+  "repository": {
+    "operators": {
+      "comment": "Note that the order here is very important!",
+      "patterns": [
+        {
+          "match": "(\\*|&)(?=\\w)",
+          "name": "keyword.operator.address.ralph"
+        },
+        {
+          "match": "\\-\\-",
+          "name": "keyword.operator.decrement.ralph"
+        },
+        {
+          "match": "\\+\\+",
+          "name": "keyword.operator.increment.ralph"
+        },
+        {
+          "match": "(==|!=|<=|>=|<(?!<)|>(?!>))",
+          "name": "keyword.operator.comparison.ralph"
+        },
+        {
+          "match": "(&&|\\|\\||!)",
+          "name": "keyword.operator.logical.ralph"
+        },
+        {
+          "match": "(=|\\+=|\\-=|\\|=|\\^=|\\*=|/=|:=|%=|<<=|>>=|&\\^=|&=)",
+          "name": "keyword.operator.assignment.ralph"
+        },
+        {
+          "match": "(\\+|\\-|\\*|/|%)",
+          "name": "keyword.operator.arithmetic.ralph"
+        },
+        {
+          "match": "(&(?!\\^)|\\||\\^|&\\^|<<|>>)",
+          "name": "keyword.operator.arithmetic.bitwise.ralph"
+        },
+        {
+          "match": "\\.\\.\\.",
+          "name": "keyword.operator.ellipsis.ralph"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.ralph",
+          "match": "\\b(if|else|while|for|return)\\b"
+        },
+        {
+          "match": "\\b(import)\\b",
+          "name": "keyword.import.ralph"
+        },
+        {
+          "match": "\\b(alph)\\b",
+          "name": "keyword.alph.ralph"
+        },
+        {
+          "match": "\\b(let|mut|const)\\b",
+          "name": "keyword.let.ralph"
+        },
+        {
+          "match": "\\b(fn|pub|payable)\\b",
+          "name": "keyword.function.ralph"
+        },
+        {
+          "match": "\\b(extends|Abstract|implements)\\b",
+          "name": "keyword.extends.ralph"
+        },
+        {
+          "match": "\\bInterface\\b",
+          "name": "keyword.Interface.ralph"
+        },
+        {
+          "match": "\\b(event|emit)\\b",
+          "name": "keyword.event.ralph"
+        },
+        {
+          "match": "\\b(@using|using|!)\\b",
+          "name": "keyword.annotation.ralph"
+        },
+        {
+          "match": "\\b(struct|TxScript|TxContract|Contract|AssetScript|enum)\\b",
+          "name": "keyword.struct.ralph"
+        },
+        { "include": "#operators" }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "comment": "numeric types",
+          "match": "(?<![A-Za-z])(Bool|I256|U256|Address|ByteVec)\\b",
+          "captures": {
+            "1": {
+              "name": "entity.name.type.numeric.ralph"
             }
           }
-        ]
-      },
-      "constant": {
-        "match": "\\b(?:true|false|null|NaN)\\b",
-        "name": "constant.language.ralph"
-      },
-      "number": {
-        "patterns": [
-          {
-            "comment": "handles hexadecimal numbers",
-            "match": "(0x)[0-9a-fA-f]*",
-            "name": "constant.hex.numeric.ralph"
-          },
-          {
-            "comment": "handles integer and decimal numbers",
-            "match": "[+-.]?(?=[1-9]|0(?!\\d))\\d+(\\.\\d+)?([eE][+-]?\\d+)?",
-            "name": "constant.dec.numeric.ralph"
-          }
-        ]
-      }
+        }
+      ]
+    },
+    "constant": {
+      "match": "\\b(?:true|false|null|NaN)\\b",
+      "name": "constant.language.ralph"
+    },
+    "number": {
+      "patterns": [
+        {
+          "comment": "handles hexadecimal numbers",
+          "match": "(0x)[0-9a-fA-f]*",
+          "name": "constant.hex.numeric.ralph"
+        },
+        {
+          "comment": "handles integer and decimal numbers",
+          "match": "[+-.]?(?=[1-9]|0(?!\\d))\\d+(\\.\\d+)?([eE][+-]?\\d+)?",
+          "name": "constant.dec.numeric.ralph"
+        }
+      ]
     }
+  }
 }
