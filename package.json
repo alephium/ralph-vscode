@@ -1,0 +1,49 @@
+{
+  "name": "ralph",
+  "displayName": "ralph",
+  "description": "ralph",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.69.0"
+  },
+  "keywords": [
+    "ralph"
+  ],
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Formatters",
+    "Linters",
+    "Other"
+  ],
+  "icon": "./image/logo.png",
+  "contributes": {
+    "languages": [
+      {
+        "id": "ralph",
+        "aliases": [
+          "ralph",
+          "RALPH",
+          "Ralph"
+        ],
+        "extensions": [
+          ".ral"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ralph",
+        "scopeName": "source.ral",
+        "path": "./syntaxes/ralph.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "ralph",
+        "path": "./snippets/snippets.code-snippets"
+      }
+    ]
+  }
+}
