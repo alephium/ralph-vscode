@@ -1,0 +1,894 @@
+
+{
+	"TODO": {
+        "prefix": "todo",
+        "body": [
+            "// TODO $1"
+        ],
+        "description": "todo"
+    },
+	"code block": {
+        "prefix": "block",
+        "body": [
+            "{",
+				"$1",	
+			"}"
+        ],
+        "description": "region"
+    },
+	"// #region   // #endregion": {
+        "prefix": "region",
+        "body": [
+            "// #region ${1}\n ${2}\n// #endregion"
+        ],
+        "description": "region"
+    },
+	"while () {}": {
+		"prefix": "while",
+		"body": [
+		  "while ($1) {"
+		    "$2",
+		  "}"
+		],
+		"description": "while"
+	},
+	"while () { }": {
+		"prefix": "wh",
+		"body": [
+		  "while ($1) {"
+		    "$2",
+		  "}"
+		],
+		"description": "while"
+	},
+	"loop {}": {
+		"prefix": "loop",
+		"body": [
+		  "while ($1) {"
+		    "$2",
+		  "}"
+		],
+		"description": "while"
+	},
+	"if {}else {}": {
+		"prefix": "ife",
+		"body": [
+		  "if ($1) {"
+		    "$2",
+		  "}else {",
+		    "$3",
+		  "}"
+		],
+		"description": "if else"
+	},
+	"if {}else if {}": {
+		"prefix": "ifeif",
+		"body": [
+		  "if ($1) {"
+		    "$2",
+		  "}else if ($3) {",
+		    "$4",
+		  "}"
+		],
+		"description": "if else if"
+	},
+	"if {}": {
+		"prefix": "if",
+		"body": [
+		  "if ($1) {"
+		    "$2",
+		  "}"
+		],
+		"description": "if {}"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"import $1": {
+		"prefix": "import",
+		"body": [
+		  "import \"$1\""
+		],
+		"description": "import"
+	},
+	"let $1 = $2": {
+		"prefix": "let",
+		"body": [
+		  "let $1 = $2"
+		],
+		"description": "let"
+	},
+	"let mut $1 = $2": {
+		"prefix": "letm",
+		"body": [
+		  "let mut $1 = $2"
+		],
+		"description": "let mut"
+	},
+	"mut $1: $2": {
+		"prefix": "mut",
+		"body": [
+		  "mut $1: $2"
+		],
+		"description": "mut"
+	},
+
+	"event $1($2)": {
+		"prefix": "event",
+		"body": [
+		  "event $1($2)"
+		],
+		"description": "event"
+	},
+	"emit $1($2)": {
+		"prefix": "emit",
+		"body": [
+		  "emit $1($2)"
+		],
+		"description": "emit"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"pub payable fn main() -> () {}": {
+		"prefix": "main",
+		"body": [
+			"pub payable fn main() -> () {",
+				"$1",
+			"}"
+		],
+		"description": "To create an main function"
+	},
+	"pub payable fn $1(arg: $2) -> $3": {
+		"prefix": "fn",
+		"body": [
+			"pub payable fn $1(arg: $2) -> ($3) {",
+				"$4",
+				"return $5",  
+			"}"
+		],
+		"description": "To create an function"
+	},
+	"fn (arg: type) -> (type) {return}": {
+		"prefix": "fnr",
+		"body": [
+			"pub fn $1(arg: $2) -> ($3) {",
+				"$4",
+				"return $5",  
+			"}"
+		],
+		"description": "To create an function"
+	},
+	"pub fn (arg: type) -> (type) {return}": {
+		"prefix": "pubfn",
+		"body": [
+			"pub fn $1(arg: $2) -> ($3) {",
+				"$4",
+				"return $5",  
+			"}"
+		],
+		"description": "To create an function"
+	},
+
+	//----------------------------------------------------------------------------------------------------------------	
+	"create an interface": {
+		"prefix": "interface",
+		"body": [
+			"// To create an interface:",
+			"Interface $1 {",
+				"pub fn $2() -> ($3)",
+				"pub fn $4() -> ($5)",
+			"}"
+		],
+		"description": "To create an interface"
+	},
+	"create TxContract": {
+		"prefix": "contract",
+		"body": [
+			"// create contract:",
+			"TxContract $1 {",
+				"event $2($3)",
+				"pub fn $4() -> ($5)",
+				"pub fn $6() -> ($7)",
+			"}"
+		],
+		"description": "create TxContract"
+	},
+	"create contract": {
+		"prefix": "TxContract",
+		"body": [
+			"// create contract:",
+			"TxContract $1 {",
+				"event $2($3)",
+				"pub fn $4() -> ($5)",
+				"pub fn $6() -> ($7)",
+			"}"
+		],
+		"description": "create contract"
+	},
+	"create TxScript": {
+		"prefix": "TxScript",
+		"body": [
+			"// invoke contract:",
+			"TxScript $1 {",
+			   "pub payable fn main() -> () {",
+			   		"$2",
+			   "}",
+			"}"
+		],
+		"description": "create TxScript"
+	},
+	"create script": {
+		"prefix": "script",
+		"body": [
+			"// invoke contract:",
+			"TxScript $1 {",
+			   "pub payable fn main() -> () {",
+			   		"$2",
+			   "}",
+			"}"
+		],
+		"description": "create TxScript"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"assert!(input: Bool) -> ()": {
+		"prefix": "assert!",
+		"body": [
+			"assert!($1)"
+		],
+		"description": "assert!"
+	},
+	"isAssetAddress!(input: Address) -> (Bool)": {
+		"prefix": "isAssetAddress!",
+		"body": [
+			"isAssetAddress!($1)"
+		],
+		"description": "isAssetAddress!"
+	},
+	"isContractAddress!(input: Address) -> (Bool)": {
+		"prefix": "isContractAddress!",
+		"body": [
+			"isContractAddress!($1)"
+		],
+		"description": "isContractAddress!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"blake2b!(input: ByteVec) -> (ByteVec)": {
+		"prefix": "blake2b!",
+		"body": [
+			"blake2b!($1)"
+		],
+		"description": "blake2b!"
+	},
+	"keccak256!(input: ByteVec) -> (ByteVec)": {
+		"prefix": "keccak256!",
+		"body": [
+			"keccak256!($1)"
+		],
+		"description": "keccak256!"
+	},
+	"sha256!(input: ByteVec) -> (ByteVec)": {
+		"prefix": "sha256!",
+		"body": [
+			"sha256!($1)"
+		],
+		"description": "sha256!"
+	},
+	"sha3!(input: ByteVec) -> (ByteVec)": {
+		"prefix": "sha3!",
+		"body": [
+			"sha3!($1)"
+		],
+		"description": "sha3!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"verifyTxSignature!(signature: ByteVec) -> ()": {
+		"prefix": "verifyTxSignature!",
+		"body": [
+			"verifyTxSignature!($1)"
+		],
+		"description": "verifyTxSignature!"
+	},
+	"verifySecP256K1!(input: ByteVec, publicKey: ByteVec, signature: ByteVec) -> ()": {
+		"prefix": "verifySecP256K1!",
+		"body": [
+			"verifySecP256K1!($1, $2, $3)"
+		],
+		"description": "verifySecP256K1!"
+	},
+	"verifyED25519!(input: ByteVec, publicKey: ByteVec, signature: ByteVec) -> ()": {
+		"prefix": "verifyED25519!",
+		"body": [
+			"verifyED25519!($1, $2, $3)"
+		],
+		"description": "verifyED25519!"
+	},
+	"verifyAbsoluteLocktime!(unixTimestampMillis: U256) -> ()": {
+		"prefix": "verifyAbsoluteLocktime!",
+		"body": [
+			"verifyAbsoluteLocktime!($1)"
+		],
+		"description": "verifyAbsoluteLocktime!"
+	},
+	"verifyRelativeLocktime!(txHash: U256, timestampMillisRelative: U256) -> ()": {
+		"prefix": "verifyRelativeLocktime!",
+		"body": [
+			"verifyRelativeLocktime!($1, $2)"
+		],
+		"description": "verifyRelativeLocktime!"
+	},
+	"ethEcRecover!(messageHash: ByteVec, sigBytes: ByteVec) -> (ByteVec)": {
+		"prefix": "ethEcRecover!",
+		"body": [
+			"ethEcRecover!($1, $2)"
+		],
+		"description": "ethEcRecover!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"networkId!() -> (ByteVec)": {
+		"prefix": "networkId!",
+		"body": [
+			"networkId!()"
+		],
+		"description": "networkId!"
+	},
+	"blockTimeStamp!() -> (U256)": {
+		"prefix": "blockTimeStamp!",
+		"body": [
+			"blockTimeStamp!()"
+		],
+		"description": "blockTimeStamp!"
+	},
+	"blockTarget!() -> (U256)": {
+		"prefix": "blockTarget!",
+		"body": [
+			"blockTarget!()"
+		],
+		"description": "blockTarget!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"txId!() -> (ByteVec)": {
+		"prefix": "txId!",
+		"body": [
+			"txId!()"
+		],
+		"description": "txId!"
+	},
+	"txInputAddress!(utxoIndex: U256) -> (Address)": {
+		"prefix": "txInputAddress!",
+		"body": [
+			"txInputAddress!($1)"
+		],
+		"description": "txInputAddress!"
+	},
+	"txInputsSize!() -> (U256)": {
+		"prefix": "txInputsSize!",
+		"body": [
+			"txInputsSize!()"
+		],
+		"description": "txInputsSize!"
+	},
+	"uniqueTxInputAddress!() -> (Address)": {
+		"prefix": "uniqueTxInputAddress!",
+		"body": [
+			"uniqueTxInputAddress!()"
+		],
+		"description": "uniqueTxInputAddress!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"toI256!(input: U256) -> (I256)": {
+		"prefix": "toI256!",
+		"body": [
+			"toI256!($1)"
+		],
+		"description": "toI256!"
+	},
+	"toU256!(input: I256) -> (U256)": {
+		"prefix": "toU256!",
+		"body": [
+			"toU256!($1)"
+		],
+		"description": "toU256!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"byteVecSlice!(input: ByteVec, start: U256, end: U256) -> (ByteVec)": {
+		"prefix": "byteVecSlice!",
+		"body": [
+			"byteVecSlice!($1, $2, $3)"
+		],
+		"description": "byteVecSlice!"
+	},
+	"size!(input: ByteVec) -> (U256)": {
+		"prefix": "size!",
+		"body": [
+			"size!($1)"
+		],
+		"description": "size!"
+	},
+	"zeros!(amountOfZeros: U256) -> (ByteVec)": {
+		"prefix": "zeros!",
+		"body": [
+			"zeros!($1)"
+		],
+		"description": "zeros!"
+	},
+	"byteVecToAddress!(input: ByteVec) -> Address": {
+		"prefix": "byteVecToAddress!",
+		"body": [
+			"byteVecToAddress!($1)"
+		],
+		"description": "byteVecToAddress!"
+	},
+	"encodeToByteVec!(fields...) -> (ByteVec)": {
+		"prefix": "encodeToByteVec!",
+		"body": [
+			"encodeToByteVec!($1)"
+		],
+		"description": "encodeToByteVec!"
+	},
+	"toByteVec!(input: (Bool|I256|U256|Address)) -> (ByteVec)": {
+		"prefix": "toByteVec!",
+		"body": [
+			"toByteVec!($1)"
+		],
+		"description": "toByteVec!"
+	},
+	"u256To1Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256To1Byte!",
+		"body": [
+			"u256To1Byte!($1)"
+		],
+		"description": "u256To1Byte!"
+	},
+	"u256To2Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256To2Byte!(a: U256) -> (ByteVec)!",
+		"body": [
+			"u256To2Byte!($1)"
+		],
+		"description": "u256To2Byte!"
+	},
+	"u256To4Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256To4Byte!",
+		"body": [
+			"u256To4Byte!($1)"
+		],
+		"description": "u256To4Byte!"
+	},
+	"u256To8Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256To8Byte!",
+		"body": [
+			"u256To8Byte!($1)"
+		],
+		"description": "u256To8Byte!"
+	},
+	"u256To16Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256To16Byte!",
+		"body": [
+			"u256To16Byte!($1)"
+		],
+		"description": "u256To16Byte!"
+	},
+	"u256To32Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256To32Byte!",
+		"body": [
+			"u256To32Byte!($1)"
+		],
+		"description": "u256To32Byte!"
+	},
+	"u256From1Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256From1Byte!",
+		"body": [
+			"u256From1Byte!($1)"
+		],
+		"description": "u256From1Byte!"
+	},
+	"u256From2Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256From2Byte!",
+		"body": [
+			"u256From2Byte!($1)"
+		],
+		"description": "u256From2Byte!"
+	},
+	"u256From4Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256From4Byte!",
+		"body": [
+			"u256From4Byte!($1)"
+		],
+		"description": "u256From4Byte!"
+	},
+	"u256From8Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256From8Byte!",
+		"body": [
+			"u256From8Byte!($1)"
+		],
+		"description": "u256From8Byte!"
+	},
+	"u256From16Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256From16Byte!",
+		"body": [
+			"u256From16Byte!($1)"
+		],
+		"description": "u256From16Byte!"
+	},
+	"u256From32Byte!(a: U256) -> (ByteVec)": {
+		"prefix": "u256From32Byte!",
+		"body": [
+			"u256From32Byte!($1)"
+		],
+		"description": "u256From32Byte!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"isPaying!(address: Address) -> (Bool)": {
+		"prefix": "isPaying!",
+		"body": [
+			"isPaying!($1)"
+		],
+		"description": "isPaying!"
+	},
+	"isCalledFromTxScript!() -> (Bool)": {
+		"prefix": "isCalledFromTxScript!",
+		"body": [
+			"isCalledFromTxScript!($1)"
+		],
+		"description": "isCalledFromTxScript!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"approveAlph!(forAddress: Address, amount: U256)) -> ()": {
+		"prefix": "approveAlph!",
+		"body": [
+			"approveAlph!($1, $2)"
+		],
+		"description": "approveAlph!"
+	},
+	"approveToken!(forAddress: Address, tokenId: ByteVec, amount:U256)) -> ()": {
+		"prefix": "approveToken!",
+		"body": [
+			"approveToken!($1, $2, $3)"
+		],
+		"description": "approveToken!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"alphRemaining!(address: Address) -> (U256)": {
+		"prefix": "alphRemaining!",
+		"body": [
+			"alphRemaining!($1)"
+		],
+		"description": "alphRemaining!"
+	},
+	"tokenRemaining!(address: Address, tokenId: ByteVec) -> (U256)": {
+		"prefix": "tokenRemaining!",
+		"body": [
+			"tokenRemaining!($1, $2)"
+		],
+		"description": "tokenRemaining!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"transferAlph!(from: Address, to: Address, amount: U256) -> ()": {
+		"prefix": "transferAlph!",
+		"body": [
+			"transferAlph!($1, $2, $3)"
+		],
+		"description": "transferAlph!"
+	},
+	"transferAlphFromSelf!(toBeneficiary: Address, amount: U256) -> ()": {
+		"prefix": "transferAlphFromSelf!",
+		"body": [
+			"transferAlphFromSelf!($1, $2)"
+		],
+		"description": "transferAlphFromSelf!"
+	},
+	"transferAlphToSelf!(fromBeneficiary: Address, amount: U256) -> ()": {
+		"prefix": "transferAlphToSelf!",
+		"body": [
+			"transferAlphToSelf!($1, $2)"
+		],
+		"description": "transferAlphToSelf!"
+	},
+	"transferToken!(from: Address, to: Address, tokenId: ByteVec, amount: U256) -> ()": {
+		"prefix": "transferToken!",
+		"body": [
+			"transferToken!($1, $2, $3)"
+		],
+		"description": "transferToken!"
+	},
+	"transferTokenFromSelf!(toBeneficiary: Address, tokenId: ByteVec, amount: U256) -> ()": {
+		"prefix": "transferTokenFromSelf!",
+		"body": [
+			"transferTokenFromSelf!($1, $2, $3)"
+		],
+		"description": "transferTokenFromSelf!"
+	},
+	"transferTokenToSelf!(fromBeneficiary: Address, tokenId: ByteVec, amount: U256) -> ()": {
+		"prefix": "transferTokenToSelf!",
+		"body": [
+			"transferTokenToSelf!($1, $2, $3)"
+		],
+		"description": "transferTokenToSelf!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"createContract!(codeCompiled: ByteVec, state: ByteVec) -> (ByteVec)": {
+		"prefix": "createContract!",
+		"body": [
+			"createContract!($1, $2)"
+		],
+		"description": "createContract!"
+	},
+	"createContractWithToken!(codeCompiled: ByteVec, state: ByteVec, tokenAmount: U256) -> (ByteVec)": {
+		"prefix": "createContractWithToken!",
+		"body": [
+			"createContractWithToken!($1, $2, $3)"
+		],
+		"description": "createContractWithToken!"
+	},
+	"copyCreateContract!(contractId: ByteVec, state: ByteVec) -> (ByteVec)": {
+		"prefix": "copyCreateContract!",
+		"body": [
+			"copyCreateContract!($1, $2)"
+		],
+		"description": "copyCreateContract!"
+	},
+	"copyCreateContractWithToken!(contractId: ByteVec, state: ByteVec, tokenAmount: U256) -> (ByteVec)": {
+		"prefix": "copyCreateContractWithToken!",
+		"body": [
+			"copyCreateContractWithToken!($1, $2, $3)"
+		],
+		"description": "copyCreateContractWithToken!"
+	},
+	"destroySelf!(address: Address) -> ()": {
+		"prefix": "destroySelf!",
+		"body": [
+			"destroySelf!($1)"
+		],
+		"description": "destroySelf!"
+	},
+	"migrate!(codeCompiled: ByteVec)": {
+		"prefix": "migrate!",
+		"body": [
+			"migrate!($1)"
+		],
+		"description": "migrate!"
+	},
+	"migrateWithState!(codeCompiled: ByteVec, state: ByteVec)": {
+		"prefix": "migrateWithState!",
+		"body": [
+			"migrateWithState!($1, $2)"
+		],
+		"description": "migrateWithState!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"selfAddress!() -> (Address)": {
+		"prefix": "selfAddress!",
+		"body": [
+			"selfAddress!()"
+		],
+		"description": "selfAddress!"
+	},
+	"selfContractId!() -> (ByteVec)": {
+		"prefix": "selfContractId!",
+		"body": [
+			"selfContractId!()"
+		],
+		"description": "selfContractId!"
+	},
+	"selfTokenId!() -> (ByteVec)": {
+		"prefix": "selfTokenId!",
+		"body": [
+			"selfTokenId!()"
+		],
+		"description": "selfTokenId!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"callerContractId!() -> (ByteVec)": {
+		"prefix": "callerContractId!",
+		"body": [
+			"callerContractId!()"
+		],
+		"description": "callerContractId!"
+	},
+	"callerAddress!() -> (Address)": {
+		"prefix": "callerAddress!",
+		"body": [
+			"callerAddress!()"
+		],
+		"description": "callerAddress!"
+	},
+	"callerInitialStateHash!() -> (ByteVec)": {
+		"prefix": "callerInitialStateHash!",
+		"body": [
+			"callerInitialStateHash!()"
+		],
+		"description": "callerInitialStateHash!"
+	},
+	"callerCodeHash!() -> (ByteVec)": {
+		"prefix": "callerCodeHash!",
+		"body": [
+			"callerCodeHash!()"
+		],
+		"description": "callerCodeHash!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"contractInitialStateHash!(contractId: ByteVec) -> (ByteVec)": {
+		"prefix": "contractInitialStateHash!",
+		"body": [
+			"contractInitialStateHash!($1)"
+		],
+		"description": "contractInitialStateHash!"
+	},
+	"contractCodeHash!() -> (contractId: ByteVec) -> (ByteVec)": {
+		"prefix": "contractCodeHash!",
+		"body": [
+			"contractCodeHash!()"
+		],
+		"description": "contractCodeHash!"
+	},
+	//----------------------------------------------------------------------------------------------------------------
+	"dustAmount!() -> (U256)": {
+		"prefix": "dustAmount!",
+		"body": [
+			"dustAmount!()"
+		],
+		"description": "dustAmount!"
+	},
+	"nullAddress!() -> (Address)": {
+		"prefix": "nullAddress!",
+		"body": [
+			"nullAddress!()"
+		],
+		"description": "nullAddress!"
+	},
+	"contractIdToAddress!(contractId: ByteVec) -> (Address)": {
+		"prefix": "contractIdToAddress!",
+		"body": [
+			"contractIdToAddress!($1)"
+		],
+		"description": "contractIdToAddress!"
+	},
+	"panic!([input: U256])": {
+		"prefix": "panic!",
+		"body": [
+			"panic!()"
+		],
+		"description": "panic!"
+	},
+	"lockApprovedAssets(address: Address, tokenId: ByteVec, amount: U256) -> ()": {
+		"prefix": "lockApprovedAssets!",
+		"body": [
+			"lockApprovedAssets!($1, $2, $3)"
+		],
+		"description": "lockApprovedAssets!"
+	},
+	"burnToken!() -> (Address, ByteVec, U256)": {
+		"prefix": "burnToken!",
+		"body": [
+			"burnToken!()"
+		],
+		"description": "burnToken!"
+	},
+	"migrateWithFields!(codeCompiled: ByteVec, field: ByteVec)": {
+		"prefix": "migrateWithFields!",
+		"body": [
+			"migrateWithFields!($1, $2)"
+		],
+		"description": "migrateWithFields!"
+	},
+	"subContractId!(id: ByteVec) -> (ByteVec)": {
+		"prefix": "subContractId!",
+		"body": [
+			"subContractId!($1)"
+		],
+		"description": "subContractId!"
+	},
+	"subContractIdOf(contract: Contract, id: ByteVec) -> (ByteVec)": {
+		"prefix": "subContractIdOf!",
+		"body": [
+			"subContractIdOf!($1, $2)"
+		],
+		"description": "subContractIdOf!"
+	}
+}
+
+// Assertions
+// assert!(input: Bool) -> () // Will halt execution if false
+// isAssetAddress!(input: Address) -> (Bool)
+// isContractAddress!(input: Address) -> (Bool)
+
+// Hashing
+// blake2b!(input: ByteVec) -> (ByteVec)
+// keccak256!(input: ByteVec) -> (ByteVec)
+// sha256!(input: ByteVec) -> (ByteVec)
+// sha3!(input: ByteVec) -> (ByteVec)
+
+// Verification
+// verifyTxSignature!(signature: ByteVec) -> ()
+// verifySecP256K1!(input: ByteVec, publicKey: ByteVec, signature: ByteVec) -> ()
+// verifyED25519!(input: ByteVec, publicKey: ByteVec, signature: ByteVec) -> ()
+// verifyAbsoluteLocktime!(unixTimestampMillis: U256) -> ()
+// verifyRelativeLocktime!(txHash: U256, timestampMillisRelative: U256) -> ()
+// ethEcRecover!(messageHash: ByteVec, sigBytes: ByteVec) -> (ByteVec)
+
+// Network
+// networkId!() -> (ByteVec)
+// blockTimeStamp!() -> (U256)
+// blockTarget!() -> (U256)
+
+// Transactions
+// txId!() -> (ByteVec)
+// txInputAddress!(utxoIndex: U256) -> (Address)  // Returns the address of the utxo at an index (since multiple utxo can exist in a transaction)
+// txInputsSize!() -> (U256)
+// uniqueTxInputAddress!() -> (Address)
+
+// Integer conversion
+// toI256!(input: U256) -> (I256)
+// toU256!(input: I256) -> (U256)
+
+// ByteVec functions
+// byteVecSlice!(input: ByteVec, start: U256, end: U256) -> (ByteVec)
+// size!(input: ByteVec) -> (U256)
+// zeros!(amountOfZeros: U256) -> (ByteVec)
+// byteVecToAddress!(input: ByteVec) -> Address
+// encodeToByteVec!(fields...) -> (ByteVec)
+// toByteVec!(input: (Bool|I256|U256|Address)) -> (ByteVec)
+// u256To1Byte!(a: U256) -> (ByteVec)
+// u256To2Byte!(a: U256) -> (ByteVec)
+// u256To4Byte!(a: U256) -> (ByteVec)
+// u256To8Byte!(a: U256) -> (ByteVec)
+// u256To16Byte!(a: U256) -> (ByteVec)
+// u256To32Byte!(a: U256) -> (ByteVec)
+// u256From1Byte!(a: U256) -> (ByteVec)
+// u256From2Byte!(a: U256) -> (ByteVec)
+// u256From4Byte!(a: U256) -> (ByteVec)
+// u256From8Byte!(a: U256) -> (ByteVec)
+// u256From16Byte!(a: U256) -> (ByteVec)
+// u256From32Byte!(a: U256) -> (ByteVec)
+
+// Stateful functions
+// Assertions
+// isPaying!(address: Address) -> (Bool)
+// isCalledFromTxScript!() -> (Bool)
+
+// Asset transfer approval
+// approveAlph!(forAddress: Address, amount: U256)) -> ()
+// approveToken!(forAddress: Address, tokenId: ByteVec, amount:U256)) -> ()
+
+// Account balance
+// alphRemaining!(address: Address) -> (U256)
+// tokenRemaining!(address: Address, tokenId: ByteVec) -> (U256)
+
+// Transfers
+// transferAlph!(from: Address, to: Address, amount: U256) -> ()
+// transferAlphFromSelf!(toBeneficiary: Address, amount: U256) -> ()
+// transferAlphToSelf!(fromBeneficiary: Address, amount: U256) -> () // This pair of transferAlph functions are useful to avoid accidentally sending or receiving money to another address.
+// transferToken!(from: Address, to: Address, tokenId: ByteVec, amount: U256) -> ()
+// transferTokenFromSelf!(toBeneficiary: Address, tokenId: ByteVec, amount: U256) -> ()
+// transferTokenToSelf!(fromBeneficiary: Address, tokenId: ByteVec, amount: U256) -> () // Same usage as the other pair of transferAlph functions.
+
+// Contracts
+// createContract!(codeCompiled: ByteVec, state: ByteVec) -> (ByteVec)
+// createContractWithToken!(codeCompiled: ByteVec, state: ByteVec, tokenAmount: U256) -> (ByteVec) // state is the state as its passed to the build-contract endpoint.
+// copyCreateContract!(contractId: ByteVec, state: ByteVec) -> (ByteVec)
+// copyCreateContractWithToken!(contractId: ByteVec, state: ByteVec, tokenAmount: U256) -> (ByteVec)
+// destroySelf!(address: Address) -> ()
+// migrate!(codeCompiled: ByteVec) // Updates the contract in-place
+// migrateWithState!(codeCompiled: ByteVec, state: ByteVec)
+
+// Internal
+// selfAddress!() -> (Address)
+// selfContractId!() -> (ByteVec)
+// selfTokenId!() -> (ByteVec)
+
+// Caller
+// callerContractId!() -> (ByteVec)
+// callerAddress!() -> (Address) // This is the last caller, in case of chained calls across contracts, scripts and users.
+// callerInitialStateHash!() -> (ByteVec)
+// callerCodeHash!() -> (ByteVec)
+
+// Hashes
+// contractInitialStateHash!(contractId: ByteVec) -> (ByteVec)
+// contractCodeHash!() -> (contractId: ByteVec) -> (ByteVec)
+
+// dustAmount!() -> (U256)
+// nullAddress!() -> (Address)
+// contractIdToAddress!(contractId: ByteVec) -> (Address)
+// panic!([input: U256])
+// lockApprovedAssets(address: Address, tokenId: ByteVec, amount: U256) -> ()
+// burnToken!() -> (Address, ByteVec, U256)
+// migrateWithState!(codeCompiled: ByteVec, state: ByteVec) // Deprecated
+// migrateWithFields!(codeCompiled: ByteVec, field: ByteVec)
+// subContractId!(id: ByteVec) -> (ByteVec)
+// subContractIdOf(contract: Contract, id: ByteVec) -> (ByteVec)
