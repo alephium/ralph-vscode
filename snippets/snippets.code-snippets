@@ -659,6 +659,35 @@
 		],
 		"description": "copyCreateContractWithToken!"
 	},
+	"createSubContract!(path: ByteVec, byteCode: ByteVec, state: ByteVec) -> (ByteVec)": {
+		"prefix": "createSubContract!",
+		"body": [
+			"createSubContract!($1, $2, $3)"
+		],
+		"description": "createSubContract!"
+	},
+	"createSubContractWithToken!(path: ByteVec, byteCode: ByteVec, state: ByteVec, amount: U256)": {
+		"prefix": "createSubContractWithToken!",
+		"body": [
+			"createSubContractWithToken!($1, $2, $3, $4)"
+		],
+		"description": "createSubContractWithToken!"
+	},
+	"copyCreateSubContract!(path: ByteVec, byteCode: ByteVec, state: ByteVec) -> (ByteVec)": {
+		"prefix": "copyCreateSubContract!",
+		"body": [
+			"copyCreateSubContract!($1, $2, $3)"
+		],
+		"description": "copyCreateSubContract!"
+	},
+	"copyCreateSubContractWithToken!(path: ByteVec, byteCode: ByteVec, state: ByteVec, amount: U256)": {
+		"prefix": "copyCreateSubContractWithToken!",
+		"body": [
+			"copyCreateSubContractWithToken!($1, $2, $3, $4)"
+		],
+		"description": "copyCreateSubContractWithToken!"
+	},
+
 	"destroySelf!(address: Address) -> ()": {
 		"prefix": "destroySelf!",
 		"body": [
@@ -892,6 +921,12 @@
 // createContractWithToken!(codeCompiled: ByteVec, state: ByteVec, tokenAmount: U256) -> (ByteVec) // state is the state as its passed to the build-contract endpoint.
 // copyCreateContract!(contractId: ByteVec, state: ByteVec) -> (ByteVec)
 // copyCreateContractWithToken!(contractId: ByteVec, state: ByteVec, tokenAmount: U256) -> (ByteVec)
+
+// createSubContract!(path: ByteVec, byteCode: ByteVec, state: ByteVec) -> (ByteVec)
+// createSubContractWithToken!(path: ByteVec, byteCode: ByteVec, state: ByteVec, amount: U256) -> (ByteVec)
+// copyCreateSubContract!(path: ByteVec, byteCode: ByteVec, state: ByteVec) -> (ByteVec)
+// copyCreateSubContractWithToken!(path: ByteVec, byteCode: ByteVec, state: ByteVec, amount: U256) -> (ByteVec)
+
 // destroySelf!(address: Address) -> ()
 // migrate!(codeCompiled: ByteVec) // Updates the contract in-place
 // migrateWithState!(codeCompiled: ByteVec, state: ByteVec)
