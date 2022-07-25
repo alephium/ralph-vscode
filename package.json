@@ -49,7 +49,11 @@
         "extensions": [
           ".ral"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./logo.png",
+          "dark": "./logo.png"
+        }
       }
     ],
     "grammars": [
