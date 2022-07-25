@@ -4,6 +4,7 @@
   "patterns": [
     { "include": "#keywords" },
     { "include": "#types" },
+    { "include": "#global" },
     { "include": "#number" },
     { "include": "#constant" }
   ],
@@ -91,7 +92,8 @@
           "match": "\\b(struct|TxScript|TxContract|Contract|AssetScript|enum)\\b",
           "name": "keyword.struct.ralph"
         },
-        { "include": "#operators" }
+        { "include": "#operators" },
+        { "include": "#comment-todo" }
       ]
     },
     "types": {
@@ -122,6 +124,76 @@
           "comment": "handles integer and decimal numbers",
           "match": "[+-.]?(?=[1-9]|0(?!\\d))\\d+(\\.\\d+)?([eE][+-]?\\d+)?",
           "name": "constant.dec.numeric.ralph"
+        }
+      ]
+    },
+    "comment-todo": {
+      "match": "(?i)\\b(FIXME|TODO|CHANGED|XXX|IDEA|HACK|NOTE|REVIEW|NB|BUG|QUESTION|COMBAK|TEMP|SUPPRESS|LINT|\\w+-disable|\\w+-suppress)\\b(?-i)",
+      "name": "keyword.comment.todo.ralph"
+    },
+    "global": {
+      "patterns": [
+        {
+          "include": "#global-variables"
+        },
+        {
+          "include": "#global-functions"
+        }
+      ]
+    },
+    "global-variables": {
+      "patterns": [
+        {
+          "match": "\\b(this)\\b",
+          "name": "variable.language.this.ralph"
+        },
+        {
+          "match": "\\b(super)\\b",
+          "name": "variable.language.super.ralph"
+        },
+        {
+          "match": "\\b(abi)\\b",
+          "name": "variable.language.builtin.abi.ralph"
+        },
+        {
+          "match": "\\b(tx\\.origin|tx\\.gasprice|msg\\.data|msg\\.sig|msg\\.value)\\b",
+          "name": "variable.language.transaction.security.ralph"
+        },
+        {
+          "match": "\\b(msg\\.sender|msg|block|tx|now)\\b",
+          "name": "variable.language.transaction.ralph"
+        }
+      ]
+    },
+    "global-functions": {
+      "patterns": [
+        {
+          "match": "\\b(require|assert|revert)\\b",
+          "name": "keyword.control.exceptions.ralph"
+        },
+        {
+          "match": "\\b(selfdestruct|suicide)\\b",
+          "name": "keyword.control.contract.ralph"
+        },
+        {
+          "match": "\\b(addmod|mulmod|keccak256|sha256|sha3|ripemd160|ecrecover)\\b",
+          "name": "support.function.math.ralph"
+        },
+        {
+          "match": "\\b(blockhash|gasleft)\\b",
+          "name": "variable.language.transaction.ralph"
+        },
+        {
+          "match": "\\b(type)\\b",
+          "name": "variable.language.type.ralph"
+        },
+        {
+          "match": "\\b\\.(send|call|delegatecall|staticcall|callcode|creationCode|runtimeCode)\\b",
+          "name": "support.function.transaction.security.ralph"
+        },
+        {
+          "match": "\\b\\.(transfer)\\b",
+          "name": "support.function.transaction.ralph"
         }
       ]
     }

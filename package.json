@@ -68,6 +68,23 @@
         "language": "ralph",
         "path": "./snippets/snippets.code-snippets"
       }
+    ],
+    "themes": [
+      {
+        "label": "Ralph Visual Developer Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/OneDarkAuditor.json"
+      },
+      {
+        "label": "Ralph Visual Developer Solarized Light",
+        "uiTheme": "vs",
+        "path": "./themes/solarized-light-color-theme.json"
+      },
+      {
+        "label": "Ralph Visual Developer Light (Visual Studio)",
+        "uiTheme": "vs",
+        "path": "./themes/light_vs.json"
+      }
     ]
   },
   "dependencies": {
