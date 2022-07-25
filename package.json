@@ -16,10 +16,7 @@
     "alephium"
   ],
   "publisher": "592938410",
-  "author": {
-    "name": "suyanlong",
-    "email": "syl416419@gmail.com"
-  },
+  "author": "suyanlong <syl416419@gmail.com>",
   "contributors": [
     {
       "email": "syl416419@gmail.com",
@@ -31,10 +28,7 @@
     "url": "https://github.com/suyanlong/ralph-vscode/issues"
   },
   "homepage": "https://github.com/suyanlong/ralph-vscode#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/suyanlong/ralph-vscode.git"
-  },
+  "repository": "git+https://github.com/suyanlong/ralph-vscode.git",
   "categories": [
     "Programming Languages",
     "Snippets",

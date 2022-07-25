@@ -1,6 +1,7 @@
 
 
 build:
+	yarn install
 	vsce package
 
 publish:
