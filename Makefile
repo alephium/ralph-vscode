@@ -2,7 +2,7 @@
 
 build:
 	yarn install
-	vsce package
+	./node_modules/vsce/vsce package
 
 publish:
-	vsce publish
+	./node_modules/vsce/vsce publish
