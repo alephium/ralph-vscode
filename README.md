@@ -3,7 +3,7 @@
 - Syntax-highlighting ✅
 - Semantic-highlighting ⏳
 - Snippet ✅
-- Formatting ⏳
+- Formatting ✅（simple format）
 - IntelliSense ⏳
 - Linting / Error Checking ⏳
 - Debugging ⏳
