@@ -73,7 +73,7 @@ export class SFormatterProvider implements vscode.DocumentFormattingEditProvider
         let addSpace = {
             csb: ['\\*\\)', '\\*\\/', '\\/\\/', '\\(\\*', '\\/\\*'],
             csa: ['\\(\\*', '\\/\\*', '\\/\\/'],
-            ss: ['--', '\\+\\+', '&&', '\\|\\|', '==', '->', '\\*', '%', '=', '\\+', '-', '&', '\\|']
+            ss: ['--', '\\+\\+', '&&', '\\|\\|', '==', '->', '<=', '>=', '!=', '\\*', '%', '=', '\\+', '-', '&', '>', '<', '\\|']
         };
 
         regEx = new RegExp(`(?<! )(${addSpace.csb.join('|')})`, "ig");
@@ -103,7 +103,7 @@ export class SFormatterProvider implements vscode.DocumentFormattingEditProvider
         text = text.replace(regEx, ') extends ');
 
         // keyword
-        regEx = new RegExp(`${this.keywords.map(val => `${val}\\s*`).join('|')}`, "ig");
+        regEx = new RegExp(`${this.keywords.map(val => `${val}\\s{1,}`).join('|')}`, "ig");
         text = text.replace(regEx, (match, sign) => sign !== undefined ? match.trim() + " " : match);
 
         return text;

@@ -9,7 +9,7 @@ export enum LogLevel {
 
 export class Logger {
     public static readonly outputChannel =
-        window.createOutputChannel('Format Files');
+        window.createOutputChannel('ralph-vscode-log');
 
     public static logLevel = LogLevel.info;
 
