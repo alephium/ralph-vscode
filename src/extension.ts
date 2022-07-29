@@ -1,10 +1,12 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import commands from "./commands";
+// import commands from "./commands";
 import * as ident from './ident';
 import * as line from './line';
 import * as paragraph from './paragraph';
+// import * as  formatter from './formatter';
+import { SFormatterProvider } from "./simpleformatter";
 
 const FORMAT_SELECTION_COMMAND = 'editor.action.formatSelection';
 const FORMAT_DOCUMENT_COMMAND = 'editor.action.formatDocument';
@@ -32,16 +34,19 @@ export function activate(context: vscode.ExtensionContext) {
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 
-	commands.map(command => command.command).forEach((command) => {
-		let disposable = vscode.commands.registerTextEditorCommand(command, (textEditor) => {
-			const language = command.split('.').pop();
-			formatCode(language, textEditor);
-		});
-		context.subscriptions.push(disposable);
-	});
+	// commands.map(command => command.command).forEach((command) => {
+	// 	let disposable = vscode.commands.registerTextEditorCommand(command, (textEditor) => {
+	// 		const language = command.split('.').pop();
+	// 		formatCode(language, textEditor);
+	// 	});
+	// 	context.subscriptions.push(disposable);
+	// });
+
+    vscode.languages.registerDocumentFormattingEditProvider({ scheme: 'file', language: 'ralph' }, new SFormatterProvider());
 
     //format comment
 	context.subscriptions.push(vscode.commands.registerCommand('format-comment.formatComment', formatComment));
+    // formatter.Formatter()
 }
 
 // this method is called when your extension is deactivated
