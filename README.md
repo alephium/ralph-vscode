@@ -14,6 +14,7 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
 ## Extension Settings
 * seting themes
 ## FAQ
+https://github.com/suyanlong/ralph-vscode/issues
 
 ## Contribution
 
