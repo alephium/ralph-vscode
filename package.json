@@ -46,7 +46,11 @@
     "commands": [
       {
         "command": "ralph.downloader",
-        "title": "Download Compiler for ralph"
+        "title": "ralph: downloader"
+      },
+      {
+        "command": "ralph.compile",
+        "title": "ralph: compile"
       }
     ],
     "configuration": {
@@ -63,6 +67,9 @@
         "ralph.downloader.config.target": {
           "type": "string",
           "default": "ralphc.jar"
+        },
+        "ralph.compiler.command": {
+          "type": "string"
         }
       }
     },
@@ -136,6 +143,7 @@
   },
   "dependencies": {
     "execa": "^6.1.0",
+    "got": "^12.3.1",
     "node-fetch": "^3.2.10"
   },
   "devDependencies": {

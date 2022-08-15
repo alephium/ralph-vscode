@@ -1,9 +1,12 @@
+"use strict";
+
 import * as vscode from 'vscode';
 import * as path from 'path';
 import {createWriteStream} from 'node:fs';
 import fetch from 'node-fetch';
-
 import * as logger from './logger';
+import { existsSync } from 'fs';
+
 
 type Config = {
   name: string;
@@ -23,7 +26,6 @@ export class Downloader {
     const config = vscode.workspace
       .getConfiguration().get('ralph.downloader.config') as Config;
     this.config = config;
-    this.log.info("url :" + this.config.url)
   }
 
   async showQuickPick() {
@@ -34,11 +36,13 @@ export class Downloader {
   async download() {
     const dir = vscode.workspace.rootPath;
     if (dir) {
-      const targetPath = path.join(dir, this.config.target);
-      const targetStream = createWriteStream(targetPath);
-
-      const response = await fetch(this.config.url);
-      response.body?.pipe(targetStream)
+      const targetPath = path.join(dir, this.config.target);        
+      if (!existsSync(targetPath) ){
+        this.log.info("download :" + this.config.url)
+        const targetStream = createWriteStream(targetPath);
+        const response = await fetch(this.config.url);
+        response.body?.pipe(targetStream)
+      }
     }
   }
 }
