@@ -3,7 +3,7 @@ name: BUILD
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
-on: [push,pull_request]
+on: [push, pull_request]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -13,13 +13,13 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - "ubuntu-latest"
+          - 'ubuntu-latest'
         node:
           # Run tests on minimal version we support
-          - "17.6.0"
+          - '17.6.0'
         NPM_CLIENT:
           # - "yarn"
-          - "npm"
+          - 'npm'
           # - "pnpm"
     env:
       INSTALL_PACKAGE: true
@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-          cache: "yarn"
+          cache: 'yarn'
 
       # - name: Install Dependencies
       #   run: yarn install --frozen-lockfile
@@ -49,11 +49,9 @@ jobs:
       - name: build
         run: make build
 
-      - name : Upload artifact bin
+      - name: Upload artifact bin
         uses: actions/upload-artifact@v3
         with:
           name: ralph-vscode
           path: |
             ralph-vscode-*.vsix
-
-

@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 defaultOptions: {
   tabWidth: 2;

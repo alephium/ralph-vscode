@@ -16,3 +16,6 @@ publish:
 clean:
 	rm -rf ./ralph-vscode-*.vsix
 
+
+fmt:
+	yarn run fmt

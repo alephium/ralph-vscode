@@ -1,111 +1,176 @@
+'use strict';
+
 import * as vscode from 'vscode';
 import * as logger from './logger';
 
-export class SFormatterProvider implements vscode.DocumentFormattingEditProvider {
-    private functions: Array<string> = [];
-    private keywords: Array<string> = [];
-    private types: Array<string> = [];
-    private ends: Array<string> = [];
-    private skipString: Array<string> = [];
+export class SFormatterProvider
+  implements vscode.DocumentFormattingEditProvider
+{
+  private functions: Array<string> = [];
+  private keywords: Array<string> = [];
+  private types: Array<string> = [];
+  private ends: Array<string> = [];
+  private skipString: Array<string> = [];
 
-    provideDocumentFormattingEdits(document: vscode.TextDocument) {
-        if (vscode.window.visibleTextEditors.every((e) => e.document.fileName !== document.fileName)) {
-            return [];
-        }
-
-        let out = [];
-        this.functions = [
-            'assert!',
-            '[A-Za-z_]*(_TO_)[A-Za-z_]*'
-        ];
-
-        this.keywords = [
-            'let', 'mut', 'const', 'for', 'event', 'emit', 'struct', 'TxScript', 'TxContract', 'Contract', 'AssetScript', 'enum',
-            'Interface', 'fn', 'pub', 'payable', 'extends', 'Abstract', 'implements',
-            'import', 'if', 'else', 'while', 'for', 'return', 'alph',
-        ];
-
-        this.types = [];
-
-        this.ends = [];
-
-        // Do not format this strings
-        this.skipString = [
-            `["']{1}[^\"\'\\\\]*(?:\\\\[\\s\\S][^"'\\\\]*)*["']{1}`,
-            '\\(\\*[\\s\\S]*?\\*\\)',
-            '\\/\\*[\\s\\S]*?\\*\\/',
-            '\\/\\/[^\\n]*\\n' // All single line comments
-        ];
-
-        let text = document.getText();
-        text = this.spaces(text);
-
-        out.push(
-            new vscode.TextEdit(new vscode.Range(
-                new vscode.Position(0, 0),
-                document.lineAt(document.lineCount - 1).range.end), text
-            )
-        );
-
-        return out;
+  provideDocumentFormattingEdits(document: vscode.TextDocument) {
+    if (
+      vscode.window.visibleTextEditors.every(
+        (e) => e.document.fileName !== document.fileName
+      )
+    ) {
+      return [];
     }
 
-    spaces(text: string): string {
-        let log = new logger.Logger("test");
-        // Delete space between func name and (
-        // ABS ( to ABS(
-        let regEx = new RegExp(`\\b(?:${this.functions.join('|')})\\b\\s+\\(`, "ig");
-        text = text.replace(regEx, (match) => {
-            return match.replace(/\s+/, '');
-        });
+    let out = [];
+    this.functions = ['assert!', '[A-Za-z_]*(_TO_)[A-Za-z_]*'];
 
-        // Add space after keywords
-        // if( to if (
-        regEx = new RegExp(`\\b(if|while)\\s*\\(`, "ig");
-        text = text.replace(regEx, (match, key) => {
-            return key !== undefined ? key + ' (' : match;
-        });
+    this.keywords = [
+      'let',
+      'mut',
+      'const',
+      'for',
+      'event',
+      'emit',
+      'struct',
+      'TxScript',
+      'TxContract',
+      'Contract',
+      'AssetScript',
+      'enum',
+      'Interface',
+      'fn',
+      'pub',
+      'payable',
+      'extends',
+      'Abstract',
+      'implements',
+      'import',
+      'if',
+      'else',
+      'while',
+      'for',
+      'return',
+      'alph'
+    ];
 
-        //  } else { 
-        regEx = new RegExp(`}\\s*else\\s*{`, "ig");
-        text = text.replace(regEx, (match, key) => key !== undefined ? '} else {' : match);
+    this.types = [];
 
-        let addSpace = {
-            csb: ['\\*\\)', '\\*\\/', '\\/\\/', '\\(\\*', '\\/\\*'],
-            csa: ['\\(\\*', '\\/\\*', '\\/\\/'],
-            ss: ['--', '\\+\\+', '&&', '\\|\\|', '==', '->', '<=', '>=', '!=', '\\*', '%', '=', '\\+', '-', '&', '>', '<', '\\|']
-        };
+    this.ends = [];
 
-        regEx = new RegExp(`(?<! )(${addSpace.csb.join('|')})`, "ig");
-        text = text.replace(regEx, (match, sign) => " " + sign);
+    // Do not format this strings
+    this.skipString = [
+      `["']{1}[^\"\'\\\\]*(?:\\\\[\\s\\S][^"'\\\\]*)*["']{1}`,
+      '\\(\\*[\\s\\S]*?\\*\\)',
+      '\\/\\*[\\s\\S]*?\\*\\/',
+      '\\/\\/[^\\n]*\\n' // All single line comments
+    ];
 
-        regEx = new RegExp(`(${addSpace.csb.join('|')})(?! )`, "ig");
-        text = text.replace(regEx, (match, sign) => sign + " ");
+    let text = document.getText();
+    text = this.spaces(text);
 
-        // operator
-        regEx = new RegExp(`${addSpace.ss.map(val => `\\s*${val}\\s*`).join('|')}`, "ig");
-        text = text.replace(regEx, (match, sign) => sign !== undefined ? " " + match.trim() + " " : match);
+    out.push(
+      new vscode.TextEdit(
+        new vscode.Range(
+          new vscode.Position(0, 0),
+          document.lineAt(document.lineCount - 1).range.end
+        ),
+        text
+      )
+    );
 
-        //:
-        regEx = new RegExp(`\\s*\\:\\s*`, "ig");
-        text = text.replace(regEx, ': ');
+    return out;
+  }
 
-        //.
-        regEx = new RegExp(`\\s*\\.\\s*`, "ig");
-        text = text.replace(regEx, '.');
+  spaces(text: string): string {
+    let log = new logger.Logger('test');
+    // Delete space between func name and (
+    // ABS ( to ABS(
+    let regEx = new RegExp(
+      `\\b(?:${this.functions.join('|')})\\b\\s+\\(`,
+      'ig'
+    );
+    text = text.replace(regEx, (match) => {
+      return match.replace(/\s+/, '');
+    });
 
-        //,
-        regEx = new RegExp(`\\s*,`, "ig");
-        text = text.replace(regEx, ',');
+    // Add space after keywords
+    // if( to if (
+    regEx = new RegExp(`\\b(if|while)\\s*\\(`, 'ig');
+    text = text.replace(regEx, (match, key) => {
+      return key !== undefined ? key + ' (' : match;
+    });
 
-        //)  extends 
-        regEx = new RegExp(`\\)\\s*extends\\s*`, "ig");
-        text = text.replace(regEx, ') extends ');
+    //  } else {
+    regEx = new RegExp(`}\\s*else\\s*{`, 'ig');
+    text = text.replace(regEx, (match, key) =>
+      key !== undefined ? '} else {' : match
+    );
 
-        // keyword
-        regEx = new RegExp(`${this.keywords.map(val => `${val}\\s{1,}`).join('|')}`, "ig");
-        text = text.replace(regEx, (match, sign) => sign !== undefined ? match.trim() + " " : match);
+    let addSpace = {
+      csb: ['\\*\\)', '\\*\\/', '\\/\\/', '\\(\\*', '\\/\\*'],
+      csa: ['\\(\\*', '\\/\\*', '\\/\\/'],
+      ss: [
+        '--',
+        '\\+\\+',
+        '&&',
+        '\\|\\|',
+        '==',
+        '->',
+        '<=',
+        '>=',
+        '!=',
+        '\\*',
+        '%',
+        '=',
+        '\\+',
+        '-',
+        '&',
+        '>',
+        '<',
+        '\\|'
+      ]
+    };
 
-        return text;
-    }
+    regEx = new RegExp(`(?<! )(${addSpace.csb.join('|')})`, 'ig');
+    text = text.replace(regEx, (match, sign) => ' ' + sign);
+
+    regEx = new RegExp(`(${addSpace.csb.join('|')})(?! )`, 'ig');
+    text = text.replace(regEx, (match, sign) => sign + ' ');
+
+    // operator
+    regEx = new RegExp(
+      `${addSpace.ss.map((val) => `\\s*${val}\\s*`).join('|')}`,
+      'ig'
+    );
+    text = text.replace(regEx, (match, sign) =>
+      sign !== undefined ? ' ' + match.trim() + ' ' : match
+    );
+
+    //:
+    regEx = new RegExp(`\\s*\\:\\s*`, 'ig');
+    text = text.replace(regEx, ': ');
+
+    //.
+    regEx = new RegExp(`\\s*\\.\\s*`, 'ig');
+    text = text.replace(regEx, '.');
+
+    //,
+    regEx = new RegExp(`\\s*,`, 'ig');
+    text = text.replace(regEx, ',');
+
+    //)  extends
+    regEx = new RegExp(`\\)\\s*extends\\s*`, 'ig');
+    text = text.replace(regEx, ') extends ');
+
+    // keyword
+    regEx = new RegExp(
+      `${this.keywords.map((val) => `${val}\\s{1,}`).join('|')}`,
+      'ig'
+    );
+    text = text.replace(regEx, (match, sign) =>
+      sign !== undefined ? match.trim() + ' ' : match
+    );
+
+    return text;
+  }
 }

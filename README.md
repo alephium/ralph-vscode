@@ -1,9 +1,11 @@
 # Ralph Language for VS Code
 
 ## Overview
+
 Ralph is the language used in alephium to create smart contracts, ralph-vscode is vscode extension.
 
 ## Features
+
 - Highlighting ✅
 - Snippet ✅
 - Formatting ✅（simple format）
@@ -12,9 +14,13 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
 - Linting / Error Checking ⏳
 - Debugging ⏳
 - Deploy ⏳
+
 ## Extension Settings
-* seting themes
+
+- seting themes
+
 ## FAQ
+
 https://github.com/suyanlong/ralph-vscode/issues
 
 ## Contribution
@@ -23,7 +29,8 @@ See [CONTRIBUTING.md](https://github.com/suyanlong/ralph-vscode/blob/main/CONTRI
 
 ## License
 
-[GNU3]([LICENSE](https://github.com/suyanlong/ralph-vscode/blob/main/LICENSE))
+[GNU3](<[LICENSE](https://github.com/suyanlong/ralph-vscode/blob/main/LICENSE)>)
 
 ## References
+
 https://github.com/alephium

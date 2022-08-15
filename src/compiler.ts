@@ -1,3 +1,4 @@
+'use strict';
 import * as vscode from 'vscode';
 import { Downloader } from './downloader';
 import * as logger from './logger';
@@ -8,23 +9,25 @@ export class Complier {
   log: logger.Logger;
   constructor() {
     this.log = new logger.Logger('Complier');
-    this.cmd = vscode.workspace.getConfiguration().get('ralph.compiler.command');
+    this.cmd = vscode.workspace
+      .getConfiguration()
+      .get('ralph.compiler.command');
   }
 
-  complier(editor: vscode.TextEditor){
+  complier(editor: vscode.TextEditor) {
     let fullFileName = editor.document.fileName;
     if (!fullFileName.endsWith('.ral')) {
-        return;
+      return;
     }
     if (editor.document.isDirty) {
-        editor.document.save();
+      editor.document.save();
     }
 
-    if (!this.cmd && vscode.workspace.rootPath){
-        const d = new Downloader();
-        d.showQuickPick();
-        const jar = path.join(vscode.workspace.rootPath, d.config.target);
-        this.cmd = `java -jar ${jar} -f ${fullFileName}`
+    if (!this.cmd && vscode.workspace.rootPath) {
+      const d = new Downloader();
+      d.showQuickPick();
+      const jar = path.join(vscode.workspace.rootPath, d.config.target);
+      this.cmd = `java -jar ${jar} -f ${fullFileName}`;
     }
 
     this.log.info(`Complier.cmd: ${this.cmd}`);
@@ -32,14 +35,14 @@ export class Complier {
 
     vscode.window.setStatusBarMessage(`Execute command: ${this.cmd}`);
 
-    exec(this.cmd,(_error: any, stdout: string, stderr: string) =>{
-        if (stderr) {
-            this.log.info(stderr);
-            console.log(stderr);
-        } else if (stdout) {
-            this.log.info(stdout);
-            console.log(stderr);
-        }
+    exec(this.cmd, (_error: any, stdout: string, stderr: string) => {
+      if (stderr) {
+        this.log.info(stderr);
+        console.log(stderr);
+      } else if (stdout) {
+        this.log.info(stdout);
+        console.log(stderr);
+      }
     });
   }
 }
