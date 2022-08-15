@@ -2,3 +2,4 @@ node_modules
 *.vsix
 dist
 ralphc.jar
+.vscode

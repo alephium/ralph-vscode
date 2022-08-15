@@ -18,8 +18,8 @@ jobs:
           # Run tests on minimal version we support
           - '17.6.0'
         NPM_CLIENT:
-          # - "yarn"
-          - 'npm'
+          - 'yarn'
+          # - 'npm'
           # - "pnpm"
     env:
       INSTALL_PACKAGE: true
