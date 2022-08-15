@@ -7,6 +7,7 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
 - Highlighting ✅
 - Snippet ✅
 - Formatting ✅（simple format）
+- Build
 - IntelliSense ⏳
 - Linting / Error Checking ⏳
 - Debugging ⏳

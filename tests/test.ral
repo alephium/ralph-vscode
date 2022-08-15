@@ -1,6 +1,6 @@
 import "sequence.ral"
 
-TxContract Governance<undoneSequenceCodeHash: ByteVec, eventEmitterId: ByteVec>(
+TxContract Governance <undoneSequenceCodeHash: ByteVec, eventEmitterId: ByteVec > (
     chainId: U256,
     governanceChainId: U256,
     governanceContract: ByteVec,
@@ -159,7 +159,7 @@ TxContract Governance<undoneSequenceCodeHash: ByteVec, eventEmitterId: ByteVec>(
         // check signature quorum size
         assert!((guardianSize * 10 / 3) * 2 / 10 + 1 <= signatureSize)
 
-        let mut lastGuardianIndex = -1i
+        let mut lastGuardianIndex =  - 1i
         loop(0, 19, 1, lastGuardianIndex = verifySignature(lastGuardianIndex, signatures[?], keys[?], hash))
     }
 
