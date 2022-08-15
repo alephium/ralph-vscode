@@ -15,6 +15,7 @@ publish:
 
 clean:
 	rm -rf ./ralph-vscode-*.vsix
+	rm -rf ./dist
 
 
 fmt:
