@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
       const download = new Downloader();
       download.showQuickPick();
     }),
-    vscode.commands.registerCommand('ralph.compile', () => {
+    vscode.commands.registerCommand('ralph.compiler', () => {
       vscode.window.activeTextEditor &&
         new Complier().complier(vscode.window.activeTextEditor);
     })
