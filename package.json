@@ -58,18 +58,22 @@
       "properties": {
         "ralph.downloader.config.name": {
           "type": "string",
+          "description": "compile name",
           "default": "ralphc"
         },
         "ralph.downloader.config.url": {
           "type": "string",
+          "description": "download link",
           "default": "https://github.com/suyanlong/ralphc/releases/download/v1.5.0-rc4/ralphc.jar"
         },
         "ralph.downloader.config.target": {
           "type": "string",
+          "description": "local place",
           "default": "ralphc.jar"
         },
         "ralph.compiler.command": {
-          "type": "string"
+          "type": "string",
+          "description": "compile command"
         }
       }
     },
