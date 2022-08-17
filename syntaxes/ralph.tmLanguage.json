@@ -168,32 +168,8 @@
     "global-functions": {
       "patterns": [
         {
-          "match": "\\b(require|assert|revert)\\b",
-          "name": "keyword.control.exceptions.ralph"
-        },
-        {
-          "match": "\\b(selfdestruct|suicide)\\b",
-          "name": "keyword.control.contract.ralph"
-        },
-        {
-          "match": "\\b(addmod|mulmod|keccak256|sha256|sha3|ripemd160|ecrecover)\\b",
+          "match": "\\w*?\\!",
           "name": "support.function.math.ralph"
-        },
-        {
-          "match": "\\b(blockhash|gasleft)\\b",
-          "name": "variable.language.transaction.ralph"
-        },
-        {
-          "match": "\\b(type)\\b",
-          "name": "variable.language.type.ralph"
-        },
-        {
-          "match": "\\b\\.(send|call|delegatecall|staticcall|callcode|creationCode|runtimeCode)\\b",
-          "name": "support.function.transaction.security.ralph"
-        },
-        {
-          "match": "\\b\\.(transfer)\\b",
-          "name": "support.function.transaction.ralph"
         }
       ]
     }
