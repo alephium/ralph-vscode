@@ -31,6 +31,7 @@ export class Downloader {
   async showQuickPick() {
     this.loadConfig();
     this.download();
+    logger.Logger.show();
   }
 
   async download() {
@@ -41,7 +42,11 @@ export class Downloader {
         this.log.info('download :' + this.config.url);
         const targetStream = createWriteStream(targetPath);
         const response = await fetch(this.config.url);
-        response.body?.pipe(targetStream);
+        response.body
+          ?.pipe(targetStream)
+          .on('finish', () =>
+            this.log.info('download complete:' + this.config.url)
+          );
       }
     }
   }

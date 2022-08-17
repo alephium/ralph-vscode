@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import { Downloader } from './downloader';
 import * as logger from './logger';
 import * as path from 'path';
+import { Logger } from './logger';
 
 export class Complier {
   cmd: string | undefined;
@@ -44,5 +45,6 @@ export class Complier {
         console.log(stderr);
       }
     });
+    Logger.show();
   }
 }

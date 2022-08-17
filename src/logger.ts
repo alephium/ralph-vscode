@@ -57,4 +57,8 @@ export class Logger {
   private static getTimestamp(): string {
     return new Date().toTimeString().split(' ')[0];
   }
+
+  public static show(): void {
+    this.outputChannel.show();
+  }
 }
