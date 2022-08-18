@@ -1,7 +1,5 @@
 'use strict';
 
-import { CommonOptions } from 'child_process';
-
 interface Command {
   command: string;
   title: string;

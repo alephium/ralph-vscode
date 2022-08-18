@@ -4,9 +4,9 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 // import commands from "./commands";
-import { SFormatterProvider } from './formatter';
+import { FormatterProvider } from './formatter';
 import { Downloader } from './downloader';
-import { Complier } from './compiler';
+import { Compiler } from './compiler';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -25,12 +25,12 @@ export function activate(context: vscode.ExtensionContext) {
     }),
     vscode.commands.registerCommand('ralph.compiler', () => {
       vscode.window.activeTextEditor &&
-        new Complier().complier(vscode.window.activeTextEditor);
+        new Compiler().compiler(vscode.window.activeTextEditor);
     })
   );
   vscode.languages.registerDocumentFormattingEditProvider(
     { scheme: 'file', language: 'ralph' },
-    new SFormatterProvider()
+    new FormatterProvider()
   );
 }
 

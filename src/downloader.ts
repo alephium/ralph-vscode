@@ -30,7 +30,7 @@ export class Downloader {
 
   async showQuickPick() {
     this.loadConfig();
-    this.download();
+    await this.download();
     logger.Logger.show();
   }
 
@@ -39,14 +39,22 @@ export class Downloader {
     if (dir) {
       const targetPath = path.join(dir, this.config.target);
       if (!existsSync(targetPath)) {
-        this.log.info('download :' + this.config.url);
+        this.log.info(`download : ${this.config.url}`);
         const targetStream = createWriteStream(targetPath);
         const response = await fetch(this.config.url);
         response.body
           ?.pipe(targetStream)
-          .on('finish', () =>
-            this.log.info('download complete:' + this.config.url)
-          );
+          .on('error', (err) => {
+            this.log.info(err.message);
+            vscode.window.showErrorMessage(err.message);
+          })
+          .on('finish', () => {
+            const msg = `download complete: ${this.config.url}`;
+            this.log.info(msg);
+            vscode.window.showInformationMessage(msg);
+          });
+      } else {
+        this.log.info(targetPath);
       }
     }
   }

@@ -3,7 +3,7 @@
 import * as vscode from 'vscode';
 import * as logger from './logger';
 
-export class SFormatterProvider
+export class FormatterProvider
   implements vscode.DocumentFormattingEditProvider
 {
   private functions: Array<string> = [];

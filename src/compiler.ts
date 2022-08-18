@@ -5,17 +5,17 @@ import * as logger from './logger';
 import * as path from 'path';
 import { Logger } from './logger';
 
-export class Complier {
+export class Compiler {
   cmd: string | undefined;
   log: logger.Logger;
   constructor() {
-    this.log = new logger.Logger('Complier');
+    this.log = new logger.Logger('Compiler');
     this.cmd = vscode.workspace
       .getConfiguration()
       .get('ralph.compiler.command');
   }
 
-  complier(editor: vscode.TextEditor) {
+  async compiler(editor: vscode.TextEditor) {
     let fullFileName = editor.document.fileName;
     if (!fullFileName.endsWith('.ral')) {
       return;
@@ -26,12 +26,12 @@ export class Complier {
 
     if (!this.cmd && vscode.workspace.rootPath) {
       const d = new Downloader();
-      d.showQuickPick();
+      await d.showQuickPick();
       const jar = path.join(vscode.workspace.rootPath, d.config.target);
       this.cmd = `java -jar ${jar} -f ${fullFileName}`;
     }
 
-    this.log.info(`Complier.cmd: ${this.cmd}`);
+    this.log.info(`Compiler.cmd: ${this.cmd}`);
     let exec = require('child_process').exec;
 
     vscode.window.setStatusBarMessage(`Execute command: ${this.cmd}`);
@@ -40,9 +40,10 @@ export class Complier {
       if (stderr) {
         this.log.info(stderr);
         console.log(stderr);
+        vscode.window.showErrorMessage(stderr);
       } else if (stdout) {
         this.log.info(stdout);
-        console.log(stderr);
+        console.log(stdout);
       }
     });
     Logger.show();
