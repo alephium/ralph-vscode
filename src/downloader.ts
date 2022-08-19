@@ -2,16 +2,15 @@
 
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { createWriteStream } from 'node:fs';
-import fetch from 'node-fetch';
 import * as logger from './logger';
 import { existsSync } from 'fs';
+import { download } from './util';
 
-type Config = {
-  name: string;
-  url: string;
-  target: string;
-};
+class Config {
+  name!: string;
+  url!: string;
+  target!: string;
+}
 
 export class Downloader {
   config!: Config;
@@ -22,10 +21,9 @@ export class Downloader {
   }
 
   private loadConfig() {
-    const config = vscode.workspace
+    this.config = vscode.workspace
       .getConfiguration()
-      .get('ralph.downloader.config') as Config;
-    this.config = config;
+      .get('ralph.downloader.Config') as Config;
   }
 
   async showQuickPick() {
@@ -39,19 +37,26 @@ export class Downloader {
     if (dir) {
       const targetPath = path.join(dir, this.config.target);
       if (!existsSync(targetPath)) {
-        this.log.info(`download : ${this.config.url}`);
-        const targetStream = createWriteStream(targetPath);
-        const response = await fetch(this.config.url);
-        response.body
-          ?.pipe(targetStream)
-          .on('error', (err) => {
-            this.log.info(err.message);
-            vscode.window.showErrorMessage(err.message);
-          })
-          .on('finish', () => {
+        this.log.info(`begin download : ${this.config.url}`);
+        await download(this.config.url, targetPath, (state) => {
+          this.log.info(
+            `downloading ${this.config.target}, total: ${Number(
+              state.size.total / 1024
+            ).toFixed(2)} KB, speed: ${Number(state.speed / 1024).toFixed(
+              2
+            )} KB/sec, ${Number(state.percent * 100).toFixed(2)}/%, ${
+              this.config.url
+            }`
+          );
+        })
+          .then(() => {
             const msg = `download complete: ${this.config.url}`;
             this.log.info(msg);
             vscode.window.showInformationMessage(msg);
+          })
+          .catch((err) => {
+            this.log.info(err.message);
+            vscode.window.showErrorMessage(err.message);
           });
       } else {
         this.log.info(targetPath);
