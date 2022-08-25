@@ -2,7 +2,7 @@
 
 build: dep
 	yarn run compile
-	./node_modules/vsce/vsce package
+	yarn vsce package
 
 compile:
 	yarn run compile
