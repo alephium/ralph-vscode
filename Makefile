@@ -20,3 +20,6 @@ clean:
 
 fmt:
 	yarn run fmt
+
+lint:
+	yarn run lint

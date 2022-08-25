@@ -73,12 +73,7 @@ changelog:
     },
     {
       "name": "Class name",
-      "scope": [
-        "entity.name.class",
-        "entity.name.type",
-        "entity.name.namespace",
-        "entity.name.scope-resolution"
-      ],
+      "scope": ["entity.name.class", "entity.name.type", "entity.name.namespace", "entity.name.scope-resolution"],
       "settings": {
         "foreground": "#268BD2"
       }
@@ -99,10 +94,7 @@ changelog:
     },
     {
       "name": "Embedded code markers",
-      "scope": [
-        "punctuation.section.embedded.begin",
-        "punctuation.section.embedded.end"
-      ],
+      "scope": ["punctuation.section.embedded.begin", "punctuation.section.embedded.end"],
       "settings": {
         "foreground": "#D30102"
       }
@@ -147,10 +139,7 @@ changelog:
     },
     {
       "name": "Tag start/end",
-      "scope": [
-        "punctuation.definition.tag.begin",
-        "punctuation.definition.tag.end"
-      ],
+      "scope": ["punctuation.definition.tag.begin", "punctuation.definition.tag.end"],
       "settings": {
         "foreground": "#93A1A1"
       }

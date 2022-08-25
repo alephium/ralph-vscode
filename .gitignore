@@ -2,5 +2,5 @@ node_modules
 *.vsix
 dist
 ralphc.jar
-.vscode
 .idea
+yarn-error.log
