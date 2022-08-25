@@ -4,3 +4,4 @@ dist
 ralphc.jar
 .idea
 yarn-error.log
+.DS_Store

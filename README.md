@@ -19,9 +19,15 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
 
 - seting themes
 
+## Guide
+
+### compile
+
+![avatar](./img/img1.jpg)
+
 ## FAQ
 
-https://github.com/suyanlong/ralph-vscode/issues
+<https://github.com/suyanlong/ralph-vscode/issues>
 
 ## Contribution
 
@@ -33,4 +39,4 @@ See [CONTRIBUTING.md](https://github.com/suyanlong/ralph-vscode/blob/main/CONTRI
 
 ## References
 
-https://github.com/alephium
+<https://github.com/alephium>
