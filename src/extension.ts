@@ -15,7 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   commands.forEach((value) => {
-    console.log('Congratulations, your extension is now active!')
     context.subscriptions.push(vscode.commands.registerCommand(value.command, value.callback))
   })
 

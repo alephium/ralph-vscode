@@ -15,6 +15,7 @@ export class Compiler {
   }
 
   async compiler(editor: vscode.TextEditor) {
+    Logger.show()
     const fullFileName = editor.document.fileName
     if (!fullFileName.endsWith('.ral')) {
       return
@@ -45,6 +46,5 @@ export class Compiler {
         console.log(stdout)
       }
     })
-    Logger.show()
   }
 }

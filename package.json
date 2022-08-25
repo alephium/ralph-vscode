@@ -2,7 +2,7 @@
   "name": "ralph-vscode",
   "displayName": "ralph vscode",
   "description": "ralph vscode",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v17.6.0"
@@ -40,6 +40,7 @@
   "main": "./dist/extension.js",
   "activationEvents": [
     "onLanguage:ralph",
+    "onCommand:ralph.compiler",
     "onCommand:ralph.downloader"
   ],
   "contributes": {

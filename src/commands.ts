@@ -11,15 +11,15 @@ interface Command {
 const commands: Command[] = [
   {
     command: 'ralph.downloader',
-    title: 'ralph downloader',
+    title: 'ralph: downloader',
     callback: () => {
       const download = new Downloader()
       download.showQuickPick()
     },
   },
   {
-    command: 'ralph.downloader',
-    title: 'ralph downloader',
+    command: 'ralph.compiler',
+    title: 'ralph: compiler',
     callback: () => {
       if (vscode.window.activeTextEditor) {
         new Compiler().compiler(vscode.window.activeTextEditor)
