@@ -1,3 +1,5 @@
+/* eslint-disable prefer-regex-literals */
+/* eslint-disable no-param-reassign */
 import * as vscode from 'vscode'
 
 export class FormatterProvider implements vscode.DocumentFormattingEditProvider {

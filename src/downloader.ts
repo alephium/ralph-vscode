@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 import * as vscode from 'vscode'
 import * as path from 'path'
 import { existsSync } from 'fs'

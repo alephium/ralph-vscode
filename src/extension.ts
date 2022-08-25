@@ -14,7 +14,10 @@ export function activate(context: vscode.ExtensionContext) {
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
-  commands.forEach((value) => context.subscriptions.push(vscode.commands.registerCommand(value.command, value.callback)))
+  commands.forEach((value) => {
+    console.log('Congratulations, your extension is now active!')
+    context.subscriptions.push(vscode.commands.registerCommand(value.command, value.callback))
+  })
 
   vscode.languages.registerDocumentFormattingEditProvider({ scheme: 'file', language: 'ralph' }, new FormatterProvider())
 }
