@@ -1,17 +1,35 @@
+/* eslint-disable max-classes-per-file */
 import * as vscode from 'vscode'
 import * as path from 'path'
 import { Downloader } from './downloader'
 import * as logger from './logger'
 import { Logger } from './logger'
 
+class Option {
+  ignoreUnusedConstantsWarnings!: boolean
+
+  ignoreUnusedVariablesWarnings!: boolean
+
+  ignoreUnusedFieldsWarnings!: boolean
+
+  ignoreReadonlyCheckWarnings!: boolean
+
+  ignoreUnusedPrivateFunctionsWarnings!: boolean
+
+  ignoreExternalCallCheckWarnings!: boolean
+}
+
 export class Compiler {
   cmd: string | undefined
 
   log: logger.Logger
 
+  option: Option | undefined
+
   constructor() {
     this.log = new logger.Logger('Compiler')
     this.cmd = vscode.workspace.getConfiguration().get('ralph.compiler.command')
+    this.option = vscode.workspace.getConfiguration().get('ralph.compiler.option') as Option
   }
 
   async compiler(editor: vscode.TextEditor) {
@@ -24,11 +42,16 @@ export class Compiler {
       editor.document.save()
     }
 
+    if (this.cmd) {
+      this.log.info(this.cmd)
+    }
+
     if (!this.cmd && vscode.workspace.rootPath) {
       const d = new Downloader()
       await d.showQuickPick()
       const jar = path.join(vscode.workspace.rootPath, d.config.target)
-      this.cmd = `java -jar ${jar} -f ${fullFileName}`
+      const warn = this.warning()
+      this.cmd = `java -jar ${jar} ${warn} -f ${fullFileName}`
     }
 
     this.log.info(`Compiler.cmd: ${this.cmd}`)
@@ -46,5 +69,32 @@ export class Compiler {
         console.log(stdout)
       }
     })
+  }
+
+  warning(): string {
+    let warning = ''
+    if (this.option?.ignoreUnusedConstantsWarnings) {
+      warning += '--ic '
+    }
+    if (this.option?.ignoreUnusedVariablesWarnings) {
+      warning += '--iv '
+    }
+
+    if (this.option?.ignoreUnusedFieldsWarnings) {
+      warning += '--if '
+    }
+
+    if (this.option?.ignoreReadonlyCheckWarnings) {
+      warning += '--ir '
+    }
+
+    if (this.option?.ignoreUnusedPrivateFunctionsWarnings) {
+      warning += '--ip '
+    }
+
+    if (this.option?.ignoreExternalCallCheckWarnings) {
+      warning += '--ie '
+    }
+    return warning
   }
 }

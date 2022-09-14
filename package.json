@@ -2,7 +2,7 @@
   "name": "ralph-vscode",
   "displayName": "ralph vscode",
   "description": "ralph vscode",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v17.6.0"
@@ -65,7 +65,7 @@
         "ralph.downloader.config.url": {
           "type": "string",
           "description": "download link",
-          "default": "https://github.com/suyanlong/ralphc/releases/download/v1.5.0-rc4/ralphc.jar"
+          "default": "https://github.com/suyanlong/ralphc/releases/download/v1.5.0-rc7/ralphc.jar"
         },
         "ralph.downloader.config.target": {
           "type": "string",
@@ -75,6 +75,36 @@
         "ralph.compiler.command": {
           "type": "string",
           "description": "compile command"
+        },
+        "ralph.compiler.option.ignoreUnusedConstantsWarnings": {
+          "type": "boolean",
+          "default": false,
+          "description": "ignore unused constants warning"
+        },
+        "ralph.compiler.option.ignoreUnusedVariablesWarnings": {
+          "type": "boolean",
+          "default": false,
+          "description": "ignore unused variables warning"
+        },
+        "ralph.compiler.option.ignoreUnusedFieldsWarnings": {
+          "type": "boolean",
+          "default": false,
+          "description": "ignore unused fields warning"
+        },
+        "ralph.compiler.option.ignoreReadonlyCheckWarnings": {
+          "type": "boolean",
+          "default": false,
+          "description": "ignore readonly check warning"
+        },
+        "ralph.compiler.option.ignoreUnusedPrivateFunctionsWarnings": {
+          "type": "boolean",
+          "default": false,
+          "description": "ignore unused private functions warning"
+        },
+        "ralph.compiler.option.ignoreExternalCallCheckWarnings": {
+          "type": "boolean",
+          "default": false,
+          "description": "ignore external call check warning"
         }
       }
     },
