@@ -6,17 +6,17 @@ import * as logger from './logger'
 import { Logger } from './logger'
 
 class Option {
-  ignoreUnusedConstantsWarnings!: boolean
+  ignoreUnusedConstantsWarnings = false
 
-  ignoreUnusedVariablesWarnings!: boolean
+  ignoreUnusedVariablesWarnings = false
 
-  ignoreUnusedFieldsWarnings!: boolean
+  ignoreUnusedFieldsWarnings = false
 
-  ignoreReadonlyCheckWarnings!: boolean
+  ignoreReadonlyCheckWarnings = false
 
-  ignoreUnusedPrivateFunctionsWarnings!: boolean
+  ignoreUnusedPrivateFunctionsWarnings = false
 
-  ignoreExternalCallCheckWarnings!: boolean
+  ignoreExternalCallCheckWarnings = false
 }
 
 export class Compiler {
@@ -42,10 +42,6 @@ export class Compiler {
       editor.document.save()
     }
 
-    if (this.cmd) {
-      this.log.info(this.cmd)
-    }
-
     if (!this.cmd && vscode.workspace.rootPath) {
       const d = new Downloader()
       await d.showQuickPick()
@@ -62,11 +58,9 @@ export class Compiler {
     exec(this.cmd, (_error: any, stdout: string, stderr: string) => {
       if (stderr) {
         this.log.info(stderr)
-        console.log(stderr)
         vscode.window.showErrorMessage(stderr)
       } else if (stdout) {
         this.log.info(stdout)
-        console.log(stdout)
       }
     })
   }
