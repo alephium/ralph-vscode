@@ -136,6 +136,13 @@
       }
     },
     {
+      "name": "builtin",
+      "scope": "support.function.builtIn.ralph",
+      "settings": {
+        "fontStyle": "bold italic"
+      }
+    },
+    {
       "name": "builtin math",
       "scope": "support.function.math.ralph",
       "settings": {
@@ -159,10 +166,26 @@
       }
     },
     {
-      "name": "logic",
-      "scope": "keyword.operator.logic.ralph",
+      "name": "test",
+      "scope": "keyword.operator.test.ralph",
       "settings": {
-        "foreground": "#ffbc65e5",
+        "foreground": "#8aa9ffe5",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "concat",
+      "scope": "keyword.operator.concat.ralph",
+      "settings": {
+        "foreground": "#8aa9ffe5",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "logical",
+      "scope": "keyword.operator.logical.ralph",
+      "settings": {
+        "foreground": "#8aa9ffe5",
         "fontStyle": "bold"
       }
     },

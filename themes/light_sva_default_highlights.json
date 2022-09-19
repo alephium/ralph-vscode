@@ -136,6 +136,13 @@
       }
     },
     {
+      "name": "builtin",
+      "scope": "support.function.builtIn.ralph",
+      "settings": {
+        "fontStyle": "bold italic"
+      }
+    },
+    {
       "name": "builtin math",
       "scope": "support.function.math.ralph",
       "settings": {
@@ -154,15 +161,31 @@
       "name": "assign",
       "scope": "keyword.operator.assignment.ralph",
       "settings": {
-        "foreground": "#6bac04",
+        "foreground": "#2654d2",
         "fontStyle": "bold"
       }
     },
     {
-      "name": "logic",
-      "scope": "keyword.operator.logic.ralph",
+      "name": "test",
+      "scope": "keyword.operator.test.ralph",
       "settings": {
-        "foreground": "#e09c43",
+        "foreground": "#2654d2",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "concat",
+      "scope": "keyword.operator.concat.ralph",
+      "settings": {
+        "foreground": "#2654d2",
+        "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "logical",
+      "scope": "keyword.operator.logical.ralph",
+      "settings": {
+        "foreground": "#2654d2",
         "fontStyle": "bold"
       }
     },

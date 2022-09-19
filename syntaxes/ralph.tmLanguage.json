@@ -13,40 +13,24 @@
       "comment": "Note that the order here is very important!",
       "patterns": [
         {
-          "match": "(\\*|&)(?=\\w)",
-          "name": "keyword.operator.address.ralph"
-        },
-        {
-          "match": "\\-\\-",
-          "name": "keyword.operator.decrement.ralph"
+          "match": "=",
+          "name": "keyword.operator.assignment.ralph"
         },
         {
           "match": "\\+\\+",
-          "name": "keyword.operator.increment.ralph"
+          "name": "keyword.operator.concat.ralph"
         },
         {
-          "match": "(==|!=|<=|>=|<(?!<)|>(?!>))",
-          "name": "keyword.operator.comparison.ralph"
+          "match": "(\\+|\\-|\\*|/|%|⊕|`+`|⊖|`-`|⊗|`*`|<<|>>|&|\\^|\\|)",
+          "name": "keyword.operator.arithmetic.ralph"
+        },
+        {
+          "match": "(==|!=|<|<=|>|>=)",
+          "name": "keyword.operator.test.ralph"
         },
         {
           "match": "(&&|\\|\\||!)",
           "name": "keyword.operator.logical.ralph"
-        },
-        {
-          "match": "(=|\\+=|\\-=|\\|=|\\^=|\\*=|/=|:=|%=|<<=|>>=|&\\^=|&=)",
-          "name": "keyword.operator.assignment.ralph"
-        },
-        {
-          "match": "(\\+|\\-|\\*|/|%)",
-          "name": "keyword.operator.arithmetic.ralph"
-        },
-        {
-          "match": "(&(?!\\^)|\\||\\^|&\\^|<<|>>)",
-          "name": "keyword.operator.arithmetic.bitwise.ralph"
-        },
-        {
-          "match": "\\.\\.\\.",
-          "name": "keyword.operator.ellipsis.ralph"
         }
       ]
     },
@@ -77,7 +61,7 @@
           "name": "keyword.extends.ralph"
         },
         {
-          "match": "\\bInterface\\b",
+          "match": "\\b(Interface)\\b",
           "name": "keyword.Interface.ralph"
         },
         {
@@ -110,7 +94,7 @@
       ]
     },
     "constant": {
-      "match": "\\b(?:true|false|null|NaN)\\b",
+      "match": "\\b(?:true|false)\\b",
       "name": "constant.language.ralph"
     },
     "number": {
@@ -148,18 +132,6 @@
           "name": "variable.language.this.ralph"
         },
         {
-          "match": "\\b(super)\\b",
-          "name": "variable.language.super.ralph"
-        },
-        {
-          "match": "\\b(abi)\\b",
-          "name": "variable.language.builtin.abi.ralph"
-        },
-        {
-          "match": "\\b(tx\\.origin|tx\\.gasprice|msg\\.data|msg\\.sig|msg\\.value)\\b",
-          "name": "variable.language.transaction.security.ralph"
-        },
-        {
           "match": "\\b(msg\\.sender|msg|block|tx|now)\\b",
           "name": "variable.language.transaction.ralph"
         }
@@ -169,7 +141,7 @@
       "patterns": [
         {
           "match": "\\w*?\\!",
-          "name": "support.function.math.ralph"
+          "name": "support.function.builtIn.ralph"
         }
       ]
     }
