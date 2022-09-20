@@ -247,7 +247,7 @@
 		"prefix": "extends",
 		"body": [
 			"// create contract:",
-			"TxContract $1 extends $2{",
+			"Contract $1 extends $2{",
 				"event $3($4)",
 				"pub fn $5() -> ($6)",
 				"pub fn $7() -> ($8)",
