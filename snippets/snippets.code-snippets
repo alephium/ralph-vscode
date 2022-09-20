@@ -198,19 +198,19 @@
 		"prefix": "contract",
 		"body": [
 			"// create contract:",
-			"TxContract $1 {",
+			"Contract $1 {",
 				"event $2($3)",
 				"pub fn $4() -> ($5)",
 				"pub fn $6() -> ($7)",
 			"}"
 		],
-		"description": "create TxContract"
+		"description": "create Contract"
 	},
 	"create contract": {
-		"prefix": "TxContract",
+		"prefix": "Contract",
 		"body": [
 			"// create contract:",
-			"TxContract $1 {",
+			"Contract $1 {",
 				"event $2($3)",
 				"pub fn $4() -> ($5)",
 				"pub fn $6() -> ($7)",
