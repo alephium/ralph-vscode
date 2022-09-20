@@ -188,9 +188,12 @@
     "antlr4ts": "^0.5.0-alpha.4",
     "execa": "^6.1.0",
     "node-fetch": "^3.2.10",
+    "ralph-parser-ts": "^0.0.4",
     "request": "^2.88.2",
     "request-progress": "^3.0.0",
-    "request-promise-native": "^1.0.9"
+    "request-promise-native": "^1.0.9",
+    "vscode-languageserver": "^8.0.2",
+    "vscode-languageserver-textdocument": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^18.6.1",
