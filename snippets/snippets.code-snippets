@@ -11,7 +11,7 @@
         "prefix": "block",
         "body": [
             "{",
-				"$1",	
+				"\t$1",	
 			"}"
         ],
         "description": "region"
@@ -27,7 +27,7 @@
 		"prefix": "while",
 		"body": [
 		  "while ($1) {"
-		    "$2",
+			  "\t$2",
 		  "}"
 		],
 		"description": "while"
@@ -36,7 +36,7 @@
 		"prefix": "wh",
 		"body": [
 		  "while ($1) {"
-		    "$2",
+		 	 "\t$2",
 		  "}"
 		],
 		"description": "while"
@@ -45,7 +45,7 @@
 		"prefix": "loop",
 		"body": [
 		  "while ($1) {"
-		    "$2",
+		 	 "\t$2",
 		  "}"
 		],
 		"description": "while"
@@ -54,7 +54,7 @@
 		"prefix": "for",
 		"body": [
 		  "while ($1) {"
-		    "$2",
+		 	 "\t$2",
 		  "}"
 		],
 		"description": "while"
@@ -63,9 +63,9 @@
 		"prefix": "ife",
 		"body": [
 		  "if ($1) {"
-		    "$2",
+		 	 "\t$2",
 		  "}else {",
-		    "$3",
+		  	"\t$3",
 		  "}"
 		],
 		"description": "if else"
@@ -74,9 +74,9 @@
 		"prefix": "ifeif",
 		"body": [
 		  "if ($1) {"
-		    "$2",
+			  "\t$2",
 		  "}else if ($3) {",
-		    "$4",
+			  "\t$4",
 		  "}"
 		],
 		"description": "if else if"
@@ -85,7 +85,7 @@
 		"prefix": "if",
 		"body": [
 		  "if ($1) {"
-		    "$2",
+			"\t$2",
 		  "}"
 		],
 		"description": "if {}"
@@ -146,7 +146,7 @@
 		"prefix": "main",
 		"body": [
 			"pub payable fn main() -> () {",
-				"$1",
+				"\t$1",
 			"}"
 		],
 		"description": "To create an main function"
@@ -155,8 +155,8 @@
 		"prefix": "fn",
 		"body": [
 			"pub payable fn $1(arg: $2) -> ($3) {",
-				"$4",
-				"return $5",  
+				"\t$4",
+				"\treturn $5",  
 			"}"
 		],
 		"description": "To create an function"
@@ -165,8 +165,8 @@
 		"prefix": "fnr",
 		"body": [
 			"pub fn $1(arg: $2) -> ($3) {",
-				"$4",
-				"return $5",  
+				"\t$4",
+				"\treturn $5",  
 			"}"
 		],
 		"description": "To create an function"
@@ -175,8 +175,8 @@
 		"prefix": "pubfn",
 		"body": [
 			"pub fn $1(arg: $2) -> ($3) {",
-				"$4",
-				"return $5",  
+				"\t$4",
+				"\treturn $5",  
 			"}"
 		],
 		"description": "To create an function"
@@ -188,8 +188,8 @@
 		"body": [
 			"// To create an interface:",
 			"Interface $1 {",
-				"pub fn $2() -> ($3)",
-				"pub fn $4() -> ($5)",
+				"\tpub fn $2() -> ($3)",
+				"\tpub fn $4() -> ($5)",
 			"}"
 		],
 		"description": "To create an interface"
@@ -199,9 +199,9 @@
 		"body": [
 			"// create contract:",
 			"Contract $1 {",
-				"event $2($3)",
-				"pub fn $4() -> ($5)",
-				"pub fn $6() -> ($7)",
+				"\tevent $2($3)",
+				"\tpub fn $4() -> ($5)",
+				"\tpub fn $6() -> ($7)",
 			"}"
 		],
 		"description": "create Contract"
@@ -211,9 +211,9 @@
 		"body": [
 			"// create contract:",
 			"Contract $1 {",
-				"event $2($3)",
-				"pub fn $4() -> ($5)",
-				"pub fn $6() -> ($7)",
+			"\tevent $2($3)",
+				"\tpub fn $4() -> ($5)",
+				"\tpub fn $6() -> ($7)",
 			"}"
 		],
 		"description": "create contract"
@@ -223,9 +223,9 @@
 		"body": [
 			"// invoke contract:",
 			"TxScript $1 {",
-			   "pub payable fn main() -> () {",
-			   		"$2",
-			   "}",
+				"\tpub payable fn main() -> () {",
+					"\t\t$2",
+				"\t}",
 			"}"
 		],
 		"description": "create TxScript"
@@ -235,9 +235,9 @@
 		"body": [
 			"// invoke contract:",
 			"TxScript $1 {",
-			   "pub payable fn main() -> () {",
-			   		"$2",
-			   "}",
+			   "\tpub payable fn main() -> () {",
+			   		"\t\t$2",
+			   "\t}",
 			"}"
 		],
 		"description": "create TxScript"
@@ -248,9 +248,9 @@
 		"body": [
 			"// create contract:",
 			"Contract $1 extends $2{",
-				"event $3($4)",
-				"pub fn $5() -> ($6)",
-				"pub fn $7() -> ($8)",
+				"\tevent $3($4)",
+				"\tpub fn $5() -> ($6)",
+				"\tpub fn $7() -> ($8)",
 			"}"
 		],
 		"description": "create contract"
