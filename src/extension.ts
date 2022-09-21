@@ -3,7 +3,7 @@
 import * as vscode from 'vscode'
 import commands from './commands'
 import { FormatterProvider } from './formatter'
-import { BuiltInHoverProvider } from './providers/builtInHoverProvider'
+import { Providers as hoverProvider } from './providers/hover/providers'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -19,9 +19,9 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand(value.command, value.callback))
   })
 
-  context.subscriptions.push(vscode.languages.registerHoverProvider({ scheme: 'file', language: 'ralph' }, new BuiltInHoverProvider()))
-
-  vscode.languages.registerDocumentFormattingEditProvider({ scheme: 'file', language: 'ralph' }, new FormatterProvider())
+  const selector = { scheme: 'file', language: 'ralph' }
+  hoverProvider().forEach((value) => context.subscriptions.push(vscode.languages.registerHoverProvider(selector, value)))
+  vscode.languages.registerDocumentFormattingEditProvider(selector, new FormatterProvider())
 }
 
 // this method is called when your extension is deactivated
