@@ -3,6 +3,7 @@
 import * as vscode from 'vscode'
 import commands from './commands'
 import { FormatterProvider } from './formatter'
+import { BuiltInHoverProvider } from './providers/builtInHoverProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -17,6 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
   commands.forEach((value) => {
     context.subscriptions.push(vscode.commands.registerCommand(value.command, value.callback))
   })
+
+  context.subscriptions.push(vscode.languages.registerHoverProvider({ scheme: 'file', language: 'ralph' }, new BuiltInHoverProvider()))
 
   vscode.languages.registerDocumentFormattingEditProvider({ scheme: 'file', language: 'ralph' }, new FormatterProvider())
 }

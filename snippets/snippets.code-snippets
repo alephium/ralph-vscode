@@ -955,4 +955,4 @@
 // migrateWithState!(codeCompiled: ByteVec, state: ByteVec) // Deprecated
 // migrateWithFields!(codeCompiled: ByteVec, field: ByteVec)
 // subContractId!(id: ByteVec) -> (ByteVec)
-// subContractIdOf(contract: Contract, id: ByteVec) -> (ByteVec)
+// subContractIdOf!(contract: Contract, id: ByteVec) -> (ByteVec)
