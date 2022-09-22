@@ -73,22 +73,22 @@ export class TokenHoverProvider implements vscode.HoverProvider {
       },
       {
         name: 'TxContract',
-        detail: 'TxContract ContractName([mut] fieldN: <type>) [extends <InterfaceName>] { ... }',
+        detail: 'Contract ContractName([mut] fieldN: <type>) [extends <InterfaceName>] { ... }',
         kind: 'keyword',
       },
       {
         name: 'Contract',
-        detail: 'TxContract ContractName([mut] fieldN: <type>) [extends <InterfaceName>] { ... }',
+        detail: 'Contract ContractName([mut] fieldN: <type>) [extends <InterfaceName>] { ... }',
         kind: 'keyword',
       },
       {
         name: 'extends',
-        detail: 'TxContract ContractName([mut] fieldN: <type>) [extends <ContractName>] { ... }',
+        detail: 'Contract ContractName([mut] fieldN: <type>) [extends <ContractName>] { ... }',
         kind: 'keyword',
       },
       {
         name: 'implements',
-        detail: 'TxContract ContractName([mut] fieldN: <type>) [implements <InterfaceName>] { ... }',
+        detail: 'Contract ContractName([mut] fieldN: <type>) [implements <InterfaceName>] { ... }',
         kind: 'keyword',
       },
       {
