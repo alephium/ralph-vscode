@@ -5,3 +5,7 @@ ralphc.jar
 .idea
 yarn-error.log
 .DS_Store
+
+*.interp
+*.java
+*.tokens
