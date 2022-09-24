@@ -14,7 +14,10 @@ declaration: typeDeclStmt;
 
 identifierList: IDENTIFIER (COMMA IDENTIFIER)*;
 
-varDecl: (CONST | (LET MUT?)) ((IDENTIFIER ASSIGN expression) | (L_PAREN identifierList R_PAREN ASSIGN expression));
+varDecl: (CONST | (LET MUT?)) ((IDENTIFIER ASSIGN expression)
+         | (L_PAREN identifierList R_PAREN ASSIGN expression)
+         | IDENTIFIER ASSIGN IDENTIFIER L_PAREN expressionList? R_PAREN )
+         ;
 
 //expression
 expression:
