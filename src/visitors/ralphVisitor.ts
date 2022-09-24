@@ -12,14 +12,14 @@ import {
 } from '../parser/RalphParser'
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
-import { Contract } from '../meta/contract'
-import { Field } from '../meta/field'
-import { Method } from '../meta/method'
-import { Event } from '../meta/event'
-import { Emit } from '../meta/emit'
-import { Base } from '../meta/base'
-import { Interface } from '../meta/interface'
-import { TxScript } from '../meta/txScript'
+import { Contract } from '../ast/contract'
+import { Field } from '../ast/field'
+import { Method } from '../ast/method'
+import { Event } from '../ast/event'
+import { Emit } from '../ast/emit'
+import { Base } from '../ast/base'
+import { Interface } from '../ast/interface'
+import { TxScript } from '../ast/txScript'
 
 export class RalphVisitor extends AbstractParseTreeVisitor<number> implements RalphParserVisitor<number> {
   structs!: Map<string, Base>
