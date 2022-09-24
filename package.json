@@ -179,16 +179,16 @@
     "test-compile": "tsc -p ./",
     "test-watch": "tsc -watch -p ./",
     "pretest": "yarn run test-compile && yarn run lint",
-    "lint": "eslint src --ext ts,js--fix",
+    "lint": "eslint src --ext ts,js --fix",
     "fmt": "prettier --write .",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "antlr4ts": "antlr4ts -visitor ./src/parser/*.g4"
   },
   "dependencies": {
     "@typescript-eslint/parser": "^5.35.1",
     "antlr4ts": "^0.5.0-alpha.4",
     "execa": "^6.1.0",
     "node-fetch": "^3.2.10",
-    "ralph-parser-ts": "^0.0.4",
     "request": "^2.88.2",
     "request-progress": "^3.0.0",
     "request-promise-native": "^1.0.9",
@@ -200,6 +200,7 @@
     "@types/request-promise-native": "^1.0.18",
     "@types/vscode": "^1.69.0",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "antlr4ts-cli": "^0.5.0-alpha.4",
     "eslint": "^8.22.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",

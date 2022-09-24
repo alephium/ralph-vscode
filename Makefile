@@ -1,11 +1,9 @@
-
+compile:
+	yarn run compile
 
 build: dep
 	yarn run compile
 	yarn vsce package
-
-compile:
-	yarn run compile
 
 dep:
 	yarn install
@@ -16,6 +14,7 @@ publish:
 clean:
 	rm -rf ./ralph-vscode-*.vsix
 	rm -rf ./dist
+	rm -rf node_modules
 
 
 fmt:
@@ -23,3 +22,6 @@ fmt:
 
 lint:
 	yarn run lint
+
+antlr4ts:
+	yarn run antlr4ts
