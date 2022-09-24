@@ -1,6 +1,15 @@
 import * as vscode from 'vscode'
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
-import { ContractContext, InterfaceContext, ParamListContext, TxScriptContext, TypeStructBodyContext } from '../parser/RalphParser'
+import {
+  ContractContext,
+  IdentifierListContext,
+  InterfaceContext,
+  MethodDeclContext,
+  ParamListContext,
+  TxScriptContext,
+  TypeStructBodyContext,
+  VarDeclContext,
+} from '../parser/RalphParser'
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
 import { Contract } from '../meta/contract'
@@ -34,13 +43,19 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
     // method
-    ctx.methodDecl().forEach((method) => {
-      base.addMember(new Method(method.IDENTIFIER().text, method.IDENTIFIER().symbol))
-    })
+    ctx.methodDecl().forEach((method) => base.addMember(Method.FromContext(method)))
     // event
-    ctx.event().forEach((event) => base.addMember(new Event(event.IDENTIFIER().text, event.IDENTIFIER().symbol)))
+    ctx.event().forEach((eventCtx) => {
+      const event = new Event(eventCtx.IDENTIFIER().text, eventCtx.IDENTIFIER().symbol)
+      event.detail = eventCtx.text
+      base.addMember(event)
+    })
     // emit
-    ctx.emit().forEach((emit) => base.addMember(new Emit(emit.IDENTIFIER().text, emit.IDENTIFIER().symbol)))
+    ctx.emit().forEach((emitCtx) => {
+      const emit = new Emit(emitCtx.IDENTIFIER().text, emitCtx.IDENTIFIER().symbol)
+      emit.detail = emitCtx.text
+      base.addMember(emit)
+    })
   }
 
   visitParams(ctx?: ParamListContext, base?: Base) {
@@ -49,6 +64,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
 
   visitContract(ctx: ContractContext): number {
     const contact = new Contract(ctx.IDENTIFIER(0).text, ctx.IDENTIFIER(0).symbol)
+    contact.Scope(ctx.IDENTIFIER(0).symbol, ctx.typeStructBody().R_CURLY().symbol)
+
     // fields
     this.visitParams(ctx.paramList(), contact)
     this.visitBody(ctx.typeStructBody(), contact)
@@ -58,6 +75,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
 
   visitInterface(ctx: InterfaceContext): number {
     const face = new Interface(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
+    face.Scope(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitBody(ctx.typeStructBody(), face)
     this.structs.set(face.name, face)
     return this.structs.size
@@ -65,6 +83,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
 
   visitTxScript(ctx: TxScriptContext): number {
     const script = new TxScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
+    script.Scope(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitParams(ctx.paramList(), script)
     this.visitBody(ctx.typeStructBody(), script)
     this.structs.set(script.name, script)
