@@ -1,6 +1,6 @@
 import { SymbolKind } from 'vscode'
 import { Ast } from './ast'
-import { ParamContext } from "../parser/RalphParser";
+import { ParamContext } from '../parser/RalphParser'
 
 export class Field extends Ast {
   kind(): SymbolKind {

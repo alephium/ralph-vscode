@@ -33,14 +33,6 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     return this.structs.size
   }
 
-  DocumentSymbol(document: vscode.TextDocument): vscode.SymbolInformation[] {
-    let items: vscode.SymbolInformation[] = []
-    this.structs.forEach((contract) => {
-      items = items.concat(contract.DocumentSymbol(document))
-    })
-    return items
-  }
-
   visitBody(ctx: TypeStructBodyContext, base: Base) {
     // method
     ctx.methodDecl().forEach((method) => base.add(Method.FromContext(method)))
@@ -48,18 +40,20 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     ctx.event().forEach((eventCtx) => {
       const event = new Event(eventCtx.IDENTIFIER().text, eventCtx.IDENTIFIER().symbol)
       event.detail = eventCtx.text
+      event.setParent(base)
       base.add(event)
     })
     // emit
     ctx.emit().forEach((emitCtx) => {
       const emit = new Emit(emitCtx.IDENTIFIER().text, emitCtx.IDENTIFIER().symbol)
       emit.detail = emitCtx.text
+      emit.setParent(base)
       base.add(emit)
     })
   }
 
   visitParams(ctx?: ParamListContext, base?: Base) {
-    ctx?.param().forEach((field) => base?.add(Field.FromContext(field)))
+    ctx?.param().forEach((field) => base?.add(Field.FromContext(field).setParent(base)))
   }
 
   visitContract(ctx: ContractContext): number {

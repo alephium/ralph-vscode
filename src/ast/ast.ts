@@ -1,7 +1,8 @@
 import { Token } from 'antlr4ts/Token'
 
 import * as vscode from 'vscode'
-import { Range, SymbolKind, Uri } from 'vscode'
+import { Position, Range, SymbolKind, Uri } from 'vscode'
+import { RuleContext } from 'antlr4ts/RuleContext'
 import { Identifier } from './identifier'
 
 export class Ast implements IAst {
@@ -9,16 +10,22 @@ export class Ast implements IAst {
 
   readonly token: Token
 
+  detail: string
+
   uri: Uri | undefined
+
+  point: Position
 
   scope: Range | undefined
 
-  detail: string
+  parent: IAst | undefined
 
   constructor(name: string, token: Token) {
     this.token = token
     this.name = name
     this.detail = name
+    this.point = this.convert(token)
+    this.range(token, token)
   }
 
   position(): vscode.Position {
@@ -26,7 +33,7 @@ export class Ast implements IAst {
   }
 
   convert(token: Token): vscode.Position {
-    return new vscode.Position(token.line, token.charPositionInLine)
+    return new vscode.Position(token.line - 1, token.charPositionInLine)
   }
 
   range(begin: Token, end: Token | undefined) {
@@ -41,6 +48,7 @@ export class Ast implements IAst {
   }
 
   contains(identifier: Identifier): boolean {
+    this.uri = this.getUri()
     if (this.uri && identifier.uri) {
       if (this.uri.path !== identifier.uri.path) {
         return false
@@ -51,16 +59,33 @@ export class Ast implements IAst {
     }
     return false
   }
+
+  toString(): string {
+    return `name: ${this.name},
+            detail: ${this.detail}, 
+            uri?.path: ${this.uri?.path.toString() ?? ''},
+            scope?.start.line: ${this.scope?.start.line ?? 0},
+            scope?.end.line: ${this.scope?.end.line ?? 0}
+            `
+  }
+
+  setParent(parent: IAst): IAst {
+    this.parent = parent
+    return this
+  }
+
+  getUri(): Uri | undefined {
+    if (this.uri) {
+      return this.uri
+    }
+    return this.parent?.getUri!()
+  }
 }
 
 export interface IAst {
-  position(): vscode.Position
-
   name: string
 
   token: Token
-
-  kind?: () => SymbolKind
 
   detail?: string
 
@@ -68,7 +93,21 @@ export interface IAst {
 
   scope?: Range
 
+  parent?: IAst
+
+  kind?: () => SymbolKind
+
+  position(): vscode.Position
+
   find?(identifier: Identifier): IAst | undefined
 
   contains?(identifier: Identifier): boolean
+
+  toString?(): string
+
+  setParent(parent: IAst): ThisType<IAst>
+
+  getChild?(): IAst[]
+
+  getUri?(): Uri | undefined
 }

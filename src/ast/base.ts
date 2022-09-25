@@ -1,6 +1,6 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
-import { SymbolKind } from 'vscode'
+import { Definition, DefinitionLink, Location, Position, ProviderResult, SymbolKind, TextDocument } from 'vscode'
 import { Ast, IAst } from './ast'
 import { Identifier } from './identifier'
 
@@ -11,6 +11,10 @@ export class Base extends Ast implements VscodeInterface {
     super(name, token)
     this.members = new Map()
     // this.members.set(this.name, this)
+  }
+
+  getChild(): IAst[] {
+    return Array.from(this.members.values())
   }
 
   // override
@@ -35,7 +39,7 @@ export class Base extends Ast implements VscodeInterface {
     this.members.set(ast.name, ast)
   }
 
-  DocumentSymbol(document: vscode.TextDocument): vscode.SymbolInformation[] {
+  documentSymbol(document: vscode.TextDocument): vscode.SymbolInformation[] {
     const items: vscode.SymbolInformation[] = []
     this.members.forEach((member) => {
       items.push(
@@ -51,21 +55,36 @@ export class Base extends Ast implements VscodeInterface {
     return items
   }
 
-  ProvideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
+  provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
+    this.uri = document.uri
+    const range = document.getWordRangeAtPosition(position)
+    const identifier = new Identifier(document.getText(range), position, document.uri)
+    console.log(`identifier = ${JSON.stringify(identifier, null, 2)}`)
+    let item
+    const member = this.find(identifier)
+    if (member) {
+      console.log(member.toString!())
+      item = new vscode.Hover([member.name, member.detail ?? ''])
+    }
+    return item
+  }
+
+  provideDefinition(document: TextDocument, position: Position): ProviderResult<Definition | DefinitionLink[]> {
     this.uri = document.uri
     const range = document.getWordRangeAtPosition(position)
     const identifier = new Identifier(document.getText(range), position, document.uri)
     let item
     const member = this.find(identifier)
     if (member) {
-      // console.log(`member = ${JSON.stringify(member)}`)
-      item = new vscode.Hover([member.name, member.detail ?? ''])
+      console.log(member.toString!())
+      item = new Location(member.uri ?? document.uri, member.scope ?? position)
     }
     return item
   }
 }
 
 export interface VscodeInterface {
-  DocumentSymbol?(document: vscode.TextDocument): vscode.SymbolInformation[]
-  ProvideHover?(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover>
+  documentSymbol?(document: vscode.TextDocument): vscode.SymbolInformation[]
+  provideHover?(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover>
+  provideDefinition?(document: TextDocument, position: Position): ProviderResult<Definition | DefinitionLink[]>
 }

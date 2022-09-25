@@ -6,7 +6,7 @@ export class HoverProvider implements vscode.HoverProvider {
     const parser = new Parser(document.getText())
     let item
     Array.from(parser.visitor.structs).find((elem) => {
-      item = elem[1].ProvideHover(document, position)
+      item = elem[1].provideHover(document, position)
       if (item) return true
     })
     return item
