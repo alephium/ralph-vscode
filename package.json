@@ -65,7 +65,7 @@
         "ralph.downloader.config.url": {
           "type": "string",
           "description": "download link",
-          "default": "https://github.com/suyanlong/ralphc/releases/download/v1.5.0-rc7/ralphc.jar"
+          "default": "https://github.com/suyanlong/ralphc/releases/download/v1.5.0-rc9/ralphc.jar"
         },
         "ralph.downloader.config.target": {
           "type": "string",
@@ -105,6 +105,11 @@
           "type": "boolean",
           "default": false,
           "description": "ignore external call check warning"
+        },
+        "ralph.compiler.option.projectDir": {
+          "type": "string",
+          "default": "",
+          "description": "project path"
         }
       }
     },

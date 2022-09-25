@@ -1,23 +1,8 @@
-/* eslint-disable max-classes-per-file */
 import * as vscode from 'vscode'
 import * as path from 'path'
-import { Downloader } from './downloader'
-import * as logger from './logger'
-import { Logger } from './logger'
-
-class Option {
-  ignoreUnusedConstantsWarnings = false
-
-  ignoreUnusedVariablesWarnings = false
-
-  ignoreUnusedFieldsWarnings = false
-
-  ignoreReadonlyCheckWarnings = false
-
-  ignoreUnusedPrivateFunctionsWarnings = false
-
-  ignoreExternalCallCheckWarnings = false
-}
+import { Downloader } from '../downloader'
+import * as logger from '../logger'
+import { Logger } from '../logger'
 
 export class Compiler {
   cmd: string | undefined
@@ -41,13 +26,16 @@ export class Compiler {
     if (editor.document.isDirty) {
       editor.document.save()
     }
-
+    let project = this.option?.projectDir
+    if (project === undefined || project.length === 0) {
+      project = path.dirname(fullFileName)
+    }
     if (!this.cmd && vscode.workspace.rootPath) {
       const d = new Downloader()
       await d.showQuickPick()
       const jar = path.join(vscode.workspace.rootPath, d.config.target)
       const warn = this.warning()
-      this.cmd = `java -jar ${jar} ${warn} -f ${fullFileName}`
+      this.cmd = `java -jar ${jar} --project ${project} ${warn} -f ${fullFileName}`
     }
 
     this.log.info(`Compiler.cmd: ${this.cmd}`)
