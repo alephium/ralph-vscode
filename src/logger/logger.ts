@@ -12,7 +12,11 @@ export class Logger {
 
   public static logLevel = LogLevel.info
 
-  public constructor(public source: string) {}
+  source: string
+
+  constructor(source: string) {
+    this.source = source
+  }
 
   public debug(message: string): void {
     Logger.callLog(LogLevel.debug, this.source, message)

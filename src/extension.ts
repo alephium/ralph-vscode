@@ -1,11 +1,11 @@
 import * as vscode from 'vscode'
 import commands from './commands'
-import { FormatterProvider } from './formatter'
-import { Providers as hoverProvider } from './providers/hover/providers'
-import { SymbolProvider } from './providers/symbolProvider'
-import { CompletionProvider } from './providers/completionProvider'
-import { DefinitionProvider } from './providers/definitionProvider'
-import { RalphRenameProvider } from './providers/renameProvider'
+import { FormatterProvider } from './formatter/formatter'
+import { Providers as hoverProvider } from './provider/hover/providers'
+import { SymbolProvider } from './provider/symbolProvider'
+import { CompletionProvider } from './provider/completionProvider'
+import { DefinitionProvider } from './provider/definitionProvider'
+import { RalphRenameProvider } from './provider/renameProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed

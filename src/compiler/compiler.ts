@@ -1,8 +1,8 @@
 import * as vscode from 'vscode'
 import * as path from 'path'
-import { Downloader } from '../downloader'
-import * as logger from '../logger'
-import { Logger } from '../logger'
+import { Downloader } from '../downloader/downloader'
+import * as logger from '../logger/logger'
+import { Logger } from '../logger/logger'
 
 export class Compiler {
   cmd: string | undefined

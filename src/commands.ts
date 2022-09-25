@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { Downloader } from './downloader'
+import { Downloader } from './downloader/downloader'
 import { Compiler } from './compiler/compiler'
 
 interface Command {

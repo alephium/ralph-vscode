@@ -1,17 +1,8 @@
-// eslint-disable-next-line max-classes-per-file
 import * as vscode from 'vscode'
 import * as path from 'path'
 import { existsSync } from 'fs'
-import * as logger from './logger'
-import { download } from './util'
-
-class Config {
-  name!: string
-
-  url!: string
-
-  target!: string
-}
+import * as logger from '../logger/logger'
+import { download } from '../util/util'
 
 export class Downloader {
   config!: Config

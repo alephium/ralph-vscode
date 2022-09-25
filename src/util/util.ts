@@ -1,47 +1,86 @@
-import { SymbolKind } from 'vscode'
-import { RalphParser } from '../parser/RalphParser'
+import * as fs from 'fs'
+import * as vscode from 'vscode'
+import * as request from 'request'
 
-export const MapKinds = new Map([
-  [RalphParser.FN, SymbolKind.Function],
-  [RalphParser.CONTRACT, SymbolKind.Class],
-  [RalphParser.TXCONTRACT, SymbolKind.Class],
-  [RalphParser.TXSCRIPT, SymbolKind.Class],
-  [RalphParser.INTERFACE, SymbolKind.Interface],
-  [RalphParser.ASSETSCRIPT, SymbolKind.Class],
-  [RalphParser.ENUM, SymbolKind.Enum],
-  [RalphParser.BOOL, SymbolKind.Boolean],
-  [RalphParser.I256, SymbolKind.Number],
-  [RalphParser.U256, SymbolKind.Number],
-  [RalphParser.BYTE, SymbolKind.Array],
-  [RalphParser.BYTEVEC, SymbolKind.Array],
-  [RalphParser.ADDRESS, SymbolKind.Constant],
-  [RalphParser.LET, SymbolKind.Variable],
-  [RalphParser.CONST, SymbolKind.Constant],
-])
+const requestProgress = require('request-progress')
 
-// File = 0,
-// Module = 1,
-// Namespace = 2,
-// Package = 3,
-// Class = 4,
-// Method = 5,
-// Property = 6,
-// Field = 7,
-// Constructor = 8,
-// Enum = 9,
-// Interface = 10,
-// Function = 11,
-// Variable = 12,
-// Constant = 13,
-// String = 14,
-// Number = 15,
-// Boolean = 16,
-// Array = 17,
-// Object = 18,
-// Key = 19,
-// Null = 20,
-// EnumMember = 21,
-// Struct = 22,
-// Event = 23,
-// Operator = 24,
-// TypeParameter = 25
+export function download(srcUrl: string, destPath: fs.PathLike, progress: (state: any) => void): Promise<void> {
+  return new Promise((resolve, reject) => {
+    requestProgress(request.get(srcUrl))
+      .on(
+        'progress',
+        (state: {
+          percent: number
+          speed: number
+          size: { total: number; transferred: number }
+          time: { elapsed: number; remaining: number }
+        }) => progress(state)
+      )
+      .on('complete', () => resolve())
+      .on('error', (err: any) => reject(err))
+      .pipe(fs.createWriteStream(destPath))
+  })
+}
+
+export async function fsExists(path: fs.PathLike): Promise<boolean> {
+  try {
+    await fs.promises.access(path)
+    return true
+  } catch {
+    return false
+  }
+}
+
+export function isOSWindows(): boolean {
+  return process.platform === 'win32'
+}
+
+export function isOSUnixoid(): boolean {
+  const { platform } = process
+  return platform === 'linux' || platform === 'darwin' || platform === 'freebsd' || platform === 'openbsd'
+}
+
+export function correctBinname(binname: string): string {
+  return binname + (process.platform === 'win32' ? '.exe' : '')
+}
+
+export function correctScriptName(binname: string): string {
+  return binname + (process.platform === 'win32' ? '.bat' : '')
+}
+
+export interface Status {
+  // Updates the message.
+  update(msg: string): void
+
+  dispose(): void
+}
+
+// Encapsulates a status bar item.
+export class StatusBarEntry implements Status {
+  private barItem: vscode.StatusBarItem
+
+  private prefix?: string
+
+  private disposed = false
+
+  constructor(context: vscode.ExtensionContext, prefix?: string) {
+    this.prefix = prefix
+    this.barItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left)
+    context.subscriptions.push(this.barItem)
+  }
+
+  show(): void {
+    this.barItem.show()
+  }
+
+  update(msg: string): void {
+    this.barItem.text = `${this.prefix} ${msg}`
+  }
+
+  dispose(): void {
+    if (!this.disposed) {
+      this.disposed = true
+      this.barItem.dispose()
+    }
+  }
+}
