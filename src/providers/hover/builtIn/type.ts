@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // eslint-disable-next-line import/no-unresolved, max-classes-per-file
 import * as vscode from 'vscode'
-import { Item } from '../item'
+import { Item } from './item'
 
 export class BuiltInTypeHoverProvider implements vscode.HoverProvider {
   builtItems!: Map<string, Item>
