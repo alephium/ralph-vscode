@@ -1,6 +1,3 @@
-/* eslint-disable import/no-unresolved */
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
 import commands from './commands'
 import { FormatterProvider } from './formatter'
@@ -8,6 +5,7 @@ import { Providers as hoverProvider } from './providers/hover/providers'
 import { SymbolProvider } from './providers/symbolProvider'
 import { CompletionProvider } from './providers/completionProvider'
 import { DefinitionProvider } from './providers/definitionProvider'
+import { RalphRenameProvider } from './providers/renameProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -25,11 +23,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   const selector = { scheme: 'file', language: 'ralph' }
   hoverProvider().forEach((value) => context.subscriptions.push(vscode.languages.registerHoverProvider(selector, value)))
-
   context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(selector, new FormatterProvider()))
   context.subscriptions.push(vscode.languages.registerDocumentSymbolProvider(selector, new SymbolProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new CompletionProvider()))
   context.subscriptions.push(vscode.languages.registerDefinitionProvider(selector, new DefinitionProvider()))
+  context.subscriptions.push(vscode.languages.registerRenameProvider(selector, new RalphRenameProvider()))
+
   console.log('register push completed!')
 }
 

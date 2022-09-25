@@ -1,14 +1,11 @@
-import * as vscode from 'vscode'
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
+import { Uri } from 'vscode'
 import {
   ContractContext,
-  IdentifierListContext,
   InterfaceContext,
-  MethodDeclContext,
   ParamListContext,
   TxScriptContext,
   TypeStructBodyContext,
-  VarDeclContext,
 } from '../parser/RalphParser'
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
@@ -24,8 +21,11 @@ import { TxScript } from '../ast/txScript'
 export class RalphVisitor extends AbstractParseTreeVisitor<number> implements RalphParserVisitor<number> {
   structs!: Map<string, Base>
 
-  constructor() {
+  uri: Uri
+
+  constructor(uri: Uri) {
     super()
+    this.uri = uri
     this.structs = new Map()
   }
 
@@ -59,6 +59,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
   visitContract(ctx: ContractContext): number {
     const contact = new Contract(ctx.IDENTIFIER(0).text, ctx.IDENTIFIER(0).symbol)
     contact.detail = ctx.text
+    contact.uri = this.uri
     contact.range(ctx.IDENTIFIER(0).symbol, ctx.typeStructBody().R_CURLY().symbol)
 
     // fields
@@ -71,6 +72,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
   visitInterface(ctx: InterfaceContext): number {
     const face = new Interface(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
     face.detail = ctx.text
+    face.uri = this.uri
     face.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitBody(ctx.typeStructBody(), face)
     this.structs.set(face.name, face)
@@ -80,6 +82,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
   visitTxScript(ctx: TxScriptContext): number {
     const script = new TxScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
     script.detail = ctx.text
+    script.uri = this.uri
     script.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitParams(ctx.paramList(), script)
     this.visitBody(ctx.typeStructBody(), script)

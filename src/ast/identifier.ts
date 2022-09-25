@@ -1,30 +1,29 @@
-// import { SymbolKind } from 'vscode'
-// import { ParamContext } from '../parser/RalphParser'
-// import { Ast } from './ast'
-// export class Identifier extends Ast {
-//   kind(): SymbolKind {
-//     return SymbolKind.Variable
-//   }
-//
-//   public static FromContext(ctx: ParamContext): Identifier {
-//     const varVal = new Identifier(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
-//     varVal.detail = ctx.text
-//     return varVal
-//   }
-// }
-
 import { Position, Uri } from 'vscode'
+import * as vscode from 'vscode'
+import { IAst } from './ast'
 
-export class Identifier {
-  uri: Uri | undefined
-
-  word: string | undefined
+export class Identifier implements IAst {
+  name: string
 
   point: Position
 
+  uri: Uri | undefined
+
   constructor(word: string, point: Position, uri?: Uri) {
     this.uri = uri
-    this.word = word
+    this.name = word
     this.point = point
+  }
+
+  word(): string {
+    return this.name
+  }
+
+  identifier(): Identifier {
+    return this
+  }
+
+  position(): vscode.Position {
+    return this.point
   }
 }

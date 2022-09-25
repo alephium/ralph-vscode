@@ -16,6 +16,7 @@ export class Ast implements IAst {
 
   point: Position
 
+  /** * action scope ** */
   scope: Range | undefined
 
   parent: IAst | undefined
@@ -40,11 +41,19 @@ export class Ast implements IAst {
     this.scope = new vscode.Range(this.convert(begin), this.convert(end ?? begin))
   }
 
-  find(identifier: Identifier): IAst | undefined {
+  findOne(identifier: Identifier): IAst | undefined {
     if (this.contains(identifier)) {
-      if (identifier.word === this.name) return this
+      if (identifier.name === this.name) return this
     }
     return undefined
+  }
+
+  findAll(identifier: Identifier): IAst[] | undefined {
+    const one = this.findOne(identifier)
+    if (one) {
+      return [one]
+    }
+    return one
   }
 
   contains(identifier: Identifier): boolean {
@@ -80,12 +89,16 @@ export class Ast implements IAst {
     }
     return this.parent?.getUri!()
   }
+
+  identifier(): Identifier {
+    return new Identifier(this.name, this.point, this.getUri())
+  }
 }
 
 export interface IAst {
   name: string
 
-  token: Token
+  token?: Token
 
   detail?: string
 
@@ -99,15 +112,19 @@ export interface IAst {
 
   position(): vscode.Position
 
-  find?(identifier: Identifier): IAst | undefined
+  findOne?(identifier: Identifier): IAst | undefined
+
+  findAll?(identifier: Identifier): IAst[] | undefined
 
   contains?(identifier: Identifier): boolean
 
   toString?(): string
 
-  setParent(parent: IAst): ThisType<IAst>
+  setParent?(parent: IAst): ThisType<IAst>
 
   getChild?(): IAst[]
 
   getUri?(): Uri | undefined
+
+  identifier(): Identifier
 }
