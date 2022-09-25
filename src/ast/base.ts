@@ -15,12 +15,7 @@ export class Base extends Ast implements VscodeInterface {
 
   // override
   find(identifier: Identifier): IAst | undefined {
-    if (this.scope?.contains(identifier.point)) {
-      if (this.uri) {
-        if (this.uri.path !== identifier.uri?.path) {
-          return undefined
-        }
-      }
+    if (this.contains(identifier)) {
       if (this.name === identifier.word) return this
       const member = this.members.get(<string>identifier.word)
       if (!member) {
@@ -36,7 +31,7 @@ export class Base extends Ast implements VscodeInterface {
     return undefined
   }
 
-  addMember(ast: IAst) {
+  add(ast: IAst) {
     this.members.set(ast.name, ast)
   }
 

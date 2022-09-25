@@ -24,7 +24,7 @@ export class Method extends Base {
       .paramList()
       ?.param()
       .forEach((varCtx) => {
-        method.addMember(Variable.FromContext(varCtx))
+        method.add(Variable.FromContext(varCtx))
       })
 
     if (ctx.annotation()) {

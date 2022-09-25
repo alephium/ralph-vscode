@@ -43,23 +43,23 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
     // method
-    ctx.methodDecl().forEach((method) => base.addMember(Method.FromContext(method)))
+    ctx.methodDecl().forEach((method) => base.add(Method.FromContext(method)))
     // event
     ctx.event().forEach((eventCtx) => {
       const event = new Event(eventCtx.IDENTIFIER().text, eventCtx.IDENTIFIER().symbol)
       event.detail = eventCtx.text
-      base.addMember(event)
+      base.add(event)
     })
     // emit
     ctx.emit().forEach((emitCtx) => {
       const emit = new Emit(emitCtx.IDENTIFIER().text, emitCtx.IDENTIFIER().symbol)
       emit.detail = emitCtx.text
-      base.addMember(emit)
+      base.add(emit)
     })
   }
 
   visitParams(ctx?: ParamListContext, base?: Base) {
-    ctx?.param().forEach((field) => base?.addMember(new Field(field.IDENTIFIER().text, field.IDENTIFIER().symbol)))
+    ctx?.param().forEach((field) => base?.add(new Field(field.IDENTIFIER().text, field.IDENTIFIER().symbol)))
   }
 
   visitContract(ctx: ContractContext): number {

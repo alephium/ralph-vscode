@@ -34,15 +34,22 @@ export class Ast implements IAst {
   }
 
   find(identifier: Identifier): IAst | undefined {
-    if (this.scope?.contains(identifier.point)) {
-      if (this.uri) {
-        if (this.uri.path !== identifier.uri?.path) {
-          return undefined
-        }
-      }
+    if (this.contains(identifier)) {
       if (identifier.word === this.name) return this
     }
     return undefined
+  }
+
+  contains(identifier: Identifier): boolean {
+    if (this.uri && identifier.uri) {
+      if (this.uri.path !== identifier.uri.path) {
+        return false
+      }
+    }
+    if (this.scope) {
+      return this.scope.contains(identifier.point)
+    }
+    return false
   }
 }
 
@@ -62,4 +69,6 @@ export interface IAst {
   scope?: Range
 
   find?(identifier: Identifier): IAst | undefined
+
+  contains?(identifier: Identifier): boolean
 }
