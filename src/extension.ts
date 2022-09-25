@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import commands from './commands'
+import commands from './commander/commands'
 import { FormatterProvider } from './formatter/formatter'
 import { Providers as hoverProvider } from './provider/hover/providers'
 import { SymbolProvider } from './provider/symbolProvider'

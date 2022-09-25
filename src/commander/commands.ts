@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
-import { Downloader } from './downloader/downloader'
-import { Compiler } from './compiler/compiler'
+import { Downloader } from '../downloader/downloader'
+import { Compiler } from '../compiler/compiler'
 
 interface Command {
   command: string
