@@ -72,7 +72,7 @@ export class Ast implements IAst {
   toString(): string {
     return `name: ${this.name},
             detail: ${this.detail}, 
-            uri?.path: ${this.uri?.path.toString() ?? ''},
+            uri?.path: ${this.getUri()?.path ?? ''},
             scope?.start.line: ${this.scope?.start.line ?? 0},
             scope?.end.line: ${this.scope?.end.line ?? 0}
             `
@@ -87,7 +87,7 @@ export class Ast implements IAst {
     if (this.uri) {
       return this.uri
     }
-    return this.parent?.getUri!()
+    return this.parent?.getUri?.()
   }
 
   identifier(): Identifier {

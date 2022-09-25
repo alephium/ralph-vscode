@@ -40,11 +40,14 @@ export class Base extends Ast implements VscodeInterface {
     if (this.contains(identifier)) {
       if (this.name === identifier.name) items.push(this)
       this.members.forEach((member) => {
-        const is = member.findAll!(identifier)
+        const is = member.findAll?.(identifier)
         if (is) items = items.concat(is)
       })
     }
-    return items
+    if (items.length > 0) {
+      return items
+    }
+    return undefined
   }
 
   add(ast: IAst) {
@@ -94,7 +97,8 @@ export class Base extends Ast implements VscodeInterface {
 
   provideRenameEdits(identifier: Identifier, newName: string, edit: WorkspaceEdit): void {
     const members = this.findAll(identifier)
-    if (members) {
+    if (members && members.length > 0) {
+      console.log(members)
       members?.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.scope!, newName))
     }
   }

@@ -1,12 +1,6 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import { Uri } from 'vscode'
-import {
-  ContractContext,
-  InterfaceContext,
-  ParamListContext,
-  TxScriptContext,
-  TypeStructBodyContext,
-} from '../parser/RalphParser'
+import { ContractContext, InterfaceContext, ParamListContext, TxScriptContext, TypeStructBodyContext } from '../parser/RalphParser'
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
 import { Contract } from '../ast/contract'
