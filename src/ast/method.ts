@@ -59,7 +59,7 @@ export class Method extends Base {
       method.detail += `${ctx.result()?.text} `
     }
 
-    method.Scope(ctx.IDENTIFIER().symbol, ctx.block()?.R_CURLY().symbol)
+    method.range(ctx.IDENTIFIER().symbol, ctx.block()?.R_CURLY().symbol)
 
     // ctx
     //   .block()

@@ -43,11 +43,11 @@ export class Base extends Ast implements VscodeInterface {
           member.name,
           <SymbolKind>member.kind?.(),
           this.name,
-          new vscode.Location(document.uri, member.Position())
+          new vscode.Location(document.uri, member.position())
         )
       )
     })
-    items.push(new vscode.SymbolInformation(this.name, SymbolKind.Class, '', new vscode.Location(document.uri, this.Position())))
+    items.push(new vscode.SymbolInformation(this.name, SymbolKind.Class, '', new vscode.Location(document.uri, this.position())))
     return items
   }
 
@@ -57,8 +57,8 @@ export class Base extends Ast implements VscodeInterface {
     const identifier = new Identifier(document.getText(range), position, document.uri)
     let item
     const member = this.find(identifier)
-    console.log(`member?.name = ${member?.name}`)
     if (member) {
+      // console.log(`member = ${JSON.stringify(member)}`)
       item = new vscode.Hover([member.name, member.detail ?? ''])
     }
     return item

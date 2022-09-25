@@ -18,19 +18,19 @@ export class Ast implements IAst {
   constructor(name: string, token: Token) {
     this.token = token
     this.name = name
-    this.detail = ''
+    this.detail = name
   }
 
-  Position(): vscode.Position {
-    return this.ToPosition(this.token)
+  position(): vscode.Position {
+    return this.convert(this.token)
   }
 
-  ToPosition(token: Token): vscode.Position {
+  convert(token: Token): vscode.Position {
     return new vscode.Position(token.line, token.charPositionInLine)
   }
 
-  Scope(begin: Token, end: Token | undefined) {
-    this.scope = new vscode.Range(this.ToPosition(begin), this.ToPosition(end ?? begin))
+  range(begin: Token, end: Token | undefined) {
+    this.scope = new vscode.Range(this.convert(begin), this.convert(end ?? begin))
   }
 
   find(identifier: Identifier): IAst | undefined {
@@ -54,7 +54,7 @@ export class Ast implements IAst {
 }
 
 export interface IAst {
-  Position(): vscode.Position
+  position(): vscode.Position
 
   name: string
 

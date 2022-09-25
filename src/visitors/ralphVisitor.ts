@@ -59,12 +59,13 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
   }
 
   visitParams(ctx?: ParamListContext, base?: Base) {
-    ctx?.param().forEach((field) => base?.add(new Field(field.IDENTIFIER().text, field.IDENTIFIER().symbol)))
+    ctx?.param().forEach((field) => base?.add(Field.FromContext(field)))
   }
 
   visitContract(ctx: ContractContext): number {
     const contact = new Contract(ctx.IDENTIFIER(0).text, ctx.IDENTIFIER(0).symbol)
-    contact.Scope(ctx.IDENTIFIER(0).symbol, ctx.typeStructBody().R_CURLY().symbol)
+    contact.detail = ctx.text
+    contact.range(ctx.IDENTIFIER(0).symbol, ctx.typeStructBody().R_CURLY().symbol)
 
     // fields
     this.visitParams(ctx.paramList(), contact)
@@ -75,7 +76,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
 
   visitInterface(ctx: InterfaceContext): number {
     const face = new Interface(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
-    face.Scope(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
+    face.detail = ctx.text
+    face.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitBody(ctx.typeStructBody(), face)
     this.structs.set(face.name, face)
     return this.structs.size
@@ -83,7 +85,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
 
   visitTxScript(ctx: TxScriptContext): number {
     const script = new TxScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
-    script.Scope(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
+    script.detail = ctx.text
+    script.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitParams(ctx.paramList(), script)
     this.visitBody(ctx.typeStructBody(), script)
     this.structs.set(script.name, script)
