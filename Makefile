@@ -1,8 +1,9 @@
 compile:
 	yarn run compile
 
-build: dep
-	yarn run compile
+build: dep compile package
+
+package: compile
 	yarn vsce package
 
 dep:
