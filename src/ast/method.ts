@@ -27,6 +27,7 @@ export class Method extends Base {
         method.add(Variable.FromContext(varCtx).setParent(method))
       })
 
+    method.detail = ''
     if (ctx.annotation()) {
       method.detail += `${ctx.annotation()?.text} `
     }

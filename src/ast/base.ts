@@ -54,20 +54,16 @@ export class Base extends Ast implements VscodeInterface {
     this.members.set(ast.name, ast)
   }
 
-  documentSymbol(document: vscode.TextDocument): vscode.SymbolInformation[] {
-    const items: vscode.SymbolInformation[] = []
+  kind(): SymbolKind {
+    return SymbolKind.Class
+  }
+
+  documentSymbol(document?: vscode.TextDocument): vscode.DocumentSymbol {
+    const item = new vscode.DocumentSymbol(this.name, '', this.kind(), this.scope!, this.scope!)
     this.members.forEach((member) => {
-      items.push(
-        new vscode.SymbolInformation(
-          member.name,
-          <SymbolKind>member.kind?.(),
-          this.name,
-          new vscode.Location(document.uri, member.position())
-        )
-      )
+      item.children.push(new vscode.DocumentSymbol(member.name, member.detail!, <SymbolKind>member.kind?.(), member.scope!, member.scope!))
     })
-    items.push(new vscode.SymbolInformation(this.name, SymbolKind.Class, '', new vscode.Location(document.uri, this.position())))
-    return items
+    return item
   }
 
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
@@ -105,7 +101,7 @@ export class Base extends Ast implements VscodeInterface {
 }
 
 export interface VscodeInterface {
-  documentSymbol?(document: vscode.TextDocument): vscode.SymbolInformation[]
+  documentSymbol?(document?: vscode.TextDocument): vscode.DocumentSymbol
   provideHover?(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover>
   provideDefinition?(document: TextDocument, position: Position): ProviderResult<Definition | DefinitionLink[]>
   provideRenameEdits?(identifier: Identifier, newName: string, edit: WorkspaceEdit): void
