@@ -5,12 +5,10 @@ options
    tokenVocab = RalphLexer;
 }
 
-sourceFile:  (importDecl)* (declaration)* EOF;
+sourceFile:  (importDecl)* (typeDeclStmt)* EOF;
 
 
 importDecl: IMPORT string_;
-
-declaration: typeDeclStmt;
 
 identifierList: IDENTIFIER (COMMA IDENTIFIER)*;
 
@@ -69,15 +67,15 @@ primitiveType
     | U256
     | BYTEVEC
     | ADDRESS
+    | arrayType
     ;
 
 arrayType: L_BRACKET type_ SEMI expression R_BRACKET;
 arrayExpr: IDENTIFIER? L_BRACKET expression (COMMA expression)* R_BRACKET;
 
+type_: primitiveType | IDENTIFIER ;
 
-type_: primitiveType | arrayType | IDENTIFIER ;
-
-typeDeclStmt: arrayType | typeStruct;
+typeDeclStmt: typeStruct;
 
 result
 	: L_PAREN R_PAREN
@@ -133,13 +131,20 @@ string_: RAW_STRING_LIT | INTERPRETED_STRING_LIT;
 //	: typeParam IDENTIFIER (L_PAREN (paramList)? R_PAREN)? ((EXTENDS | IMPLEMENTS) IDENTIFIER (L_PAREN (expressionList)? R_PAREN)?)?
 //	;
 
+varName: IDENTIFIER;
+interfaceName: IDENTIFIER;
+txScriptName: IDENTIFIER;
+methodName: IDENTIFIER;
+eventName: IDENTIFIER;
+//builtIn: IDENTIFIER | UNUSED;
+
 typeStruct: txScript | contract | interface;
 
 typeStructBody: L_CURLY (statement | event | emit | methodDecl)* R_CURLY;
 
 txScript: TXSCRIPT IDENTIFIER (L_PAREN (paramList)? R_PAREN)? typeStructBody;
 
-contract: (TXCONTRACT | CONTRACT) IDENTIFIER (L_PAREN (paramList)? R_PAREN)? ((EXTENDS | IMPLEMENTS) IDENTIFIER (L_PAREN (expressionList)? R_PAREN)?)? typeStructBody;
+contract: CONTRACT IDENTIFIER (L_PAREN (paramList)? R_PAREN)? ((EXTENDS | IMPLEMENTS) IDENTIFIER (L_PAREN (expressionList)? R_PAREN)?)? typeStructBody;
 
 interface: INTERFACE IDENTIFIER typeStructBody;
 
@@ -156,8 +161,7 @@ annotation
 block: L_CURLY (statement)* R_CURLY;
 
 statement:
-	declaration
-	| simpleStmt
+	simpleStmt
 	| returnStmt
 	| block
 	| ifStmt

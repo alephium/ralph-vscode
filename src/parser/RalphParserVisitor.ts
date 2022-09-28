@@ -5,7 +5,6 @@ import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
 
 import { SourceFileContext } from "./RalphParser";
 import { ImportDeclContext } from "./RalphParser";
-import { DeclarationContext } from "./RalphParser";
 import { IdentifierListContext } from "./RalphParser";
 import { VarDeclContext } from "./RalphParser";
 import { ExpressionContext } from "./RalphParser";
@@ -25,6 +24,11 @@ import { MethodDeclContext } from "./RalphParser";
 import { BasicLitContext } from "./RalphParser";
 import { IntegerContext } from "./RalphParser";
 import { String_Context } from "./RalphParser";
+import { VarNameContext } from "./RalphParser";
+import { InterfaceNameContext } from "./RalphParser";
+import { TxScriptNameContext } from "./RalphParser";
+import { MethodNameContext } from "./RalphParser";
+import { EventNameContext } from "./RalphParser";
 import { TypeStructContext } from "./RalphParser";
 import { TypeStructBodyContext } from "./RalphParser";
 import { TxScriptContext } from "./RalphParser";
@@ -65,13 +69,6 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitImportDecl?: (ctx: ImportDeclContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `RalphParser.declaration`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitDeclaration?: (ctx: DeclarationContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.identifierList`.
@@ -205,6 +202,41 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitString_?: (ctx: String_Context) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.varName`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVarName?: (ctx: VarNameContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.interfaceName`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitInterfaceName?: (ctx: InterfaceNameContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.txScriptName`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitTxScriptName?: (ctx: TxScriptNameContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.methodName`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitMethodName?: (ctx: MethodNameContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.eventName`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitEventName?: (ctx: EventNameContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.typeStruct`.

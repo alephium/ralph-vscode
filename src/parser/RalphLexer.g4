@@ -38,7 +38,7 @@ EXTENDS                :'extends';
 ABSTRACT               :'Abstract';
 IMPLEMENTS             :'implements';
 EVENT                  :'event';
-EMIT                  :'emit';
+EMIT                   :'emit';
 
 //@using|using
 USING                  :'using';
@@ -49,6 +49,8 @@ U256                   :'U256';
 BYTE                   :'Byte';
 BYTEVEC                :'ByteVec';
 ADDRESS                :'Address';
+
+UNUSED                 :'unused';
 
 //->
 R_ARROW                :'->';
