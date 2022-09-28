@@ -413,6 +413,26 @@ export class FunctionHoverProvider implements vscode.HoverProvider {
         detail: 'subContractIdOf!(contract: Contract, id: ByteVec) -> (ByteVec)',
         kind: 'function',
       },
+      {
+        name: 'nullContractAddress!',
+        detail: 'nullContractAddress!() -> (Address)',
+        kind: 'function',
+      },
+      {
+        name: 'contractExists!',
+        detail: 'contractExists!(byteCode: ByteVec) -> Bool',
+        kind: 'function',
+      },
+      {
+        name: 'blockHash!',
+        detail: 'blockHash!() -> (ByteVec)',
+        kind: 'function',
+      },
+      {
+        name: 'checkCaller!',
+        detail: 'checkCaller!(check: Bool, errorCode:U256) -> ()',
+        kind: 'function',
+      },
     ]
 
     this.items.forEach((item) => this.builtItems.set(item.name, item))
