@@ -47,11 +47,11 @@
     "commands": [
       {
         "command": "ralph.downloader",
-        "title": "ralph: downloader"
+        "title": "Ralph: downloader"
       },
       {
         "command": "ralph.compiler",
-        "title": "ralph: compile"
+        "title": "Ralph: compile"
       }
     ],
     "configuration": {
@@ -136,12 +136,12 @@
         {
           "command": "ralph.compiler",
           "when": "resourceLangId == ralph",
-          "group": "ralph"
+          "group": "navigation@1"
         },
         {
           "command": "ralph.downloader",
           "when": "resourceLangId == ralph",
-          "group": "ralph"
+          "group": "navigation@2"
         }
       ]
     },
