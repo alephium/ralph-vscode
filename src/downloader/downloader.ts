@@ -1,6 +1,7 @@
 import * as vscode from 'vscode'
 import * as path from 'path'
 import { existsSync } from 'fs'
+import * as os from 'os'
 import * as logger from '../logger/logger'
 import { download } from '../util/util'
 
@@ -25,7 +26,7 @@ export class Downloader {
   }
 
   async download() {
-    const dir = vscode.workspace.rootPath
+    const dir = path.join(os.homedir(), '.alephium-dev')
     if (dir) {
       const targetPath = path.join(dir, this.config.target)
       if (!existsSync(targetPath)) {

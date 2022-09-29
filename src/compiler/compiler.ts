@@ -1,5 +1,6 @@
 import * as vscode from 'vscode'
 import * as path from 'path'
+import * as os from 'os'
 import { Downloader } from '../downloader/downloader'
 import * as logger from '../logger/logger'
 import { Logger } from '../logger/logger'
@@ -33,7 +34,7 @@ export class Compiler {
     if (!this.cmd && vscode.workspace.rootPath) {
       const d = new Downloader()
       await d.showQuickPick()
-      const jar = path.join(vscode.workspace.rootPath, d.config.target)
+      const jar = path.join(os.homedir(), '.alephium-dev', d.config.target)
       const warn = this.warning()
       this.cmd = `java -jar ${jar} --project ${project} ${warn} -f ${fullFileName}`
     }
