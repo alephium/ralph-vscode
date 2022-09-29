@@ -838,11 +838,40 @@
 			"subContractIdOf!($1, $2)"
 		],
 		"description": "subContractIdOf!"
+	},
+	"checkCaller!(check: Bool, errorCode: U256) -> ()": {
+		"prefix": "checkCaller!",
+		"body": [
+			"checkCaller!($1, $2)"
+		],
+		"description": "checkCaller!(check: Bool, errorCode: U256) -> ()"
+	},
+	"contractExists!(byteCode: ByteVec) -> Bool": {
+		"prefix": "contractExists!",
+		"body": [
+			"contractExists!($1)"
+		],
+		"description": "contractExists!(byteCode: ByteVec) -> Bool"
+	},
+	"blockHash!() -> (ByteVec)": {
+		"prefix": "blockHash!",
+		"body": [
+			"blockHash!()"
+		],
+		"description": "blockHash!() -> (ByteVec)"
+	},
+	"nullContractAddress!() -> (Address)": {
+		"prefix": "nullContractAddress!",
+		"body": [
+			"nullContractAddress!()"
+		],
+		"description": "nullContractAddress!() -> (Address)"
 	}
 }
 
 // Assertions
 // assert!(input: Bool) -> () // Will halt execution if false
+// checkCaller!(check: Bool, errorCode: U256) -> ()
 // isAssetAddress!(input: Address) -> (Bool)
 // isContractAddress!(input: Address) -> (Bool)
 
@@ -926,6 +955,7 @@
 // createSubContractWithToken!(path: ByteVec, byteCode: ByteVec, state: ByteVec, amount: U256) -> (ByteVec)
 // copyCreateSubContract!(path: ByteVec, byteCode: ByteVec, state: ByteVec) -> (ByteVec)
 // copyCreateSubContractWithToken!(path: ByteVec, byteCode: ByteVec, state: ByteVec, amount: U256) -> (ByteVec)
+// contractExists!(byteCode: ByteVec) -> Bool
 
 // destroySelf!(address: Address) -> ()
 // migrate!(codeCompiled: ByteVec) // Updates the contract in-place
@@ -950,9 +980,12 @@
 // nullAddress!() -> (Address)
 // contractIdToAddress!(contractId: ByteVec) -> (Address)
 // panic!([input: U256])
+// blockHash!() -> (ByteVec)
+
 // lockApprovedAssets!(address: Address, tokenId: ByteVec, amount: U256) -> ()
 // burnToken!() -> (Address, ByteVec, U256)
 // migrateWithState!(codeCompiled: ByteVec, state: ByteVec) // Deprecated
 // migrateWithFields!(codeCompiled: ByteVec, field: ByteVec)
 // subContractId!(id: ByteVec) -> (ByteVec)
 // subContractIdOf!(contract: Contract, id: ByteVec) -> (ByteVec)
+// nullContractAddress!() -> (Address)
