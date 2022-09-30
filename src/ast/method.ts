@@ -34,9 +34,6 @@ export class Method extends Base {
     if (ctx.PUB()) {
       method.detail += `${ctx.PUB()?.text} `
     }
-    if (ctx.PAYABLE()) {
-      method.detail += `${ctx.PAYABLE()?.text} `
-    }
     method.detail += `${ctx.FN().text} `
     method.detail += `${ctx.IDENTIFIER().text}`
 

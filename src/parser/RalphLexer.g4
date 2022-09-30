@@ -3,11 +3,11 @@ lexer grammar RalphLexer;
 // LEXER
 // src/main/scala/org/alephium/protocol/vm/lang/Lexer.scala
 // Keywords
-IMPORT                 : 'import';
-PACKAGE                : 'package';
+// IMPORT                 : 'import';
+// PACKAGE                : 'package';
+// PAYABLE                : 'payable';
 FN                     : 'fn';
 PUB                    : 'pub';
-PAYABLE                : 'payable';
 RETURN                 : 'return' ;
 
 INTERFACE              : 'Interface';
@@ -100,6 +100,9 @@ AND                    : '&&';
 OR                     : '||';
 NOT                    : '!';
 
+ADDRESS_LIT            : '#' LETTER*;
+ALPH_LIT               : DIGIT* ' '? 'alph';
+BOOL_LIT               : 'true' | 'false';
 
 //TODO
 // Number literals
@@ -107,10 +110,6 @@ DECIMAL_LIT            : ('0' | [1-9] ('_'? [0-9])*);
 BINARY_LIT             : '0' [bB] ('_'? BIN_DIGIT)+;
 OCTAL_LIT              : '0' [oO]? ('_'? OCTAL_DIGIT)+;
 HEX_LIT                : '0' [xX]  ('_'? HEX_DIGIT)+;
-
-ADDRESS_LIT            : '#' LETTER*;
-ALPH_LIT               : DIGIT* ' '? 'alph';
-BOOL_LIT               : 'true' | 'false';
 
 FLOAT_LIT : (DECIMAL_FLOAT_LIT | HEX_FLOAT_LIT);
 
@@ -187,10 +186,10 @@ fragment DIGIT
     ;
 
 // Whitespace and comments
-WS   : [ \t\n\r]+                    -> channel(HIDDEN);
-COMMENT:            '/*' .*? '*/'    -> channel(HIDDEN);
-LINE_COMMENT:       '//' ~[\r\n]*    -> channel(HIDDEN);
-TERMINATOR: [\r\n]+                  -> channel(HIDDEN);
+WS   : [ \t\n\r]+                    -> channel(1);
+COMMENT:            '/*' .*? '*/'    -> channel(2);
+LINE_COMMENT:       '//' ~[\r\n]*    -> channel(3);
+TERMINATOR: [\r\n]+                  -> channel(4);
 
 // Emit an EOS token for any newlines, semicolon, multiline comments or the EOF and
 //return to normal lexing
