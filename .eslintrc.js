@@ -17,6 +17,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-use-before-define': ['error', { ignoreTypeReferences: true }],
     'no-prototype-builtins': 'off',
+    'class-methods-use-this': 'off',
     'import/prefer-default-export': 'off',
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
