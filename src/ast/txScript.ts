@@ -4,7 +4,7 @@ import { Base } from './base'
 export class TxScript extends Base {
   main!: string
 
-  kind(): SymbolKind {
+  symbolKind(): SymbolKind {
     return SymbolKind.Class
   }
 }

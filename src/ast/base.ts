@@ -1,24 +1,24 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
 import { Definition, DefinitionLink, Location, Position, ProviderResult, SymbolKind, TextDocument, WorkspaceEdit } from 'vscode'
-import { Ast, IAst } from './ast'
-import { Identifier } from './identifier'
+import { Identifier, IdentifierKind } from './identifier'
+import { Ast } from './ast'
 
 export class Base extends Ast implements VscodeInterface {
-  members: Map<string, IAst>
+  members: Map<string, Identifier>
 
   constructor(name: string, token: Token) {
     super(name, token)
     this.members = new Map()
-    // this.members.set(this.name, this)
+    this.kind = IdentifierKind.Type
   }
 
-  getChild(): IAst[] {
+  getChild(): Identifier[] {
     return Array.from(this.members.values())
   }
 
   // override
-  findOne(identifier: Identifier): IAst | undefined {
+  findOne(identifier: Identifier): Identifier | undefined {
     if (this.contains(identifier)) {
       if (this.name === identifier.name) return this
       const member = this.members.get(<string>identifier.name)
@@ -35,8 +35,8 @@ export class Base extends Ast implements VscodeInterface {
     return undefined
   }
 
-  findAll(identifier: Identifier): IAst[] | undefined {
-    let items: IAst[] = []
+  findAll(identifier: Identifier): Identifier[] | undefined {
+    let items: Identifier[] = []
     if (this.contains(identifier)) {
       if (this.name === identifier.name) items.push(this)
       this.members.forEach((member) => {
@@ -50,25 +50,31 @@ export class Base extends Ast implements VscodeInterface {
     return undefined
   }
 
-  add(ast: IAst) {
+  add(ast: Identifier) {
     this.members.set(ast.name, ast)
   }
 
-  kind(): SymbolKind {
+  symbolKind(): SymbolKind {
     return SymbolKind.Class
   }
 
   documentSymbol(document?: vscode.TextDocument): vscode.DocumentSymbol {
-    const item = new vscode.DocumentSymbol(this.name, '', this.kind(), this.scope!, this.scope!)
+    const item = new vscode.DocumentSymbol(this.name, '', this.symbolKind(), this.scope!, this.scope!)
     this.members.forEach((member) => {
-      item.children.push(new vscode.DocumentSymbol(member.name, member.detail!, <SymbolKind>member.kind?.(), member.scope!, member.scope!))
+      item.children.push(
+        new vscode.DocumentSymbol(member.name, member.detail!, <SymbolKind>member.symbolKind?.(), member.scope!, member.scope!)
+      )
     })
     return item
   }
 
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
     const range = document.getWordRangeAtPosition(position)
-    const identifier = new Identifier(document.getText(range), position, document.uri)
+    const identifier = <Identifier>{
+      name: document.getText(range),
+      point: position,
+      uri: document.uri,
+    }
     console.log(`identifier = ${JSON.stringify(identifier, null, 2)}`)
     let item
     const member = this.findOne(identifier)
@@ -81,7 +87,11 @@ export class Base extends Ast implements VscodeInterface {
 
   provideDefinition(document: TextDocument, position: Position): ProviderResult<Definition | DefinitionLink[]> {
     const range = document.getWordRangeAtPosition(position)
-    const identifier = new Identifier(document.getText(range), position, document.uri)
+    const identifier = <Identifier>{
+      name: document.getText(range),
+      point: position,
+      uri: document.uri,
+    }
     let item
     const member = this.findOne(identifier)
     if (member) {

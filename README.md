@@ -38,6 +38,7 @@ java -jar /Users/${home}/.alephium-dev/ralphc.jar --project ./tests/contracts/
 ```
 
 ### More command compile
+
 https://github.com/suyanlong/ralphc
 
 ## FAQ

@@ -1,9 +1,9 @@
 import { SymbolKind } from 'vscode'
-import { Ast, IAst } from './ast'
 import { ParamContext } from '../parser/RalphParser'
+import { Ast } from './ast'
 
 export class Variable extends Ast {
-  kind(): SymbolKind {
+  symbolKind(): SymbolKind {
     return SymbolKind.Variable
   }
 

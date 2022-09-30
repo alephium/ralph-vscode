@@ -3,14 +3,14 @@ import { Token } from 'antlr4ts/Token'
 import { Base } from './base'
 import { MethodDeclContext } from '../parser/RalphParser'
 import { Variable } from './variable'
-import { IAst } from './ast'
+import { Identifier } from './identifier'
 
 export class Method extends Base {
-  kind(): SymbolKind {
+  symbolKind(): SymbolKind {
     return SymbolKind.Function
   }
 
-  identifiers: Map<string, IAst>
+  identifiers: Map<string, Identifier>
 
   constructor(name: string, token: Token) {
     super(name, token)
@@ -19,7 +19,6 @@ export class Method extends Base {
 
   public static FromContext(ctx: MethodDeclContext): Method {
     const method = new Method(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
-
     ctx
       .paramList()
       ?.param()

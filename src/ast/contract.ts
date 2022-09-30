@@ -2,7 +2,7 @@ import { SymbolKind } from 'vscode'
 import { Base } from './base'
 
 export class Contract extends Base {
-  kind(): SymbolKind {
+  symbolKind(): SymbolKind {
     return SymbolKind.Class
   }
 }

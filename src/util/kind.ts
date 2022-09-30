@@ -1,7 +1,7 @@
 import { SymbolKind } from 'vscode'
 import { RalphParser } from '../parser/RalphParser'
 
-export const MapKinds = new Map([
+const mapKinds = new Map([
   [RalphParser.FN, SymbolKind.Function],
   [RalphParser.CONTRACT, SymbolKind.Class],
   [RalphParser.TXCONTRACT, SymbolKind.Class],
@@ -18,6 +18,10 @@ export const MapKinds = new Map([
   [RalphParser.LET, SymbolKind.Variable],
   [RalphParser.CONST, SymbolKind.Constant],
 ])
+
+export default function MapKinds() {
+  return mapKinds
+}
 
 // File = 0,
 // Module = 1,

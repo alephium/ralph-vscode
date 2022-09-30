@@ -1,5 +1,4 @@
-import { RenameProvider, WorkspaceEdit, TextDocument, Uri, CancellationToken, Position, Range, ProviderResult } from 'vscode'
-import * as vscode from 'vscode'
+import { RenameProvider, WorkspaceEdit, TextDocument, Position, ProviderResult } from 'vscode'
 import { Parser } from '../parser/parser'
 import { Identifier } from '../ast/identifier'
 
@@ -7,7 +6,11 @@ export class RalphRenameProvider implements RenameProvider {
   provideRenameEdits(document: TextDocument, position: Position, newName: string): ProviderResult<WorkspaceEdit> {
     const parser = new Parser(document.uri, document.getText())
     const range = document.getWordRangeAtPosition(position)
-    const identifier = new Identifier(document.getText(range), position, document.uri)
+    const identifier = <Identifier>{
+      name: document.getText(range),
+      point: position,
+      uri: document.uri,
+    }
     const edit = new WorkspaceEdit()
     parser.visitor.structs.forEach((item) => item.provideRenameEdits(identifier, newName, edit))
     return edit

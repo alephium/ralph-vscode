@@ -1,25 +1,38 @@
 import { Token } from 'antlr4ts/Token'
-
-import * as vscode from 'vscode'
 import { Position, Range, SymbolKind, Uri } from 'vscode'
-import { RuleContext } from 'antlr4ts/RuleContext'
-import { Identifier } from './identifier'
+import * as vscode from 'vscode'
+import MapKinds from '../util/kind'
+import { ActionKind, Identifier, IdentifierKind } from './identifier'
 
-export class Ast implements IAst {
-  readonly name: string
+export class Ast implements Identifier {
+  name: string
 
-  readonly token: Token
+  identifierKind?: IdentifierKind
+
+  action: ActionKind | undefined
+
+  kind?: number
+
+  token: Token
 
   detail: string
 
-  uri: Uri | undefined
-
   point: Position
+
+  uri: Uri | undefined
 
   /** * action scope ** */
   scope: Range | undefined
 
-  parent: IAst | undefined
+  parent: Identifier | undefined
+
+  symbolKind(): SymbolKind {
+    return MapKinds().get(this.kind!)!
+  }
+
+  identifier(): Identifier {
+    return this
+  }
 
   constructor(name: string, token: Token) {
     this.token = token
@@ -27,10 +40,6 @@ export class Ast implements IAst {
     this.detail = name
     this.point = this.convert(token)
     this.range(token, token)
-  }
-
-  position(): vscode.Position {
-    return this.convert(this.token)
   }
 
   convert(token: Token): vscode.Position {
@@ -41,14 +50,14 @@ export class Ast implements IAst {
     this.scope = new vscode.Range(this.convert(begin), this.convert(end ?? begin))
   }
 
-  findOne(identifier: Identifier): IAst | undefined {
+  findOne(identifier: Identifier): Identifier | undefined {
     if (this.contains(identifier)) {
       if (identifier.name === this.name) return this
     }
     return undefined
   }
 
-  findAll(identifier: Identifier): IAst[] | undefined {
+  findAll(identifier: Identifier): Identifier[] | undefined {
     const one = this.findOne(identifier)
     if (one) {
       return [one]
@@ -64,7 +73,7 @@ export class Ast implements IAst {
       }
     }
     if (this.scope) {
-      return this.scope.contains(identifier.point)
+      return this.scope.contains(identifier.point!)
     }
     return false
   }
@@ -78,8 +87,18 @@ export class Ast implements IAst {
             `
   }
 
-  setParent(parent: IAst): IAst {
+  setParent(parent: Identifier): Identifier {
     this.parent = parent
+    return this
+  }
+
+  setIdentifierKind(identifierKind: IdentifierKind): Identifier {
+    this.identifierKind = identifierKind
+    return this
+  }
+
+  setAction(action: ActionKind): Identifier {
+    this.action = action
     return this
   }
 
@@ -90,41 +109,7 @@ export class Ast implements IAst {
     return this.parent?.getUri?.()
   }
 
-  identifier(): Identifier {
-    return new Identifier(this.name, this.point, this.getUri())
+  word(): string {
+    return this.name
   }
-}
-
-export interface IAst {
-  name: string
-
-  token?: Token
-
-  detail?: string
-
-  uri?: Uri
-
-  scope?: Range
-
-  parent?: IAst
-
-  kind?: () => SymbolKind
-
-  position(): vscode.Position
-
-  findOne?(identifier: Identifier): IAst | undefined
-
-  findAll?(identifier: Identifier): IAst[] | undefined
-
-  contains?(identifier: Identifier): boolean
-
-  toString?(): string
-
-  setParent?(parent: IAst): ThisType<IAst>
-
-  getChild?(): IAst[]
-
-  getUri?(): Uri | undefined
-
-  identifier(): Identifier
 }
