@@ -174,12 +174,9 @@ statement:
 simpleStmt
 	: emptyStmt
 	| varDecl
-	| expressionStmt
-	| event
+	| expression
 	| emit
 	;
-
-expressionStmt: expression;
 
 emptyStmt: eos;
 
