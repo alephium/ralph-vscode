@@ -1,10 +1,14 @@
-import { SymbolKind } from 'vscode'
+import { CompletionItemKind, SymbolKind } from 'vscode'
 import { ParamContext } from '../parser/RalphParser'
 import { Ast } from './ast'
 
 export class Field extends Ast {
   symbolKind(): SymbolKind {
     return SymbolKind.Field
+  }
+
+  completionItemKind(): CompletionItemKind {
+    return CompletionItemKind.Field
   }
 
   public static FromContext(ctx: ParamContext): Field {

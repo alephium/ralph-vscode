@@ -1,10 +1,10 @@
 import { RenameProvider, WorkspaceEdit, TextDocument, Position, ProviderResult } from 'vscode'
-import { Parser } from '../parser/parser'
+import Parser from '../parser/parser'
 import { Identifier } from '../ast/identifier'
+import cache from '../cache/cache'
 
 export class RalphRenameProvider implements RenameProvider {
   provideRenameEdits(document: TextDocument, position: Position, newName: string): ProviderResult<WorkspaceEdit> {
-    const parser = new Parser(document.uri, document.getText())
     const range = document.getWordRangeAtPosition(position)
     const identifier = <Identifier>{
       name: document.getText(range),
@@ -12,7 +12,8 @@ export class RalphRenameProvider implements RenameProvider {
       uri: document.uri,
     }
     const edit = new WorkspaceEdit()
-    parser.visitor.structs.forEach((item) => item.provideRenameEdits(identifier, newName, edit))
+    Parser(document.uri, document.getText())
+    cache.forEach((item) => item.provideRenameEdits(identifier, newName, edit))
     return edit
   }
 

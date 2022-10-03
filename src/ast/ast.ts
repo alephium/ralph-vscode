@@ -11,9 +11,9 @@ export class Ast implements Identifier {
 
   action: ActionKind | undefined
 
-  kind?: number
+  kind: number | undefined
 
-  token: Token
+  token: Token | undefined
 
   detail: string
 
@@ -34,12 +34,16 @@ export class Ast implements Identifier {
     return this
   }
 
-  constructor(name: string, token: Token) {
-    this.token = token
+  constructor(name: string, token: Position | Token) {
     this.name = name
     this.detail = name
-    this.point = this.convert(token)
-    this.range(token, token)
+    if (token instanceof Position) {
+      this.point = token
+    } else {
+      this.token = token
+      this.point = this.convert(token)
+      this.range(token, token)
+    }
   }
 
   convert(token: Token): vscode.Position {

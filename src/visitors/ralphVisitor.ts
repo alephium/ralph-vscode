@@ -10,20 +10,21 @@ import { Event } from '../ast/event'
 import { Base } from '../ast/base'
 import { Interface } from '../ast/interface'
 import { TxScript } from '../ast/txScript'
+import cache from '../cache/cache'
 
 export class RalphVisitor extends AbstractParseTreeVisitor<number> implements RalphParserVisitor<number> {
-  structs!: Map<string, Base>
+  cache!: Map<string, Base>
 
   uri: Uri
 
   constructor(uri: Uri) {
     super()
     this.uri = uri
-    this.structs = new Map()
+    this.cache = cache
   }
 
   protected defaultResult(): number {
-    return this.structs.size
+    return this.cache.size
   }
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
@@ -58,8 +59,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     // fields
     this.visitParams(ctx.paramList(), contact)
     this.visitBody(ctx.typeStructBody(), contact)
-    this.structs.set(contact.name, contact)
-    return this.structs.size
+    this.cache.set(contact.name, contact)
+    return this.cache.size
   }
 
   visitInterface(ctx: InterfaceContext): number {
@@ -68,8 +69,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     face.uri = this.uri
     face.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitBody(ctx.typeStructBody(), face)
-    this.structs.set(face.name, face)
-    return this.structs.size
+    this.cache.set(face.name, face)
+    return this.cache.size
   }
 
   visitTxScript(ctx: TxScriptContext): number {
@@ -79,7 +80,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     script.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitParams(ctx.paramList(), script)
     this.visitBody(ctx.typeStructBody(), script)
-    this.structs.set(script.name, script)
-    return this.structs.size
+    this.cache.set(script.name, script)
+    return this.cache.size
   }
 }

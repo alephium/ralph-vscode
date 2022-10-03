@@ -1,4 +1,4 @@
-import { SymbolKind } from 'vscode'
+import { CompletionItemKind, SymbolKind } from 'vscode'
 import { Token } from 'antlr4ts/Token'
 import { Base } from './base'
 import { MethodDeclContext } from '../parser/RalphParser'
@@ -8,6 +8,10 @@ import { Identifier } from './identifier'
 export class Method extends Base {
   symbolKind(): SymbolKind {
     return SymbolKind.Function
+  }
+
+  completionItemKind(): CompletionItemKind {
+    return CompletionItemKind.Function
   }
 
   identifiers: Map<string, Identifier>

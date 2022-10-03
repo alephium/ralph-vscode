@@ -1,13 +1,12 @@
 import * as vscode from 'vscode'
-import { Parser } from '../parser/parser'
+import Parser from '../parser/parser'
+import cache from '../cache/cache'
 
 export class SymbolProvider implements vscode.DocumentSymbolProvider {
   provideDocumentSymbols(document: vscode.TextDocument): vscode.ProviderResult<vscode.DocumentSymbol[] | vscode.SymbolInformation[]> {
-    const parser = new Parser(document.uri, document.getText())
-    const items: vscode.DocumentSymbol[] = []
-    parser.visitor.structs.forEach((contract) => {
-      items.push(contract.documentSymbol(document))
-    })
-    return items
+    Parser(document.uri, document.getText())
+    return Array.from(cache.values())
+      .filter((c) => c.getUri()?.path === document.uri.path)
+      .map((contract) => contract.documentSymbol())
   }
 }

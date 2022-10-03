@@ -1,5 +1,5 @@
 import { Token } from 'antlr4ts/Token'
-import { Position, Range, SymbolKind, Uri } from 'vscode'
+import { CompletionItemKind, Position, Range, SymbolKind, Uri } from 'vscode'
 
 export enum IdentifierKind {
   Variable = 0,
@@ -16,7 +16,7 @@ export enum ActionKind {
 export interface Identifier {
   name: string
 
-  kind?: IdentifierKind
+  identifierKind?: IdentifierKind
 
   action?: ActionKind
 
@@ -33,6 +33,8 @@ export interface Identifier {
   scope?: Range
 
   symbolKind?(): SymbolKind
+
+  completionItemKind?(): CompletionItemKind
 
   findOne?(identifier: Identifier): Identifier | undefined
 

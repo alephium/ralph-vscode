@@ -6,6 +6,7 @@ import { SymbolProvider } from './provider/symbolProvider'
 import { CompletionProvider } from './provider/completionProvider'
 import { DefinitionProvider } from './provider/definitionProvider'
 import { RalphRenameProvider } from './provider/renameProvider'
+import Parser from './parser/parser'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -13,6 +14,8 @@ export function activate(context: vscode.ExtensionContext) {
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
   console.log('Congratulations, your extension is now active!')
+
+  init()
 
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
@@ -34,3 +37,12 @@ export function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() {}
+
+async function init() {
+  const files = await vscode.workspace.findFiles('**/*.ral')
+  files.forEach(async (uri) => {
+    console.log(`file path ${uri.path}`)
+    const doc = await vscode.workspace.openTextDocument(uri)
+    Parser(doc.uri, doc.getText())
+  })
+}

@@ -1,6 +1,16 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
-import { Definition, DefinitionLink, Location, Position, ProviderResult, SymbolKind, TextDocument, WorkspaceEdit } from 'vscode'
+import {
+  CompletionItemKind,
+  Definition,
+  DefinitionLink,
+  Location,
+  Position,
+  ProviderResult,
+  SymbolKind,
+  TextDocument,
+  WorkspaceEdit,
+} from 'vscode'
 import { Identifier, IdentifierKind } from './identifier'
 import { Ast } from './ast'
 
@@ -56,6 +66,10 @@ export class Base extends Ast implements VscodeInterface {
 
   symbolKind(): SymbolKind {
     return SymbolKind.Class
+  }
+
+  completionItemKind(): CompletionItemKind {
+    return CompletionItemKind.Class
   }
 
   documentSymbol(document?: vscode.TextDocument): vscode.DocumentSymbol {

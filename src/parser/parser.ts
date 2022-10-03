@@ -4,20 +4,14 @@ import { RalphLexer } from './RalphLexer'
 import { RalphParser } from './RalphParser'
 import { RalphVisitor } from '../visitors/ralphVisitor'
 
-export class Parser {
-  visitor: RalphVisitor
-
-  constructor(uri: Uri, text: string) {
+export default function Parser(uri: Uri, text: string) {
     // Create the lexer and parser
     const inputStream = CharStreams.fromString(text)
     const lexer = new RalphLexer(inputStream)
     const tokenStream = new CommonTokenStream(lexer)
     const parser = new RalphParser(tokenStream)
-
     // Parse the input, where `sourceFile` is whatever entry point you defined
     const tree = parser.sourceFile()
-
-    this.visitor = new RalphVisitor(uri)
-    this.visitor.visit(tree)
-  }
+    const visitor = new RalphVisitor(uri)
+    visitor.visit(tree)
 }
