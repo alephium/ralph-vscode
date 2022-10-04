@@ -26,3 +26,7 @@ lint:
 
 antlr4ts:
 	yarn run antlr4ts
+
+
+test:
+	yarn run test
