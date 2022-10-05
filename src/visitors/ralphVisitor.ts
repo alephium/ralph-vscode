@@ -1,6 +1,13 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import { Uri } from 'vscode'
-import { ContractContext, InterfaceContext, ParamListContext, TxScriptContext, TypeStructBodyContext } from '../parser/RalphParser'
+import {
+  ContractContext,
+  EventContext,
+  InterfaceContext,
+  ParamListContext,
+  TxScriptContext,
+  TypeStructBodyContext,
+} from '../parser/RalphParser'
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
 import { Contract } from '../ast/contract'
@@ -81,6 +88,12 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     this.visitParams(ctx.paramList(), script)
     this.visitBody(ctx.typeStructBody(), script)
     this.cache.set(script.name, script)
+    return this.cache.size
+  }
+
+  visitEvent(ctx: EventContext): number {
+    console.log(`visitEvent = ${ctx.text}`)
+
     return this.cache.size
   }
 }
