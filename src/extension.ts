@@ -7,6 +7,7 @@ import { CompletionProvider } from './provider/completionProvider'
 import { DefinitionProvider } from './provider/definitionProvider'
 import { RalphRenameProvider } from './provider/renameProvider'
 import Parser from './parser/parser'
+import { BuiltInFunctionProvider } from './provider/builtInFunctionProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -29,6 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(selector, new FormatterProvider()))
   context.subscriptions.push(vscode.languages.registerDocumentSymbolProvider(selector, new SymbolProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new CompletionProvider()))
+  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new BuiltInFunctionProvider()))
   context.subscriptions.push(vscode.languages.registerDefinitionProvider(selector, new DefinitionProvider()))
   context.subscriptions.push(vscode.languages.registerRenameProvider(selector, new RalphRenameProvider()))
 

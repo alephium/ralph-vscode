@@ -2,7 +2,7 @@ import * as vscode from 'vscode'
 import { CompletionItem, CompletionItemKind, CompletionTriggerKind } from 'vscode'
 import cache from '../cache/cache'
 
-export class CompletionProvider implements vscode.CompletionItemProvider<CompletionItem> {
+export class CompletionProvider implements vscode.CompletionItemProvider {
   provideCompletionItems(
     document: vscode.TextDocument,
     position: vscode.Position,

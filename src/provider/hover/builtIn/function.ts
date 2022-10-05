@@ -3,7 +3,7 @@ import { MarkdownString } from 'vscode'
 import jsonData from './ralph-built-in-functions.json'
 
 // https://raw.githubusercontent.com/alephium/alephium/master/protocol/src/main/resources/ralph-built-in-functions.json
-interface Fun {
+export interface Fun {
   name: string
 
   category: string
