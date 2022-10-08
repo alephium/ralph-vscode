@@ -11,5 +11,9 @@ class Option {
 
   ignoreExternalCallCheckWarnings = false
 
+  warningAsError = false
+
   projectDir: string | undefined
+
+  debug: string | undefined
 }
