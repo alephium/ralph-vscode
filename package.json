@@ -2,7 +2,7 @@
   "name": "ralph-vscode",
   "displayName": "ralph vscode",
   "description": "ralph vscode",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v18.0.0"
@@ -25,10 +25,10 @@
   ],
   "license": "GUN3",
   "bugs": {
-    "url": "https://github.com/suyanlong/ralph-vscode/issues"
+    "url": "https://github.com/alephium/ralph-vscode/issues"
   },
-  "homepage": "https://github.com/suyanlong/ralph-vscode#readme",
-  "repository": "git+https://github.com/suyanlong/ralph-vscode.git",
+  "homepage": "https://github.com/alephium/ralph-vscode#readme",
+  "repository": "git+https://github.com/alephium/ralph-vscode.git",
   "categories": [
     "Programming Languages",
     "Snippets",
@@ -65,7 +65,7 @@
         "ralph.downloader.config.url": {
           "type": "string",
           "description": "download link",
-          "default": "https://github.com/suyanlong/ralphc/releases/download/v1.5.0-rc9/ralphc.jar"
+          "default": "https://github.com/alephium/ralphc/releases/download/v1.5.0-rc11/ralphc.jar"
         },
         "ralph.downloader.config.target": {
           "type": "string",
@@ -110,6 +110,16 @@
           "type": "string",
           "default": "",
           "description": "project path"
+        },
+        "ralph.compiler.option.warningAsError": {
+          "type": "boolean",
+          "default": false,
+          "description": "Consider warnings as errors"
+        },
+        "ralph.compiler.option.debug": {
+          "type": "boolean",
+          "default": false,
+          "description": "debug mode"
         }
       }
     },

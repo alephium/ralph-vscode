@@ -39,19 +39,19 @@ java -jar /Users/${home}/.alephium-dev/ralphc.jar --project ./tests/contracts/
 
 ### More command compile
 
-https://github.com/suyanlong/ralphc
+https://github.com/alephium/ralphc
 
 ## FAQ
 
-<https://github.com/suyanlong/ralph-vscode/issues>
+<https://github.com/alephium/ralph-vscode/issues>
 
 ## Contribution
 
-See [CONTRIBUTING.md](https://github.com/suyanlong/ralph-vscode/blob/main/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/alephium/ralph-vscode/blob/main/CONTRIBUTING.md)
 
 ## License
 
-[GNU3](<[LICENSE](https://github.com/suyanlong/ralph-vscode/blob/main/LICENSE)>)
+[GNU3](<[LICENSE](https://github.com/alephium/ralph-vscode/blob/main/LICENSE)>)
 
 ## References
 
