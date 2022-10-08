@@ -1,8 +1,11 @@
 import { CompletionItemKind, SymbolKind } from 'vscode'
 import { ParamContext } from '../parser/RalphParser'
-import { Ast } from './ast'
+import { SemanticNode } from './ast'
+import { Identifier } from './identifier'
 
-export class Variable extends Ast {
+export class Variable extends SemanticNode {
+  type_: Identifier | undefined
+
   symbolKind(): SymbolKind {
     return SymbolKind.Variable
   }
@@ -15,5 +18,9 @@ export class Variable extends Ast {
     const varVal = new Variable(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
     varVal.detail = ctx.text
     return varVal
+  }
+
+  getType(): Identifier | undefined {
+    return this.type_
   }
 }

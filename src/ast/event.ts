@@ -1,7 +1,7 @@
 import { CompletionItemKind, SymbolKind } from 'vscode'
-import { Ast } from './ast'
+import { SemanticNode } from './ast'
 
-export class Event extends Ast {
+export class Event extends SemanticNode {
   symbolKind(): SymbolKind {
     return SymbolKind.Field
   }

@@ -12,9 +12,11 @@ import {
   WorkspaceEdit,
 } from 'vscode'
 import { Identifier, IdentifierKind } from './identifier'
-import { Ast } from './ast'
+import { SemanticNode } from './ast'
+import { Word } from './word'
+import { Finder } from './finder'
 
-export class Base extends Ast implements VscodeInterface {
+export class Base extends SemanticNode implements VscodeInterface, Finder {
   members: Map<string, Identifier>
 
   constructor(name: string, token: Token) {
@@ -23,13 +25,31 @@ export class Base extends Ast implements VscodeInterface {
     this.kind = IdentifierKind.Type
   }
 
+  add(ast: Identifier) {
+    this.members.set(ast.name, ast)
+  }
+
   getChild(): Identifier[] {
     return Array.from(this.members.values())
   }
 
+  container(identifier?: Identifier): Identifier | undefined {
+    if (!identifier) {
+      return this.parent
+    }
+    if (this.isScope(identifier)) {
+      const obj = Array.from(this.members.values()).find((member) => member.isScope?.(identifier))
+      if (obj) {
+        return obj
+      }
+      return this
+    }
+    return undefined
+  }
+
   // override
-  findOne(identifier: Identifier): Identifier | undefined {
-    if (this.contains(identifier)) {
+  findOne(identifier: Word): Identifier | undefined {
+    if (this.isScope(identifier)) {
       if (this.name === identifier.name) return this
       const member = this.members.get(<string>identifier.name)
       if (!member) {
@@ -45,9 +65,9 @@ export class Base extends Ast implements VscodeInterface {
     return undefined
   }
 
-  findAll(identifier: Identifier): Identifier[] | undefined {
+  findAll(identifier: Word): Identifier[] | undefined {
     let items: Identifier[] = []
-    if (this.contains(identifier)) {
+    if (this.isScope(identifier)) {
       if (this.name === identifier.name) items.push(this)
       this.members.forEach((member) => {
         const is = member.findAll?.(identifier)
@@ -58,10 +78,6 @@ export class Base extends Ast implements VscodeInterface {
       return items
     }
     return undefined
-  }
-
-  add(ast: Identifier) {
-    this.members.set(ast.name, ast)
   }
 
   symbolKind(): SymbolKind {
