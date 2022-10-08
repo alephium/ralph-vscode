@@ -83,7 +83,7 @@ result
     ;
 
 
-paramAnnotation: AT IDENTIFIER;
+paramAnnotation: AT 'unused';
 
 param: paramAnnotation? MUT? IDENTIFIER COLON typeName;
 

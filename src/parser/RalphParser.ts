@@ -1056,7 +1056,7 @@ export class RalphParser extends Parser {
 			this.state = 207;
 			this.match(RalphParser.AT);
 			this.state = 208;
-			this.match(RalphParser.IDENTIFIER);
+			this.match(RalphParser.UNUSED);
 			}
 		}
 		catch (re) {
@@ -2227,7 +2227,7 @@ export class RalphParser extends Parser {
 		"\xC1\x03\x02\x02\x02\xCC\xCD\x03\x02\x02\x02\xCD\xCE\x03\x02\x02\x02\xCE" +
 		"\xD0\x07$\x02\x02\xCF\xBD\x03\x02\x02\x02\xCF\xBF\x03\x02\x02\x02\xCF" +
 		"\xC0\x03\x02\x02\x02\xD0\x19\x03\x02\x02\x02\xD1\xD2\x07\x19\x02\x02\xD2" +
-		"\xD3\x07\"\x02\x02\xD3\x1B\x03\x02\x02\x02\xD4\xD6\x05\x1A\x0E\x02\xD5" +
+		"\xD3\x07 \x02\x02\xD3\x1B\x03\x02\x02\x02\xD4\xD6\x05\x1A\x0E\x02\xD5" +
 		"\xD4\x03\x02\x02\x02\xD5\xD6\x03\x02\x02\x02\xD6\xD8\x03\x02\x02\x02\xD7" +
 		"\xD9\x07\x12\x02\x02\xD8\xD7\x03\x02\x02\x02\xD8\xD9\x03\x02\x02\x02\xD9" +
 		"\xDA\x03\x02\x02\x02\xDA\xDB\x07\"\x02\x02\xDB\xDC\x07,\x02\x02\xDC\xDD" +
@@ -2868,7 +2868,7 @@ export class ResultContext extends ParserRuleContext {
 
 export class ParamAnnotationContext extends ParserRuleContext {
 	public AT(): TerminalNode { return this.getToken(RalphParser.AT, 0); }
-	public IDENTIFIER(): TerminalNode { return this.getToken(RalphParser.IDENTIFIER, 0); }
+	public UNUSED(): TerminalNode { return this.getToken(RalphParser.UNUSED, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
