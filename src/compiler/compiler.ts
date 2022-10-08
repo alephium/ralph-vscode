@@ -36,7 +36,11 @@ export class Compiler {
       await d.showQuickPick()
       const jar = path.join(os.homedir(), '.alephium-dev', d.config.target)
       const warn = this.warning()
-      this.cmd = `java -jar ${jar} --project ${project} ${warn} -f ${fullFileName}`
+      let debug = ''
+      if (this.option?.debug) {
+        debug = '-d'
+      }
+      this.cmd = `java -jar ${jar} ${debug} --project ${project} ${warn} -f ${fullFileName}`
     }
 
     this.log.info(`Compiler.cmd: ${this.cmd}`)
@@ -77,6 +81,10 @@ export class Compiler {
 
     if (this.option?.ignoreExternalCallCheckWarnings) {
       warning += '--ie '
+    }
+
+    if (this.option?.warningAsError) {
+      warning += '--warning '
     }
     return warning
   }
