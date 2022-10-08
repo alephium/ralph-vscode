@@ -1,15 +1,16 @@
 import { Token } from 'antlr4ts/Token'
-import { Position, Range, SymbolKind, Uri } from 'vscode'
 import * as vscode from 'vscode'
+import { CompletionItemLabel, Position, Range, SymbolKind, Uri } from 'vscode'
 import MapKinds from '../util/kind'
-import { ActionKind, Identifier, IdentifierKind } from './identifier'
+import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
+import { Word } from './word'
 
-export class Ast implements Identifier {
+export class SemanticNode implements Identifier {
   name: string
 
   identifierKind?: IdentifierKind
 
-  action: ActionKind | undefined
+  semanticsKind: SemanticsKind | undefined
 
   kind: number | undefined
 
@@ -17,7 +18,7 @@ export class Ast implements Identifier {
 
   detail: string
 
-  point: Position
+  point: Position | undefined
 
   uri: Uri | undefined
 
@@ -34,15 +35,18 @@ export class Ast implements Identifier {
     return this
   }
 
-  constructor(name: string, token: Position | Token) {
+  constructor(name: string, token?: Position | Token) {
     this.name = name
     this.detail = name
-    if (token instanceof Position) {
-      this.point = token
-    } else {
-      this.token = token
-      this.point = this.convert(token)
-      this.range(token, token)
+    this.semanticsKind = SemanticsKind.Def
+    if (token) {
+      if (token instanceof Position) {
+        this.point = token
+      } else {
+        this.token = token
+        this.point = this.convert(token)
+        this.range(token, token)
+      }
     }
   }
 
@@ -54,22 +58,47 @@ export class Ast implements Identifier {
     this.scope = new vscode.Range(this.convert(begin), this.convert(end ?? begin))
   }
 
-  findOne(identifier: Identifier): Identifier | undefined {
-    if (this.contains(identifier)) {
-      if (identifier.name === this.name) return this
+  findOne(condition: Word): Identifier | undefined {
+    if (this.isScope(condition)) {
+      if (condition.name === this.name) return this
     }
     return undefined
   }
 
-  findAll(identifier: Identifier): Identifier[] | undefined {
-    const one = this.findOne(identifier)
+  findAll(condition: Word): Identifier[] | undefined {
+    const one = this.findOne(condition)
     if (one) {
       return [one]
     }
     return one
   }
 
-  contains(identifier: Identifier): boolean {
+  find(condition: Word): Identifier[] | undefined {
+    if (this.isScope(condition)) {
+      if (condition.name === this.name) return [this]
+    }
+    return undefined
+  }
+
+  container(identifier?: Identifier): Identifier | undefined {
+    if (identifier) {
+      if (this.isScope(identifier)) {
+        return this.parent
+      }
+      return undefined
+    }
+    return this.parent
+  }
+
+  isDef(): boolean {
+    return this.semanticsKind === SemanticsKind.Def
+  }
+
+  isRef(): boolean {
+    return this.semanticsKind === SemanticsKind.Ref
+  }
+
+  isScope(identifier: Identifier): boolean {
     this.uri = this.getUri()
     if (this.uri && identifier.uri) {
       if (this.uri.path !== identifier.uri.path) {
@@ -91,7 +120,7 @@ export class Ast implements Identifier {
             `
   }
 
-  setParent(parent: Identifier): Identifier {
+  setParent(parent: Word): Identifier {
     this.parent = parent
     return this
   }
@@ -101,8 +130,8 @@ export class Ast implements Identifier {
     return this
   }
 
-  setAction(action: ActionKind): Identifier {
-    this.action = action
+  setSemanticsKind(kind: SemanticsKind): Identifier {
+    this.semanticsKind = kind
     return this
   }
 
@@ -113,7 +142,11 @@ export class Ast implements Identifier {
     return this.parent?.getUri?.()
   }
 
-  word(): string {
-    return this.name
+  completionItemLabel(): CompletionItemLabel {
+    return {
+      label: this.name,
+      detail: this.detail,
+      description: this.detail,
+    }
   }
 }

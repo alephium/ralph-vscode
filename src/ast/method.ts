@@ -3,9 +3,11 @@ import { Token } from 'antlr4ts/Token'
 import { Base } from './base'
 import { MethodDeclContext } from '../parser/RalphParser'
 import { Variable } from './variable'
-import { Identifier } from './identifier'
+import { Word } from './word'
 
 export class Method extends Base {
+  identifiers: Map<string, Word>
+
   symbolKind(): SymbolKind {
     return SymbolKind.Function
   }
@@ -13,8 +15,6 @@ export class Method extends Base {
   completionItemKind(): CompletionItemKind {
     return CompletionItemKind.Function
   }
-
-  identifiers: Map<string, Identifier>
 
   constructor(name: string, token: Token) {
     super(name, token)
