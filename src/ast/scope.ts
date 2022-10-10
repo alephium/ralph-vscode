@@ -6,9 +6,9 @@ export enum ScopeKind {
 }
 
 export class Scope {
-  uri: Uri
-
   scopeKind: ScopeKind
+
+  uri: Uri
 
   /** * action scope ** */
   scope: Range

@@ -1,12 +1,8 @@
-import { Position, Uri } from 'vscode'
+import { Position } from './position'
 import { IdentifierKind, SemanticsKind } from './identifier'
 
-export interface Word {
+export interface Word extends Position {
   name: string
-
-  uri?: Uri
-
-  point?: Position
 
   identifierKind?: IdentifierKind
 

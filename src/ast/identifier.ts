@@ -1,8 +1,9 @@
 import { Token } from 'antlr4ts/Token'
-import { CompletionItemLabel, Position, Range, Uri } from 'vscode'
+import { CompletionItemLabel, Range, Uri } from 'vscode'
 import { Kinder } from './kinder'
 // eslint-disable-next-line import/no-cycle
 import { Finder } from './finder'
+import { Position } from './position'
 
 export enum IdentifierKind {
   Variable = 0,
@@ -16,16 +17,12 @@ export enum SemanticsKind {
   Def = 1,
 }
 
-export interface Identifier extends Kinder, Finder {
+export interface Identifier extends Kinder, Finder, Position {
   name: string
 
   identifierKind?: IdentifierKind
 
   semanticsKind?: SemanticsKind
-
-  uri?: Uri
-
-  point?: Position
 
   scope?: Range
 
@@ -41,7 +38,7 @@ export interface Identifier extends Kinder, Finder {
 
   toString?(): string
 
-  isScope?(identifier: Identifier): boolean
+  isScope?(identifier: Position): boolean
 
   isDef?(): boolean
 
@@ -51,13 +48,15 @@ export interface Identifier extends Kinder, Finder {
 
   getChild?(): Identifier[]
 
-  getType?(): Identifier
+  getType?(): Identifier | undefined
 
-  identifier?(): ThisType<Identifier>
+  identifier?(): Identifier
 
-  setParent?(parent: Identifier): ThisType<Identifier>
+  setParent?(parent: Identifier): this
 
-  setSemanticsKind?(kind: SemanticsKind): ThisType<Identifier>
+  setSemanticsKind?(kind: SemanticsKind): this
+
+  setIdentifierKind?(kind: IdentifierKind): this
 
   completionItemLabel?(): CompletionItemLabel
 }

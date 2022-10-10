@@ -1,44 +1,42 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
-import {
-  CompletionItemKind,
-  Definition,
-  DefinitionLink,
-  Location,
-  Position,
-  ProviderResult,
-  SymbolKind,
-  TextDocument,
-  WorkspaceEdit,
-} from 'vscode'
+import { CompletionItemKind, Definition, DefinitionLink, Location, ProviderResult, SymbolKind, TextDocument, WorkspaceEdit } from 'vscode'
 import { Identifier, IdentifierKind } from './identifier'
 import { SemanticNode } from './ast'
 import { Word } from './word'
 import { Finder } from './finder'
+import { Position } from './position'
 
 export class Base extends SemanticNode implements VscodeInterface, Finder {
   members: Map<string, Identifier>
+
+  identifiers: Identifier[]
 
   constructor(name: string, token: Token) {
     super(name, token)
     this.members = new Map()
     this.kind = IdentifierKind.Type
+    this.identifiers = []
   }
 
-  add(ast: Identifier) {
-    this.members.set(ast.name, ast)
+  add(member: Identifier) {
+    this.members.set(member.name, member)
+  }
+
+  concat(identifiers: Identifier[]) {
+    this.identifiers.concat(identifiers)
   }
 
   getChild(): Identifier[] {
     return Array.from(this.members.values())
   }
 
-  container(identifier?: Identifier): Identifier | undefined {
-    if (!identifier) {
+  container(position?: Position): Identifier | undefined {
+    if (!position) {
       return this.parent
     }
-    if (this.isScope(identifier)) {
-      const obj = Array.from(this.members.values()).find((member) => member.isScope?.(identifier))
+    if (this.isScope(position)) {
+      const obj = Array.from(this.members.values()).find((member) => member.isScope?.(position))
       if (obj) {
         return obj
       }
@@ -115,7 +113,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return item
   }
 
-  provideDefinition(document: TextDocument, position: Position): ProviderResult<Definition | DefinitionLink[]> {
+  provideDefinition(document: TextDocument, position: vscode.Position): ProviderResult<Definition | DefinitionLink[]> {
     const range = document.getWordRangeAtPosition(position)
     const identifier = <Identifier>{
       name: document.getText(range),
@@ -143,6 +141,6 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 export interface VscodeInterface {
   documentSymbol?(document?: vscode.TextDocument): vscode.DocumentSymbol
   provideHover?(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover>
-  provideDefinition?(document: TextDocument, position: Position): ProviderResult<Definition | DefinitionLink[]>
+  provideDefinition?(document: TextDocument, position: vscode.Position): ProviderResult<Definition | DefinitionLink[]>
   provideRenameEdits?(identifier: Identifier, newName: string, edit: WorkspaceEdit): void
 }
