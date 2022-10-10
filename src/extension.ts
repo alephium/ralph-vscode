@@ -8,6 +8,7 @@ import { DefinitionProvider } from './provider/definitionProvider'
 import { RalphRenameProvider } from './provider/renameProvider'
 import Parser from './parser/parser'
 import { BuiltInProvider } from './provider/completion/builtInProvider'
+import { IdentifierProvider } from './provider/completion/identifierProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -31,6 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerDocumentSymbolProvider(selector, new SymbolProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GlobalProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new BuiltInProvider()))
+  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new IdentifierProvider()))
   context.subscriptions.push(vscode.languages.registerDefinitionProvider(selector, new DefinitionProvider()))
   context.subscriptions.push(vscode.languages.registerRenameProvider(selector, new RalphRenameProvider()))
 
@@ -43,7 +45,6 @@ export function deactivate() {}
 async function init() {
   const files = await vscode.workspace.findFiles('**/*.ral')
   files.forEach(async (uri) => {
-    console.log(`file path ${uri.path}`)
     const doc = await vscode.workspace.openTextDocument(uri)
     Parser(doc.uri, doc.getText())
   })

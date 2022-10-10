@@ -1,7 +1,7 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
 import { CompletionItemKind, Definition, DefinitionLink, Location, ProviderResult, SymbolKind, TextDocument, WorkspaceEdit } from 'vscode'
-import { Identifier, IdentifierKind } from './identifier'
+import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
 import { SemanticNode } from './ast'
 import { Word } from './word'
 import { Finder } from './finder'
@@ -23,8 +23,8 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     this.members.set(member.name, member)
   }
 
-  concat(identifiers: Identifier[]) {
-    this.identifiers.concat(identifiers)
+  append(identifiers: Identifier[]) {
+    this.identifiers.push(...identifiers)
   }
 
   getChild(): Identifier[] {
@@ -56,7 +56,6 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
           if (ast) return ast
         }
       } else {
-        console.log(`find success! ${member.name}`)
         return member
       }
     }
@@ -64,18 +63,30 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
   }
 
   findAll(identifier: Word): Identifier[] | undefined {
-    let items: Identifier[] = []
+    const items: Identifier[] = []
     if (this.isScope(identifier)) {
       if (this.name === identifier.name) items.push(this)
       this.members.forEach((member) => {
         const is = member.findAll?.(identifier)
-        if (is) items = items.concat(is)
+        if (is) items.push(...is)
       })
     }
     if (items.length > 0) {
       return items
     }
     return undefined
+  }
+
+  def(condition: Word): Identifier[] | undefined {
+    const member = Array.from(this.members.values())
+    const identifiers = this.identifiers.filter(
+      (value) => value.identifierKind === IdentifierKind.Variable && value.semanticsKind === SemanticsKind.Def
+    )
+    return member.concat(identifiers)
+  }
+
+  ref(condition: Word): Identifier[] | undefined {
+    return Array.from(this.identifiers.values())
   }
 
   symbolKind(): SymbolKind {
@@ -103,11 +114,9 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
       point: position,
       uri: document.uri,
     }
-    console.log(`identifier = ${JSON.stringify(identifier, null, 2)}`)
     let item
     const member = this.findOne(identifier)
     if (member) {
-      console.log(member.toString!())
       item = new vscode.Hover([member.name, member.detail ?? ''])
     }
     return item
@@ -123,7 +132,6 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     let item
     const member = this.findOne(identifier)
     if (member) {
-      console.log(member.toString!())
       item = new Location(member.uri ?? document.uri, member.scope ?? position)
     }
     return item
@@ -132,7 +140,6 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
   provideRenameEdits(identifier: Identifier, newName: string, edit: WorkspaceEdit): void {
     const members = this.findAll(identifier)
     if (members && members.length > 0) {
-      console.log(members)
       members?.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.scope!, newName))
     }
   }

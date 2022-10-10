@@ -55,8 +55,7 @@ export class Method extends Base {
     method.range(ctx.IDENTIFIER().symbol, ctx.block()?.R_CURLY().symbol)
 
     const block = ctx.block()
-    if (block) method.concat(blockContext(block))
-
+    if (block) method.append(blockContext(block))
     return method
   }
 }

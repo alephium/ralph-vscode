@@ -9,9 +9,9 @@ export interface Finder {
 
   find?(condition: Word): Identifier[] | undefined
 
-  def?(condition: Word): Identifier | undefined
+  def?(condition: Word): Identifier[] | undefined
 
   ref?(condition: Word): Identifier[] | undefined
 
-  container?(position: Position): Identifier | undefined
+  container?(position?: Position): Identifier | undefined
 }
