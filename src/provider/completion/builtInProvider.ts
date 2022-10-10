@@ -7,7 +7,7 @@ import { Identifier } from '../../ast/identifier'
 import { BuiltInType } from '../../ast/builtInType'
 import { builtInType } from '../hover/builtIn/type'
 
-export class BuiltInCompletionProvider implements vscode.CompletionItemProvider {
+export class BuiltInProvider implements vscode.CompletionItemProvider {
   items: Array<Fun>
 
   builtInType: Array<Identifier>
