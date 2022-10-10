@@ -1,9 +1,10 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
-import { CompletionItemLabel, Position, Range, SymbolKind, Uri } from 'vscode'
+import { CompletionItemLabel, Range, SymbolKind, Uri } from 'vscode'
 import MapKinds from '../util/kind'
 import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
 import { Word } from './word'
+import { Position } from './position'
 
 export class SemanticNode implements Identifier {
   name: string
@@ -18,7 +19,7 @@ export class SemanticNode implements Identifier {
 
   detail: string
 
-  point: Position | undefined
+  point: vscode.Position | undefined
 
   uri: Uri | undefined
 
@@ -35,12 +36,13 @@ export class SemanticNode implements Identifier {
     return this
   }
 
-  constructor(name: string, token?: Position | Token) {
+  constructor(name: string, token?: vscode.Position | Token) {
     this.name = name
     this.detail = name
     this.semanticsKind = SemanticsKind.Def
+    this.identifierKind = IdentifierKind.Type
     if (token) {
-      if (token instanceof Position) {
+      if (token instanceof vscode.Position) {
         this.point = token
       } else {
         this.token = token
@@ -80,9 +82,9 @@ export class SemanticNode implements Identifier {
     return undefined
   }
 
-  container(identifier?: Identifier): Identifier | undefined {
-    if (identifier) {
-      if (this.isScope(identifier)) {
+  container(position?: Position): Identifier | undefined {
+    if (position) {
+      if (this.isScope(position)) {
         return this.parent
       }
       return undefined
@@ -98,15 +100,15 @@ export class SemanticNode implements Identifier {
     return this.semanticsKind === SemanticsKind.Ref
   }
 
-  isScope(identifier: Identifier): boolean {
+  isScope(position: Position): boolean {
     this.uri = this.getUri()
-    if (this.uri && identifier.uri) {
-      if (this.uri.path !== identifier.uri.path) {
+    if (this.uri && position.uri) {
+      if (this.uri.path !== position.uri.path) {
         return false
       }
     }
     if (this.scope) {
-      return this.scope.contains(identifier.point!)
+      return this.scope.contains(position.point!)
     }
     return false
   }
@@ -120,17 +122,17 @@ export class SemanticNode implements Identifier {
             `
   }
 
-  setParent(parent: Word): Identifier {
+  setParent(parent: Identifier): this {
     this.parent = parent
     return this
   }
 
-  setIdentifierKind(identifierKind: IdentifierKind): Identifier {
+  setIdentifierKind(identifierKind: IdentifierKind): this {
     this.identifierKind = identifierKind
     return this
   }
 
-  setSemanticsKind(kind: SemanticsKind): Identifier {
+  setSemanticsKind(kind: SemanticsKind): this {
     this.semanticsKind = kind
     return this
   }

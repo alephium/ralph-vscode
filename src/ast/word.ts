@@ -1,12 +1,9 @@
-import { Position, Uri } from 'vscode'
+import { Position } from './position'
+// eslint-disable-next-line import/no-cycle
 import { IdentifierKind, SemanticsKind } from './identifier'
 
-export interface Word {
-  name: string
-
-  uri?: Uri
-
-  point?: Position
+export interface Word extends Position {
+  name?: string
 
   identifierKind?: IdentifierKind
 

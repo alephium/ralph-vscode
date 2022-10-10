@@ -1,13 +1,6 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import { Uri } from 'vscode'
-import {
-  ContractContext,
-  EventContext,
-  InterfaceContext,
-  ParamListContext,
-  TxScriptContext,
-  TypeStructBodyContext,
-} from '../parser/RalphParser'
+import { ContractContext, InterfaceContext, ParamListContext, TxScriptContext, TypeStructBodyContext } from '../parser/RalphParser'
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
 import { Contract } from '../ast/contract'
@@ -18,6 +11,7 @@ import { Base } from '../ast/base'
 import { Interface } from '../ast/interface'
 import { TxScript } from '../ast/txScript'
 import cache from '../cache/cache'
+import { statementContext } from '../ast/context'
 
 export class RalphVisitor extends AbstractParseTreeVisitor<number> implements RalphParserVisitor<number> {
   cache!: Map<string, Base>
@@ -36,7 +30,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
     // method
-    ctx.methodDecl().forEach((method) => base.add(Method.FromContext(method)))
+    ctx.methodDecl().forEach((method) => base.add(Method.FromContext(method).setParent(base)))
     // event
     ctx.event().forEach((eventCtx) => {
       const event = new Event(eventCtx.IDENTIFIER().text, eventCtx.IDENTIFIER().symbol)
@@ -44,13 +38,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
       event.setParent(base)
       base.add(event)
     })
-    // // emit
-    // ctx.emit().forEach((emitCtx) => {
-    //   const emit = new Emit(emitCtx.IDENTIFIER().text, emitCtx.IDENTIFIER().symbol)
-    //   emit.detail = emitCtx.text
-    //   emit.setParent(base)
-    //   base.add(emit)
-    // })
+
+    ctx.statement().forEach((value) => base.append(statementContext(value)))
   }
 
   visitParams(ctx?: ParamListContext, base?: Base) {
@@ -88,12 +77,6 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     this.visitParams(ctx.paramList(), script)
     this.visitBody(ctx.typeStructBody(), script)
     this.cache.set(script.name, script)
-    return this.cache.size
-  }
-
-  visitEvent(ctx: EventContext): number {
-    console.log(`visitEvent = ${ctx.text}`)
-
     return this.cache.size
   }
 }

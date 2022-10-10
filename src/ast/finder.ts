@@ -1,5 +1,6 @@
 import { Word } from './word'
 import { Identifier } from './identifier'
+import { Position } from './position'
 
 export interface Finder {
   findOne?(condition: Word): Identifier | undefined
@@ -8,9 +9,9 @@ export interface Finder {
 
   find?(condition: Word): Identifier[] | undefined
 
-  def?(condition: Word): Identifier | undefined
+  def?(condition: Word): Identifier[] | undefined
 
   ref?(condition: Word): Identifier[] | undefined
 
-  container?(identifier: Identifier): Identifier | undefined
+  container?(position?: Position): Identifier | undefined
 }

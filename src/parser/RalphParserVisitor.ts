@@ -6,6 +6,7 @@ import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
 import { SourceFileContext } from "./RalphParser";
 import { IdentifierListContext } from "./RalphParser";
 import { VarDeclContext } from "./RalphParser";
+import { VarNameContext } from "./RalphParser";
 import { ExpressionContext } from "./RalphParser";
 import { ExpressionListContext } from "./RalphParser";
 import { CallContext } from "./RalphParser";
@@ -67,6 +68,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitVarDecl?: (ctx: VarDeclContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.varName`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVarName?: (ctx: VarNameContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.expression`.

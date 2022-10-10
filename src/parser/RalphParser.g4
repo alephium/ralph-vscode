@@ -7,16 +7,18 @@ options
 
 sourceFile: (txScript | contract | interface)* EOF;
 
-identifierList: IDENTIFIER (COMMA IDENTIFIER)*;
+identifierList: varName (COMMA varName)*;
 
 varDecl
-    : (CONST | (LET MUT?)) ((IDENTIFIER ASSIGN expression) | (L_PAREN identifierList R_PAREN ASSIGN expression)) //# varDeclStmt
+    : (CONST | (LET MUT?)) ((varName ASSIGN expression) | (L_PAREN identifierList R_PAREN ASSIGN expression)) //# varDeclStmt
     ;
+
+varName: IDENTIFIER;
 
 //expression
 expression:
 	primaryExpr
-	| IDENTIFIER
+	| varName
 	| call
 	| (SUB | NOT) expression
 	| expression (

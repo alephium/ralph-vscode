@@ -1,24 +1,16 @@
 import { CompletionItemKind, SymbolKind } from 'vscode'
-import { Token } from 'antlr4ts/Token'
 import { Base } from './base'
 import { MethodDeclContext } from '../parser/RalphParser'
 import { Variable } from './variable'
-import { Word } from './word'
+import { blockContext } from './context'
 
 export class Method extends Base {
-  identifiers: Map<string, Word>
-
   symbolKind(): SymbolKind {
     return SymbolKind.Function
   }
 
   completionItemKind(): CompletionItemKind {
     return CompletionItemKind.Function
-  }
-
-  constructor(name: string, token: Token) {
-    super(name, token)
-    this.identifiers = new Map()
   }
 
   public static FromContext(ctx: MethodDeclContext): Method {
@@ -62,12 +54,8 @@ export class Method extends Base {
 
     method.range(ctx.IDENTIFIER().symbol, ctx.block()?.R_CURLY().symbol)
 
-    // ctx
-    //   .block()
-    //   ?.statement()
-    //   .forEach((stm) => {
-    //     stm.simpleStmt().emit().IDENTIFIER()
-    //   })
+    const block = ctx.block()
+    if (block) method.append(blockContext(block))
     return method
   }
 }
