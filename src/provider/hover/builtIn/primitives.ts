@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-// eslint-disable-next-line import/no-unresolved, max-classes-per-file
 import * as vscode from 'vscode'
 import { Item } from './item'
 
@@ -41,7 +39,7 @@ export const builtInType = [
   },
 ]
 
-export class BuiltInTypeHoverProvider implements vscode.HoverProvider {
+export class BuiltInPrimitivesHoverProvider implements vscode.HoverProvider {
   builtItems!: Map<string, Item>
 
   constructor() {

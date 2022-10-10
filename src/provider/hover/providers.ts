@@ -1,11 +1,9 @@
-/* eslint-disable import/no-unresolved */
 import * as vscode from 'vscode'
-
 import { FunctionHoverProvider } from './builtIn/function'
-import { TokenHoverProvider } from './builtIn/token'
-import { BuiltInTypeHoverProvider } from './builtIn/type'
+import { KeywordHoverProvider } from './builtIn/keyword'
+import { BuiltInPrimitivesHoverProvider } from './builtIn/primitives'
 import { HoverProvider } from './hoverProvider'
 
 export function Providers(): vscode.HoverProvider[] {
-  return [new FunctionHoverProvider(), new TokenHoverProvider(), new BuiltInTypeHoverProvider(), new HoverProvider()]
+  return [new FunctionHoverProvider(), new KeywordHoverProvider(), new BuiltInPrimitivesHoverProvider(), new HoverProvider()]
 }

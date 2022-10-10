@@ -5,7 +5,7 @@ import jsonData from '../hover/builtIn/ralph-built-in-functions.json'
 import { Fun } from '../hover/builtIn/function'
 import { Identifier } from '../../ast/identifier'
 import { BuiltInType } from '../../ast/builtInType'
-import { builtInType } from '../hover/builtIn/type'
+import { builtInType } from '../hover/builtIn/primitives'
 
 export class BuiltInProvider implements vscode.CompletionItemProvider {
   items: Array<Fun>
