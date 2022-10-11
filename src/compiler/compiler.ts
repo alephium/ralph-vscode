@@ -14,8 +14,8 @@ export class Compiler {
 
   constructor() {
     this.log = new logger.Logger('Compiler')
-    this.cmd = vscode.workspace.getConfiguration().get('ralph.compiler.command')
-    this.option = vscode.workspace.getConfiguration().get('ralph.compiler.option') as Option
+    this.cmd = vscode.workspace.getConfiguration().get('ralph.compile.command')
+    this.option = vscode.workspace.getConfiguration().get('ralph.compile.option') as Option
   }
 
   async compiler(editor: vscode.TextEditor) {
