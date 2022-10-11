@@ -16,7 +16,7 @@ export class Downloader {
   }
 
   private loadConfig() {
-    this.config = vscode.workspace.getConfiguration().get('ralph.downloader.config') as Config
+    this.config = vscode.workspace.getConfiguration().get('ralph.download.config') as Config
   }
 
   async showQuickPick() {
