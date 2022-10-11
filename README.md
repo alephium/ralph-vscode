@@ -10,8 +10,7 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
 - Highlighting ✅
 - Snippet ✅
 - Formatting ✅（simple format）
-- Complie ✅ ( ctl[cmd] + shift + p => ralph: compile )
-- Deploy ⏳
+- Complie ✅ ( ctl[cmd] + shift + p => Ralph: compile )
 - IntelliSense ⏳
   - Provide a hover for builtIn function and primitive type. ✅
   - Provide a hover for the given code position. ✅
@@ -20,26 +19,43 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
   - Rename Variable. ✅
 - Linting ✅
 - Debugging ⏳
+- Deploy ⏳
 
 ## Extension Settings
 
-- seting themes
+### Theme set
+![img.png](./img/setTheme.png)
+
+### User configure Set
+![img.png](img/userSet.png)
 
 ## Guide
 
-### compile
+### Hover
+![avatar](./img/builtInHover.png)
 
-![avatar](./img/img1.jpg)
+### OutLine
+![img.png](./img/outLine.png)
+
+### Completion
+![img.png](./img/completion.png)
+
+### Compile
+![img.png](./img/compile.png)
+
+### Log output
+![img.png](./img/logOut.png)
 
 ### Command compile
 
 ```shell
-java -jar /Users/${home}/.alephium-dev/ralphc.jar --project ./tests/contracts/
+java -jar ${home}/.alephium-dev/ralphc.jar --project ./tests/contracts/
 ```
 
-### More command compile
-
+#### More command compile
 https://github.com/alephium/ralphc
+
+## More Feature
 
 ## FAQ
 
