@@ -15,10 +15,13 @@ varDecl
 
 varName: IDENTIFIER;
 
+varNames: IDENTIFIER (DOT IDENTIFIER)*;
+
 //expression
 expression:
 	primaryExpr
 	| varName
+	| varNames
 	| call
 	| (SUB | NOT) expression
 	| expression (
@@ -51,8 +54,10 @@ expression:
 
 expressionList: (expression COMMA?)*;
 
+callChain: varNames;
+
 call:
-    IDENTIFIER (DOT IDENTIFIER)* L_PAREN expressionList R_PAREN   // # callStmt
+    callChain L_PAREN expressionList R_PAREN   // # callStmt
     ;
 
 primaryExpr
@@ -134,7 +139,9 @@ string_: RAW_STRING_LIT | INTERPRETED_STRING_LIT;
 
 //builtIn: IDENTIFIER | UNUSED;
 
-typeStructBody: L_CURLY (statement | event | methodDecl)* R_CURLY;
+enum: ENUM IDENTIFIER L_CURLY (varName ASSIGN expression)* R_CURLY;
+
+typeStructBody: L_CURLY (statement | event | methodDecl | enum)* R_CURLY;
 
 txScript
     : TXSCRIPT IDENTIFIER (L_PAREN paramList R_PAREN)? typeStructBody // # txScriptDeclStmt

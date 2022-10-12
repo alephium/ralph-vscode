@@ -124,45 +124,49 @@ export class RalphParser extends Parser {
 	public static readonly RULE_identifierList = 1;
 	public static readonly RULE_varDecl = 2;
 	public static readonly RULE_varName = 3;
-	public static readonly RULE_expression = 4;
-	public static readonly RULE_expressionList = 5;
-	public static readonly RULE_call = 6;
-	public static readonly RULE_primaryExpr = 7;
-	public static readonly RULE_primitiveType = 8;
-	public static readonly RULE_arrayType = 9;
-	public static readonly RULE_arrayExpr = 10;
-	public static readonly RULE_typeName = 11;
-	public static readonly RULE_result = 12;
-	public static readonly RULE_paramAnnotation = 13;
-	public static readonly RULE_param = 14;
-	public static readonly RULE_paramList = 15;
-	public static readonly RULE_methodDecl = 16;
-	public static readonly RULE_basicLit = 17;
-	public static readonly RULE_integer = 18;
-	public static readonly RULE_string_ = 19;
-	public static readonly RULE_typeStructBody = 20;
-	public static readonly RULE_txScript = 21;
-	public static readonly RULE_contract = 22;
-	public static readonly RULE_interface = 23;
-	public static readonly RULE_event = 24;
-	public static readonly RULE_emit = 25;
-	public static readonly RULE_annotation = 26;
-	public static readonly RULE_block = 27;
-	public static readonly RULE_statement = 28;
-	public static readonly RULE_simpleStmt = 29;
-	public static readonly RULE_emptyStmt = 30;
-	public static readonly RULE_returnStmt = 31;
-	public static readonly RULE_ifStmt = 32;
-	public static readonly RULE_whileStmt = 33;
-	public static readonly RULE_eos = 34;
+	public static readonly RULE_varNames = 4;
+	public static readonly RULE_expression = 5;
+	public static readonly RULE_expressionList = 6;
+	public static readonly RULE_callChain = 7;
+	public static readonly RULE_call = 8;
+	public static readonly RULE_primaryExpr = 9;
+	public static readonly RULE_primitiveType = 10;
+	public static readonly RULE_arrayType = 11;
+	public static readonly RULE_arrayExpr = 12;
+	public static readonly RULE_typeName = 13;
+	public static readonly RULE_result = 14;
+	public static readonly RULE_paramAnnotation = 15;
+	public static readonly RULE_param = 16;
+	public static readonly RULE_paramList = 17;
+	public static readonly RULE_methodDecl = 18;
+	public static readonly RULE_basicLit = 19;
+	public static readonly RULE_integer = 20;
+	public static readonly RULE_string_ = 21;
+	public static readonly RULE_enum = 22;
+	public static readonly RULE_typeStructBody = 23;
+	public static readonly RULE_txScript = 24;
+	public static readonly RULE_contract = 25;
+	public static readonly RULE_interface = 26;
+	public static readonly RULE_event = 27;
+	public static readonly RULE_emit = 28;
+	public static readonly RULE_annotation = 29;
+	public static readonly RULE_block = 30;
+	public static readonly RULE_statement = 31;
+	public static readonly RULE_simpleStmt = 32;
+	public static readonly RULE_emptyStmt = 33;
+	public static readonly RULE_returnStmt = 34;
+	public static readonly RULE_ifStmt = 35;
+	public static readonly RULE_whileStmt = 36;
+	public static readonly RULE_eos = 37;
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
-		"sourceFile", "identifierList", "varDecl", "varName", "expression", "expressionList", 
-		"call", "primaryExpr", "primitiveType", "arrayType", "arrayExpr", "typeName", 
-		"result", "paramAnnotation", "param", "paramList", "methodDecl", "basicLit", 
-		"integer", "string_", "typeStructBody", "txScript", "contract", "interface", 
-		"event", "emit", "annotation", "block", "statement", "simpleStmt", "emptyStmt", 
-		"returnStmt", "ifStmt", "whileStmt", "eos",
+		"sourceFile", "identifierList", "varDecl", "varName", "varNames", "expression", 
+		"expressionList", "callChain", "call", "primaryExpr", "primitiveType", 
+		"arrayType", "arrayExpr", "typeName", "result", "paramAnnotation", "param", 
+		"paramList", "methodDecl", "basicLit", "integer", "string_", "enum", "typeStructBody", 
+		"txScript", "contract", "interface", "event", "emit", "annotation", "block", 
+		"statement", "simpleStmt", "emptyStmt", "returnStmt", "ifStmt", "whileStmt", 
+		"eos",
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
@@ -225,29 +229,29 @@ export class RalphParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 75;
+			this.state = 81;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << RalphParser.INTERFACE) | (1 << RalphParser.TXSCRIPT) | (1 << RalphParser.CONTRACT))) !== 0)) {
 				{
-				this.state = 73;
+				this.state = 79;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case RalphParser.TXSCRIPT:
 					{
-					this.state = 70;
+					this.state = 76;
 					this.txScript();
 					}
 					break;
 				case RalphParser.CONTRACT:
 					{
-					this.state = 71;
+					this.state = 77;
 					this.contract();
 					}
 					break;
 				case RalphParser.INTERFACE:
 					{
-					this.state = 72;
+					this.state = 78;
 					this.interface();
 					}
 					break;
@@ -255,11 +259,11 @@ export class RalphParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				this.state = 77;
+				this.state = 83;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 78;
+			this.state = 84;
 			this.match(RalphParser.EOF);
 			}
 		}
@@ -285,21 +289,21 @@ export class RalphParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 80;
+			this.state = 86;
 			this.varName();
-			this.state = 85;
+			this.state = 91;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === RalphParser.COMMA) {
 				{
 				{
-				this.state = 81;
+				this.state = 87;
 				this.match(RalphParser.COMMA);
-				this.state = 82;
+				this.state = 88;
 				this.varName();
 				}
 				}
-				this.state = 87;
+				this.state = 93;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -327,26 +331,26 @@ export class RalphParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 93;
+			this.state = 99;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case RalphParser.CONST:
 				{
-				this.state = 88;
+				this.state = 94;
 				this.match(RalphParser.CONST);
 				}
 				break;
 			case RalphParser.LET:
 				{
 				{
-				this.state = 89;
+				this.state = 95;
 				this.match(RalphParser.LET);
-				this.state = 91;
+				this.state = 97;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la === RalphParser.MUT) {
 					{
-					this.state = 90;
+					this.state = 96;
 					this.match(RalphParser.MUT);
 					}
 				}
@@ -357,17 +361,17 @@ export class RalphParser extends Parser {
 			default:
 				throw new NoViableAltException(this);
 			}
-			this.state = 105;
+			this.state = 111;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case RalphParser.IDENTIFIER:
 				{
 				{
-				this.state = 95;
+				this.state = 101;
 				this.varName();
-				this.state = 96;
+				this.state = 102;
 				this.match(RalphParser.ASSIGN);
-				this.state = 97;
+				this.state = 103;
 				this.expression(0);
 				}
 				}
@@ -375,15 +379,15 @@ export class RalphParser extends Parser {
 			case RalphParser.L_PAREN:
 				{
 				{
-				this.state = 99;
+				this.state = 105;
 				this.match(RalphParser.L_PAREN);
-				this.state = 100;
+				this.state = 106;
 				this.identifierList();
-				this.state = 101;
+				this.state = 107;
 				this.match(RalphParser.R_PAREN);
-				this.state = 102;
+				this.state = 108;
 				this.match(RalphParser.ASSIGN);
-				this.state = 103;
+				this.state = 109;
 				this.expression(0);
 				}
 				}
@@ -414,8 +418,52 @@ export class RalphParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 107;
+			this.state = 113;
 			this.match(RalphParser.IDENTIFIER);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public varNames(): VarNamesContext {
+		let _localctx: VarNamesContext = new VarNamesContext(this._ctx, this.state);
+		this.enterRule(_localctx, 8, RalphParser.RULE_varNames);
+		try {
+			let _alt: number;
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 115;
+			this.match(RalphParser.IDENTIFIER);
+			this.state = 120;
+			this._errHandler.sync(this);
+			_alt = this.interpreter.adaptivePredict(this._input, 6, this._ctx);
+			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
+				if (_alt === 1) {
+					{
+					{
+					this.state = 116;
+					this.match(RalphParser.DOT);
+					this.state = 117;
+					this.match(RalphParser.IDENTIFIER);
+					}
+					}
+				}
+				this.state = 122;
+				this._errHandler.sync(this);
+				_alt = this.interpreter.adaptivePredict(this._input, 6, this._ctx);
+			}
 			}
 		}
 		catch (re) {
@@ -445,40 +493,47 @@ export class RalphParser extends Parser {
 		let _parentState: number = this.state;
 		let _localctx: ExpressionContext = new ExpressionContext(this._ctx, _parentState);
 		let _prevctx: ExpressionContext = _localctx;
-		let _startState: number = 8;
-		this.enterRecursionRule(_localctx, 8, RalphParser.RULE_expression, _p);
+		let _startState: number = 10;
+		this.enterRecursionRule(_localctx, 10, RalphParser.RULE_expression, _p);
 		let _la: number;
 		try {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 115;
+			this.state = 130;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 6, this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input, 7, this._ctx) ) {
 			case 1:
 				{
-				this.state = 110;
+				this.state = 124;
 				this.primaryExpr();
 				}
 				break;
 
 			case 2:
 				{
-				this.state = 111;
+				this.state = 125;
 				this.varName();
 				}
 				break;
 
 			case 3:
 				{
-				this.state = 112;
-				this.call();
+				this.state = 126;
+				this.varNames();
 				}
 				break;
 
 			case 4:
 				{
-				this.state = 113;
+				this.state = 127;
+				this.call();
+				}
+				break;
+
+			case 5:
+				{
+				this.state = 128;
 				_la = this._input.LA(1);
 				if (!(_la === RalphParser.SUB || _la === RalphParser.NOT)) {
 				this._errHandler.recoverInline(this);
@@ -490,15 +545,15 @@ export class RalphParser extends Parser {
 					this._errHandler.reportMatch(this);
 					this.consume();
 				}
-				this.state = 114;
+				this.state = 129;
 				this.expression(5);
 				}
 				break;
 			}
 			this._ctx._stop = this._input.tryLT(-1);
-			this.state = 131;
+			this.state = 146;
 			this._errHandler.sync(this);
-			_alt = this.interpreter.adaptivePredict(this._input, 8, this._ctx);
+			_alt = this.interpreter.adaptivePredict(this._input, 9, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					if (this._parseListeners != null) {
@@ -506,18 +561,18 @@ export class RalphParser extends Parser {
 					}
 					_prevctx = _localctx;
 					{
-					this.state = 129;
+					this.state = 144;
 					this._errHandler.sync(this);
-					switch ( this.interpreter.adaptivePredict(this._input, 7, this._ctx) ) {
+					switch ( this.interpreter.adaptivePredict(this._input, 8, this._ctx) ) {
 					case 1:
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						this.pushNewRecursionContext(_localctx, _startState, RalphParser.RULE_expression);
-						this.state = 117;
+						this.state = 132;
 						if (!(this.precpred(this._ctx, 4))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 4)");
 						}
-						this.state = 118;
+						this.state = 133;
 						_la = this._input.LA(1);
 						if (!(((((_la - 46)) & ~0x1F) === 0 && ((1 << (_la - 46)) & ((1 << (RalphParser.CONCAT - 46)) | (1 << (RalphParser.ADD - 46)) | (1 << (RalphParser.SUB - 46)) | (1 << (RalphParser.MUL - 46)) | (1 << (RalphParser.DIV - 46)) | (1 << (RalphParser.MOD - 46)) | (1 << (RalphParser.MODADD - 46)) | (1 << (RalphParser.MODSUB - 46)) | (1 << (RalphParser.MODMUL - 46)) | (1 << (RalphParser.SHL - 46)) | (1 << (RalphParser.SHR - 46)) | (1 << (RalphParser.BITAND - 46)) | (1 << (RalphParser.XOR - 46)) | (1 << (RalphParser.BITOR - 46)))) !== 0))) {
 						this._errHandler.recoverInline(this);
@@ -529,7 +584,7 @@ export class RalphParser extends Parser {
 							this._errHandler.reportMatch(this);
 							this.consume();
 						}
-						this.state = 119;
+						this.state = 134;
 						this.expression(5);
 						}
 						break;
@@ -538,11 +593,11 @@ export class RalphParser extends Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						this.pushNewRecursionContext(_localctx, _startState, RalphParser.RULE_expression);
-						this.state = 120;
+						this.state = 135;
 						if (!(this.precpred(this._ctx, 3))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 3)");
 						}
-						this.state = 121;
+						this.state = 136;
 						_la = this._input.LA(1);
 						if (!(((((_la - 60)) & ~0x1F) === 0 && ((1 << (_la - 60)) & ((1 << (RalphParser.EQ - 60)) | (1 << (RalphParser.NQ - 60)) | (1 << (RalphParser.LT - 60)) | (1 << (RalphParser.LE - 60)) | (1 << (RalphParser.GT - 60)) | (1 << (RalphParser.GE - 60)))) !== 0))) {
 						this._errHandler.recoverInline(this);
@@ -554,7 +609,7 @@ export class RalphParser extends Parser {
 							this._errHandler.reportMatch(this);
 							this.consume();
 						}
-						this.state = 122;
+						this.state = 137;
 						this.expression(4);
 						}
 						break;
@@ -563,11 +618,11 @@ export class RalphParser extends Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						this.pushNewRecursionContext(_localctx, _startState, RalphParser.RULE_expression);
-						this.state = 123;
+						this.state = 138;
 						if (!(this.precpred(this._ctx, 2))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 2)");
 						}
-						this.state = 124;
+						this.state = 139;
 						_la = this._input.LA(1);
 						if (!(_la === RalphParser.AND || _la === RalphParser.OR)) {
 						this._errHandler.recoverInline(this);
@@ -579,7 +634,7 @@ export class RalphParser extends Parser {
 							this._errHandler.reportMatch(this);
 							this.consume();
 						}
-						this.state = 125;
+						this.state = 140;
 						this.expression(3);
 						}
 						break;
@@ -588,22 +643,22 @@ export class RalphParser extends Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						this.pushNewRecursionContext(_localctx, _startState, RalphParser.RULE_expression);
-						this.state = 126;
+						this.state = 141;
 						if (!(this.precpred(this._ctx, 1))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 1)");
 						}
-						this.state = 127;
+						this.state = 142;
 						this.match(RalphParser.ASSIGN);
-						this.state = 128;
+						this.state = 143;
 						this.expression(2);
 						}
 						break;
 					}
 					}
 				}
-				this.state = 133;
+				this.state = 148;
 				this._errHandler.sync(this);
-				_alt = this.interpreter.adaptivePredict(this._input, 8, this._ctx);
+				_alt = this.interpreter.adaptivePredict(this._input, 9, this._ctx);
 			}
 			}
 		}
@@ -624,27 +679,27 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public expressionList(): ExpressionListContext {
 		let _localctx: ExpressionListContext = new ExpressionListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 10, RalphParser.RULE_expressionList);
+		this.enterRule(_localctx, 12, RalphParser.RULE_expressionList);
 		let _la: number;
 		try {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 140;
+			this.state = 155;
 			this._errHandler.sync(this);
-			_alt = this.interpreter.adaptivePredict(this._input, 10, this._ctx);
+			_alt = this.interpreter.adaptivePredict(this._input, 11, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 134;
+					this.state = 149;
 					this.expression(0);
-					this.state = 136;
+					this.state = 151;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 					if (_la === RalphParser.COMMA) {
 						{
-						this.state = 135;
+						this.state = 150;
 						this.match(RalphParser.COMMA);
 						}
 					}
@@ -652,10 +707,35 @@ export class RalphParser extends Parser {
 					}
 					}
 				}
-				this.state = 142;
+				this.state = 157;
 				this._errHandler.sync(this);
-				_alt = this.interpreter.adaptivePredict(this._input, 10, this._ctx);
+				_alt = this.interpreter.adaptivePredict(this._input, 11, this._ctx);
 			}
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public callChain(): CallChainContext {
+		let _localctx: CallChainContext = new CallChainContext(this._ctx, this.state);
+		this.enterRule(_localctx, 14, RalphParser.RULE_callChain);
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 158;
+			this.varNames();
 			}
 		}
 		catch (re) {
@@ -675,34 +755,17 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public call(): CallContext {
 		let _localctx: CallContext = new CallContext(this._ctx, this.state);
-		this.enterRule(_localctx, 12, RalphParser.RULE_call);
-		let _la: number;
+		this.enterRule(_localctx, 16, RalphParser.RULE_call);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 143;
-			this.match(RalphParser.IDENTIFIER);
-			this.state = 148;
-			this._errHandler.sync(this);
-			_la = this._input.LA(1);
-			while (_la === RalphParser.DOT) {
-				{
-				{
-				this.state = 144;
-				this.match(RalphParser.DOT);
-				this.state = 145;
-				this.match(RalphParser.IDENTIFIER);
-				}
-				}
-				this.state = 150;
-				this._errHandler.sync(this);
-				_la = this._input.LA(1);
-			}
-			this.state = 151;
+			this.state = 160;
+			this.callChain();
+			this.state = 161;
 			this.match(RalphParser.L_PAREN);
-			this.state = 152;
+			this.state = 162;
 			this.expressionList();
-			this.state = 153;
+			this.state = 163;
 			this.match(RalphParser.R_PAREN);
 			}
 		}
@@ -723,9 +786,9 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public primaryExpr(): PrimaryExprContext {
 		let _localctx: PrimaryExprContext = new PrimaryExprContext(this._ctx, this.state);
-		this.enterRule(_localctx, 14, RalphParser.RULE_primaryExpr);
+		this.enterRule(_localctx, 18, RalphParser.RULE_primaryExpr);
 		try {
-			this.state = 157;
+			this.state = 167;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case RalphParser.ADDRESS_LIT:
@@ -741,7 +804,7 @@ export class RalphParser extends Parser {
 			case RalphParser.INTERPRETED_STRING_LIT:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 155;
+				this.state = 165;
 				this.basicLit();
 				}
 				break;
@@ -749,7 +812,7 @@ export class RalphParser extends Parser {
 			case RalphParser.L_BRACKET:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 156;
+				this.state = 166;
 				this.arrayExpr();
 				}
 				break;
@@ -774,57 +837,57 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public primitiveType(): PrimitiveTypeContext {
 		let _localctx: PrimitiveTypeContext = new PrimitiveTypeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 16, RalphParser.RULE_primitiveType);
+		this.enterRule(_localctx, 20, RalphParser.RULE_primitiveType);
 		try {
-			this.state = 166;
+			this.state = 176;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case RalphParser.BOOL:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 159;
+				this.state = 169;
 				this.match(RalphParser.BOOL);
 				}
 				break;
 			case RalphParser.I256:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 160;
+				this.state = 170;
 				this.match(RalphParser.I256);
 				}
 				break;
 			case RalphParser.BYTE:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 161;
+				this.state = 171;
 				this.match(RalphParser.BYTE);
 				}
 				break;
 			case RalphParser.U256:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 162;
+				this.state = 172;
 				this.match(RalphParser.U256);
 				}
 				break;
 			case RalphParser.BYTEVEC:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 163;
+				this.state = 173;
 				this.match(RalphParser.BYTEVEC);
 				}
 				break;
 			case RalphParser.ADDRESS:
 				this.enterOuterAlt(_localctx, 6);
 				{
-				this.state = 164;
+				this.state = 174;
 				this.match(RalphParser.ADDRESS);
 				}
 				break;
 			case RalphParser.L_BRACKET:
 				this.enterOuterAlt(_localctx, 7);
 				{
-				this.state = 165;
+				this.state = 175;
 				this.arrayType();
 				}
 				break;
@@ -849,19 +912,19 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public arrayType(): ArrayTypeContext {
 		let _localctx: ArrayTypeContext = new ArrayTypeContext(this._ctx, this.state);
-		this.enterRule(_localctx, 18, RalphParser.RULE_arrayType);
+		this.enterRule(_localctx, 22, RalphParser.RULE_arrayType);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 168;
+			this.state = 178;
 			this.match(RalphParser.L_BRACKET);
-			this.state = 169;
+			this.state = 179;
 			this.typeName();
-			this.state = 170;
+			this.state = 180;
 			this.match(RalphParser.SEMI);
-			this.state = 171;
+			this.state = 181;
 			this.expression(0);
-			this.state = 172;
+			this.state = 182;
 			this.match(RalphParser.R_BRACKET);
 			}
 		}
@@ -882,42 +945,42 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public arrayExpr(): ArrayExprContext {
 		let _localctx: ArrayExprContext = new ArrayExprContext(this._ctx, this.state);
-		this.enterRule(_localctx, 20, RalphParser.RULE_arrayExpr);
+		this.enterRule(_localctx, 24, RalphParser.RULE_arrayExpr);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 175;
+			this.state = 185;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.IDENTIFIER) {
 				{
-				this.state = 174;
+				this.state = 184;
 				this.match(RalphParser.IDENTIFIER);
 				}
 			}
 
-			this.state = 177;
+			this.state = 187;
 			this.match(RalphParser.L_BRACKET);
-			this.state = 178;
+			this.state = 188;
 			this.expression(0);
-			this.state = 183;
+			this.state = 193;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (_la === RalphParser.COMMA) {
 				{
 				{
-				this.state = 179;
+				this.state = 189;
 				this.match(RalphParser.COMMA);
-				this.state = 180;
+				this.state = 190;
 				this.expression(0);
 				}
 				}
-				this.state = 185;
+				this.state = 195;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 186;
+			this.state = 196;
 			this.match(RalphParser.R_BRACKET);
 			}
 		}
@@ -938,9 +1001,9 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public typeName(): TypeNameContext {
 		let _localctx: TypeNameContext = new TypeNameContext(this._ctx, this.state);
-		this.enterRule(_localctx, 22, RalphParser.RULE_typeName);
+		this.enterRule(_localctx, 26, RalphParser.RULE_typeName);
 		try {
-			this.state = 190;
+			this.state = 200;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case RalphParser.BOOL:
@@ -952,14 +1015,14 @@ export class RalphParser extends Parser {
 			case RalphParser.L_BRACKET:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 188;
+				this.state = 198;
 				this.primitiveType();
 				}
 				break;
 			case RalphParser.IDENTIFIER:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 189;
+				this.state = 199;
 				this.match(RalphParser.IDENTIFIER);
 				}
 				break;
@@ -984,19 +1047,19 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public result(): ResultContext {
 		let _localctx: ResultContext = new ResultContext(this._ctx, this.state);
-		this.enterRule(_localctx, 24, RalphParser.RULE_result);
+		this.enterRule(_localctx, 28, RalphParser.RULE_result);
 		let _la: number;
 		try {
 			let _alt: number;
-			this.state = 210;
+			this.state = 220;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 20, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 192;
+				this.state = 202;
 				this.match(RalphParser.L_PAREN);
-				this.state = 193;
+				this.state = 203;
 				this.match(RalphParser.R_PAREN);
 				}
 				break;
@@ -1004,7 +1067,7 @@ export class RalphParser extends Parser {
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 194;
+				this.state = 204;
 				this.typeName();
 				}
 				break;
@@ -1012,39 +1075,39 @@ export class RalphParser extends Parser {
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 195;
+				this.state = 205;
 				this.match(RalphParser.L_PAREN);
-				this.state = 207;
+				this.state = 217;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (((((_la - 24)) & ~0x1F) === 0 && ((1 << (_la - 24)) & ((1 << (RalphParser.BOOL - 24)) | (1 << (RalphParser.I256 - 24)) | (1 << (RalphParser.U256 - 24)) | (1 << (RalphParser.BYTE - 24)) | (1 << (RalphParser.BYTEVEC - 24)) | (1 << (RalphParser.ADDRESS - 24)) | (1 << (RalphParser.IDENTIFIER - 24)) | (1 << (RalphParser.L_BRACKET - 24)))) !== 0)) {
 					{
-					this.state = 196;
+					this.state = 206;
 					this.typeName();
-					this.state = 201;
+					this.state = 211;
 					this._errHandler.sync(this);
 					_alt = this.interpreter.adaptivePredict(this._input, 17, this._ctx);
 					while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 						if (_alt === 1) {
 							{
 							{
-							this.state = 197;
+							this.state = 207;
 							this.match(RalphParser.COMMA);
-							this.state = 198;
+							this.state = 208;
 							this.typeName();
 							}
 							}
 						}
-						this.state = 203;
+						this.state = 213;
 						this._errHandler.sync(this);
 						_alt = this.interpreter.adaptivePredict(this._input, 17, this._ctx);
 					}
-					this.state = 205;
+					this.state = 215;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
 					if (_la === RalphParser.COMMA) {
 						{
-						this.state = 204;
+						this.state = 214;
 						this.match(RalphParser.COMMA);
 						}
 					}
@@ -1052,7 +1115,7 @@ export class RalphParser extends Parser {
 					}
 				}
 
-				this.state = 209;
+				this.state = 219;
 				this.match(RalphParser.R_PAREN);
 				}
 				break;
@@ -1075,13 +1138,13 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public paramAnnotation(): ParamAnnotationContext {
 		let _localctx: ParamAnnotationContext = new ParamAnnotationContext(this._ctx, this.state);
-		this.enterRule(_localctx, 26, RalphParser.RULE_paramAnnotation);
+		this.enterRule(_localctx, 30, RalphParser.RULE_paramAnnotation);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 212;
+			this.state = 222;
 			this.match(RalphParser.AT);
-			this.state = 213;
+			this.state = 223;
 			this.match(RalphParser.UNUSED);
 			}
 		}
@@ -1102,36 +1165,36 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public param(): ParamContext {
 		let _localctx: ParamContext = new ParamContext(this._ctx, this.state);
-		this.enterRule(_localctx, 28, RalphParser.RULE_param);
+		this.enterRule(_localctx, 32, RalphParser.RULE_param);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 216;
+			this.state = 226;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.AT) {
 				{
-				this.state = 215;
+				this.state = 225;
 				this.paramAnnotation();
 				}
 			}
 
-			this.state = 219;
+			this.state = 229;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.MUT) {
 				{
-				this.state = 218;
+				this.state = 228;
 				this.match(RalphParser.MUT);
 				}
 			}
 
-			this.state = 221;
+			this.state = 231;
 			this.match(RalphParser.IDENTIFIER);
-			this.state = 222;
+			this.state = 232;
 			this.match(RalphParser.COLON);
-			this.state = 223;
+			this.state = 233;
 			this.typeName();
 			}
 		}
@@ -1152,32 +1215,32 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public paramList(): ParamListContext {
 		let _localctx: ParamListContext = new ParamListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 30, RalphParser.RULE_paramList);
+		this.enterRule(_localctx, 34, RalphParser.RULE_paramList);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 231;
+			this.state = 241;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while (((((_la - 16)) & ~0x1F) === 0 && ((1 << (_la - 16)) & ((1 << (RalphParser.MUT - 16)) | (1 << (RalphParser.AT - 16)) | (1 << (RalphParser.IDENTIFIER - 16)))) !== 0)) {
 				{
 				{
-				this.state = 225;
+				this.state = 235;
 				this.param();
-				this.state = 227;
+				this.state = 237;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la === RalphParser.COMMA) {
 					{
-					this.state = 226;
+					this.state = 236;
 					this.match(RalphParser.COMMA);
 					}
 				}
 
 				}
 				}
-				this.state = 233;
+				this.state = 243;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -1200,59 +1263,59 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public methodDecl(): MethodDeclContext {
 		let _localctx: MethodDeclContext = new MethodDeclContext(this._ctx, this.state);
-		this.enterRule(_localctx, 32, RalphParser.RULE_methodDecl);
+		this.enterRule(_localctx, 36, RalphParser.RULE_methodDecl);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 235;
+			this.state = 245;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.AT) {
 				{
-				this.state = 234;
+				this.state = 244;
 				this.annotation();
 				}
 			}
 
-			this.state = 238;
+			this.state = 248;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.PUB) {
 				{
-				this.state = 237;
+				this.state = 247;
 				this.match(RalphParser.PUB);
 				}
 			}
 
-			this.state = 240;
+			this.state = 250;
 			this.match(RalphParser.FN);
-			this.state = 241;
+			this.state = 251;
 			this.match(RalphParser.IDENTIFIER);
-			this.state = 242;
+			this.state = 252;
 			this.match(RalphParser.L_PAREN);
-			this.state = 243;
+			this.state = 253;
 			this.paramList();
-			this.state = 244;
+			this.state = 254;
 			this.match(RalphParser.R_PAREN);
-			this.state = 247;
+			this.state = 257;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.R_ARROW) {
 				{
-				this.state = 245;
+				this.state = 255;
 				this.match(RalphParser.R_ARROW);
-				this.state = 246;
+				this.state = 256;
 				this.result();
 				}
 			}
 
-			this.state = 250;
+			this.state = 260;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 28, this._ctx) ) {
 			case 1:
 				{
-				this.state = 249;
+				this.state = 259;
 				this.block();
 				}
 				break;
@@ -1276,9 +1339,9 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public basicLit(): BasicLitContext {
 		let _localctx: BasicLitContext = new BasicLitContext(this._ctx, this.state);
-		this.enterRule(_localctx, 34, RalphParser.RULE_basicLit);
+		this.enterRule(_localctx, 38, RalphParser.RULE_basicLit);
 		try {
-			this.state = 257;
+			this.state = 267;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case RalphParser.DECIMAL_LIT:
@@ -1289,7 +1352,7 @@ export class RalphParser extends Parser {
 			case RalphParser.RUNE_LIT:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 252;
+				this.state = 262;
 				this.integer();
 				}
 				break;
@@ -1297,28 +1360,28 @@ export class RalphParser extends Parser {
 			case RalphParser.INTERPRETED_STRING_LIT:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 253;
+				this.state = 263;
 				this.string_();
 				}
 				break;
 			case RalphParser.ADDRESS_LIT:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 254;
+				this.state = 264;
 				this.match(RalphParser.ADDRESS_LIT);
 				}
 				break;
 			case RalphParser.ALPH_LIT:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 255;
+				this.state = 265;
 				this.match(RalphParser.ALPH_LIT);
 				}
 				break;
 			case RalphParser.BOOL_LIT:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 256;
+				this.state = 266;
 				this.match(RalphParser.BOOL_LIT);
 				}
 				break;
@@ -1343,12 +1406,12 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public integer(): IntegerContext {
 		let _localctx: IntegerContext = new IntegerContext(this._ctx, this.state);
-		this.enterRule(_localctx, 36, RalphParser.RULE_integer);
+		this.enterRule(_localctx, 40, RalphParser.RULE_integer);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 259;
+			this.state = 269;
 			_la = this._input.LA(1);
 			if (!(((((_la - 72)) & ~0x1F) === 0 && ((1 << (_la - 72)) & ((1 << (RalphParser.DECIMAL_LIT - 72)) | (1 << (RalphParser.BINARY_LIT - 72)) | (1 << (RalphParser.OCTAL_LIT - 72)) | (1 << (RalphParser.HEX_LIT - 72)) | (1 << (RalphParser.IMAGINARY_LIT - 72)) | (1 << (RalphParser.RUNE_LIT - 72)))) !== 0))) {
 			this._errHandler.recoverInline(this);
@@ -1379,12 +1442,12 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public string_(): String_Context {
 		let _localctx: String_Context = new String_Context(this._ctx, this.state);
-		this.enterRule(_localctx, 38, RalphParser.RULE_string_);
+		this.enterRule(_localctx, 42, RalphParser.RULE_string_);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 261;
+			this.state = 271;
 			_la = this._input.LA(1);
 			if (!(_la === RalphParser.RAW_STRING_LIT || _la === RalphParser.INTERPRETED_STRING_LIT)) {
 			this._errHandler.recoverInline(this);
@@ -1413,21 +1476,71 @@ export class RalphParser extends Parser {
 		return _localctx;
 	}
 	// @RuleVersion(0)
-	public typeStructBody(): TypeStructBodyContext {
-		let _localctx: TypeStructBodyContext = new TypeStructBodyContext(this._ctx, this.state);
-		this.enterRule(_localctx, 40, RalphParser.RULE_typeStructBody);
+	public enum(): EnumContext {
+		let _localctx: EnumContext = new EnumContext(this._ctx, this.state);
+		this.enterRule(_localctx, 44, RalphParser.RULE_enum);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 263;
+			this.state = 273;
+			this.match(RalphParser.ENUM);
+			this.state = 274;
+			this.match(RalphParser.IDENTIFIER);
+			this.state = 275;
 			this.match(RalphParser.L_CURLY);
-			this.state = 269;
+			this.state = 282;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << RalphParser.FN) | (1 << RalphParser.PUB) | (1 << RalphParser.RETURN) | (1 << RalphParser.IF) | (1 << RalphParser.WHILE) | (1 << RalphParser.LET) | (1 << RalphParser.CONST) | (1 << RalphParser.EVENT) | (1 << RalphParser.EMIT) | (1 << RalphParser.AT))) !== 0) || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & ((1 << (RalphParser.IDENTIFIER - 32)) | (1 << (RalphParser.L_CURLY - 32)) | (1 << (RalphParser.L_BRACKET - 32)) | (1 << (RalphParser.SUB - 32)))) !== 0) || ((((_la - 68)) & ~0x1F) === 0 && ((1 << (_la - 68)) & ((1 << (RalphParser.NOT - 68)) | (1 << (RalphParser.ADDRESS_LIT - 68)) | (1 << (RalphParser.ALPH_LIT - 68)) | (1 << (RalphParser.BOOL_LIT - 68)) | (1 << (RalphParser.DECIMAL_LIT - 68)) | (1 << (RalphParser.BINARY_LIT - 68)) | (1 << (RalphParser.OCTAL_LIT - 68)) | (1 << (RalphParser.HEX_LIT - 68)) | (1 << (RalphParser.IMAGINARY_LIT - 68)) | (1 << (RalphParser.RUNE_LIT - 68)) | (1 << (RalphParser.RAW_STRING_LIT - 68)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 68)) | (1 << (RalphParser.EOS - 68)))) !== 0)) {
+			while (_la === RalphParser.IDENTIFIER) {
 				{
-				this.state = 267;
+				{
+				this.state = 276;
+				this.varName();
+				this.state = 277;
+				this.match(RalphParser.ASSIGN);
+				this.state = 278;
+				this.expression(0);
+				}
+				}
+				this.state = 284;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+			}
+			this.state = 285;
+			this.match(RalphParser.R_CURLY);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public typeStructBody(): TypeStructBodyContext {
+		let _localctx: TypeStructBodyContext = new TypeStructBodyContext(this._ctx, this.state);
+		this.enterRule(_localctx, 46, RalphParser.RULE_typeStructBody);
+		let _la: number;
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 287;
+			this.match(RalphParser.L_CURLY);
+			this.state = 294;
+			this._errHandler.sync(this);
+			_la = this._input.LA(1);
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << RalphParser.FN) | (1 << RalphParser.PUB) | (1 << RalphParser.RETURN) | (1 << RalphParser.ENUM) | (1 << RalphParser.IF) | (1 << RalphParser.WHILE) | (1 << RalphParser.LET) | (1 << RalphParser.CONST) | (1 << RalphParser.EVENT) | (1 << RalphParser.EMIT) | (1 << RalphParser.AT))) !== 0) || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & ((1 << (RalphParser.IDENTIFIER - 32)) | (1 << (RalphParser.L_CURLY - 32)) | (1 << (RalphParser.L_BRACKET - 32)) | (1 << (RalphParser.SUB - 32)))) !== 0) || ((((_la - 68)) & ~0x1F) === 0 && ((1 << (_la - 68)) & ((1 << (RalphParser.NOT - 68)) | (1 << (RalphParser.ADDRESS_LIT - 68)) | (1 << (RalphParser.ALPH_LIT - 68)) | (1 << (RalphParser.BOOL_LIT - 68)) | (1 << (RalphParser.DECIMAL_LIT - 68)) | (1 << (RalphParser.BINARY_LIT - 68)) | (1 << (RalphParser.OCTAL_LIT - 68)) | (1 << (RalphParser.HEX_LIT - 68)) | (1 << (RalphParser.IMAGINARY_LIT - 68)) | (1 << (RalphParser.RUNE_LIT - 68)) | (1 << (RalphParser.RAW_STRING_LIT - 68)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 68)) | (1 << (RalphParser.EOS - 68)))) !== 0)) {
+				{
+				this.state = 292;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case RalphParser.RETURN:
@@ -1454,13 +1567,13 @@ export class RalphParser extends Parser {
 				case RalphParser.INTERPRETED_STRING_LIT:
 				case RalphParser.EOS:
 					{
-					this.state = 264;
+					this.state = 288;
 					this.statement();
 					}
 					break;
 				case RalphParser.EVENT:
 					{
-					this.state = 265;
+					this.state = 289;
 					this.event();
 					}
 					break;
@@ -1468,19 +1581,25 @@ export class RalphParser extends Parser {
 				case RalphParser.PUB:
 				case RalphParser.AT:
 					{
-					this.state = 266;
+					this.state = 290;
 					this.methodDecl();
+					}
+					break;
+				case RalphParser.ENUM:
+					{
+					this.state = 291;
+					this.enum();
 					}
 					break;
 				default:
 					throw new NoViableAltException(this);
 				}
 				}
-				this.state = 271;
+				this.state = 296;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 272;
+			this.state = 297;
 			this.match(RalphParser.R_CURLY);
 			}
 		}
@@ -1501,30 +1620,30 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public txScript(): TxScriptContext {
 		let _localctx: TxScriptContext = new TxScriptContext(this._ctx, this.state);
-		this.enterRule(_localctx, 42, RalphParser.RULE_txScript);
+		this.enterRule(_localctx, 48, RalphParser.RULE_txScript);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 274;
+			this.state = 299;
 			this.match(RalphParser.TXSCRIPT);
-			this.state = 275;
+			this.state = 300;
 			this.match(RalphParser.IDENTIFIER);
-			this.state = 280;
+			this.state = 305;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.L_PAREN) {
 				{
-				this.state = 276;
+				this.state = 301;
 				this.match(RalphParser.L_PAREN);
-				this.state = 277;
+				this.state = 302;
 				this.paramList();
-				this.state = 278;
+				this.state = 303;
 				this.match(RalphParser.R_PAREN);
 				}
 			}
 
-			this.state = 282;
+			this.state = 307;
 			this.typeStructBody();
 			}
 		}
@@ -1545,35 +1664,35 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public contract(): ContractContext {
 		let _localctx: ContractContext = new ContractContext(this._ctx, this.state);
-		this.enterRule(_localctx, 44, RalphParser.RULE_contract);
+		this.enterRule(_localctx, 50, RalphParser.RULE_contract);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 284;
+			this.state = 309;
 			this.match(RalphParser.CONTRACT);
-			this.state = 285;
+			this.state = 310;
 			this.match(RalphParser.IDENTIFIER);
-			this.state = 290;
+			this.state = 315;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.L_PAREN) {
 				{
-				this.state = 286;
+				this.state = 311;
 				this.match(RalphParser.L_PAREN);
-				this.state = 287;
+				this.state = 312;
 				this.paramList();
-				this.state = 288;
+				this.state = 313;
 				this.match(RalphParser.R_PAREN);
 				}
 			}
 
-			this.state = 300;
+			this.state = 325;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.EXTENDS || _la === RalphParser.IMPLEMENTS) {
 				{
-				this.state = 292;
+				this.state = 317;
 				_la = this._input.LA(1);
 				if (!(_la === RalphParser.EXTENDS || _la === RalphParser.IMPLEMENTS)) {
 				this._errHandler.recoverInline(this);
@@ -1585,18 +1704,18 @@ export class RalphParser extends Parser {
 					this._errHandler.reportMatch(this);
 					this.consume();
 				}
-				this.state = 293;
+				this.state = 318;
 				this.match(RalphParser.IDENTIFIER);
-				this.state = 298;
+				this.state = 323;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				if (_la === RalphParser.L_PAREN) {
 					{
-					this.state = 294;
+					this.state = 319;
 					this.match(RalphParser.L_PAREN);
-					this.state = 295;
+					this.state = 320;
 					this.expressionList();
-					this.state = 296;
+					this.state = 321;
 					this.match(RalphParser.R_PAREN);
 					}
 				}
@@ -1604,7 +1723,7 @@ export class RalphParser extends Parser {
 				}
 			}
 
-			this.state = 302;
+			this.state = 327;
 			this.typeStructBody();
 			}
 		}
@@ -1625,15 +1744,15 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public interface(): InterfaceContext {
 		let _localctx: InterfaceContext = new InterfaceContext(this._ctx, this.state);
-		this.enterRule(_localctx, 46, RalphParser.RULE_interface);
+		this.enterRule(_localctx, 52, RalphParser.RULE_interface);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 304;
+			this.state = 329;
 			this.match(RalphParser.INTERFACE);
-			this.state = 305;
+			this.state = 330;
 			this.match(RalphParser.IDENTIFIER);
-			this.state = 306;
+			this.state = 331;
 			this.typeStructBody();
 			}
 		}
@@ -1654,19 +1773,19 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public event(): EventContext {
 		let _localctx: EventContext = new EventContext(this._ctx, this.state);
-		this.enterRule(_localctx, 48, RalphParser.RULE_event);
+		this.enterRule(_localctx, 54, RalphParser.RULE_event);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 308;
+			this.state = 333;
 			this.match(RalphParser.EVENT);
-			this.state = 309;
+			this.state = 334;
 			this.match(RalphParser.IDENTIFIER);
-			this.state = 310;
+			this.state = 335;
 			this.match(RalphParser.L_PAREN);
-			this.state = 311;
+			this.state = 336;
 			this.paramList();
-			this.state = 312;
+			this.state = 337;
 			this.match(RalphParser.R_PAREN);
 			}
 		}
@@ -1687,19 +1806,19 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public emit(): EmitContext {
 		let _localctx: EmitContext = new EmitContext(this._ctx, this.state);
-		this.enterRule(_localctx, 50, RalphParser.RULE_emit);
+		this.enterRule(_localctx, 56, RalphParser.RULE_emit);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 314;
+			this.state = 339;
 			this.match(RalphParser.EMIT);
-			this.state = 315;
+			this.state = 340;
 			this.match(RalphParser.IDENTIFIER);
-			this.state = 316;
+			this.state = 341;
 			this.match(RalphParser.L_PAREN);
-			this.state = 317;
+			this.state = 342;
 			this.expressionList();
-			this.state = 318;
+			this.state = 343;
 			this.match(RalphParser.R_PAREN);
 			}
 		}
@@ -1720,19 +1839,19 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public annotation(): AnnotationContext {
 		let _localctx: AnnotationContext = new AnnotationContext(this._ctx, this.state);
-		this.enterRule(_localctx, 52, RalphParser.RULE_annotation);
+		this.enterRule(_localctx, 58, RalphParser.RULE_annotation);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 320;
+			this.state = 345;
 			this.match(RalphParser.AT);
-			this.state = 321;
+			this.state = 346;
 			this.match(RalphParser.USING);
-			this.state = 322;
+			this.state = 347;
 			this.match(RalphParser.L_PAREN);
-			this.state = 323;
+			this.state = 348;
 			this.expressionList();
-			this.state = 324;
+			this.state = 349;
 			this.match(RalphParser.R_PAREN);
 			}
 		}
@@ -1753,28 +1872,28 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public block(): BlockContext {
 		let _localctx: BlockContext = new BlockContext(this._ctx, this.state);
-		this.enterRule(_localctx, 54, RalphParser.RULE_block);
+		this.enterRule(_localctx, 60, RalphParser.RULE_block);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 326;
+			this.state = 351;
 			this.match(RalphParser.L_CURLY);
-			this.state = 330;
+			this.state = 355;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << RalphParser.RETURN) | (1 << RalphParser.IF) | (1 << RalphParser.WHILE) | (1 << RalphParser.LET) | (1 << RalphParser.CONST) | (1 << RalphParser.EMIT))) !== 0) || ((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & ((1 << (RalphParser.IDENTIFIER - 32)) | (1 << (RalphParser.L_CURLY - 32)) | (1 << (RalphParser.L_BRACKET - 32)) | (1 << (RalphParser.SUB - 32)))) !== 0) || ((((_la - 68)) & ~0x1F) === 0 && ((1 << (_la - 68)) & ((1 << (RalphParser.NOT - 68)) | (1 << (RalphParser.ADDRESS_LIT - 68)) | (1 << (RalphParser.ALPH_LIT - 68)) | (1 << (RalphParser.BOOL_LIT - 68)) | (1 << (RalphParser.DECIMAL_LIT - 68)) | (1 << (RalphParser.BINARY_LIT - 68)) | (1 << (RalphParser.OCTAL_LIT - 68)) | (1 << (RalphParser.HEX_LIT - 68)) | (1 << (RalphParser.IMAGINARY_LIT - 68)) | (1 << (RalphParser.RUNE_LIT - 68)) | (1 << (RalphParser.RAW_STRING_LIT - 68)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 68)) | (1 << (RalphParser.EOS - 68)))) !== 0)) {
 				{
 				{
-				this.state = 327;
+				this.state = 352;
 				this.statement();
 				}
 				}
-				this.state = 332;
+				this.state = 357;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
-			this.state = 333;
+			this.state = 358;
 			this.match(RalphParser.R_CURLY);
 			}
 		}
@@ -1795,9 +1914,9 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public statement(): StatementContext {
 		let _localctx: StatementContext = new StatementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 56, RalphParser.RULE_statement);
+		this.enterRule(_localctx, 62, RalphParser.RULE_statement);
 		try {
-			this.state = 340;
+			this.state = 365;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case RalphParser.LET:
@@ -1821,35 +1940,35 @@ export class RalphParser extends Parser {
 			case RalphParser.EOS:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 335;
+				this.state = 360;
 				this.simpleStmt();
 				}
 				break;
 			case RalphParser.RETURN:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 336;
+				this.state = 361;
 				this.returnStmt();
 				}
 				break;
 			case RalphParser.L_CURLY:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 337;
+				this.state = 362;
 				this.block();
 				}
 				break;
 			case RalphParser.IF:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 338;
+				this.state = 363;
 				this.ifStmt();
 				}
 				break;
 			case RalphParser.WHILE:
 				this.enterOuterAlt(_localctx, 5);
 				{
-				this.state = 339;
+				this.state = 364;
 				this.whileStmt();
 				}
 				break;
@@ -1874,15 +1993,15 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public simpleStmt(): SimpleStmtContext {
 		let _localctx: SimpleStmtContext = new SimpleStmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 58, RalphParser.RULE_simpleStmt);
+		this.enterRule(_localctx, 64, RalphParser.RULE_simpleStmt);
 		try {
-			this.state = 346;
+			this.state = 371;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case RalphParser.EOS:
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 342;
+				this.state = 367;
 				this.emptyStmt();
 				}
 				break;
@@ -1890,7 +2009,7 @@ export class RalphParser extends Parser {
 			case RalphParser.CONST:
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 343;
+				this.state = 368;
 				this.varDecl();
 				}
 				break;
@@ -1911,14 +2030,14 @@ export class RalphParser extends Parser {
 			case RalphParser.INTERPRETED_STRING_LIT:
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 344;
+				this.state = 369;
 				this.expression(0);
 				}
 				break;
 			case RalphParser.EMIT:
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 345;
+				this.state = 370;
 				this.emit();
 				}
 				break;
@@ -1943,11 +2062,11 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public emptyStmt(): EmptyStmtContext {
 		let _localctx: EmptyStmtContext = new EmptyStmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 60, RalphParser.RULE_emptyStmt);
+		this.enterRule(_localctx, 66, RalphParser.RULE_emptyStmt);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 348;
+			this.state = 373;
 			this.eos();
 			}
 		}
@@ -1968,13 +2087,13 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public returnStmt(): ReturnStmtContext {
 		let _localctx: ReturnStmtContext = new ReturnStmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 62, RalphParser.RULE_returnStmt);
+		this.enterRule(_localctx, 68, RalphParser.RULE_returnStmt);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 350;
+			this.state = 375;
 			this.match(RalphParser.RETURN);
-			this.state = 351;
+			this.state = 376;
 			this.expressionList();
 			}
 		}
@@ -1995,40 +2114,40 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public ifStmt(): IfStmtContext {
 		let _localctx: IfStmtContext = new IfStmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 64, RalphParser.RULE_ifStmt);
+		this.enterRule(_localctx, 70, RalphParser.RULE_ifStmt);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 353;
+			this.state = 378;
 			this.match(RalphParser.IF);
-			this.state = 354;
+			this.state = 379;
 			this.match(RalphParser.L_PAREN);
-			this.state = 355;
+			this.state = 380;
 			this.expression(0);
-			this.state = 356;
+			this.state = 381;
 			this.match(RalphParser.R_PAREN);
-			this.state = 357;
+			this.state = 382;
 			this.block();
-			this.state = 363;
+			this.state = 388;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (_la === RalphParser.ELSE) {
 				{
-				this.state = 358;
+				this.state = 383;
 				this.match(RalphParser.ELSE);
-				this.state = 361;
+				this.state = 386;
 				this._errHandler.sync(this);
 				switch (this._input.LA(1)) {
 				case RalphParser.L_CURLY:
 					{
-					this.state = 359;
+					this.state = 384;
 					this.block();
 					}
 					break;
 				case RalphParser.IF:
 					{
-					this.state = 360;
+					this.state = 385;
 					this.ifStmt();
 					}
 					break;
@@ -2057,28 +2176,28 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public whileStmt(): WhileStmtContext {
 		let _localctx: WhileStmtContext = new WhileStmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 66, RalphParser.RULE_whileStmt);
+		this.enterRule(_localctx, 72, RalphParser.RULE_whileStmt);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 365;
+			this.state = 390;
 			this.match(RalphParser.WHILE);
-			this.state = 366;
+			this.state = 391;
 			this.match(RalphParser.L_PAREN);
-			this.state = 368;
+			this.state = 393;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			if (((((_la - 32)) & ~0x1F) === 0 && ((1 << (_la - 32)) & ((1 << (RalphParser.IDENTIFIER - 32)) | (1 << (RalphParser.L_BRACKET - 32)) | (1 << (RalphParser.SUB - 32)))) !== 0) || ((((_la - 68)) & ~0x1F) === 0 && ((1 << (_la - 68)) & ((1 << (RalphParser.NOT - 68)) | (1 << (RalphParser.ADDRESS_LIT - 68)) | (1 << (RalphParser.ALPH_LIT - 68)) | (1 << (RalphParser.BOOL_LIT - 68)) | (1 << (RalphParser.DECIMAL_LIT - 68)) | (1 << (RalphParser.BINARY_LIT - 68)) | (1 << (RalphParser.OCTAL_LIT - 68)) | (1 << (RalphParser.HEX_LIT - 68)) | (1 << (RalphParser.IMAGINARY_LIT - 68)) | (1 << (RalphParser.RUNE_LIT - 68)) | (1 << (RalphParser.RAW_STRING_LIT - 68)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 68)))) !== 0)) {
 				{
-				this.state = 367;
+				this.state = 392;
 				this.expression(0);
 				}
 			}
 
-			this.state = 370;
+			this.state = 395;
 			this.match(RalphParser.R_PAREN);
-			this.state = 371;
+			this.state = 396;
 			this.block();
 			}
 		}
@@ -2099,11 +2218,11 @@ export class RalphParser extends Parser {
 	// @RuleVersion(0)
 	public eos(): EosContext {
 		let _localctx: EosContext = new EosContext(this._ctx, this.state);
-		this.enterRule(_localctx, 68, RalphParser.RULE_eos);
+		this.enterRule(_localctx, 74, RalphParser.RULE_eos);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 373;
+			this.state = 398;
 			this.match(RalphParser.EOS);
 			}
 		}
@@ -2124,7 +2243,7 @@ export class RalphParser extends Parser {
 
 	public sempred(_localctx: RuleContext, ruleIndex: number, predIndex: number): boolean {
 		switch (ruleIndex) {
-		case 4:
+		case 5:
 			return this.expression_sempred(_localctx as ExpressionContext, predIndex);
 		}
 		return true;
@@ -2147,186 +2266,198 @@ export class RalphParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03^\u017A\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03^\u0193\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04" +
 		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x04" +
 		"\x13\t\x13\x04\x14\t\x14\x04\x15\t\x15\x04\x16\t\x16\x04\x17\t\x17\x04" +
 		"\x18\t\x18\x04\x19\t\x19\x04\x1A\t\x1A\x04\x1B\t\x1B\x04\x1C\t\x1C\x04" +
 		"\x1D\t\x1D\x04\x1E\t\x1E\x04\x1F\t\x1F\x04 \t \x04!\t!\x04\"\t\"\x04#" +
-		"\t#\x04$\t$\x03\x02\x03\x02\x03\x02\x07\x02L\n\x02\f\x02\x0E\x02O\v\x02" +
-		"\x03\x02\x03\x02\x03\x03\x03\x03\x03\x03\x07\x03V\n\x03\f\x03\x0E\x03" +
-		"Y\v\x03\x03\x04\x03\x04\x03\x04\x05\x04^\n\x04\x05\x04`\n\x04\x03\x04" +
-		"\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04" +
-		"\x05\x04l\n\x04\x03\x05\x03\x05\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06" +
-		"\x03\x06\x05\x06v\n\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06" +
-		"\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x07\x06\x84\n\x06\f\x06" +
-		"\x0E\x06\x87\v\x06\x03\x07\x03\x07\x05\x07\x8B\n\x07\x07\x07\x8D\n\x07" +
-		"\f\x07\x0E\x07\x90\v\x07\x03\b\x03\b\x03\b\x07\b\x95\n\b\f\b\x0E\b\x98" +
-		"\v\b\x03\b\x03\b\x03\b\x03\b\x03\t\x03\t\x05\t\xA0\n\t\x03\n\x03\n\x03" +
-		"\n\x03\n\x03\n\x03\n\x03\n\x05\n\xA9\n\n\x03\v\x03\v\x03\v\x03\v\x03\v" +
-		"\x03\v\x03\f\x05\f\xB2\n\f\x03\f\x03\f\x03\f\x03\f\x07\f\xB8\n\f\f\f\x0E" +
-		"\f\xBB\v\f\x03\f\x03\f\x03\r\x03\r\x05\r\xC1\n\r\x03\x0E\x03\x0E\x03\x0E" +
-		"\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x07\x0E\xCA\n\x0E\f\x0E\x0E\x0E\xCD\v" +
-		"\x0E\x03\x0E\x05\x0E\xD0\n\x0E\x05\x0E\xD2\n\x0E\x03\x0E\x05\x0E\xD5\n" +
-		"\x0E\x03\x0F\x03\x0F\x03\x0F\x03\x10\x05\x10\xDB\n\x10\x03\x10\x05\x10" +
-		"\xDE\n\x10\x03\x10\x03\x10\x03\x10\x03\x10\x03\x11\x03\x11\x05\x11\xE6" +
-		"\n\x11\x07\x11\xE8\n\x11\f\x11\x0E\x11\xEB\v\x11\x03\x12\x05\x12\xEE\n" +
-		"\x12\x03\x12\x05\x12\xF1\n\x12\x03\x12\x03\x12\x03\x12\x03\x12\x03\x12" +
-		"\x03\x12\x03\x12\x05\x12\xFA\n\x12\x03\x12\x05\x12\xFD\n\x12\x03\x13\x03" +
-		"\x13\x03\x13\x03\x13\x03\x13\x05\x13\u0104\n\x13\x03\x14\x03\x14\x03\x15" +
-		"\x03\x15\x03\x16\x03\x16\x03\x16\x03\x16\x07\x16\u010E\n\x16\f\x16\x0E" +
-		"\x16\u0111\v\x16\x03\x16\x03\x16\x03\x17\x03\x17\x03\x17\x03\x17\x03\x17" +
-		"\x03\x17\x05\x17\u011B\n\x17\x03\x17\x03\x17\x03\x18\x03\x18\x03\x18\x03" +
-		"\x18\x03\x18\x03\x18\x05\x18\u0125\n\x18\x03\x18\x03\x18\x03\x18\x03\x18" +
-		"\x03\x18\x03\x18\x05\x18\u012D\n\x18\x05\x18\u012F\n\x18\x03\x18\x03\x18" +
-		"\x03\x19\x03\x19\x03\x19\x03\x19\x03\x1A\x03\x1A\x03\x1A\x03\x1A\x03\x1A" +
-		"\x03\x1A\x03\x1B\x03\x1B\x03\x1B\x03\x1B\x03\x1B\x03\x1B\x03\x1C\x03\x1C" +
-		"\x03\x1C\x03\x1C\x03\x1C\x03\x1C\x03\x1D\x03\x1D\x07\x1D\u014B\n\x1D\f" +
-		"\x1D\x0E\x1D\u014E\v\x1D\x03\x1D\x03\x1D\x03\x1E\x03\x1E\x03\x1E\x03\x1E" +
-		"\x03\x1E\x05\x1E\u0157\n\x1E\x03\x1F\x03\x1F\x03\x1F\x03\x1F\x05\x1F\u015D" +
-		"\n\x1F\x03 \x03 \x03!\x03!\x03!\x03\"\x03\"\x03\"\x03\"\x03\"\x03\"\x03" +
-		"\"\x03\"\x05\"\u016C\n\"\x05\"\u016E\n\"\x03#\x03#\x03#\x05#\u0173\n#" +
-		"\x03#\x03#\x03#\x03$\x03$\x03$\x02\x02\x03\n%\x02\x02\x04\x02\x06\x02" +
-		"\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18\x02\x1A" +
-		"\x02\x1C\x02\x1E\x02 \x02\"\x02$\x02&\x02(\x02*\x02,\x02.\x020\x022\x02" +
-		"4\x026\x028\x02:\x02<\x02>\x02@\x02B\x02D\x02F\x02\x02\t\x04\x0222FF\x03" +
-		"\x020=\x03\x02>C\x03\x02DE\x04\x02JMQR\x03\x02XY\x04\x02\x13\x13\x15\x15" +
-		"\x02\u0194\x02M\x03\x02\x02\x02\x04R\x03\x02\x02\x02\x06_\x03\x02\x02" +
-		"\x02\bm\x03\x02\x02\x02\nu\x03\x02\x02\x02\f\x8E\x03\x02\x02\x02\x0E\x91" +
-		"\x03\x02\x02\x02\x10\x9F\x03\x02\x02\x02\x12\xA8\x03\x02\x02\x02\x14\xAA" +
-		"\x03\x02\x02\x02\x16\xB1\x03\x02\x02\x02\x18\xC0\x03\x02\x02\x02\x1A\xD4" +
-		"\x03\x02\x02\x02\x1C\xD6\x03\x02\x02\x02\x1E\xDA\x03\x02\x02\x02 \xE9" +
-		"\x03\x02\x02\x02\"\xED\x03\x02\x02\x02$\u0103\x03\x02\x02\x02&\u0105\x03" +
-		"\x02\x02\x02(\u0107\x03\x02\x02\x02*\u0109\x03\x02\x02\x02,\u0114\x03" +
-		"\x02\x02\x02.\u011E\x03\x02\x02\x020\u0132\x03\x02\x02\x022\u0136\x03" +
-		"\x02\x02\x024\u013C\x03\x02\x02\x026\u0142\x03\x02\x02\x028\u0148\x03" +
-		"\x02\x02\x02:\u0156\x03\x02\x02\x02<\u015C\x03\x02\x02\x02>\u015E\x03" +
-		"\x02\x02\x02@\u0160\x03\x02\x02\x02B\u0163\x03\x02\x02\x02D\u016F\x03" +
-		"\x02\x02\x02F\u0177\x03\x02\x02\x02HL\x05,\x17\x02IL\x05.\x18\x02JL\x05" +
-		"0\x19\x02KH\x03\x02\x02\x02KI\x03\x02\x02\x02KJ\x03\x02\x02\x02LO\x03" +
-		"\x02\x02\x02MK\x03\x02\x02\x02MN\x03\x02\x02\x02NP\x03\x02\x02\x02OM\x03" +
-		"\x02\x02\x02PQ\x07\x02\x02\x03Q\x03\x03\x02\x02\x02RW\x05\b\x05\x02ST" +
-		"\x07*\x02\x02TV\x05\b\x05\x02US\x03\x02\x02\x02VY\x03\x02\x02\x02WU\x03" +
-		"\x02\x02\x02WX\x03\x02\x02\x02X\x05\x03\x02\x02\x02YW\x03\x02\x02\x02" +
-		"Z`\x07\x11\x02\x02[]\x07\x10\x02\x02\\^\x07\x12\x02\x02]\\\x03\x02\x02" +
-		"\x02]^\x03\x02\x02\x02^`\x03\x02\x02\x02_Z\x03\x02\x02\x02_[\x03\x02\x02" +
-		"\x02`k\x03\x02\x02\x02ab\x05\b\x05\x02bc\x07)\x02\x02cd\x05\n\x06\x02" +
-		"dl\x03\x02\x02\x02ef\x07#\x02\x02fg\x05\x04\x03\x02gh\x07$\x02\x02hi\x07" +
-		")\x02\x02ij\x05\n\x06\x02jl\x03\x02\x02\x02ka\x03\x02\x02\x02ke\x03\x02" +
-		"\x02\x02l\x07\x03\x02\x02\x02mn\x07\"\x02\x02n\t\x03\x02\x02\x02op\b\x06" +
-		"\x01\x02pv\x05\x10\t\x02qv\x05\b\x05\x02rv\x05\x0E\b\x02st\t\x02\x02\x02" +
-		"tv\x05\n\x06\x07uo\x03\x02\x02\x02uq\x03\x02\x02\x02ur\x03\x02\x02\x02" +
-		"us\x03\x02\x02\x02v\x85\x03\x02\x02\x02wx\f\x06\x02\x02xy\t\x03\x02\x02" +
-		"y\x84\x05\n\x06\x07z{\f\x05\x02\x02{|\t\x04\x02\x02|\x84\x05\n\x06\x06" +
-		"}~\f\x04\x02\x02~\x7F\t\x05\x02\x02\x7F\x84\x05\n\x06\x05\x80\x81\f\x03" +
-		"\x02\x02\x81\x82\x07)\x02\x02\x82\x84\x05\n\x06\x04\x83w\x03\x02\x02\x02" +
-		"\x83z\x03\x02\x02\x02\x83}\x03\x02\x02\x02\x83\x80\x03\x02\x02\x02\x84" +
-		"\x87\x03\x02\x02\x02\x85\x83\x03\x02\x02\x02\x85\x86\x03\x02\x02\x02\x86" +
-		"\v\x03\x02\x02\x02\x87\x85\x03\x02\x02\x02\x88\x8A\x05\n\x06\x02\x89\x8B" +
-		"\x07*\x02\x02\x8A\x89\x03\x02\x02\x02\x8A\x8B\x03\x02\x02\x02\x8B\x8D" +
-		"\x03\x02\x02\x02\x8C\x88\x03\x02\x02\x02\x8D\x90\x03\x02\x02\x02\x8E\x8C" +
-		"\x03\x02\x02\x02\x8E\x8F\x03\x02\x02\x02\x8F\r\x03\x02\x02\x02\x90\x8E" +
-		"\x03\x02\x02\x02\x91\x96\x07\"\x02\x02\x92\x93\x07-\x02\x02\x93\x95\x07" +
-		"\"\x02\x02\x94\x92\x03\x02\x02\x02\x95\x98\x03\x02\x02\x02\x96\x94\x03" +
-		"\x02\x02\x02\x96\x97\x03\x02\x02\x02\x97\x99\x03\x02\x02\x02\x98\x96\x03" +
-		"\x02\x02\x02\x99\x9A\x07#\x02\x02\x9A\x9B\x05\f\x07\x02\x9B\x9C\x07$\x02" +
-		"\x02\x9C\x0F\x03\x02\x02\x02\x9D\xA0\x05$\x13\x02\x9E\xA0\x05\x16\f\x02" +
-		"\x9F\x9D\x03\x02\x02\x02\x9F\x9E\x03\x02\x02\x02\xA0\x11\x03\x02\x02\x02" +
-		"\xA1\xA9\x07\x1A\x02\x02\xA2\xA9\x07\x1B\x02\x02\xA3\xA9\x07\x1D\x02\x02" +
-		"\xA4\xA9\x07\x1C\x02\x02\xA5\xA9\x07\x1E\x02\x02\xA6\xA9\x07\x1F\x02\x02" +
-		"\xA7\xA9\x05\x14\v\x02\xA8\xA1\x03\x02\x02\x02\xA8\xA2\x03\x02\x02\x02" +
-		"\xA8\xA3\x03\x02\x02\x02\xA8\xA4\x03\x02\x02\x02\xA8\xA5\x03\x02\x02\x02" +
-		"\xA8\xA6\x03\x02\x02\x02\xA8\xA7\x03\x02\x02\x02\xA9\x13\x03\x02\x02\x02" +
-		"\xAA\xAB\x07\'\x02\x02\xAB\xAC\x05\x18\r\x02\xAC\xAD\x07+\x02\x02\xAD" +
-		"\xAE\x05\n\x06\x02\xAE\xAF\x07(\x02\x02\xAF\x15\x03\x02\x02\x02\xB0\xB2" +
-		"\x07\"\x02\x02\xB1\xB0\x03\x02\x02\x02\xB1\xB2\x03\x02\x02\x02\xB2\xB3" +
-		"\x03\x02\x02\x02\xB3\xB4\x07\'\x02\x02\xB4\xB9\x05\n\x06\x02\xB5\xB6\x07" +
-		"*\x02\x02\xB6\xB8\x05\n\x06\x02\xB7\xB5\x03\x02\x02\x02\xB8\xBB\x03\x02" +
-		"\x02\x02\xB9\xB7\x03\x02\x02\x02\xB9\xBA\x03\x02\x02\x02\xBA\xBC\x03\x02" +
-		"\x02\x02\xBB\xB9\x03\x02\x02\x02\xBC\xBD\x07(\x02\x02\xBD\x17\x03\x02" +
-		"\x02\x02\xBE\xC1\x05\x12\n\x02\xBF\xC1\x07\"\x02\x02\xC0\xBE\x03\x02\x02" +
-		"\x02\xC0\xBF\x03\x02\x02\x02\xC1\x19\x03\x02\x02\x02\xC2\xC3\x07#\x02" +
-		"\x02\xC3\xD5\x07$\x02\x02\xC4\xD5\x05\x18\r\x02\xC5\xD1\x07#\x02\x02\xC6" +
-		"\xCB\x05\x18\r\x02\xC7\xC8\x07*\x02\x02\xC8\xCA\x05\x18\r\x02\xC9\xC7" +
-		"\x03\x02\x02\x02\xCA\xCD\x03\x02\x02\x02\xCB\xC9\x03\x02\x02\x02\xCB\xCC" +
-		"\x03\x02\x02\x02\xCC\xCF\x03\x02\x02\x02\xCD\xCB\x03\x02\x02\x02\xCE\xD0" +
-		"\x07*\x02\x02\xCF\xCE\x03\x02\x02\x02\xCF\xD0\x03\x02\x02\x02\xD0\xD2" +
-		"\x03\x02\x02\x02\xD1\xC6\x03\x02\x02\x02\xD1\xD2\x03\x02\x02\x02\xD2\xD3" +
-		"\x03\x02\x02\x02\xD3\xD5\x07$\x02\x02\xD4\xC2\x03\x02\x02\x02\xD4\xC4" +
-		"\x03\x02\x02\x02\xD4\xC5\x03\x02\x02\x02\xD5\x1B\x03\x02\x02\x02\xD6\xD7" +
-		"\x07\x19\x02\x02\xD7\xD8\x07 \x02\x02\xD8\x1D\x03\x02\x02\x02\xD9\xDB" +
-		"\x05\x1C\x0F\x02\xDA\xD9\x03\x02\x02\x02\xDA\xDB\x03\x02\x02\x02\xDB\xDD" +
-		"\x03\x02\x02\x02\xDC\xDE\x07\x12\x02\x02\xDD\xDC\x03\x02\x02\x02\xDD\xDE" +
-		"\x03\x02\x02\x02\xDE\xDF\x03\x02\x02\x02\xDF\xE0\x07\"\x02\x02\xE0\xE1" +
-		"\x07,\x02\x02\xE1\xE2\x05\x18\r\x02\xE2\x1F\x03\x02\x02\x02\xE3\xE5\x05" +
-		"\x1E\x10\x02\xE4\xE6\x07*\x02\x02\xE5\xE4\x03\x02\x02\x02\xE5\xE6\x03" +
-		"\x02\x02\x02\xE6\xE8\x03\x02\x02\x02\xE7\xE3\x03\x02\x02\x02\xE8\xEB\x03" +
-		"\x02\x02\x02\xE9\xE7\x03\x02\x02\x02\xE9\xEA\x03\x02\x02\x02\xEA!\x03" +
-		"\x02\x02\x02\xEB\xE9\x03\x02\x02\x02\xEC\xEE\x056\x1C\x02\xED\xEC\x03" +
-		"\x02\x02\x02\xED\xEE\x03\x02\x02\x02\xEE\xF0\x03\x02\x02\x02\xEF\xF1\x07" +
-		"\x04\x02\x02\xF0\xEF\x03\x02\x02\x02\xF0\xF1\x03\x02\x02\x02\xF1\xF2\x03" +
-		"\x02\x02\x02\xF2\xF3\x07\x03\x02\x02\xF3\xF4\x07\"\x02\x02\xF4\xF5\x07" +
-		"#\x02\x02\xF5\xF6\x05 \x11\x02\xF6\xF9\x07$\x02\x02\xF7\xF8\x07!\x02\x02" +
-		"\xF8\xFA\x05\x1A\x0E\x02\xF9\xF7\x03\x02\x02\x02\xF9\xFA\x03\x02\x02\x02" +
-		"\xFA\xFC\x03\x02\x02\x02\xFB\xFD\x058\x1D\x02\xFC\xFB\x03\x02\x02\x02" +
-		"\xFC\xFD\x03\x02\x02\x02\xFD#\x03\x02\x02\x02\xFE\u0104\x05&\x14\x02\xFF" +
-		"\u0104\x05(\x15\x02\u0100\u0104\x07G\x02\x02\u0101\u0104\x07H\x02\x02" +
-		"\u0102\u0104\x07I\x02\x02\u0103\xFE\x03\x02\x02\x02\u0103\xFF\x03\x02" +
-		"\x02\x02\u0103\u0100\x03\x02\x02\x02\u0103\u0101\x03\x02\x02\x02\u0103" +
-		"\u0102\x03\x02\x02\x02\u0104%\x03\x02\x02\x02\u0105\u0106\t\x06\x02\x02" +
-		"\u0106\'\x03\x02\x02\x02\u0107\u0108\t\x07\x02\x02\u0108)\x03\x02\x02" +
-		"\x02\u0109\u010F\x07%\x02\x02\u010A\u010E\x05:\x1E\x02\u010B\u010E\x05" +
-		"2\x1A\x02\u010C\u010E\x05\"\x12\x02\u010D\u010A\x03\x02\x02\x02\u010D" +
-		"\u010B\x03\x02\x02\x02\u010D\u010C\x03\x02\x02\x02\u010E\u0111\x03\x02" +
-		"\x02\x02\u010F\u010D\x03\x02\x02\x02\u010F\u0110\x03\x02\x02\x02\u0110" +
-		"\u0112\x03\x02\x02\x02\u0111\u010F\x03\x02\x02\x02\u0112\u0113\x07&\x02" +
-		"\x02\u0113+\x03\x02\x02\x02\u0114\u0115\x07\t\x02\x02\u0115\u011A\x07" +
-		"\"\x02\x02\u0116\u0117\x07#\x02\x02\u0117\u0118\x05 \x11\x02\u0118\u0119" +
-		"\x07$\x02\x02\u0119\u011B\x03\x02\x02\x02\u011A\u0116\x03\x02\x02\x02" +
-		"\u011A\u011B\x03\x02\x02\x02\u011B\u011C\x03\x02\x02\x02\u011C\u011D\x05" +
-		"*\x16\x02\u011D-\x03\x02\x02\x02\u011E\u011F\x07\v\x02\x02\u011F\u0124" +
-		"\x07\"\x02\x02\u0120\u0121\x07#\x02\x02\u0121\u0122\x05 \x11\x02\u0122" +
-		"\u0123\x07$\x02\x02\u0123\u0125\x03\x02\x02\x02\u0124\u0120\x03\x02\x02" +
-		"\x02\u0124\u0125\x03\x02\x02\x02\u0125\u012E\x03\x02\x02\x02\u0126\u0127" +
-		"\t\b\x02\x02\u0127\u012C\x07\"\x02\x02\u0128\u0129\x07#\x02\x02\u0129" +
-		"\u012A\x05\f\x07\x02\u012A\u012B\x07$\x02\x02\u012B\u012D\x03\x02\x02" +
-		"\x02\u012C\u0128\x03\x02\x02\x02\u012C\u012D\x03\x02\x02\x02\u012D\u012F" +
-		"\x03\x02\x02\x02\u012E\u0126\x03\x02\x02\x02\u012E\u012F\x03\x02\x02\x02" +
-		"\u012F\u0130\x03\x02\x02\x02\u0130\u0131\x05*\x16\x02\u0131/\x03\x02\x02" +
-		"\x02\u0132\u0133\x07\x06\x02\x02\u0133\u0134\x07\"\x02\x02\u0134\u0135" +
-		"\x05*\x16\x02\u01351\x03\x02\x02\x02\u0136\u0137\x07\x16\x02\x02\u0137" +
-		"\u0138\x07\"\x02\x02\u0138\u0139\x07#\x02\x02\u0139\u013A\x05 \x11\x02" +
-		"\u013A\u013B\x07$\x02\x02\u013B3\x03\x02\x02\x02\u013C\u013D\x07\x17\x02" +
-		"\x02\u013D\u013E\x07\"\x02\x02\u013E\u013F\x07#\x02\x02\u013F\u0140\x05" +
-		"\f\x07\x02\u0140\u0141\x07$\x02\x02\u01415\x03\x02\x02\x02\u0142\u0143" +
-		"\x07\x19\x02\x02\u0143\u0144\x07\x18\x02\x02\u0144\u0145\x07#\x02\x02" +
-		"\u0145\u0146\x05\f\x07\x02\u0146\u0147\x07$\x02\x02\u01477\x03\x02\x02" +
-		"\x02\u0148\u014C\x07%\x02\x02\u0149\u014B\x05:\x1E\x02\u014A\u0149\x03" +
-		"\x02\x02\x02\u014B\u014E\x03\x02\x02\x02\u014C\u014A\x03\x02\x02\x02\u014C" +
-		"\u014D\x03\x02\x02\x02\u014D\u014F\x03\x02\x02\x02\u014E\u014C\x03\x02" +
-		"\x02\x02\u014F\u0150\x07&\x02\x02\u01509\x03\x02\x02\x02\u0151\u0157\x05" +
-		"<\x1F\x02\u0152\u0157\x05@!\x02\u0153\u0157\x058\x1D\x02\u0154\u0157\x05" +
-		"B\"\x02\u0155\u0157\x05D#\x02\u0156\u0151\x03\x02\x02\x02\u0156\u0152" +
-		"\x03\x02\x02\x02\u0156\u0153\x03\x02\x02\x02\u0156\u0154\x03\x02\x02\x02" +
-		"\u0156\u0155\x03\x02\x02\x02\u0157;\x03\x02\x02\x02\u0158\u015D\x05> " +
-		"\x02\u0159\u015D\x05\x06\x04\x02\u015A\u015D\x05\n\x06\x02\u015B\u015D" +
-		"\x054\x1B\x02\u015C\u0158\x03\x02\x02\x02\u015C\u0159\x03\x02\x02\x02" +
-		"\u015C\u015A\x03\x02\x02\x02\u015C\u015B\x03\x02\x02\x02\u015D=\x03\x02" +
-		"\x02\x02\u015E\u015F\x05F$\x02\u015F?\x03\x02\x02\x02\u0160\u0161\x07" +
-		"\x05\x02\x02\u0161\u0162\x05\f\x07\x02\u0162A\x03\x02\x02\x02\u0163\u0164" +
-		"\x07\r\x02\x02\u0164\u0165\x07#\x02\x02\u0165\u0166\x05\n\x06\x02\u0166" +
-		"\u0167\x07$\x02\x02\u0167\u016D\x058\x1D\x02\u0168\u016B\x07\x0E\x02\x02" +
-		"\u0169\u016C\x058\x1D\x02\u016A\u016C\x05B\"\x02\u016B\u0169\x03\x02\x02" +
-		"\x02\u016B\u016A\x03\x02\x02\x02\u016C\u016E\x03\x02\x02\x02\u016D\u0168" +
-		"\x03\x02\x02\x02\u016D\u016E\x03\x02\x02\x02\u016EC\x03\x02\x02\x02\u016F" +
-		"\u0170\x07\x0F\x02\x02\u0170\u0172\x07#\x02\x02\u0171\u0173\x05\n\x06" +
-		"\x02\u0172\u0171\x03\x02\x02\x02\u0172\u0173\x03\x02\x02\x02\u0173\u0174" +
-		"\x03\x02\x02\x02\u0174\u0175\x07$\x02\x02\u0175\u0176\x058\x1D\x02\u0176" +
-		"E\x03\x02\x02\x02\u0177\u0178\x07^\x02\x02\u0178G\x03\x02\x02\x02,KMW" +
-		"]_ku\x83\x85\x8A\x8E\x96\x9F\xA8\xB1\xB9\xC0\xCB\xCF\xD1\xD4\xDA\xDD\xE5" +
-		"\xE9\xED\xF0\xF9\xFC\u0103\u010D\u010F\u011A\u0124\u012C\u012E\u014C\u0156" +
-		"\u015C\u016B\u016D\u0172";
+		"\t#\x04$\t$\x04%\t%\x04&\t&\x04\'\t\'\x03\x02\x03\x02\x03\x02\x07\x02" +
+		"R\n\x02\f\x02\x0E\x02U\v\x02\x03\x02\x03\x02\x03\x03\x03\x03\x03\x03\x07" +
+		"\x03\\\n\x03\f\x03\x0E\x03_\v\x03\x03\x04\x03\x04\x03\x04\x05\x04d\n\x04" +
+		"\x05\x04f\n\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04" +
+		"\x03\x04\x03\x04\x03\x04\x05\x04r\n\x04\x03\x05\x03\x05\x03\x06\x03\x06" +
+		"\x03\x06\x07\x06y\n\x06\f\x06\x0E\x06|\v\x06\x03\x07\x03\x07\x03\x07\x03" +
+		"\x07\x03\x07\x03\x07\x03\x07\x05\x07\x85\n\x07\x03\x07\x03\x07\x03\x07" +
+		"\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07" +
+		"\x07\x07\x93\n\x07\f\x07\x0E\x07\x96\v\x07\x03\b\x03\b\x05\b\x9A\n\b\x07" +
+		"\b\x9C\n\b\f\b\x0E\b\x9F\v\b\x03\t\x03\t\x03\n\x03\n\x03\n\x03\n\x03\n" +
+		"\x03\v\x03\v\x05\v\xAA\n\v\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x03\f\x05" +
+		"\f\xB3\n\f\x03\r\x03\r\x03\r\x03\r\x03\r\x03\r\x03\x0E\x05\x0E\xBC\n\x0E" +
+		"\x03\x0E\x03\x0E\x03\x0E\x03\x0E\x07\x0E\xC2\n\x0E\f\x0E\x0E\x0E\xC5\v" +
+		"\x0E\x03\x0E\x03\x0E\x03\x0F\x03\x0F\x05\x0F\xCB\n\x0F\x03\x10\x03\x10" +
+		"\x03\x10\x03\x10\x03\x10\x03\x10\x03\x10\x07\x10\xD4\n\x10\f\x10\x0E\x10" +
+		"\xD7\v\x10\x03\x10\x05\x10\xDA\n\x10\x05\x10\xDC\n\x10\x03\x10\x05\x10" +
+		"\xDF\n\x10\x03\x11\x03\x11\x03\x11\x03\x12\x05\x12\xE5\n\x12\x03\x12\x05" +
+		"\x12\xE8\n\x12\x03\x12\x03\x12\x03\x12\x03\x12\x03\x13\x03\x13\x05\x13" +
+		"\xF0\n\x13\x07\x13\xF2\n\x13\f\x13\x0E\x13\xF5\v\x13\x03\x14\x05\x14\xF8" +
+		"\n\x14\x03\x14\x05\x14\xFB\n\x14\x03\x14\x03\x14\x03\x14\x03\x14\x03\x14" +
+		"\x03\x14\x03\x14\x05\x14\u0104\n\x14\x03\x14\x05\x14\u0107\n\x14\x03\x15" +
+		"\x03\x15\x03\x15\x03\x15\x03\x15\x05\x15\u010E\n\x15\x03\x16\x03\x16\x03" +
+		"\x17\x03\x17\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x03\x18\x07" +
+		"\x18\u011B\n\x18\f\x18\x0E\x18\u011E\v\x18\x03\x18\x03\x18\x03\x19\x03" +
+		"\x19\x03\x19\x03\x19\x03\x19\x07\x19\u0127\n\x19\f\x19\x0E\x19\u012A\v" +
+		"\x19\x03\x19\x03\x19\x03\x1A\x03\x1A\x03\x1A\x03\x1A\x03\x1A\x03\x1A\x05" +
+		"\x1A\u0134\n\x1A\x03\x1A\x03\x1A\x03\x1B\x03\x1B\x03\x1B\x03\x1B\x03\x1B" +
+		"\x03\x1B\x05\x1B\u013E\n\x1B\x03\x1B\x03\x1B\x03\x1B\x03\x1B\x03\x1B\x03" +
+		"\x1B\x05\x1B\u0146\n\x1B\x05\x1B\u0148\n\x1B\x03\x1B\x03\x1B\x03\x1C\x03" +
+		"\x1C\x03\x1C\x03\x1C\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03\x1D\x03" +
+		"\x1E\x03\x1E\x03\x1E\x03\x1E\x03\x1E\x03\x1E\x03\x1F\x03\x1F\x03\x1F\x03" +
+		"\x1F\x03\x1F\x03\x1F\x03 \x03 \x07 \u0164\n \f \x0E \u0167\v \x03 \x03" +
+		" \x03!\x03!\x03!\x03!\x03!\x05!\u0170\n!\x03\"\x03\"\x03\"\x03\"\x05\"" +
+		"\u0176\n\"\x03#\x03#\x03$\x03$\x03$\x03%\x03%\x03%\x03%\x03%\x03%\x03" +
+		"%\x03%\x05%\u0185\n%\x05%\u0187\n%\x03&\x03&\x03&\x05&\u018C\n&\x03&\x03" +
+		"&\x03&\x03\'\x03\'\x03\'\x02\x02\x03\f(\x02\x02\x04\x02\x06\x02\b\x02" +
+		"\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x14\x02\x16\x02\x18\x02\x1A\x02\x1C" +
+		"\x02\x1E\x02 \x02\"\x02$\x02&\x02(\x02*\x02,\x02.\x020\x022\x024\x026" +
+		"\x028\x02:\x02<\x02>\x02@\x02B\x02D\x02F\x02H\x02J\x02L\x02\x02\t\x04" +
+		"\x0222FF\x03\x020=\x03\x02>C\x03\x02DE\x04\x02JMQR\x03\x02XY\x04\x02\x13" +
+		"\x13\x15\x15\x02\u01AD\x02S\x03\x02\x02\x02\x04X\x03\x02\x02\x02\x06e" +
+		"\x03\x02\x02\x02\bs\x03\x02\x02\x02\nu\x03\x02\x02\x02\f\x84\x03\x02\x02" +
+		"\x02\x0E\x9D\x03\x02\x02\x02\x10\xA0\x03\x02\x02\x02\x12\xA2\x03\x02\x02" +
+		"\x02\x14\xA9\x03\x02\x02\x02\x16\xB2\x03\x02\x02\x02\x18\xB4\x03\x02\x02" +
+		"\x02\x1A\xBB\x03\x02\x02\x02\x1C\xCA\x03\x02\x02\x02\x1E\xDE\x03\x02\x02" +
+		"\x02 \xE0\x03\x02\x02\x02\"\xE4\x03\x02\x02\x02$\xF3\x03\x02\x02\x02&" +
+		"\xF7\x03\x02\x02\x02(\u010D\x03\x02\x02\x02*\u010F\x03\x02\x02\x02,\u0111" +
+		"\x03\x02\x02\x02.\u0113\x03\x02\x02\x020\u0121\x03\x02\x02\x022\u012D" +
+		"\x03\x02\x02\x024\u0137\x03\x02\x02\x026\u014B\x03\x02\x02\x028\u014F" +
+		"\x03\x02\x02\x02:\u0155\x03\x02\x02\x02<\u015B\x03\x02\x02\x02>\u0161" +
+		"\x03\x02\x02\x02@\u016F\x03\x02\x02\x02B\u0175\x03\x02\x02\x02D\u0177" +
+		"\x03\x02\x02\x02F\u0179\x03\x02\x02\x02H\u017C\x03\x02\x02\x02J\u0188" +
+		"\x03\x02\x02\x02L\u0190\x03\x02\x02\x02NR\x052\x1A\x02OR\x054\x1B\x02" +
+		"PR\x056\x1C\x02QN\x03\x02\x02\x02QO\x03\x02\x02\x02QP\x03\x02\x02\x02" +
+		"RU\x03\x02\x02\x02SQ\x03\x02\x02\x02ST\x03\x02\x02\x02TV\x03\x02\x02\x02" +
+		"US\x03\x02\x02\x02VW\x07\x02\x02\x03W\x03\x03\x02\x02\x02X]\x05\b\x05" +
+		"\x02YZ\x07*\x02\x02Z\\\x05\b\x05\x02[Y\x03\x02\x02\x02\\_\x03\x02\x02" +
+		"\x02][\x03\x02\x02\x02]^\x03\x02\x02\x02^\x05\x03\x02\x02\x02_]\x03\x02" +
+		"\x02\x02`f\x07\x11\x02\x02ac\x07\x10\x02\x02bd\x07\x12\x02\x02cb\x03\x02" +
+		"\x02\x02cd\x03\x02\x02\x02df\x03\x02\x02\x02e`\x03\x02\x02\x02ea\x03\x02" +
+		"\x02\x02fq\x03\x02\x02\x02gh\x05\b\x05\x02hi\x07)\x02\x02ij\x05\f\x07" +
+		"\x02jr\x03\x02\x02\x02kl\x07#\x02\x02lm\x05\x04\x03\x02mn\x07$\x02\x02" +
+		"no\x07)\x02\x02op\x05\f\x07\x02pr\x03\x02\x02\x02qg\x03\x02\x02\x02qk" +
+		"\x03\x02\x02\x02r\x07\x03\x02\x02\x02st\x07\"\x02\x02t\t\x03\x02\x02\x02" +
+		"uz\x07\"\x02\x02vw\x07-\x02\x02wy\x07\"\x02\x02xv\x03\x02\x02\x02y|\x03" +
+		"\x02\x02\x02zx\x03\x02\x02\x02z{\x03\x02\x02\x02{\v\x03\x02\x02\x02|z" +
+		"\x03\x02\x02\x02}~\b\x07\x01\x02~\x85\x05\x14\v\x02\x7F\x85\x05\b\x05" +
+		"\x02\x80\x85\x05\n\x06\x02\x81\x85\x05\x12\n\x02\x82\x83\t\x02\x02\x02" +
+		"\x83\x85\x05\f\x07\x07\x84}\x03\x02\x02\x02\x84\x7F\x03\x02\x02\x02\x84" +
+		"\x80\x03\x02\x02\x02\x84\x81\x03\x02\x02\x02\x84\x82\x03\x02\x02\x02\x85" +
+		"\x94\x03\x02\x02\x02\x86\x87\f\x06\x02\x02\x87\x88\t\x03\x02\x02\x88\x93" +
+		"\x05\f\x07\x07\x89\x8A\f\x05\x02\x02\x8A\x8B\t\x04\x02\x02\x8B\x93\x05" +
+		"\f\x07\x06\x8C\x8D\f\x04\x02\x02\x8D\x8E\t\x05\x02\x02\x8E\x93\x05\f\x07" +
+		"\x05\x8F\x90\f\x03\x02\x02\x90\x91\x07)\x02\x02\x91\x93\x05\f\x07\x04" +
+		"\x92\x86\x03\x02\x02\x02\x92\x89\x03\x02\x02\x02\x92\x8C\x03\x02\x02\x02" +
+		"\x92\x8F\x03\x02\x02\x02\x93\x96\x03\x02\x02\x02\x94\x92\x03\x02\x02\x02" +
+		"\x94\x95\x03\x02\x02\x02\x95\r\x03\x02\x02\x02\x96\x94\x03\x02\x02\x02" +
+		"\x97\x99\x05\f\x07\x02\x98\x9A\x07*\x02\x02\x99\x98\x03\x02\x02\x02\x99" +
+		"\x9A\x03\x02\x02\x02\x9A\x9C\x03\x02\x02\x02\x9B\x97\x03\x02\x02\x02\x9C" +
+		"\x9F\x03\x02\x02\x02\x9D\x9B\x03\x02\x02\x02\x9D\x9E\x03\x02\x02\x02\x9E" +
+		"\x0F\x03\x02\x02\x02\x9F\x9D\x03\x02\x02\x02\xA0\xA1\x05\n\x06\x02\xA1" +
+		"\x11\x03\x02\x02\x02\xA2\xA3\x05\x10\t\x02\xA3\xA4\x07#\x02\x02\xA4\xA5" +
+		"\x05\x0E\b\x02\xA5\xA6\x07$\x02\x02\xA6\x13\x03\x02\x02\x02\xA7\xAA\x05" +
+		"(\x15\x02\xA8\xAA\x05\x1A\x0E\x02\xA9\xA7\x03\x02\x02\x02\xA9\xA8\x03" +
+		"\x02\x02\x02\xAA\x15\x03\x02\x02\x02\xAB\xB3\x07\x1A\x02\x02\xAC\xB3\x07" +
+		"\x1B\x02\x02\xAD\xB3\x07\x1D\x02\x02\xAE\xB3\x07\x1C\x02\x02\xAF\xB3\x07" +
+		"\x1E\x02\x02\xB0\xB3\x07\x1F\x02\x02\xB1\xB3\x05\x18\r\x02\xB2\xAB\x03" +
+		"\x02\x02\x02\xB2\xAC\x03\x02\x02\x02\xB2\xAD\x03\x02\x02\x02\xB2\xAE\x03" +
+		"\x02\x02\x02\xB2\xAF\x03\x02\x02\x02\xB2\xB0\x03\x02\x02\x02\xB2\xB1\x03" +
+		"\x02\x02\x02\xB3\x17\x03\x02\x02\x02\xB4\xB5\x07\'\x02\x02\xB5\xB6\x05" +
+		"\x1C\x0F\x02\xB6\xB7\x07+\x02\x02\xB7\xB8\x05\f\x07\x02\xB8\xB9\x07(\x02" +
+		"\x02\xB9\x19\x03\x02\x02\x02\xBA\xBC\x07\"\x02\x02\xBB\xBA\x03\x02\x02" +
+		"\x02\xBB\xBC\x03\x02\x02\x02\xBC\xBD\x03\x02\x02\x02\xBD\xBE\x07\'\x02" +
+		"\x02\xBE\xC3\x05\f\x07\x02\xBF\xC0\x07*\x02\x02\xC0\xC2\x05\f\x07\x02" +
+		"\xC1\xBF\x03\x02\x02\x02\xC2\xC5\x03\x02\x02\x02\xC3\xC1\x03\x02\x02\x02" +
+		"\xC3\xC4\x03\x02\x02\x02\xC4\xC6\x03\x02\x02\x02\xC5\xC3\x03\x02\x02\x02" +
+		"\xC6\xC7\x07(\x02\x02\xC7\x1B\x03\x02\x02\x02\xC8\xCB\x05\x16\f\x02\xC9" +
+		"\xCB\x07\"\x02\x02\xCA\xC8\x03\x02\x02\x02\xCA\xC9\x03\x02\x02\x02\xCB" +
+		"\x1D\x03\x02\x02\x02\xCC\xCD\x07#\x02\x02\xCD\xDF\x07$\x02\x02\xCE\xDF" +
+		"\x05\x1C\x0F\x02\xCF\xDB\x07#\x02\x02\xD0\xD5\x05\x1C\x0F\x02\xD1\xD2" +
+		"\x07*\x02\x02\xD2\xD4\x05\x1C\x0F\x02\xD3\xD1\x03\x02\x02\x02\xD4\xD7" +
+		"\x03\x02\x02\x02\xD5\xD3\x03\x02\x02\x02\xD5\xD6\x03\x02\x02\x02\xD6\xD9" +
+		"\x03\x02\x02\x02\xD7\xD5\x03\x02\x02\x02\xD8\xDA\x07*\x02\x02\xD9\xD8" +
+		"\x03\x02\x02\x02\xD9\xDA\x03\x02\x02\x02\xDA\xDC\x03\x02\x02\x02\xDB\xD0" +
+		"\x03\x02\x02\x02\xDB\xDC\x03\x02\x02\x02\xDC\xDD\x03\x02\x02\x02\xDD\xDF" +
+		"\x07$\x02\x02\xDE\xCC\x03\x02\x02\x02\xDE\xCE\x03\x02\x02\x02\xDE\xCF" +
+		"\x03\x02\x02\x02\xDF\x1F\x03\x02\x02\x02\xE0\xE1\x07\x19\x02\x02\xE1\xE2" +
+		"\x07 \x02\x02\xE2!\x03\x02\x02\x02\xE3\xE5\x05 \x11\x02\xE4\xE3\x03\x02" +
+		"\x02\x02\xE4\xE5\x03\x02\x02\x02\xE5\xE7\x03\x02\x02\x02\xE6\xE8\x07\x12" +
+		"\x02\x02\xE7\xE6\x03\x02\x02\x02\xE7\xE8\x03\x02\x02\x02\xE8\xE9\x03\x02" +
+		"\x02\x02\xE9\xEA\x07\"\x02\x02\xEA\xEB\x07,\x02\x02\xEB\xEC\x05\x1C\x0F" +
+		"\x02\xEC#\x03\x02\x02\x02\xED\xEF\x05\"\x12\x02\xEE\xF0\x07*\x02\x02\xEF" +
+		"\xEE\x03\x02\x02\x02\xEF\xF0\x03\x02\x02\x02\xF0\xF2\x03\x02\x02\x02\xF1" +
+		"\xED\x03\x02\x02\x02\xF2\xF5\x03\x02\x02\x02\xF3\xF1\x03\x02\x02\x02\xF3" +
+		"\xF4\x03\x02\x02\x02\xF4%\x03\x02\x02\x02\xF5\xF3\x03\x02\x02\x02\xF6" +
+		"\xF8\x05<\x1F\x02\xF7\xF6\x03\x02\x02\x02\xF7\xF8\x03\x02\x02\x02\xF8" +
+		"\xFA\x03\x02\x02\x02\xF9\xFB\x07\x04\x02\x02\xFA\xF9\x03\x02\x02\x02\xFA" +
+		"\xFB\x03\x02\x02\x02\xFB\xFC\x03\x02\x02\x02\xFC\xFD\x07\x03\x02\x02\xFD" +
+		"\xFE\x07\"\x02\x02\xFE\xFF\x07#\x02\x02\xFF\u0100\x05$\x13\x02\u0100\u0103" +
+		"\x07$\x02\x02\u0101\u0102\x07!\x02\x02\u0102\u0104\x05\x1E\x10\x02\u0103" +
+		"\u0101\x03\x02\x02\x02\u0103\u0104\x03\x02\x02\x02\u0104\u0106\x03\x02" +
+		"\x02\x02\u0105\u0107\x05> \x02\u0106\u0105\x03\x02\x02\x02\u0106\u0107" +
+		"\x03\x02\x02\x02\u0107\'\x03\x02\x02\x02\u0108\u010E\x05*\x16\x02\u0109" +
+		"\u010E\x05,\x17\x02\u010A\u010E\x07G\x02\x02\u010B\u010E\x07H\x02\x02" +
+		"\u010C\u010E\x07I\x02\x02\u010D\u0108\x03\x02\x02\x02\u010D\u0109\x03" +
+		"\x02\x02\x02\u010D\u010A\x03\x02\x02\x02\u010D\u010B\x03\x02\x02\x02\u010D" +
+		"\u010C\x03\x02\x02\x02\u010E)\x03\x02\x02\x02\u010F\u0110\t\x06\x02\x02" +
+		"\u0110+\x03\x02\x02\x02\u0111\u0112\t\x07\x02\x02\u0112-\x03\x02\x02\x02" +
+		"\u0113\u0114\x07\b\x02\x02\u0114\u0115\x07\"\x02\x02\u0115\u011C\x07%" +
+		"\x02\x02\u0116\u0117\x05\b\x05\x02\u0117\u0118\x07)\x02\x02\u0118\u0119" +
+		"\x05\f\x07\x02\u0119\u011B\x03\x02\x02\x02\u011A\u0116\x03\x02\x02\x02" +
+		"\u011B\u011E\x03\x02\x02\x02\u011C\u011A\x03\x02\x02\x02\u011C\u011D\x03" +
+		"\x02\x02\x02\u011D\u011F\x03\x02\x02\x02\u011E\u011C\x03\x02\x02\x02\u011F" +
+		"\u0120\x07&\x02\x02\u0120/\x03\x02\x02\x02\u0121\u0128\x07%\x02\x02\u0122" +
+		"\u0127\x05@!\x02\u0123\u0127\x058\x1D\x02\u0124\u0127\x05&\x14\x02\u0125" +
+		"\u0127\x05.\x18\x02\u0126\u0122\x03\x02\x02\x02\u0126\u0123\x03\x02\x02" +
+		"\x02\u0126\u0124\x03\x02\x02\x02\u0126\u0125\x03\x02\x02\x02\u0127\u012A" +
+		"\x03\x02\x02\x02\u0128\u0126\x03\x02\x02\x02\u0128\u0129\x03\x02\x02\x02" +
+		"\u0129\u012B\x03\x02\x02\x02\u012A\u0128\x03\x02\x02\x02\u012B\u012C\x07" +
+		"&\x02\x02\u012C1\x03\x02\x02\x02\u012D\u012E\x07\t\x02\x02\u012E\u0133" +
+		"\x07\"\x02\x02\u012F\u0130\x07#\x02\x02\u0130\u0131\x05$\x13\x02\u0131" +
+		"\u0132\x07$\x02\x02\u0132\u0134\x03\x02\x02\x02\u0133\u012F\x03\x02\x02" +
+		"\x02\u0133\u0134\x03\x02\x02\x02\u0134\u0135\x03\x02\x02\x02\u0135\u0136" +
+		"\x050\x19\x02\u01363\x03\x02\x02\x02\u0137\u0138\x07\v\x02\x02\u0138\u013D" +
+		"\x07\"\x02\x02\u0139\u013A\x07#\x02\x02\u013A\u013B\x05$\x13\x02\u013B" +
+		"\u013C\x07$\x02\x02\u013C\u013E\x03\x02\x02\x02\u013D\u0139\x03\x02\x02" +
+		"\x02\u013D\u013E\x03\x02\x02\x02\u013E\u0147\x03\x02\x02\x02\u013F\u0140" +
+		"\t\b\x02\x02\u0140\u0145\x07\"\x02\x02\u0141\u0142\x07#\x02\x02\u0142" +
+		"\u0143\x05\x0E\b\x02\u0143\u0144\x07$\x02\x02\u0144\u0146\x03\x02\x02" +
+		"\x02\u0145\u0141\x03\x02\x02\x02\u0145\u0146\x03\x02\x02\x02\u0146\u0148" +
+		"\x03\x02\x02\x02\u0147\u013F\x03\x02\x02\x02\u0147\u0148\x03\x02\x02\x02" +
+		"\u0148\u0149\x03\x02\x02\x02\u0149\u014A\x050\x19\x02\u014A5\x03\x02\x02" +
+		"\x02\u014B\u014C\x07\x06\x02\x02\u014C\u014D\x07\"\x02\x02\u014D\u014E" +
+		"\x050\x19\x02\u014E7\x03\x02\x02\x02\u014F\u0150\x07\x16\x02\x02\u0150" +
+		"\u0151\x07\"\x02\x02\u0151\u0152\x07#\x02\x02\u0152\u0153\x05$\x13\x02" +
+		"\u0153\u0154\x07$\x02\x02\u01549\x03\x02\x02\x02\u0155\u0156\x07\x17\x02" +
+		"\x02\u0156\u0157\x07\"\x02\x02\u0157\u0158\x07#\x02\x02\u0158\u0159\x05" +
+		"\x0E\b\x02\u0159\u015A\x07$\x02\x02\u015A;\x03\x02\x02\x02\u015B\u015C" +
+		"\x07\x19\x02\x02\u015C\u015D\x07\x18\x02\x02\u015D\u015E\x07#\x02\x02" +
+		"\u015E\u015F\x05\x0E\b\x02\u015F\u0160\x07$\x02\x02\u0160=\x03\x02\x02" +
+		"\x02\u0161\u0165\x07%\x02\x02\u0162\u0164\x05@!\x02\u0163\u0162\x03\x02" +
+		"\x02\x02\u0164\u0167\x03\x02\x02\x02\u0165\u0163\x03\x02\x02\x02\u0165" +
+		"\u0166\x03\x02\x02\x02\u0166\u0168\x03\x02\x02\x02\u0167\u0165\x03\x02" +
+		"\x02\x02\u0168\u0169\x07&\x02\x02\u0169?\x03\x02\x02\x02\u016A\u0170\x05" +
+		"B\"\x02\u016B\u0170\x05F$\x02\u016C\u0170\x05> \x02\u016D\u0170\x05H%" +
+		"\x02\u016E\u0170\x05J&\x02\u016F\u016A\x03\x02\x02\x02\u016F\u016B\x03" +
+		"\x02\x02\x02\u016F\u016C\x03\x02\x02\x02\u016F\u016D\x03\x02\x02\x02\u016F" +
+		"\u016E\x03\x02\x02\x02\u0170A\x03\x02\x02\x02\u0171\u0176\x05D#\x02\u0172" +
+		"\u0176\x05\x06\x04\x02\u0173\u0176\x05\f\x07\x02\u0174\u0176\x05:\x1E" +
+		"\x02\u0175\u0171\x03\x02\x02\x02\u0175\u0172\x03\x02\x02\x02\u0175\u0173" +
+		"\x03\x02\x02\x02\u0175\u0174\x03\x02\x02\x02\u0176C\x03\x02\x02\x02\u0177" +
+		"\u0178\x05L\'\x02\u0178E\x03\x02\x02\x02\u0179\u017A\x07\x05\x02\x02\u017A" +
+		"\u017B\x05\x0E\b\x02\u017BG\x03\x02\x02\x02\u017C\u017D\x07\r\x02\x02" +
+		"\u017D\u017E\x07#\x02\x02\u017E\u017F\x05\f\x07\x02\u017F\u0180\x07$\x02" +
+		"\x02\u0180\u0186\x05> \x02\u0181\u0184\x07\x0E\x02\x02\u0182\u0185\x05" +
+		"> \x02\u0183\u0185\x05H%\x02\u0184\u0182\x03\x02\x02\x02\u0184\u0183\x03" +
+		"\x02\x02\x02\u0185\u0187\x03\x02\x02\x02\u0186\u0181\x03\x02\x02\x02\u0186" +
+		"\u0187\x03\x02\x02\x02\u0187I\x03\x02\x02\x02\u0188\u0189\x07\x0F\x02" +
+		"\x02\u0189\u018B\x07#\x02\x02\u018A\u018C\x05\f\x07\x02\u018B\u018A\x03" +
+		"\x02\x02\x02\u018B\u018C\x03\x02\x02\x02\u018C\u018D\x03\x02\x02\x02\u018D" +
+		"\u018E\x07$\x02\x02\u018E\u018F\x05> \x02\u018FK\x03\x02\x02\x02\u0190" +
+		"\u0191\x07^\x02\x02\u0191M\x03\x02\x02\x02-QS]ceqz\x84\x92\x94\x99\x9D" +
+		"\xA9\xB2\xBB\xC3\xCA\xD5\xD9\xDB\xDE\xE4\xE7\xEF\xF3\xF7\xFA\u0103\u0106" +
+		"\u010D\u011C\u0126\u0128\u0133\u013D\u0145\u0147\u0165\u016F\u0175\u0184" +
+		"\u0186\u018B";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!RalphParser.__ATN) {
@@ -2516,12 +2647,62 @@ export class VarNameContext extends ParserRuleContext {
 }
 
 
+export class VarNamesContext extends ParserRuleContext {
+	public IDENTIFIER(): TerminalNode[];
+	public IDENTIFIER(i: number): TerminalNode;
+	public IDENTIFIER(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(RalphParser.IDENTIFIER);
+		} else {
+			return this.getToken(RalphParser.IDENTIFIER, i);
+		}
+	}
+	public DOT(): TerminalNode[];
+	public DOT(i: number): TerminalNode;
+	public DOT(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(RalphParser.DOT);
+		} else {
+			return this.getToken(RalphParser.DOT, i);
+		}
+	}
+	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+		super(parent, invokingState);
+	}
+	// @Override
+	public get ruleIndex(): number { return RalphParser.RULE_varNames; }
+	// @Override
+	public enterRule(listener: RalphParserListener): void {
+		if (listener.enterVarNames) {
+			listener.enterVarNames(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: RalphParserListener): void {
+		if (listener.exitVarNames) {
+			listener.exitVarNames(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: RalphParserVisitor<Result>): Result {
+		if (visitor.visitVarNames) {
+			return visitor.visitVarNames(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
 export class ExpressionContext extends ParserRuleContext {
 	public primaryExpr(): PrimaryExprContext | undefined {
 		return this.tryGetRuleContext(0, PrimaryExprContext);
 	}
 	public varName(): VarNameContext | undefined {
 		return this.tryGetRuleContext(0, VarNameContext);
+	}
+	public varNames(): VarNamesContext | undefined {
+		return this.tryGetRuleContext(0, VarNamesContext);
 	}
 	public call(): CallContext | undefined {
 		return this.tryGetRuleContext(0, CallContext);
@@ -2634,30 +2815,47 @@ export class ExpressionListContext extends ParserRuleContext {
 }
 
 
-export class CallContext extends ParserRuleContext {
-	public IDENTIFIER(): TerminalNode[];
-	public IDENTIFIER(i: number): TerminalNode;
-	public IDENTIFIER(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(RalphParser.IDENTIFIER);
-		} else {
-			return this.getToken(RalphParser.IDENTIFIER, i);
+export class CallChainContext extends ParserRuleContext {
+	public varNames(): VarNamesContext {
+		return this.getRuleContext(0, VarNamesContext);
+	}
+	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+		super(parent, invokingState);
+	}
+	// @Override
+	public get ruleIndex(): number { return RalphParser.RULE_callChain; }
+	// @Override
+	public enterRule(listener: RalphParserListener): void {
+		if (listener.enterCallChain) {
+			listener.enterCallChain(this);
 		}
+	}
+	// @Override
+	public exitRule(listener: RalphParserListener): void {
+		if (listener.exitCallChain) {
+			listener.exitCallChain(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: RalphParserVisitor<Result>): Result {
+		if (visitor.visitCallChain) {
+			return visitor.visitCallChain(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
+export class CallContext extends ParserRuleContext {
+	public callChain(): CallChainContext {
+		return this.getRuleContext(0, CallChainContext);
 	}
 	public L_PAREN(): TerminalNode { return this.getToken(RalphParser.L_PAREN, 0); }
 	public expressionList(): ExpressionListContext {
 		return this.getRuleContext(0, ExpressionListContext);
 	}
 	public R_PAREN(): TerminalNode { return this.getToken(RalphParser.R_PAREN, 0); }
-	public DOT(): TerminalNode[];
-	public DOT(i: number): TerminalNode;
-	public DOT(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(RalphParser.DOT);
-		} else {
-			return this.getToken(RalphParser.DOT, i);
-		}
-	}
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -3196,6 +3394,66 @@ export class String_Context extends ParserRuleContext {
 }
 
 
+export class EnumContext extends ParserRuleContext {
+	public ENUM(): TerminalNode { return this.getToken(RalphParser.ENUM, 0); }
+	public IDENTIFIER(): TerminalNode { return this.getToken(RalphParser.IDENTIFIER, 0); }
+	public L_CURLY(): TerminalNode { return this.getToken(RalphParser.L_CURLY, 0); }
+	public R_CURLY(): TerminalNode { return this.getToken(RalphParser.R_CURLY, 0); }
+	public varName(): VarNameContext[];
+	public varName(i: number): VarNameContext;
+	public varName(i?: number): VarNameContext | VarNameContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(VarNameContext);
+		} else {
+			return this.getRuleContext(i, VarNameContext);
+		}
+	}
+	public ASSIGN(): TerminalNode[];
+	public ASSIGN(i: number): TerminalNode;
+	public ASSIGN(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(RalphParser.ASSIGN);
+		} else {
+			return this.getToken(RalphParser.ASSIGN, i);
+		}
+	}
+	public expression(): ExpressionContext[];
+	public expression(i: number): ExpressionContext;
+	public expression(i?: number): ExpressionContext | ExpressionContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(ExpressionContext);
+		} else {
+			return this.getRuleContext(i, ExpressionContext);
+		}
+	}
+	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+		super(parent, invokingState);
+	}
+	// @Override
+	public get ruleIndex(): number { return RalphParser.RULE_enum; }
+	// @Override
+	public enterRule(listener: RalphParserListener): void {
+		if (listener.enterEnum) {
+			listener.enterEnum(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: RalphParserListener): void {
+		if (listener.exitEnum) {
+			listener.exitEnum(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: RalphParserVisitor<Result>): Result {
+		if (visitor.visitEnum) {
+			return visitor.visitEnum(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
 export class TypeStructBodyContext extends ParserRuleContext {
 	public L_CURLY(): TerminalNode { return this.getToken(RalphParser.L_CURLY, 0); }
 	public R_CURLY(): TerminalNode { return this.getToken(RalphParser.R_CURLY, 0); }
@@ -3224,6 +3482,15 @@ export class TypeStructBodyContext extends ParserRuleContext {
 			return this.getRuleContexts(MethodDeclContext);
 		} else {
 			return this.getRuleContext(i, MethodDeclContext);
+		}
+	}
+	public enum(): EnumContext[];
+	public enum(i: number): EnumContext;
+	public enum(i?: number): EnumContext | EnumContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(EnumContext);
+		} else {
+			return this.getRuleContext(i, EnumContext);
 		}
 	}
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
