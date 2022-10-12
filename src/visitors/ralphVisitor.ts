@@ -12,6 +12,7 @@ import { Interface } from '../ast/interface'
 import { TxScript } from '../ast/txScript'
 import cache from '../cache/cache'
 import { statementContext } from '../ast/context'
+import { Enum } from '../ast/enum'
 
 export class RalphVisitor extends AbstractParseTreeVisitor<number> implements RalphParserVisitor<number> {
   cache!: Map<string, Base>
@@ -40,6 +41,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     })
 
     ctx.statement().forEach((value) => base.append(statementContext(value)))
+    ctx.enum().forEach((value) => base.add(Enum.FromContext(value).setParent(base)))
   }
 
   visitParams(ctx?: ParamListContext, base?: Base) {

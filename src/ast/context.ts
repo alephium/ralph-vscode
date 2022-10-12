@@ -80,7 +80,11 @@ export function expressionContext(ctx: ExpressionContext): Identifier[] {
 
 export function callContext(ctx: CallContext): Identifier[] {
   const identifiers: Identifier[] = []
-  ctx.IDENTIFIER().forEach((value) => identifiers.push(refNode(value)))
+  ctx
+    .callChain()
+    .varNames()
+    .IDENTIFIER()
+    .forEach((value) => identifiers.push(refNode(value)))
   identifiers.push(...expressionListContext(ctx.expressionList()))
   return identifiers
 }
