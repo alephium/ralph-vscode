@@ -32,7 +32,7 @@ export class BuiltInProvider implements vscode.CompletionItemProvider {
         (item) =>
           new CompletionItem(
             {
-              label: `${item.name}!`,
+              label: `${item.name}!${item.signature.substring(item.signature.indexOf('('), item.signature.indexOf(')') + 1)}`,
               detail: item.signature,
               description: item.doc,
             },
