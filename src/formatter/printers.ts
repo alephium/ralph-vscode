@@ -8,10 +8,6 @@ export const printers: Record<string, Printer> = {
   },
 }
 
-function print(
-  path: AstPath,
-  _options: ParserOptions,
-  _print: (path: AstPath) => Doc
-): Doc {
+function print(path: AstPath, _options: ParserOptions, _print: (path: AstPath) => Doc): Doc {
   return ''
 }

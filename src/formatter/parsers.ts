@@ -1,4 +1,4 @@
-import { Parser, ParserOptions } from 'prettier'
+import { Parser } from 'prettier'
 import { CharStreams, CommonTokenStream } from 'antlr4ts'
 import { locStart, locEnd } from './loc'
 import { RalphParser } from '../parser/RalphParser'
@@ -9,7 +9,7 @@ export const parsers: Record<string, Parser> = {
     parse,
     locStart,
     locEnd,
-    astFormat: 'ralph-ast',
+    astFormat: 'ralph',
   },
 }
 
