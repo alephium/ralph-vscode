@@ -40,83 +40,83 @@
   "main": "./dist/extension.js",
   "activationEvents": [
     "onLanguage:ralph",
-    "onCommand:ralph.compiler",
-    "onCommand:ralph.downloader"
+    "onCommand:ralph.compile",
+    "onCommand:ralph.download"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "ralph.downloader",
-        "title": "Ralph: downloader"
+        "command": "ralph.download",
+        "title": "Ralph: Download"
       },
       {
-        "command": "ralph.compiler",
-        "title": "Ralph: compile"
+        "command": "ralph.compile",
+        "title": "Ralph: Compile"
       }
     ],
     "configuration": {
       "title": "Ralph settings",
       "properties": {
-        "ralph.downloader.config.name": {
+        "ralph.download.config.name": {
           "type": "string",
           "description": "compile name",
           "default": "ralphc"
         },
-        "ralph.downloader.config.url": {
+        "ralph.download.config.url": {
           "type": "string",
           "description": "download link",
           "default": "https://github.com/alephium/ralphc/releases/download/v1.5.0-rc11/ralphc.jar"
         },
-        "ralph.downloader.config.target": {
+        "ralph.download.config.target": {
           "type": "string",
           "description": "local place",
           "default": "ralphc.jar"
         },
-        "ralph.compiler.command": {
+        "ralph.compile.command": {
           "type": "string",
           "description": "compile command"
         },
-        "ralph.compiler.option.ignoreUnusedConstantsWarnings": {
+        "ralph.compile.option.ignoreUnusedConstantsWarnings": {
           "type": "boolean",
           "default": false,
           "description": "ignore unused constants warning"
         },
-        "ralph.compiler.option.ignoreUnusedVariablesWarnings": {
+        "ralph.compile.option.ignoreUnusedVariablesWarnings": {
           "type": "boolean",
           "default": false,
           "description": "ignore unused variables warning"
         },
-        "ralph.compiler.option.ignoreUnusedFieldsWarnings": {
+        "ralph.compile.option.ignoreUnusedFieldsWarnings": {
           "type": "boolean",
           "default": false,
           "description": "ignore unused fields warning"
         },
-        "ralph.compiler.option.ignoreReadonlyCheckWarnings": {
+        "ralph.compile.option.ignoreReadonlyCheckWarnings": {
           "type": "boolean",
           "default": false,
           "description": "ignore readonly check warning"
         },
-        "ralph.compiler.option.ignoreUnusedPrivateFunctionsWarnings": {
+        "ralph.compile.option.ignoreUnusedPrivateFunctionsWarnings": {
           "type": "boolean",
           "default": false,
           "description": "ignore unused private functions warning"
         },
-        "ralph.compiler.option.ignoreExternalCallCheckWarnings": {
+        "ralph.compile.option.ignoreExternalCallCheckWarnings": {
           "type": "boolean",
           "default": false,
           "description": "ignore external call check warning"
         },
-        "ralph.compiler.option.projectDir": {
+        "ralph.compile.option.projectDir": {
           "type": "string",
           "default": "",
           "description": "project path"
         },
-        "ralph.compiler.option.warningAsError": {
+        "ralph.compile.option.warningAsError": {
           "type": "boolean",
           "default": false,
           "description": "Consider warnings as errors"
         },
-        "ralph.compiler.option.debug": {
+        "ralph.compile.option.debug": {
           "type": "boolean",
           "default": false,
           "description": "debug mode"
@@ -144,12 +144,12 @@
     "menus": {
       "editor/context": [
         {
-          "command": "ralph.compiler",
+          "command": "ralph.compile",
           "when": "resourceLangId == ralph",
           "group": "navigation@1"
         },
         {
-          "command": "ralph.downloader",
+          "command": "ralph.download",
           "when": "resourceLangId == ralph",
           "group": "navigation@2"
         }
