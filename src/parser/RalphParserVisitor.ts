@@ -7,8 +7,10 @@ import { SourceFileContext } from "./RalphParser";
 import { IdentifierListContext } from "./RalphParser";
 import { VarDeclContext } from "./RalphParser";
 import { VarNameContext } from "./RalphParser";
+import { VarNamesContext } from "./RalphParser";
 import { ExpressionContext } from "./RalphParser";
 import { ExpressionListContext } from "./RalphParser";
+import { CallChainContext } from "./RalphParser";
 import { CallContext } from "./RalphParser";
 import { PrimaryExprContext } from "./RalphParser";
 import { PrimitiveTypeContext } from "./RalphParser";
@@ -23,6 +25,7 @@ import { MethodDeclContext } from "./RalphParser";
 import { BasicLitContext } from "./RalphParser";
 import { IntegerContext } from "./RalphParser";
 import { String_Context } from "./RalphParser";
+import { EnumContext } from "./RalphParser";
 import { TypeStructBodyContext } from "./RalphParser";
 import { TxScriptContext } from "./RalphParser";
 import { ContractContext } from "./RalphParser";
@@ -77,6 +80,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitVarName?: (ctx: VarNameContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `RalphParser.varNames`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVarNames?: (ctx: VarNamesContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `RalphParser.expression`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -89,6 +99,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitExpressionList?: (ctx: ExpressionListContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.callChain`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitCallChain?: (ctx: CallChainContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.call`.
@@ -187,6 +204,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitString_?: (ctx: String_Context) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.enum`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitEnum?: (ctx: EnumContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.typeStructBody`.
