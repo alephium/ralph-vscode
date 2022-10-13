@@ -1,5 +1,6 @@
 import * as vscode from 'vscode'
 import { Item } from './item'
+import { Filter } from '../../filter'
 
 export const builtInType = [
   {
@@ -39,15 +40,17 @@ export const builtInType = [
   },
 ]
 
-export class BuiltInPrimitivesHoverProvider implements vscode.HoverProvider {
+export class BuiltInPrimitivesHoverProvider extends Filter implements vscode.HoverProvider {
   builtItems!: Map<string, Item>
 
   constructor() {
+    super()
     this.builtItems = new Map()
     builtInType.forEach((item) => this.builtItems.set(item.name, item))
   }
 
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
+    if (this.isSkip(document, position)) return undefined
     const range = document.getWordRangeAtPosition(position)
     const item = this.builtItems.get(document.getText(range))!
     return new vscode.Hover([`(builtIn global ${item.kind}) \n ${item.name}`, item.detail])
