@@ -25,12 +25,12 @@ import { MethodDeclContext } from "./RalphParser";
 import { BasicLitContext } from "./RalphParser";
 import { IntegerContext } from "./RalphParser";
 import { String_Context } from "./RalphParser";
-import { EnumContext } from "./RalphParser";
+import { TypeStructContext } from "./RalphParser";
+import { TypeParamContext } from "./RalphParser";
+import { StructNameContext } from "./RalphParser";
+import { TypeStructHeaderContext } from "./RalphParser";
 import { TypeStructBodyContext } from "./RalphParser";
-import { TxScriptContext } from "./RalphParser";
-import { AssetScriptContext } from "./RalphParser";
-import { ContractContext } from "./RalphParser";
-import { InterfaceContext } from "./RalphParser";
+import { EnumContext } from "./RalphParser";
 import { EventContext } from "./RalphParser";
 import { EmitContext } from "./RalphParser";
 import { AnnotationContext } from "./RalphParser";
@@ -292,15 +292,48 @@ export interface RalphParserListener extends ParseTreeListener {
 	exitString_?: (ctx: String_Context) => void;
 
 	/**
-	 * Enter a parse tree produced by `RalphParser.enum`.
+	 * Enter a parse tree produced by `RalphParser.typeStruct`.
 	 * @param ctx the parse tree
 	 */
-	enterEnum?: (ctx: EnumContext) => void;
+	enterTypeStruct?: (ctx: TypeStructContext) => void;
 	/**
-	 * Exit a parse tree produced by `RalphParser.enum`.
+	 * Exit a parse tree produced by `RalphParser.typeStruct`.
 	 * @param ctx the parse tree
 	 */
-	exitEnum?: (ctx: EnumContext) => void;
+	exitTypeStruct?: (ctx: TypeStructContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.typeParam`.
+	 * @param ctx the parse tree
+	 */
+	enterTypeParam?: (ctx: TypeParamContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.typeParam`.
+	 * @param ctx the parse tree
+	 */
+	exitTypeParam?: (ctx: TypeParamContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.structName`.
+	 * @param ctx the parse tree
+	 */
+	enterStructName?: (ctx: StructNameContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.structName`.
+	 * @param ctx the parse tree
+	 */
+	exitStructName?: (ctx: StructNameContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.typeStructHeader`.
+	 * @param ctx the parse tree
+	 */
+	enterTypeStructHeader?: (ctx: TypeStructHeaderContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.typeStructHeader`.
+	 * @param ctx the parse tree
+	 */
+	exitTypeStructHeader?: (ctx: TypeStructHeaderContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.typeStructBody`.
@@ -314,48 +347,15 @@ export interface RalphParserListener extends ParseTreeListener {
 	exitTypeStructBody?: (ctx: TypeStructBodyContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `RalphParser.txScript`.
+	 * Enter a parse tree produced by `RalphParser.enum`.
 	 * @param ctx the parse tree
 	 */
-	enterTxScript?: (ctx: TxScriptContext) => void;
+	enterEnum?: (ctx: EnumContext) => void;
 	/**
-	 * Exit a parse tree produced by `RalphParser.txScript`.
+	 * Exit a parse tree produced by `RalphParser.enum`.
 	 * @param ctx the parse tree
 	 */
-	exitTxScript?: (ctx: TxScriptContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `RalphParser.assetScript`.
-	 * @param ctx the parse tree
-	 */
-	enterAssetScript?: (ctx: AssetScriptContext) => void;
-	/**
-	 * Exit a parse tree produced by `RalphParser.assetScript`.
-	 * @param ctx the parse tree
-	 */
-	exitAssetScript?: (ctx: AssetScriptContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `RalphParser.contract`.
-	 * @param ctx the parse tree
-	 */
-	enterContract?: (ctx: ContractContext) => void;
-	/**
-	 * Exit a parse tree produced by `RalphParser.contract`.
-	 * @param ctx the parse tree
-	 */
-	exitContract?: (ctx: ContractContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `RalphParser.interface`.
-	 * @param ctx the parse tree
-	 */
-	enterInterface?: (ctx: InterfaceContext) => void;
-	/**
-	 * Exit a parse tree produced by `RalphParser.interface`.
-	 * @param ctx the parse tree
-	 */
-	exitInterface?: (ctx: InterfaceContext) => void;
+	exitEnum?: (ctx: EnumContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.event`.

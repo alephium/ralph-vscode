@@ -17,7 +17,7 @@ export class SemanticNode implements Identifier {
 
   token: Token | undefined
 
-  detail: string
+  detail: string | undefined
 
   point: vscode.Position | undefined
 
@@ -36,8 +36,8 @@ export class SemanticNode implements Identifier {
     return this
   }
 
-  constructor(name: string, token?: vscode.Position | Token) {
-    this.name = name
+  constructor(name?: string, token?: vscode.Position | Token) {
+    this.name = name ?? 'undefined'
     this.detail = name
     this.semanticsKind = SemanticsKind.Def
     this.identifierKind = IdentifierKind.Type
@@ -146,7 +146,7 @@ export class SemanticNode implements Identifier {
 
   completionItemLabel(): CompletionItemLabel {
     return {
-      label: this.name,
+      label: this.name ?? 'undefined',
       detail: this.detail,
       description: this.detail,
     }

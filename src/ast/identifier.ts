@@ -59,4 +59,8 @@ export interface Identifier extends Kinder, Finder, Position {
   setIdentifierKind?(kind: IdentifierKind): this
 
   completionItemLabel?(): CompletionItemLabel
+
+  add?(member: Identifier): void
+
+  append?(identifiers: Identifier[]): void
 }

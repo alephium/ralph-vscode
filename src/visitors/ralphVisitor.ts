@@ -6,8 +6,8 @@ import {
   ContractContext,
   InterfaceContext,
   ParamListContext,
-  TxScriptContext,
-  TypeStructBodyContext,
+  TxScriptContext, TypeParamContext,
+  TypeStructBodyContext, TypeStructContext, TypeStructHeaderContext
 } from '../parser/RalphParser'
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
@@ -22,8 +22,10 @@ import cache from '../cache/cache'
 import { statementContext } from '../ast/context'
 import { Enum } from '../ast/enum'
 import { AssetScript } from '../ast/assetScript'
+import { Identifier } from "../ast/identifier";
+import { SemanticNode } from "../ast/ast";
 
-export class RalphVisitor extends AbstractParseTreeVisitor<number> implements RalphParserVisitor<number> {
+export class RalphVisitor extends AbstractParseTreeVisitor<Identifier> implements RalphParserVisitor<Identifier> {
   cache!: Map<string, Base>
 
   uri: Uri
@@ -34,7 +36,24 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     this.cache = cache
   }
 
-  protected defaultResult(): number {
+  protected defaultResult(): Identifier {
+    return new SemanticNode('root')
+  }
+
+  visitTypeParam(ctx: TypeParamContext): Identifier {
+    if (ctx.CONTRACT()) return new Contract()
+  }
+
+  visitTypeStruct(ctx: TypeStructContext): Identifier{
+    ctx.typeStructHeader()
+    return this.cache.size
+  }
+
+  visitTypeStructHeader(ctx: TypeStructHeaderContext): Identifier{
+    return this.cache.size
+  }
+
+  visitTypeStructBody(ctx: TypeStructBodyContext): Identifier{
     return this.cache.size
   }
 

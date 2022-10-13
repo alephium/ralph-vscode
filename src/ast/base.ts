@@ -109,7 +109,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
     const range = document.getWordRangeAtPosition(position)
-    const identifier = <Identifier>{
+    const identifier = <Word>{
       name: document.getText(range),
       point: position,
       uri: document.uri,
@@ -124,7 +124,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   provideDefinition(document: TextDocument, position: vscode.Position): ProviderResult<Definition | DefinitionLink[]> {
     const range = document.getWordRangeAtPosition(position)
-    const identifier = <Identifier>{
+    const identifier = <Word>{
       name: document.getText(range),
       point: position,
       uri: document.uri,
@@ -137,7 +137,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return item
   }
 
-  provideRenameEdits(identifier: Identifier, newName: string, edit: WorkspaceEdit): void {
+  provideRenameEdits(identifier: Word, newName: string, edit: WorkspaceEdit): void {
     const members = this.findAll(identifier)
     if (members && members.length > 0) {
       members?.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.scope!, newName))
