@@ -5,7 +5,7 @@ options
    tokenVocab = RalphLexer;
 }
 
-sourceFile: (txScript | contract | interface)* EOF;
+sourceFile: (txScript | contract | interface | assetScript)* EOF;
 
 identifierList: varName (COMMA varName)*;
 
@@ -124,11 +124,8 @@ string_: RAW_STRING_LIT | INTERPRETED_STRING_LIT;
 //typeStruct: typeStructHeader typeStructBody;
 
 //typeParam
-//	: STRUCT
-//	| ENUM
 //	| INTERFACE
 //	| TXSCRIPT
-//	| TXCONTRACT
 //	| CONTRACT
 //	| ASSETSCRIPT
 //	;
@@ -136,8 +133,6 @@ string_: RAW_STRING_LIT | INTERPRETED_STRING_LIT;
 //typeStructHeader
 //	: typeParam IDENTIFIER (L_PAREN (paramList)? R_PAREN)? ((EXTENDS | IMPLEMENTS) IDENTIFIER (L_PAREN expressionList R_PAREN)?)?
 //	;
-
-//builtIn: IDENTIFIER | UNUSED;
 
 enum: ENUM IDENTIFIER L_CURLY (varName ASSIGN expression)* R_CURLY;
 
@@ -147,12 +142,16 @@ txScript
     : TXSCRIPT IDENTIFIER (L_PAREN paramList R_PAREN)? typeStructBody // # txScriptDeclStmt
     ;
 
+assetScript
+    : ASSETSCRIPT IDENTIFIER (L_PAREN paramList R_PAREN)? typeStructBody
+    ;
+
 contract
     : CONTRACT IDENTIFIER (L_PAREN paramList R_PAREN)? ((EXTENDS | IMPLEMENTS) IDENTIFIER (L_PAREN expressionList R_PAREN)?)? typeStructBody // # contractDeclStmt
     ;
 
 interface
-    : INTERFACE IDENTIFIER typeStructBody // # interfaceDeclStmt
+    : INTERFACE IDENTIFIER (EXTENDS IDENTIFIER)? typeStructBody // # interfaceDeclStmt
     ;
 
 event: EVENT IDENTIFIER L_PAREN paramList R_PAREN;

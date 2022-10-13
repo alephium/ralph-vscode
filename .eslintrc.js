@@ -21,6 +21,7 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-declare': 'off',
+    'no-param-reassign': 'off',
   },
   settings: {
     'import/resolver': {

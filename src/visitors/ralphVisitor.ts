@@ -1,6 +1,14 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import { Uri } from 'vscode'
-import { ContractContext, InterfaceContext, ParamListContext, TxScriptContext, TypeStructBodyContext } from '../parser/RalphParser'
+import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
+import {
+  AssetScriptContext,
+  ContractContext,
+  InterfaceContext,
+  ParamListContext,
+  TxScriptContext,
+  TypeStructBodyContext,
+} from '../parser/RalphParser'
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
 import { Contract } from '../ast/contract'
@@ -13,6 +21,7 @@ import { TxScript } from '../ast/txScript'
 import cache from '../cache/cache'
 import { statementContext } from '../ast/context'
 import { Enum } from '../ast/enum'
+import { AssetScript } from '../ast/assetScript'
 
 export class RalphVisitor extends AbstractParseTreeVisitor<number> implements RalphParserVisitor<number> {
   cache!: Map<string, Base>
@@ -62,23 +71,39 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
   }
 
   visitInterface(ctx: InterfaceContext): number {
-    const face = new Interface(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
+    const face = new Interface(ctx.IDENTIFIER(0).text, ctx.IDENTIFIER(0).symbol)
     face.detail = ctx.text
     face.uri = this.uri
-    face.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
+    face.range(ctx.IDENTIFIER(0).symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitBody(ctx.typeStructBody(), face)
     this.cache.set(face.name, face)
     return this.cache.size
   }
 
-  visitTxScript(ctx: TxScriptContext): number {
-    const script = new TxScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
-    script.detail = ctx.text
-    script.uri = this.uri
-    script.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
-    this.visitParams(ctx.paramList(), script)
-    this.visitBody(ctx.typeStructBody(), script)
-    this.cache.set(script.name, script)
+  visitScript(ctx: Script, base: Base): number {
+    base.detail = ctx.text
+    base.uri = this.uri
+    base.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
+    this.visitParams(ctx.paramList?.(), base)
+    this.visitBody(ctx.typeStructBody!(), base)
+    this.cache.set(base.name, base)
     return this.cache.size
   }
+
+  visitTxScript(ctx: TxScriptContext): number {
+    const script = new TxScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
+    return this.visitScript(ctx, script)
+  }
+
+  visitAssetScript(ctx: AssetScriptContext): number {
+    const script = new AssetScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
+    return this.visitScript(ctx, script)
+  }
+}
+
+interface Script {
+  IDENTIFIER(): TerminalNode
+  paramList?(): ParamListContext | undefined
+  typeStructBody(): TypeStructBodyContext
+  get text(): string
 }
