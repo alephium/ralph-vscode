@@ -6,13 +6,15 @@ import { Fun } from '../hover/builtIn/function'
 import { Identifier } from '../../ast/identifier'
 import { BuiltInType } from '../../ast/builtInType'
 import { builtInType } from '../hover/builtIn/primitives'
+import { Filter } from '../filter'
 
-export class BuiltInProvider implements vscode.CompletionItemProvider {
+export class BuiltInProvider extends Filter implements vscode.CompletionItemProvider {
   items: Array<Fun>
 
   builtInType: Array<Identifier>
 
   constructor() {
+    super()
     this.items = Object.assign(new Array<Fun>(), jsonData)
     this.builtInType = builtInType.map((value) => {
       const obj = new BuiltInType(value.name)
@@ -23,16 +25,17 @@ export class BuiltInProvider implements vscode.CompletionItemProvider {
 
   provideCompletionItems(
     document: TextDocument,
-    _position: Position,
+    position: Position,
     token: CancellationToken,
     context: CompletionContext
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
+    if (this.isSkip(document, position)) return undefined
     return this.items
       .map(
         (item) =>
           new CompletionItem(
             {
-              label: `${item.name}!`,
+              label: `${item.name}!${item.signature.substring(item.signature.indexOf('('), item.signature.indexOf(')') + 1)}`,
               detail: item.signature,
               description: item.doc,
             },
