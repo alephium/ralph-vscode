@@ -11,10 +11,8 @@ PUB                    : 'pub';
 RETURN                 : 'return' ;
 
 INTERFACE              : 'Interface';
-STRUCT                 : 'struct';
 ENUM                   : 'enum';
 TXSCRIPT               : 'TxScript';
-TXCONTRACT             : 'TxContract';
 CONTRACT               : 'Contract';
 ASSETSCRIPT            : 'AssetScript';
 
