@@ -3,14 +3,16 @@ import { CompletionItem } from 'vscode'
 import cache from '../../cache/cache'
 import { Identifier } from '../../ast/identifier'
 import { Position } from '../../ast/position'
+import { Filter } from '../filter'
 
-export class IdentifierProvider implements vscode.CompletionItemProvider {
+export class IdentifierProvider extends Filter implements vscode.CompletionItemProvider {
   provideCompletionItems(
     document: vscode.TextDocument,
     position: vscode.Position,
     token: vscode.CancellationToken,
     context: vscode.CompletionContext
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
+    if (this.isSkip(document, position)) return undefined
     const pos = {
       uri: document.uri,
       point: position,

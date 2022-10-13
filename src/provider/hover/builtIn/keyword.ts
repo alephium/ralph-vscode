@@ -1,12 +1,14 @@
 import * as vscode from 'vscode'
 import { Item } from './item'
+import { Filter } from '../../filter'
 
-export class KeywordHoverProvider implements vscode.HoverProvider {
+export class KeywordHoverProvider extends Filter implements vscode.HoverProvider {
   builtItems!: Map<string, Item>
 
   items: Array<Item>
 
   constructor() {
+    super()
     this.builtItems = new Map()
     this.items = [
       {
@@ -100,6 +102,7 @@ export class KeywordHoverProvider implements vscode.HoverProvider {
   }
 
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
+    if (this.isSkip(document, position)) return undefined
     const range = document.getWordRangeAtPosition(position)
     const item = this.builtItems.get(document.getText(range))!
     return new vscode.Hover([`(builtIn syntax ${item.kind}) \n ${item.name}`, item.detail])

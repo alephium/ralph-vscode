@@ -2,9 +2,11 @@ import { RenameProvider, WorkspaceEdit, TextDocument, Position, ProviderResult }
 import Parser from '../parser/parser'
 import { Identifier } from '../ast/identifier'
 import cache from '../cache/cache'
+import { Filter } from './filter'
 
-export class RalphRenameProvider implements RenameProvider {
+export class RalphRenameProvider extends Filter implements RenameProvider {
   provideRenameEdits(document: TextDocument, position: Position, newName: string): ProviderResult<WorkspaceEdit> {
+    if (this.isSkip(document, position)) return undefined
     const range = document.getWordRangeAtPosition(position)
     const identifier = <Identifier>{
       name: document.getText(range),
