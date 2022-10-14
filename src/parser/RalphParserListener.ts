@@ -28,6 +28,7 @@ import { String_Context } from "./RalphParser";
 import { EnumContext } from "./RalphParser";
 import { TypeStructBodyContext } from "./RalphParser";
 import { TxScriptContext } from "./RalphParser";
+import { AssetScriptContext } from "./RalphParser";
 import { ContractContext } from "./RalphParser";
 import { InterfaceContext } from "./RalphParser";
 import { EventContext } from "./RalphParser";
@@ -322,6 +323,17 @@ export interface RalphParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTxScript?: (ctx: TxScriptContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.assetScript`.
+	 * @param ctx the parse tree
+	 */
+	enterAssetScript?: (ctx: AssetScriptContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.assetScript`.
+	 * @param ctx the parse tree
+	 */
+	exitAssetScript?: (ctx: AssetScriptContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.contract`.

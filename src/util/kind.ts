@@ -4,7 +4,6 @@ import { RalphParser } from '../parser/RalphParser'
 const mapKinds = new Map([
   [RalphParser.FN, SymbolKind.Function],
   [RalphParser.CONTRACT, SymbolKind.Class],
-  [RalphParser.TXCONTRACT, SymbolKind.Class],
   [RalphParser.TXSCRIPT, SymbolKind.Class],
   [RalphParser.INTERFACE, SymbolKind.Interface],
   [RalphParser.ASSETSCRIPT, SymbolKind.Class],
