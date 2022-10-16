@@ -1,5 +1,5 @@
 import { CompletionItemKind, SymbolKind } from 'vscode'
-import { Token } from 'antlr4ts/Token'
+import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { ParamContext } from '../parser/RalphParser'
 import { SemanticNode } from './ast'
 import { Identifier, IdentifierKind } from './identifier'
@@ -15,13 +15,13 @@ export class Variable extends SemanticNode {
     return CompletionItemKind.Variable
   }
 
-  constructor(name: string, token: Token) {
-    super(name, token)
+  constructor(node: TerminalNode) {
+    super(node)
     this.identifierKind = IdentifierKind.Variable
   }
 
   public static FromContext(ctx: ParamContext): Variable {
-    const varVal = new Variable(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
+    const varVal = new Variable(ctx.IDENTIFIER())
     varVal.detail = ctx.text
     // varVal.type_ = ctx.typeName()
     return varVal

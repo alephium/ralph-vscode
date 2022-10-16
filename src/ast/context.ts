@@ -21,7 +21,7 @@ import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
 import { SemanticNode } from './ast'
 
 export function refNode(ctx: TerminalNode): Identifier {
-  const node = new SemanticNode(ctx.text, ctx.symbol)
+  const node = new SemanticNode(ctx)
   node.setSemanticsKind(SemanticsKind.Ref)
   return node
 }

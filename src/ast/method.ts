@@ -14,7 +14,7 @@ export class Method extends Base {
   }
 
   public static FromContext(ctx: MethodDeclContext): Method {
-    const method = new Method(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
+    const method = new Method(ctx.IDENTIFIER())
     ctx
       .paramList()
       ?.param()

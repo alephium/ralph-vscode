@@ -5,7 +5,8 @@ export class BuiltInType extends SemanticNode {
   description: string | undefined
 
   constructor(name: string) {
-    super(name)
+    super()
+    this.name = name
     this.description = this.detail
   }
 
@@ -19,7 +20,7 @@ export class BuiltInType extends SemanticNode {
 
   completionItemLabel(): CompletionItemLabel {
     return {
-      label: this.name,
+      label: this.name!,
       detail: this.detail,
       description: this.description,
     }

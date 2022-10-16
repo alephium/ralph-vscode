@@ -1,6 +1,6 @@
-import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
 import { CompletionItemKind, Definition, DefinitionLink, Location, ProviderResult, SymbolKind, TextDocument, WorkspaceEdit } from 'vscode'
+import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
 import { SemanticNode } from './ast'
 import { Word } from './word'
@@ -12,15 +12,15 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   identifiers: Identifier[]
 
-  constructor(name?: string, token?: Token) {
-    super(name, token)
+  constructor(node: TerminalNode) {
+    super(node)
     this.members = new Map()
     this.kind = IdentifierKind.Type
     this.identifiers = []
   }
 
   add(member: Identifier) {
-    this.members.set(member.name, member)
+    this.members.set(member.name!, member)
   }
 
   append(identifiers: Identifier[]) {
@@ -98,10 +98,10 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
   }
 
   documentSymbol(document?: vscode.TextDocument): vscode.DocumentSymbol {
-    const item = new vscode.DocumentSymbol(this.name, '', this.symbolKind(), this.scope!, this.scope!)
+    const item = new vscode.DocumentSymbol(this.name!, '', this.symbolKind(), this.scope!, this.scope!)
     this.members.forEach((member) => {
       item.children.push(
-        new vscode.DocumentSymbol(member.name, member.detail!, <SymbolKind>member.symbolKind?.(), member.scope!, member.scope!)
+        new vscode.DocumentSymbol(member.name!, member.detail!, <SymbolKind>member.symbolKind?.(), member.scope!, member.scope!)
       )
     })
     return item
@@ -117,7 +117,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     let item
     const member = this.findOne(identifier)
     if (member) {
-      item = new vscode.Hover([member.name, member.detail ?? ''])
+      item = new vscode.Hover([member.name!, member.detail ?? ''])
     }
     return item
   }

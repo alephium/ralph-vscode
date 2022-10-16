@@ -1,4 +1,3 @@
-import { Token } from 'antlr4ts/Token'
 import { CompletionItemLabel, Range, Uri } from 'vscode'
 import { Kinder } from './kinder'
 // eslint-disable-next-line import/no-cycle
@@ -18,15 +17,13 @@ export enum SemanticsKind {
 }
 
 export interface Identifier extends Kinder, Finder, Position {
-  name: string
+  name?: string
 
   identifierKind?: IdentifierKind
 
   semanticsKind?: SemanticsKind
 
   scope?: Range
-
-  token?: Token
 
   detail?: string
 
@@ -49,8 +46,6 @@ export interface Identifier extends Kinder, Finder, Position {
   getChild?(): Identifier[]
 
   getType?(): Identifier | undefined
-
-  identifier?(): Identifier
 
   setParent?(parent: Identifier): this
 
