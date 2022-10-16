@@ -24,26 +24,33 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
 ## Extension Settings
 
 ### Theme set
+
 ![img.png](./img/setTheme.png)
 
 ### User configure Set
+
 ![img.png](img/userSet.png)
 
 ## Guide
 
 ### Hover
+
 ![avatar](./img/builtInHover.png)
 
 ### OutLine
+
 ![img.png](./img/outLine.png)
 
 ### Completion
+
 ![img.png](./img/completion.png)
 
 ### Compile
+
 ![img.png](./img/compile.png)
 
 ### Log output
+
 ![img.png](./img/logOut.png)
 
 ### Command compile
@@ -53,6 +60,7 @@ java -jar ${home}/.alephium-dev/ralphc.jar --project ./tests/contracts/
 ```
 
 #### More command compile
+
 https://github.com/alephium/ralphc
 
 ## More Feature

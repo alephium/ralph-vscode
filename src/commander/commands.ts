@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import { Downloader } from '../downloader/downloader'
 import { Compiler } from '../compiler/compiler'
-import { build } from '../deploy/deploy'
+import { build, deployToDevnet} from '../deploy/deploy'
 
 interface Command {
   command: string
@@ -34,6 +34,15 @@ const commands: Command[] = [
       console.log('begin remote Compile')
       build().catch((err) => console.log(err))
       console.log('end remote Compile')
+    },
+  },
+  {
+    command: 'ralph.online.deploy',
+    title: 'Ralph Online Deploy',
+    callback: () => {
+      console.log('begin deploy')
+      deployToDevnet().catch((err) => console.log(err))
+      console.log('end deploy')
     },
   },
 ]
