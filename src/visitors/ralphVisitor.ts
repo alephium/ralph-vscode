@@ -1,6 +1,5 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import { Uri } from 'vscode'
-import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import {
   AssetScriptContext,
   ContractContext,
@@ -22,8 +21,12 @@ import cache from '../cache/cache'
 import { statementContext } from '../ast/context'
 import { Enum } from '../ast/enum'
 import { AssetScript } from '../ast/assetScript'
+import { Identifier } from '../ast/identifier'
+import { SemanticNode } from '../ast/ast'
 
-export class RalphVisitor extends AbstractParseTreeVisitor<number> implements RalphParserVisitor<number> {
+type Result = Identifier | undefined
+
+export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements RalphParserVisitor<Result> {
   cache!: Map<string, Base>
 
   uri: Uri
@@ -34,8 +37,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     this.cache = cache
   }
 
-  protected defaultResult(): number {
-    return this.cache.size
+  protected defaultResult(): Result {
+    return new SemanticNode()
   }
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
@@ -43,7 +46,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     ctx.methodDecl().forEach((method) => base.add(Method.FromContext(method).setParent(base)))
     // event
     ctx.event().forEach((eventCtx) => {
-      const event = new Event(eventCtx.IDENTIFIER().text, eventCtx.IDENTIFIER().symbol)
+      const event = new Event(eventCtx.IDENTIFIER())
       event.detail = eventCtx.text
       event.setParent(base)
       base.add(event)
@@ -57,52 +60,34 @@ export class RalphVisitor extends AbstractParseTreeVisitor<number> implements Ra
     ctx?.param().forEach((field) => base?.add(Field.FromContext(field).setParent(base)))
   }
 
-  visitContract(ctx: ContractContext): number {
-    const contact = new Contract(ctx.IDENTIFIER(0).text, ctx.IDENTIFIER(0).symbol)
-    contact.detail = ctx.text
-    contact.uri = this.uri
-    contact.range(ctx.IDENTIFIER(0).symbol, ctx.typeStructBody().R_CURLY().symbol)
-
-    // fields
-    this.visitParams(ctx.paramList(), contact)
-    this.visitBody(ctx.typeStructBody(), contact)
-    this.cache.set(contact.name, contact)
-    return this.cache.size
-  }
-
-  visitInterface(ctx: InterfaceContext): number {
-    const face = new Interface(ctx.IDENTIFIER(0).text, ctx.IDENTIFIER(0).symbol)
-    face.detail = ctx.text
-    face.uri = this.uri
-    face.range(ctx.IDENTIFIER(0).symbol, ctx.typeStructBody().R_CURLY().symbol)
-    this.visitBody(ctx.typeStructBody(), face)
-    this.cache.set(face.name, face)
-    return this.cache.size
-  }
-
-  visitScript(ctx: Script, base: Base): number {
+  visitStruct(ctx: Struct, base: Base): Result {
     base.detail = ctx.text
     base.uri = this.uri
-    base.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
+    base.range(ctx.typeStructBody().L_CURLY().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitParams(ctx.paramList?.(), base)
     this.visitBody(ctx.typeStructBody!(), base)
-    this.cache.set(base.name, base)
-    return this.cache.size
+    this.cache.set(base.name!, base)
+    return base
   }
 
-  visitTxScript(ctx: TxScriptContext): number {
-    const script = new TxScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
-    return this.visitScript(ctx, script)
+  visitContract(ctx: ContractContext): Result {
+    return this.visitStruct(ctx, new Contract(ctx.IDENTIFIER(0)))
   }
 
-  visitAssetScript(ctx: AssetScriptContext): number {
-    const script = new AssetScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
-    return this.visitScript(ctx, script)
+  visitInterface(ctx: InterfaceContext): Result {
+    return this.visitStruct(ctx, new Interface(ctx.IDENTIFIER(0)))
+  }
+
+  visitTxScript(ctx: TxScriptContext): Result {
+    return this.visitStruct(ctx, new TxScript(ctx.IDENTIFIER()))
+  }
+
+  visitAssetScript(ctx: AssetScriptContext): Result {
+    return this.visitStruct(ctx, new AssetScript(ctx.IDENTIFIER()))
   }
 }
 
-interface Script {
-  IDENTIFIER(): TerminalNode
+interface Struct {
   paramList?(): ParamListContext | undefined
   typeStructBody(): TypeStructBodyContext
   get text(): string

@@ -21,7 +21,7 @@ import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
 import { SemanticNode } from './ast'
 
 export function refNode(ctx: TerminalNode): Identifier {
-  const node = new SemanticNode(ctx.text, ctx.symbol)
+  const node = new SemanticNode(ctx)
   node.setSemanticsKind(SemanticsKind.Ref)
   return node
 }
@@ -79,6 +79,7 @@ export function expressionContext(ctx: ExpressionContext): Identifier[] {
 }
 
 export function callContext(ctx: CallContext): Identifier[] {
+  // TODO
   const identifiers: Identifier[] = []
   ctx
     .callChain()

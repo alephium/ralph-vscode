@@ -15,7 +15,7 @@ export class Field extends SemanticNode {
   }
 
   public static FromContext(ctx: ParamContext): Field {
-    const field = new Field(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
+    const field = new Field(ctx.IDENTIFIER())
     field.detail = ctx.text
     return field
   }

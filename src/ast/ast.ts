@@ -1,13 +1,14 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
 import { CompletionItemLabel, Range, SymbolKind, Uri } from 'vscode'
+import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import MapKinds from '../util/kind'
 import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
 import { Word } from './word'
 import { Position } from './position'
 
 export class SemanticNode implements Identifier {
-  name: string
+  name: string | undefined
 
   identifierKind?: IdentifierKind
 
@@ -15,9 +16,7 @@ export class SemanticNode implements Identifier {
 
   kind: number | undefined
 
-  token: Token | undefined
-
-  detail: string
+  detail: string | undefined
 
   point: vscode.Position | undefined
 
@@ -32,23 +31,13 @@ export class SemanticNode implements Identifier {
     return MapKinds().get(this.kind!)!
   }
 
-  identifier(): Identifier {
-    return this
-  }
-
-  constructor(name: string, token?: vscode.Position | Token) {
-    this.name = name
-    this.detail = name
-    this.semanticsKind = SemanticsKind.Def
-    this.identifierKind = IdentifierKind.Type
-    if (token) {
-      if (token instanceof vscode.Position) {
-        this.point = token
-      } else {
-        this.token = token
-        this.point = this.convert(token)
-        this.range(token, token)
-      }
+  constructor(node?: TerminalNode) {
+    if (node) {
+      this.name = node.symbol.text!
+      this.detail = this.name
+      this.semanticsKind = SemanticsKind.Def
+      this.identifierKind = IdentifierKind.Type
+      this.range(node.symbol, node.symbol)
     }
   }
 
@@ -146,7 +135,7 @@ export class SemanticNode implements Identifier {
 
   completionItemLabel(): CompletionItemLabel {
     return {
-      label: this.name,
+      label: this.name ?? 'undefined',
       detail: this.detail,
       description: this.detail,
     }

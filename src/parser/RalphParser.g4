@@ -160,7 +160,6 @@ emit
     : EMIT IDENTIFIER L_PAREN expressionList R_PAREN  // # emitStmt
     ;
 
-
 //  [@using(preapprovedAssets = <Bool>, assetsInContract = <Bool>)]
 annotation
     : AT USING L_PAREN expressionList R_PAREN
