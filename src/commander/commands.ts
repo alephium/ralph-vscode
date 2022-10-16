@@ -1,6 +1,7 @@
 import * as vscode from 'vscode'
 import { Downloader } from '../downloader/downloader'
 import { Compiler } from '../compiler/compiler'
+import { build } from '../deploy/deploy'
 
 interface Command {
   command: string
@@ -24,6 +25,15 @@ const commands: Command[] = [
       if (vscode.window.activeTextEditor) {
         new Compiler().compiler(vscode.window.activeTextEditor)
       }
+    },
+  },
+  {
+    command: 'ralph.online.compile',
+    title: 'Ralph Online Compile',
+    callback: () => {
+      console.log('begin remote Compile')
+      build().catch((err) => console.log(err))
+      console.log('end remote Compile')
     },
   },
 ]
