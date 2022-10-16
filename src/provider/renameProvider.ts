@@ -1,9 +1,8 @@
 import { RenameProvider, WorkspaceEdit, TextDocument, Position, ProviderResult } from 'vscode'
 import Parser from '../parser/parser'
-import { Identifier } from '../ast/identifier'
 import cache from '../cache/cache'
 import { Filter } from './filter'
-import { Word } from "../ast/word";
+import { Word } from '../ast/word'
 
 export class RalphRenameProvider extends Filter implements RenameProvider {
   provideRenameEdits(document: TextDocument, position: Position, newName: string): ProviderResult<WorkspaceEdit> {

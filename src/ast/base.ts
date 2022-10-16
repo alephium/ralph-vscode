@@ -12,7 +12,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   identifiers: Identifier[]
 
-  constructor(name: string, token: Token) {
+  constructor(name?: string, token?: Token) {
     super(name, token)
     this.members = new Map()
     this.kind = IdentifierKind.Type

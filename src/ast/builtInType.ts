@@ -2,7 +2,7 @@ import { CompletionItemKind, CompletionItemLabel, SymbolKind } from 'vscode'
 import { SemanticNode } from './ast'
 
 export class BuiltInType extends SemanticNode {
-  description: string
+  description: string | undefined
 
   constructor(name: string) {
     super(name)

@@ -25,12 +25,12 @@ import { MethodDeclContext } from "./RalphParser";
 import { BasicLitContext } from "./RalphParser";
 import { IntegerContext } from "./RalphParser";
 import { String_Context } from "./RalphParser";
-import { TypeStructContext } from "./RalphParser";
-import { TypeParamContext } from "./RalphParser";
-import { StructNameContext } from "./RalphParser";
-import { TypeStructHeaderContext } from "./RalphParser";
-import { TypeStructBodyContext } from "./RalphParser";
 import { EnumContext } from "./RalphParser";
+import { TypeStructBodyContext } from "./RalphParser";
+import { TxScriptContext } from "./RalphParser";
+import { AssetScriptContext } from "./RalphParser";
+import { ContractContext } from "./RalphParser";
+import { InterfaceContext } from "./RalphParser";
 import { EventContext } from "./RalphParser";
 import { EmitContext } from "./RalphParser";
 import { AnnotationContext } from "./RalphParser";
@@ -207,32 +207,11 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitString_?: (ctx: String_Context) => Result;
 
 	/**
-	 * Visit a parse tree produced by `RalphParser.typeStruct`.
+	 * Visit a parse tree produced by `RalphParser.enum`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitTypeStruct?: (ctx: TypeStructContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `RalphParser.typeParam`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitTypeParam?: (ctx: TypeParamContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `RalphParser.structName`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitStructName?: (ctx: StructNameContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `RalphParser.typeStructHeader`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitTypeStructHeader?: (ctx: TypeStructHeaderContext) => Result;
+	visitEnum?: (ctx: EnumContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.typeStructBody`.
@@ -242,11 +221,32 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitTypeStructBody?: (ctx: TypeStructBodyContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `RalphParser.enum`.
+	 * Visit a parse tree produced by `RalphParser.txScript`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitEnum?: (ctx: EnumContext) => Result;
+	visitTxScript?: (ctx: TxScriptContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.assetScript`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitAssetScript?: (ctx: AssetScriptContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.contract`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitContract?: (ctx: ContractContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.interface`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitInterface?: (ctx: InterfaceContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.event`.

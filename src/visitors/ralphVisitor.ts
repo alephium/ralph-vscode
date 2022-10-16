@@ -6,8 +6,8 @@ import {
   ContractContext,
   InterfaceContext,
   ParamListContext,
-  TxScriptContext, TypeParamContext,
-  TypeStructBodyContext, TypeStructContext, TypeStructHeaderContext
+  TxScriptContext,
+  TypeStructBodyContext,
 } from '../parser/RalphParser'
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
@@ -22,10 +22,12 @@ import cache from '../cache/cache'
 import { statementContext } from '../ast/context'
 import { Enum } from '../ast/enum'
 import { AssetScript } from '../ast/assetScript'
-import { Identifier } from "../ast/identifier";
-import { SemanticNode } from "../ast/ast";
+import { Identifier } from '../ast/identifier'
+import { SemanticNode } from '../ast/ast'
 
-export class RalphVisitor extends AbstractParseTreeVisitor<Identifier> implements RalphParserVisitor<Identifier> {
+type Result = Identifier | undefined
+
+export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements RalphParserVisitor<Result> {
   cache!: Map<string, Base>
 
   uri: Uri
@@ -36,25 +38,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Identifier> implement
     this.cache = cache
   }
 
-  protected defaultResult(): Identifier {
+  protected defaultResult(): Result {
     return new SemanticNode('root')
-  }
-
-  visitTypeParam(ctx: TypeParamContext): Identifier {
-    if (ctx.CONTRACT()) return new Contract()
-  }
-
-  visitTypeStruct(ctx: TypeStructContext): Identifier{
-    ctx.typeStructHeader()
-    return this.cache.size
-  }
-
-  visitTypeStructHeader(ctx: TypeStructHeaderContext): Identifier{
-    return this.cache.size
-  }
-
-  visitTypeStructBody(ctx: TypeStructBodyContext): Identifier{
-    return this.cache.size
   }
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
@@ -76,7 +61,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Identifier> implement
     ctx?.param().forEach((field) => base?.add(Field.FromContext(field).setParent(base)))
   }
 
-  visitContract(ctx: ContractContext): number {
+  visitContract(ctx: ContractContext): Result {
     const contact = new Contract(ctx.IDENTIFIER(0).text, ctx.IDENTIFIER(0).symbol)
     contact.detail = ctx.text
     contact.uri = this.uri
@@ -86,35 +71,35 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Identifier> implement
     this.visitParams(ctx.paramList(), contact)
     this.visitBody(ctx.typeStructBody(), contact)
     this.cache.set(contact.name, contact)
-    return this.cache.size
+    return contact
   }
 
-  visitInterface(ctx: InterfaceContext): number {
+  visitInterface(ctx: InterfaceContext): Result {
     const face = new Interface(ctx.IDENTIFIER(0).text, ctx.IDENTIFIER(0).symbol)
     face.detail = ctx.text
     face.uri = this.uri
     face.range(ctx.IDENTIFIER(0).symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitBody(ctx.typeStructBody(), face)
     this.cache.set(face.name, face)
-    return this.cache.size
+    return face
   }
 
-  visitScript(ctx: Script, base: Base): number {
+  visitScript(ctx: Script, base: Base): Result {
     base.detail = ctx.text
     base.uri = this.uri
     base.range(ctx.IDENTIFIER().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitParams(ctx.paramList?.(), base)
     this.visitBody(ctx.typeStructBody!(), base)
     this.cache.set(base.name, base)
-    return this.cache.size
+    return base
   }
 
-  visitTxScript(ctx: TxScriptContext): number {
+  visitTxScript(ctx: TxScriptContext): Result {
     const script = new TxScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
     return this.visitScript(ctx, script)
   }
 
-  visitAssetScript(ctx: AssetScriptContext): number {
+  visitAssetScript(ctx: AssetScriptContext): Result {
     const script = new AssetScript(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
     return this.visitScript(ctx, script)
   }
