@@ -13,6 +13,8 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
 
   builtInType: Array<Identifier>
 
+  builtInLiteral: Array<string>
+
   constructor() {
     super()
     this.items = Object.assign(new Array<Fun>(), jsonData)
@@ -21,6 +23,7 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
       obj.description = `${value.kind}: ${value.detail}`
       return obj
     })
+    this.builtInLiteral = ['true', 'false']
   }
 
   provideCompletionItems(
@@ -43,5 +46,6 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
           )
       )
       .concat(this.builtInType.map((value) => value.completionItem!()))
+      .concat(this.builtInLiteral.map((value) => new CompletionItem({ label: value }, CompletionItemKind.Value)))
   }
 }

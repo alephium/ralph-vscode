@@ -10,6 +10,7 @@ import Parser from './parser/parser'
 import { BuiltInProvider } from './provider/completion/builtInProvider'
 import { IdentifierProvider } from './provider/completion/identifierProvider'
 import { EnumProvider } from './provider/completion/enumProvider'
+import { AnnotationProvider } from './provider/completion/annotationProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -34,6 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GlobalProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new BuiltInProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new IdentifierProvider()))
+  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new AnnotationProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new EnumProvider(), '.'))
   context.subscriptions.push(vscode.languages.registerDefinitionProvider(selector, new DefinitionProvider()))
   context.subscriptions.push(vscode.languages.registerRenameProvider(selector, new RalphRenameProvider()))
