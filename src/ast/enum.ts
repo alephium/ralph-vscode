@@ -14,7 +14,11 @@ export class Enum extends Base {
 
   public static FromContext(ctx: EnumContext): Enum {
     const enumValue = new Enum(ctx.IDENTIFIER())
-    ctx.varName().forEach((value) => enumValue.add(new Variable(value.IDENTIFIER()).setParent(enumValue)))
+    ctx.varNameAssign().forEach((value) => {
+      const member = new Variable(value.varName().IDENTIFIER()).setParent(enumValue)
+      member.detail = value.text
+      enumValue.add(member)
+    })
     return enumValue
   }
 }
