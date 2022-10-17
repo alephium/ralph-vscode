@@ -1,14 +1,15 @@
 import { Configuration } from '@alephium/cli'
 import { Number256 } from '@alephium/web3'
-import vscode from 'vscode'
+import * as vscode from 'vscode'
 
 // Settings are usually for configuring
 export type Settings = {
   issueTokenAmount: Number256
 }
+
 const defaultSettings: Settings = { issueTokenAmount: 100n }
 
-const defaultConfiguration = vscode.workspace.getConfiguration().get('ralph.online.configuration') as Configuration<Settings>
+const vscodeConfig = vscode.workspace.getConfiguration().get('ralph.online.configuration') as Configuration<Settings>
 
 const configuration: Configuration<Settings> = {
   defaultNetwork: 'devnet',
@@ -20,13 +21,11 @@ const configuration: Configuration<Settings> = {
         'vault alarm sad mass witness property virus style good flower rice alpha viable evidence run glare pretty scout evil judge enroll refuse another lava',
       settings: defaultSettings,
     },
-
     testnet: {
       nodeUrl: process.env.NODE_URL as string,
       mnemonic: process.env.MNEMONIC as string,
       settings: defaultSettings,
     },
-
     mainnet: {
       nodeUrl: process.env.NODE_URL as string,
       mnemonic: process.env.MNEMONIC as string,
@@ -35,4 +34,6 @@ const configuration: Configuration<Settings> = {
   },
 }
 
-export { configuration, defaultConfiguration }
+const defaultConfiguration = { ...configuration, ...vscodeConfig }
+
+export { defaultConfiguration }
