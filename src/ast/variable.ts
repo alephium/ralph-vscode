@@ -3,6 +3,7 @@ import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { ParamContext } from '../parser/RalphParser'
 import { SemanticNode } from './ast'
 import { Identifier, IdentifierKind } from './identifier'
+import { typeNameContext } from './context'
 
 export class Variable extends SemanticNode {
   type_: Identifier | undefined
@@ -23,12 +24,11 @@ export class Variable extends SemanticNode {
   public static FromContext(ctx: ParamContext): Variable {
     const varVal = new Variable(ctx.IDENTIFIER())
     varVal.detail = ctx.text
-    // varVal.type_ = ctx.typeName()
+    varVal.type_ = typeNameContext(ctx.typeName())
     return varVal
   }
 
   getType(): Identifier | undefined {
-    // eslint-disable-next-line no-underscore-dangle
     return this.type_
   }
 }

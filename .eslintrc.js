@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-declare': 'off',
     'no-param-reassign': 'off',
+    'no-underscore-dangle': 'off',
   },
   settings: {
     'import/resolver': {

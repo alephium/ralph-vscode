@@ -10,7 +10,7 @@ import { Position } from './position'
 export class SemanticNode implements Identifier {
   name: string | undefined
 
-  identifierKind?: IdentifierKind
+  identifierKind: IdentifierKind | undefined
 
   semanticsKind: SemanticsKind | undefined
 
@@ -136,7 +136,7 @@ export class SemanticNode implements Identifier {
   completionItemLabel(): CompletionItemLabel {
     return {
       label: this.name ?? 'undefined',
-      detail: this.detail,
+      // detail: this.detail,
       description: this.detail,
     }
   }

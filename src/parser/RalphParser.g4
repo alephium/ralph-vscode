@@ -134,7 +134,9 @@ string_: RAW_STRING_LIT | INTERPRETED_STRING_LIT;
 //	: typeParam IDENTIFIER (L_PAREN (paramList)? R_PAREN)? ((EXTENDS | IMPLEMENTS) IDENTIFIER (L_PAREN expressionList R_PAREN)?)?
 //	;
 
-enum: ENUM IDENTIFIER L_CURLY (varName ASSIGN expression)* R_CURLY;
+varNameAssign: varName ASSIGN basicLit;
+
+enum: ENUM IDENTIFIER L_CURLY varNameAssign* R_CURLY;
 
 typeStructBody: L_CURLY (statement | event | methodDecl | enum)* R_CURLY;
 

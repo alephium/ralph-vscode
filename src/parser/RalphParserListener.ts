@@ -25,6 +25,7 @@ import { MethodDeclContext } from "./RalphParser";
 import { BasicLitContext } from "./RalphParser";
 import { IntegerContext } from "./RalphParser";
 import { String_Context } from "./RalphParser";
+import { VarNameAssignContext } from "./RalphParser";
 import { EnumContext } from "./RalphParser";
 import { TypeStructBodyContext } from "./RalphParser";
 import { TxScriptContext } from "./RalphParser";
@@ -290,6 +291,17 @@ export interface RalphParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitString_?: (ctx: String_Context) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.varNameAssign`.
+	 * @param ctx the parse tree
+	 */
+	enterVarNameAssign?: (ctx: VarNameAssignContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.varNameAssign`.
+	 * @param ctx the parse tree
+	 */
+	exitVarNameAssign?: (ctx: VarNameAssignContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.enum`.
