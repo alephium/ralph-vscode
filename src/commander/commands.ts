@@ -1,7 +1,8 @@
 import * as vscode from 'vscode'
 import { Downloader } from '../downloader/downloader'
 import { Compiler } from '../compiler/compiler'
-import { build, deployToDevnet} from '../deploy/deploy'
+import { deployToDevnet } from '../deploy/deploy'
+import { build } from '../deploy/build'
 
 interface Command {
   command: string
