@@ -37,6 +37,7 @@ export class Property extends SemanticNode {
   }
 
   label(): string {
-    return `(mut) ${this.name}`
+    if (this.isMut) return `(mut) ${this.name}`
+    return this.name!
   }
 }
