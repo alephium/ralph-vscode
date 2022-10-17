@@ -7,6 +7,6 @@ export class SymbolProvider implements vscode.DocumentSymbolProvider {
     Parser(document.uri, document.getText())
     return Array.from(cache.values())
       .filter((c) => c.getUri()?.path === document.uri.path)
-      .map((contract) => contract.documentSymbol())
+      .map((contract) => contract.provideDocumentSymbols())
   }
 }

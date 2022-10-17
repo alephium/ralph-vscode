@@ -1,6 +1,6 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
-import { CompletionItemLabel, Range, SymbolKind, Uri } from 'vscode'
+import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Range, SymbolKind, Uri } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import MapKinds from '../util/kind'
 import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
@@ -26,10 +26,6 @@ export class SemanticNode implements Identifier {
   scope: Range | undefined
 
   parent: Identifier | undefined
-
-  symbolKind(): SymbolKind {
-    return MapKinds().get(this.kind!)!
-  }
 
   constructor(node?: TerminalNode) {
     if (node) {
@@ -133,11 +129,31 @@ export class SemanticNode implements Identifier {
     return this.parent?.getUri?.()
   }
 
+  symbolKind(): SymbolKind {
+    return MapKinds().get(this.kind!)!
+  }
+
   completionItemLabel(): CompletionItemLabel {
     return {
-      label: this.name ?? 'undefined',
+      label: this.label(),
       // detail: this.detail,
       description: this.detail,
     }
+  }
+
+  label(): string {
+    return this.name ?? 'undefined'
+  }
+
+  completionItemKind(): CompletionItemKind {
+    return CompletionItemKind.Variable
+  }
+
+  documentSymbol(): DocumentSymbol {
+    return new DocumentSymbol(this.label(), this.detail!, this.symbolKind(), this.scope!, this.scope!)
+  }
+
+  completionItem(): CompletionItem {
+    return new CompletionItem(this.completionItemLabel(), this.completionItemKind())
   }
 }

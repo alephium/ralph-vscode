@@ -6,6 +6,8 @@ import { Identifier, IdentifierKind } from './identifier'
 import { typeNameContext } from './context'
 
 export class Property extends SemanticNode {
+  isMut: boolean
+
   type_: Identifier | undefined
 
   symbolKind(): SymbolKind {
@@ -18,6 +20,7 @@ export class Property extends SemanticNode {
 
   constructor(node: TerminalNode) {
     super(node)
+    this.isMut = false
     this.identifierKind = IdentifierKind.Variable
   }
 
@@ -25,10 +28,15 @@ export class Property extends SemanticNode {
     const field = new Property(ctx.IDENTIFIER())
     field.detail = ctx.text
     field.type_ = typeNameContext(ctx.typeName())
+    if (ctx.MUT()) field.isMut = true
     return field
   }
 
   getType(): Identifier | undefined {
     return this.type_
+  }
+
+  label(): string {
+    return `(mut) ${this.name}`
   }
 }
