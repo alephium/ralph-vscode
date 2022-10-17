@@ -5,15 +5,15 @@ import { SemanticNode } from './ast'
 import { Identifier, IdentifierKind } from './identifier'
 import { typeNameContext } from './context'
 
-export class Field extends SemanticNode {
+export class Property extends SemanticNode {
   type_: Identifier | undefined
 
   symbolKind(): SymbolKind {
-    return SymbolKind.Field
+    return SymbolKind.Property
   }
 
   completionItemKind(): CompletionItemKind {
-    return CompletionItemKind.Field
+    return CompletionItemKind.Property
   }
 
   constructor(node: TerminalNode) {
@@ -21,8 +21,8 @@ export class Field extends SemanticNode {
     this.identifierKind = IdentifierKind.Variable
   }
 
-  public static FromContext(ctx: ParamContext): Field {
-    const field = new Field(ctx.IDENTIFIER())
+  public static FromContext(ctx: ParamContext): Property {
+    const field = new Property(ctx.IDENTIFIER())
     field.detail = ctx.text
     field.type_ = typeNameContext(ctx.typeName())
     return field

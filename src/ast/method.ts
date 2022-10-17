@@ -6,11 +6,11 @@ import { blockContext } from './context'
 
 export class Method extends Base {
   symbolKind(): SymbolKind {
-    return SymbolKind.Function
+    return SymbolKind.Method
   }
 
   completionItemKind(): CompletionItemKind {
-    return CompletionItemKind.Function
+    return CompletionItemKind.Method
   }
 
   public static FromContext(ctx: MethodDeclContext): Method {

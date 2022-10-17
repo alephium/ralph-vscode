@@ -3,10 +3,10 @@ import { SemanticNode } from './ast'
 
 export class Event extends SemanticNode {
   symbolKind(): SymbolKind {
-    return SymbolKind.Field
+    return SymbolKind.Event
   }
 
   completionItemKind(): CompletionItemKind {
-    return CompletionItemKind.Property
+    return CompletionItemKind.Event
   }
 }
