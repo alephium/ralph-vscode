@@ -11,7 +11,7 @@ import {
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
 import { Contract } from '../ast/contract'
-import { Field } from '../ast/field'
+import { Property } from '../ast/property'
 import { Method } from '../ast/method'
 import { Event } from '../ast/event'
 import { Base } from '../ast/base'
@@ -57,7 +57,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   }
 
   visitParams(ctx?: ParamListContext, base?: Base) {
-    ctx?.param().forEach((field) => base?.add(Field.FromContext(field).setParent(base)))
+    ctx?.param().forEach((field) => base?.add(Property.FromContext(field).setParent(base)))
   }
 
   visitStruct(ctx: Struct, base: Base): Result {

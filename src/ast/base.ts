@@ -97,12 +97,10 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return CompletionItemKind.Class
   }
 
-  documentSymbol(document?: vscode.TextDocument): vscode.DocumentSymbol {
-    const item = new vscode.DocumentSymbol(this.name!, '', this.symbolKind(), this.scope!, this.scope!)
+  provideDocumentSymbols(document?: vscode.TextDocument): vscode.DocumentSymbol {
+    const item = this.documentSymbol()
     this.members.forEach((member) => {
-      item.children.push(
-        new vscode.DocumentSymbol(member.name!, member.detail!, <SymbolKind>member.symbolKind?.(), member.scope!, member.scope!)
-      )
+      item.children.push(member.documentSymbol!())
     })
     return item
   }
@@ -146,7 +144,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 }
 
 export interface VscodeInterface {
-  documentSymbol?(document?: vscode.TextDocument): vscode.DocumentSymbol
+  provideDocumentSymbols?(document?: vscode.TextDocument): vscode.DocumentSymbol
   provideHover?(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover>
   provideDefinition?(document: TextDocument, position: vscode.Position): ProviderResult<Definition | DefinitionLink[]>
   provideRenameEdits?(identifier: Identifier, newName: string, edit: WorkspaceEdit): void

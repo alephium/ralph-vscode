@@ -42,6 +42,6 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
             CompletionItemKind.Function
           )
       )
-      .concat(this.builtInType.map((value) => new CompletionItem(value.completionItemLabel!(), value.completionItemKind?.())))
+      .concat(this.builtInType.map((value) => value.completionItem!()))
   }
 }
