@@ -27,10 +27,10 @@ export function refNode(ctx: TerminalNode): Identifier {
 }
 
 function typeNode(typeNode: TerminalNode): Identifier {
-  return <Identifier>refNode(typeNode).setIdentifierKind?.(IdentifierKind.Type).setSemanticsKind?.(SemanticsKind.Ref)
+  return <Identifier>refNode(typeNode).setIdentifierKind?.(IdentifierKind.Type)
 }
 
-export function primitiveTypeContext(ctx: PrimitiveTypeContext): Identifier[] {
+export function primitiveTypeContext(ctx: PrimitiveTypeContext): Identifier {
   const identifiers: Identifier[] = []
   const add = (node: TerminalNode | undefined) => {
     if (node) identifiers.push(typeNode(node))
@@ -41,21 +41,21 @@ export function primitiveTypeContext(ctx: PrimitiveTypeContext): Identifier[] {
   add(ctx.ADDRESS())
   add(ctx.BYTE())
   add(ctx.BOOL())
-  return identifiers
+  return identifiers[0]
 }
 
-export function typeNameContext(ctx: TypeNameContext): Identifier[] {
+export function typeNameContext(ctx: TypeNameContext): Identifier {
   const identifiers: Identifier[] = []
   const primitiveType = ctx.primitiveType()
-  if (primitiveType) identifiers.push(...primitiveTypeContext(primitiveType))
+  if (primitiveType) identifiers.push(primitiveTypeContext(primitiveType))
   const identifier = ctx.IDENTIFIER()
   if (identifier) identifiers.push(typeNode(identifier))
-  return identifiers
+  return identifiers[0]
 }
 
 export function resultContext(ctx: ResultContext): Identifier[] {
   const identifiers: Identifier[] = []
-  ctx.typeName().forEach((value) => identifiers.push(...typeNameContext(value)))
+  ctx.typeName().forEach((value) => identifiers.push(typeNameContext(value)))
   return identifiers
 }
 
@@ -124,22 +124,23 @@ export function blockContext(ctx: BlockContext): Identifier[] {
   return identifiers
 }
 
+// todo
 export function varDeclContext(ctx: VarDeclContext): Identifier[] {
   const identifiers: Identifier[] = []
   const varName = ctx.varName()
-  if (varName) identifiers.push(<Identifier>varNameContext(varName).setSemanticsKind?.(SemanticsKind.Def))
+  if (varName) identifiers.push(<Identifier>varNameContext(varName))
   const expression = ctx.expression()
   if (expression) identifiers.push(...expressionContext(expression))
   ctx
     .identifierList()
     ?.varName()
-    .forEach((value) => identifiers.push(<Identifier>varNameContext(value).setSemanticsKind?.(SemanticsKind.Def)))
+    .forEach((value) => identifiers.push(<Identifier>varNameContext(value)))
   return identifiers
 }
 
 // VarNameContext
 export function varNameContext(ctx: VarNameContext): Identifier {
-  return <Identifier>refNode(ctx.IDENTIFIER()).setIdentifierKind?.(IdentifierKind.Variable)
+  return <Identifier>refNode(ctx.IDENTIFIER()).setIdentifierKind?.(IdentifierKind.Variable).setSemanticsKind?.(SemanticsKind.Def)
 }
 
 export function simpleStmtContext(ctx: SimpleStmtContext): Identifier[] {
