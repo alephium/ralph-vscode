@@ -12,6 +12,6 @@ export class GlobalProvider extends Filter implements vscode.CompletionItemProvi
     context: vscode.CompletionContext
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     if (this.isSkip(document, position)) return undefined
-    return Array.from(cache.values()).map((value) => new CompletionItem(value.completionItemLabel!(), value.completionItemKind?.()))
+    return Array.from(cache.values()).map((value) => value.completionItem())
   }
 }

@@ -1,6 +1,6 @@
-import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
 import { CompletionItemKind, Definition, DefinitionLink, Location, ProviderResult, SymbolKind, TextDocument, WorkspaceEdit } from 'vscode'
+import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
 import { SemanticNode } from './ast'
 import { Word } from './word'
@@ -12,15 +12,15 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   identifiers: Identifier[]
 
-  constructor(name: string, token: Token) {
-    super(name, token)
+  constructor(node: TerminalNode) {
+    super(node)
     this.members = new Map()
     this.kind = IdentifierKind.Type
     this.identifiers = []
   }
 
   add(member: Identifier) {
-    this.members.set(member.name, member)
+    this.members.set(member.name!, member)
   }
 
   append(identifiers: Identifier[]) {
@@ -97,19 +97,17 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return CompletionItemKind.Class
   }
 
-  documentSymbol(document?: vscode.TextDocument): vscode.DocumentSymbol {
-    const item = new vscode.DocumentSymbol(this.name, '', this.symbolKind(), this.scope!, this.scope!)
+  provideDocumentSymbols(document?: vscode.TextDocument): vscode.DocumentSymbol {
+    const item = this.documentSymbol()
     this.members.forEach((member) => {
-      item.children.push(
-        new vscode.DocumentSymbol(member.name, member.detail!, <SymbolKind>member.symbolKind?.(), member.scope!, member.scope!)
-      )
+      item.children.push(member.documentSymbol!())
     })
     return item
   }
 
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
     const range = document.getWordRangeAtPosition(position)
-    const identifier = <Identifier>{
+    const identifier = <Word>{
       name: document.getText(range),
       point: position,
       uri: document.uri,
@@ -117,14 +115,14 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     let item
     const member = this.findOne(identifier)
     if (member) {
-      item = new vscode.Hover([member.name, member.detail ?? ''])
+      item = new vscode.Hover([member.name!, member.detail ?? ''])
     }
     return item
   }
 
   provideDefinition(document: TextDocument, position: vscode.Position): ProviderResult<Definition | DefinitionLink[]> {
     const range = document.getWordRangeAtPosition(position)
-    const identifier = <Identifier>{
+    const identifier = <Word>{
       name: document.getText(range),
       point: position,
       uri: document.uri,
@@ -137,7 +135,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return item
   }
 
-  provideRenameEdits(identifier: Identifier, newName: string, edit: WorkspaceEdit): void {
+  provideRenameEdits(identifier: Word, newName: string, edit: WorkspaceEdit): void {
     const members = this.findAll(identifier)
     if (members && members.length > 0) {
       members?.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.scope!, newName))
@@ -146,7 +144,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 }
 
 export interface VscodeInterface {
-  documentSymbol?(document?: vscode.TextDocument): vscode.DocumentSymbol
+  provideDocumentSymbols?(document?: vscode.TextDocument): vscode.DocumentSymbol
   provideHover?(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover>
   provideDefinition?(document: TextDocument, position: vscode.Position): ProviderResult<Definition | DefinitionLink[]>
   provideRenameEdits?(identifier: Identifier, newName: string, edit: WorkspaceEdit): void

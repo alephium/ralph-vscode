@@ -1,20 +1,35 @@
 import { CompletionItemKind, SymbolKind } from 'vscode'
+import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Base } from './base'
 import { MethodDeclContext } from '../parser/RalphParser'
 import { Variable } from './variable'
 import { blockContext } from './context'
 
 export class Method extends Base {
+  isPub: boolean
+
+  constructor(node: TerminalNode) {
+    super(node)
+    this.isPub = false
+  }
+
   symbolKind(): SymbolKind {
-    return SymbolKind.Function
+    return SymbolKind.Method
   }
 
   completionItemKind(): CompletionItemKind {
-    return CompletionItemKind.Function
+    return CompletionItemKind.Method
+  }
+
+  label(): string {
+    if (this.isPub) {
+      return `🔓 ${this.name}`
+    }
+    return `🔐 ${this.name}`
   }
 
   public static FromContext(ctx: MethodDeclContext): Method {
-    const method = new Method(ctx.IDENTIFIER().text, ctx.IDENTIFIER().symbol)
+    const method = new Method(ctx.IDENTIFIER())
     ctx
       .paramList()
       ?.param()
@@ -27,6 +42,7 @@ export class Method extends Base {
       method.detail += `${ctx.annotation()?.text} `
     }
     if (ctx.PUB()) {
+      method.isPub = true
       method.detail += `${ctx.PUB()?.text} `
     }
     method.detail += `${ctx.FN().text} `

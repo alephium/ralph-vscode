@@ -5,17 +5,17 @@ import { SemanticNode } from './ast'
 import { Identifier, IdentifierKind } from './identifier'
 import { typeNameContext } from './context'
 
-export class Variable extends SemanticNode {
+export class Property extends SemanticNode {
   isMut: boolean
 
   type_: Identifier | undefined
 
   symbolKind(): SymbolKind {
-    return SymbolKind.Variable
+    return SymbolKind.Property
   }
 
   completionItemKind(): CompletionItemKind {
-    return CompletionItemKind.Variable
+    return CompletionItemKind.Property
   }
 
   constructor(node: TerminalNode) {
@@ -24,12 +24,12 @@ export class Variable extends SemanticNode {
     this.identifierKind = IdentifierKind.Variable
   }
 
-  public static FromContext(ctx: ParamContext): Variable {
-    const varVal = new Variable(ctx.IDENTIFIER())
-    varVal.detail = ctx.text
-    varVal.type_ = typeNameContext(ctx.typeName())
-    if (ctx.MUT()) varVal.isMut = true
-    return varVal
+  public static FromContext(ctx: ParamContext): Property {
+    const field = new Property(ctx.IDENTIFIER())
+    field.detail = ctx.text
+    field.type_ = typeNameContext(ctx.typeName())
+    if (ctx.MUT()) field.isMut = true
+    return field
   }
 
   getType(): Identifier | undefined {

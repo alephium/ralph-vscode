@@ -1,23 +1,22 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
-import { CompletionItemLabel, Range, SymbolKind, Uri } from 'vscode'
+import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Range, SymbolKind, Uri } from 'vscode'
+import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import MapKinds from '../util/kind'
 import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
 import { Word } from './word'
 import { Position } from './position'
 
 export class SemanticNode implements Identifier {
-  name: string
+  name: string | undefined
 
-  identifierKind?: IdentifierKind
+  identifierKind: IdentifierKind | undefined
 
   semanticsKind: SemanticsKind | undefined
 
   kind: number | undefined
 
-  token: Token | undefined
-
-  detail: string
+  detail: string | undefined
 
   point: vscode.Position | undefined
 
@@ -28,27 +27,13 @@ export class SemanticNode implements Identifier {
 
   parent: Identifier | undefined
 
-  symbolKind(): SymbolKind {
-    return MapKinds().get(this.kind!)!
-  }
-
-  identifier(): Identifier {
-    return this
-  }
-
-  constructor(name: string, token?: vscode.Position | Token) {
-    this.name = name
-    this.detail = name
-    this.semanticsKind = SemanticsKind.Def
-    this.identifierKind = IdentifierKind.Type
-    if (token) {
-      if (token instanceof vscode.Position) {
-        this.point = token
-      } else {
-        this.token = token
-        this.point = this.convert(token)
-        this.range(token, token)
-      }
+  constructor(node?: TerminalNode) {
+    if (node) {
+      this.name = node.symbol.text!
+      this.detail = this.name
+      this.semanticsKind = SemanticsKind.Def
+      this.identifierKind = IdentifierKind.Type
+      this.range(node.symbol, node.symbol)
     }
   }
 
@@ -144,11 +129,31 @@ export class SemanticNode implements Identifier {
     return this.parent?.getUri?.()
   }
 
+  symbolKind(): SymbolKind {
+    return MapKinds().get(this.kind!)!
+  }
+
   completionItemLabel(): CompletionItemLabel {
     return {
-      label: this.name,
-      detail: this.detail,
+      label: this.label(),
+      // detail: this.detail,
       description: this.detail,
     }
+  }
+
+  label(): string {
+    return this.name ?? 'undefined'
+  }
+
+  completionItemKind(): CompletionItemKind {
+    return CompletionItemKind.Variable
+  }
+
+  documentSymbol(): DocumentSymbol {
+    return new DocumentSymbol(this.label(), this.detail!, this.symbolKind(), this.scope!, this.scope!)
+  }
+
+  completionItem(): CompletionItem {
+    return new CompletionItem(this.completionItemLabel(), this.completionItemKind())
   }
 }
