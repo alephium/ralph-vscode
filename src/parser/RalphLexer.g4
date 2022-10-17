@@ -19,7 +19,7 @@ ASSETSCRIPT            : 'AssetScript';
 IF                     : 'if';
 ELSE                   : 'else';
 WHILE                  : 'while';
-// FOR                    : 'for';
+FOR                    : 'for';
 // BREAK                  : 'break';
 // CONTINUE               : 'continue';
 // DEFAULT                : 'default';
@@ -98,7 +98,8 @@ AND                    : '&&';
 OR                     : '||';
 NOT                    : '!';
 
-ADDRESS_LIT            : '#' LETTER*;
+BYTE_LIT               : '#' LETTER*;
+ADDRESS_LIT            : '@' LETTER*;
 ALPH_LIT               : DIGIT* ' '? 'alph';
 BOOL_LIT               : 'true' | 'false';
 

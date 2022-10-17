@@ -175,9 +175,9 @@ statement:
 	| block
 	| ifStmt
 	| whileStmt
+    | forStmt
 	// | breakStmt
 	// | continueStmt
-	// | forStmt
 	;
 
 simpleStmt
@@ -197,8 +197,9 @@ whileStmt
     : WHILE L_PAREN expression? R_PAREN block
     ;
 
+forStmt: FOR L_PAREN (LET MUT varName ASSIGN expression)? SEMI expression? SEMI expression? R_PAREN block;
+
 // breakStmt: BREAK IDENTIFIER?;
 // continueStmt: CONTINUE IDENTIFIER?;
-// forStmt: FOR (expression?) block;
 
 eos: EOS;
