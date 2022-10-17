@@ -136,7 +136,7 @@ export class SemanticNode implements Identifier {
   completionItemLabel(): CompletionItemLabel {
     return {
       label: this.name ?? 'undefined',
-      detail: this.detail,
+      // detail: this.detail,
       description: this.detail,
     }
   }
