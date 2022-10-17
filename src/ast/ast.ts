@@ -10,7 +10,7 @@ import { Position } from './position'
 export class SemanticNode implements Identifier {
   name: string | undefined
 
-  identifierKind?: IdentifierKind
+  identifierKind: IdentifierKind | undefined
 
   semanticsKind: SemanticsKind | undefined
 
