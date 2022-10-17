@@ -21,6 +21,6 @@ export class EnumProvider extends Filter implements vscode.CompletionItemProvide
     const enumVal = Array.from(cache.values())
       .find((value) => value.findOne(word))
       ?.findOne(word)
-    return enumVal?.getChild?.().map((value) => new CompletionItem(value.completionItemLabel!(), value.completionItemKind?.()))
+    return enumVal?.getChild?.().map((value) => value.completionItem!())
   }
 }

@@ -1,5 +1,4 @@
 import * as vscode from 'vscode'
-import { CompletionItem } from 'vscode'
 import cache from '../../cache/cache'
 import { Identifier } from '../../ast/identifier'
 import { Position } from '../../ast/position'
@@ -28,7 +27,7 @@ export class IdentifierProvider extends Filter implements vscode.CompletionItemP
   defs(container: Identifier | undefined, pos: Position): vscode.CompletionItem[] {
     let items: vscode.CompletionItem[] = []
     if (container) {
-      const subItem = container.def?.(pos)?.map((value) => new CompletionItem(value.completionItemLabel!(), value.completionItemKind?.()))
+      const subItem = container.def?.(pos)?.map((value) => value.completionItem!())
       if (subItem) items = items.concat(subItem)
       items = items.concat(this.defs(container.container?.(), pos))
     }

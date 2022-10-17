@@ -1,5 +1,5 @@
-import { CompletionItemLabel, Range, Uri } from 'vscode'
-import { Kinder } from './kinder'
+import * as vscode from 'vscode'
+import { IntelliSense, Kinder } from './kinder'
 // eslint-disable-next-line import/no-cycle
 import { Finder } from './finder'
 import { Position } from './position'
@@ -16,14 +16,14 @@ export enum SemanticsKind {
   Def = 1,
 }
 
-export interface Identifier extends Kinder, Finder, Position {
+export interface Identifier extends Kinder, Finder, Position, IntelliSense {
   name?: string
 
   identifierKind?: IdentifierKind
 
   semanticsKind?: SemanticsKind
 
-  scope?: Range
+  scope?: vscode.Range
 
   detail?: string
 
@@ -41,7 +41,7 @@ export interface Identifier extends Kinder, Finder, Position {
 
   isRef?(): boolean
 
-  getUri?(): Uri | undefined
+  getUri?(): vscode.Uri | undefined
 
   getChild?(): Identifier[]
 
@@ -53,9 +53,9 @@ export interface Identifier extends Kinder, Finder, Position {
 
   setIdentifierKind?(kind: IdentifierKind): this
 
-  completionItemLabel?(): CompletionItemLabel
-
   add?(member: Identifier): void
 
   append?(identifiers: Identifier[]): void
+
+  label?(): string
 }
