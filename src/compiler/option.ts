@@ -1,4 +1,4 @@
-class Option {
+class CompileOption {
   ignoreUnusedConstantsWarnings = false
 
   ignoreUnusedVariablesWarnings = false
