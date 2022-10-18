@@ -6,6 +6,7 @@ import {
   EmitContext,
   ExpressionContext,
   ExpressionListContext,
+  ForStmtContext,
   IfStmtContext,
   PrimitiveTypeContext,
   ResultContext,
@@ -158,6 +159,15 @@ export function whileStmtContext(ctx: WhileStmtContext): Identifier[] {
   const identifiers: Identifier[] = []
   const expression = ctx.expression()
   if (expression) identifiers.push(...expressionContext(expression))
+  identifiers.push(...blockContext(ctx.block()))
+  return identifiers
+}
+
+export function forStmtContext(ctx: ForStmtContext): Identifier[] {
+  const identifiers: Identifier[] = []
+  const varName = ctx.varName()
+  if (varName) identifiers.push(varNameContext(varName))
+  ctx.expression().forEach((expression) => identifiers.push(...expressionContext(expression)))
   identifiers.push(...blockContext(ctx.block()))
   return identifiers
 }

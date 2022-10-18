@@ -53,8 +53,8 @@
 	"for {}": {
 		"prefix": "for",
 		"body": [
-		  "while ($1) {",
-		 	 "\t$2",
+		  "for (let mut $1; $2; $3) {",
+		 	 "\t$4",
 		  "}"
 		],
 		"description": "while"

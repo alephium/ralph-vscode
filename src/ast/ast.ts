@@ -135,8 +135,8 @@ export class SemanticNode implements Identifier {
 
   completionItemLabel(): CompletionItemLabel {
     return {
-      label: this.label(),
-      // detail: this.detail,
+      label: this.name!,
+      detail: this.label(),
       description: this.detail,
     }
   }
