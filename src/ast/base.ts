@@ -1,13 +1,15 @@
 import * as vscode from 'vscode'
 import { CompletionItemKind, Definition, DefinitionLink, Location, ProviderResult, SymbolKind, TextDocument, WorkspaceEdit } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
-import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
+import { Identifier } from './identifier'
+import { IdentifierKind, SemanticsKind } from './kinder'
 import { SemanticNode } from './ast'
 import { Word } from './word'
 import { Finder } from './finder'
 import { Position } from './position'
 
 export class Base extends SemanticNode implements VscodeInterface, Finder {
+  // TODO Fix use set
   members: Map<string, Identifier>
 
   identifiers: Identifier[]
@@ -31,14 +33,11 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return Array.from(this.members.values())
   }
 
-  container(position?: Position): Identifier | undefined {
-    if (!position) {
-      return this.parent
-    }
-    if (this.isScope(position)) {
-      const obj = Array.from(this.members.values()).find((member) => member.isScope?.(position))
-      if (obj) {
-        return obj
+  container(position: Position): Identifier | undefined {
+    if (this.contains(position)) {
+      for (const value of this.members.values()) {
+        const obj = value.container?.(position)
+        if (obj) return obj
       }
       return this
     }
@@ -47,13 +46,13 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   // override
   findOne(identifier: Word): Identifier | undefined {
-    if (this.isScope(identifier)) {
+    if (this.contains(identifier)) {
       if (this.name === identifier.name) return this
       const member = this.members.get(<string>identifier.name)
       if (!member) {
         for (const member of this.members.values()) {
-          const ast = member.findOne?.(identifier)
-          if (ast) return ast
+          const one = member.findOne?.(identifier)
+          if (one) return one
         }
       } else {
         return member
@@ -64,7 +63,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   findAll(identifier: Word): Identifier[] | undefined {
     const items: Identifier[] = []
-    if (this.isScope(identifier)) {
+    if (this.contains(identifier)) {
       if (this.name === identifier.name) items.push(this)
       this.members.forEach((member) => {
         const is = member.findAll?.(identifier)
@@ -77,7 +76,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return undefined
   }
 
-  def(condition: Word): Identifier[] | undefined {
+  defs(): Identifier[] | undefined {
     const member = Array.from(this.members.values())
     const identifiers = this.identifiers.filter(
       (value) => value.identifierKind === IdentifierKind.Variable && value.semanticsKind === SemanticsKind.Def
@@ -85,7 +84,18 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return member.concat(identifiers)
   }
 
-  ref(condition: Word): Identifier[] | undefined {
+  def(word: Word): Identifier | undefined {
+    if (this.contains(word)) {
+      for (const member of this.members.values()) {
+        const def = member.def?.(word)
+        if (def) return def
+      }
+      return super.def(word)
+    }
+    return undefined
+  }
+
+  ref(): Identifier[] | undefined {
     return Array.from(this.identifiers.values())
   }
 
@@ -130,7 +140,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     let item
     const member = this.findOne(identifier)
     if (member) {
-      item = new Location(member.uri ?? document.uri, member.scope ?? position)
+      item = new Location(member.uri ?? document.uri, member.range ?? position)
     }
     return item
   }
@@ -138,7 +148,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
   provideRenameEdits(identifier: Word, newName: string, edit: WorkspaceEdit): void {
     const members = this.findAll(identifier)
     if (members && members.length > 0) {
-      members?.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.scope!, newName))
+      members?.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.range!, newName))
     }
   }
 }

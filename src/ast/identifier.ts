@@ -1,19 +1,16 @@
 import * as vscode from 'vscode'
-import { IntelliSense, Kinder } from './kinder'
+import { CompletionItem, CompletionItemKind, CompletionItemLabel, SymbolKind } from 'vscode'
+import { Kinder, IdentifierKind, SemanticsKind } from './kinder'
 // eslint-disable-next-line import/no-cycle
 import { Finder } from './finder'
 import { Position } from './position'
 
-export enum IdentifierKind {
-  Variable = 0,
-  Method = 1,
-  Event = 2,
-  Type = 3,
-}
-
-export enum SemanticsKind {
-  Ref = 0,
-  Def = 1,
+export interface IntelliSense {
+  symbolKind?(): SymbolKind
+  completionItemKind?(): CompletionItemKind
+  completionItemLabel?(): CompletionItemLabel
+  documentSymbol?(): vscode.DocumentSymbol
+  completionItem?(): CompletionItem
 }
 
 export interface Identifier extends Kinder, Finder, Position, IntelliSense {
@@ -23,7 +20,7 @@ export interface Identifier extends Kinder, Finder, Position, IntelliSense {
 
   semanticsKind?: SemanticsKind
 
-  scope?: vscode.Range
+  range?: vscode.Range
 
   detail?: string
 
@@ -35,7 +32,7 @@ export interface Identifier extends Kinder, Finder, Position, IntelliSense {
 
   toString?(): string
 
-  isScope?(identifier: Position): boolean
+  contains?(identifier: Position): boolean
 
   isDef?(): boolean
 

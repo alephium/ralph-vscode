@@ -2,8 +2,10 @@ import { CompletionItemKind, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { ParamContext } from '../parser/RalphParser'
 import { SemanticNode } from './ast'
-import { Identifier, IdentifierKind } from './identifier'
+import { Identifier } from './identifier'
+import { IdentifierKind } from './kinder'
 import { typeNameContext } from './context'
+import caches from '../cache/cache'
 
 export class Variable extends SemanticNode {
   isMut: boolean
@@ -33,10 +35,11 @@ export class Variable extends SemanticNode {
   }
 
   getType(): Identifier | undefined {
-    return this.type_
+    return caches.get(<string>this.type_?.name)
   }
 
   label(): string {
-    return `(mut) ${this.name}`
+    if (this.isMut) return `(mut) ${this.name}`
+    return this.name!
   }
 }

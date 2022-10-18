@@ -1,7 +1,6 @@
 import * as vscode from 'vscode'
 import cache from '../../cache/cache'
 import { Identifier } from '../../ast/identifier'
-import { Position } from '../../ast/position'
 import { Filter } from '../filter'
 
 export class IdentifierProvider extends Filter implements vscode.CompletionItemProvider {
@@ -18,18 +17,18 @@ export class IdentifierProvider extends Filter implements vscode.CompletionItemP
     }
 
     const container = Array.from(cache.values())
-      .find((value) => value.isScope(pos))
+      .find((value) => value.contains(pos))
       ?.container(pos)
 
-    return this.defs(container, pos)
+    return this.defs(container)
   }
 
-  defs(container: Identifier | undefined, pos: Position): vscode.CompletionItem[] {
+  defs(container: Identifier | undefined): vscode.CompletionItem[] {
     let items: vscode.CompletionItem[] = []
     if (container) {
-      const subItem = container.def?.(pos)?.map((value) => value.completionItem!())
+      const subItem = container.defs?.()?.map((value) => value.completionItem!())
       if (subItem) items = items.concat(subItem)
-      items = items.concat(this.defs(container.container?.(), pos))
+      items = items.concat(this.defs(container.parent))
     }
     return items
   }

@@ -18,7 +18,8 @@ import {
   VarNameContext,
   WhileStmtContext,
 } from '../parser/RalphParser'
-import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
+import { Identifier } from './identifier'
+import { IdentifierKind, SemanticsKind } from './kinder'
 import { SemanticNode } from './ast'
 
 export function refNode(ctx: TerminalNode): Identifier {

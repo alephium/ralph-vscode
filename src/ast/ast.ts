@@ -3,9 +3,10 @@ import * as vscode from 'vscode'
 import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Range, SymbolKind, Uri } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import MapKinds from '../util/kind'
-import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
+import { Identifier } from './identifier'
 import { Word } from './word'
 import { Position } from './position'
+import { IdentifierKind, SemanticsKind } from './kinder'
 
 export class SemanticNode implements Identifier {
   name: string | undefined
@@ -23,7 +24,7 @@ export class SemanticNode implements Identifier {
   uri: Uri | undefined
 
   /** * action scope ** */
-  scope: Range | undefined
+  range: Range | undefined
 
   parent: Identifier | undefined
 
@@ -33,7 +34,7 @@ export class SemanticNode implements Identifier {
       this.detail = this.name
       this.semanticsKind = SemanticsKind.Def
       this.identifierKind = IdentifierKind.Type
-      this.range(node.symbol, node.symbol)
+      this.setRange(node.symbol, node.symbol)
     }
   }
 
@@ -41,12 +42,13 @@ export class SemanticNode implements Identifier {
     return new vscode.Position(token.line - 1, token.charPositionInLine)
   }
 
-  range(begin: Token, end: Token | undefined) {
-    this.scope = new vscode.Range(this.convert(begin), this.convert(end ?? begin))
+  setRange(begin: Token, end: Token | undefined): this {
+    this.range = new vscode.Range(this.convert(begin), this.convert(end ?? begin))
+    return this
   }
 
   findOne(condition: Word): Identifier | undefined {
-    if (this.isScope(condition)) {
+    if (this.contains(condition)) {
       if (condition.name === this.name) return this
     }
     return undefined
@@ -61,20 +63,17 @@ export class SemanticNode implements Identifier {
   }
 
   find(condition: Word): Identifier[] | undefined {
-    if (this.isScope(condition)) {
+    if (this.contains(condition)) {
       if (condition.name === this.name) return [this]
     }
     return undefined
   }
 
-  container(position?: Position): Identifier | undefined {
-    if (position) {
-      if (this.isScope(position)) {
-        return this.parent
-      }
-      return undefined
+  container(position: Position): Identifier | undefined {
+    if (this.contains(position)) {
+      return this.parent
     }
-    return this.parent
+    return undefined
   }
 
   isDef(): boolean {
@@ -85,15 +84,15 @@ export class SemanticNode implements Identifier {
     return this.semanticsKind === SemanticsKind.Ref
   }
 
-  isScope(position: Position): boolean {
+  contains(position: Position): boolean {
     this.uri = this.getUri()
     if (this.uri && position.uri) {
       if (this.uri.path !== position.uri.path) {
         return false
       }
     }
-    if (this.scope) {
-      return this.scope.contains(position.point!)
+    if (this.range) {
+      return this.range.contains(position.point!)
     }
     return false
   }
@@ -102,8 +101,8 @@ export class SemanticNode implements Identifier {
     return `name: ${this.name},
             detail: ${this.detail}, 
             uri?.path: ${this.getUri()?.path ?? ''},
-            scope?.start.line: ${this.scope?.start.line ?? 0},
-            scope?.end.line: ${this.scope?.end.line ?? 0}
+            scope?.start.line: ${this.range?.start.line ?? 0},
+            scope?.end.line: ${this.range?.end.line ?? 0}
             `
   }
 
@@ -129,6 +128,25 @@ export class SemanticNode implements Identifier {
     return this.parent?.getUri?.()
   }
 
+  getChild(): Identifier[] {
+    return []
+  }
+
+  defs(): Identifier[] | undefined {
+    return undefined
+  }
+
+  ref(): Identifier[] | undefined {
+    return undefined
+  }
+
+  def(word: Word): Identifier | undefined {
+    if (this.isDef() && word.name === this.name) {
+      return this
+    }
+    return undefined
+  }
+
   symbolKind(): SymbolKind {
     return MapKinds().get(this.kind!)!
   }
@@ -150,7 +168,7 @@ export class SemanticNode implements Identifier {
   }
 
   documentSymbol(): DocumentSymbol {
-    return new DocumentSymbol(this.label(), this.detail!, this.symbolKind(), this.scope!, this.scope!)
+    return new DocumentSymbol(this.label(), this.detail!, this.symbolKind(), this.range!, this.range!)
   }
 
   completionItem(): CompletionItem {

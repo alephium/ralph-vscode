@@ -63,9 +63,9 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   visitStruct(ctx: Struct, base: Base): Result {
     base.detail = ctx.text
     base.uri = this.uri
-    base.range(ctx.typeStructBody().L_CURLY().symbol, ctx.typeStructBody().R_CURLY().symbol)
+    base.setRange(ctx.typeStructBody().L_CURLY().symbol, ctx.typeStructBody().R_CURLY().symbol)
     this.visitParams(ctx.paramList?.(), base)
-    this.visitBody(ctx.typeStructBody!(), base)
+    this.visitBody(ctx.typeStructBody?.(), base)
     this.cache.set(base.name!, base)
     return base
   }

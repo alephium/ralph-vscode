@@ -4,7 +4,7 @@ import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Base } from './base'
 import { EnumContext } from '../parser/RalphParser'
 import { SemanticNode } from './ast'
-import { IdentifierKind } from './identifier'
+import { IdentifierKind } from './kinder'
 
 export class Enum extends Base {
   symbolKind(): SymbolKind {

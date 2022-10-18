@@ -68,7 +68,7 @@ export class Method extends Base {
       method.detail += `${ctx.result()?.text} `
     }
 
-    method.range(ctx.IDENTIFIER().symbol, ctx.block()?.R_CURLY().symbol)
+    method.setRange(ctx.IDENTIFIER().symbol, ctx.block()?.R_CURLY().symbol)
 
     const block = ctx.block()
     if (block) method.append(blockContext(block))
