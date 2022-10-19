@@ -44,22 +44,6 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return undefined
   }
 
-  // override
-  findOne(word: Word): Identifier | undefined {
-    if (this.contains(word)) {
-      if (this.name === word.name) return this
-      const member = this.members.get(word.name)
-      if (member) {
-        return member
-      }
-      for (const member of this.members.values()) {
-        const one = member.findOne?.(word)
-        if (one) return one
-      }
-    }
-    return undefined
-  }
-
   findAll(identifier: Word): Identifier[] | undefined {
     const items: Identifier[] = []
     if (this.contains(identifier)) {
@@ -68,11 +52,11 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
         const is = member.findAll?.(identifier)
         if (is) items.push(...is)
       })
+      this.identifiers.forEach((value) => {
+        if (value.name === identifier.name) items.push(value)
+      })
     }
-    if (items.length > 0) {
-      return items
-    }
-    return undefined
+    return items
   }
 
   defs(): Identifier[] | undefined {

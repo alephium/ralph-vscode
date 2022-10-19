@@ -4,8 +4,6 @@ import { Identifier } from './identifier'
 import { Position } from './position'
 
 export interface Finder {
-  findOne?(condition: Word): Identifier | undefined
-
   findAll?(condition: Word): Identifier[] | undefined
 
   find?(condition: Word): Identifier[] | undefined

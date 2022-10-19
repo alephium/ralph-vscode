@@ -1,22 +1,23 @@
-import { RenameProvider, WorkspaceEdit, TextDocument, Position, ProviderResult } from 'vscode'
+import vscode, { RenameProvider, WorkspaceEdit, TextDocument, Position, ProviderResult } from 'vscode'
 import Parser from '../parser/parser'
 import cache from '../cache/cache'
 import { Filter } from './filter'
-import { Word } from '../ast/word'
 
 export class RalphRenameProvider extends Filter implements RenameProvider {
   provideRenameEdits(document: TextDocument, position: Position, newName: string): ProviderResult<WorkspaceEdit> {
-    if (this.isSkip(document, position)) return undefined
-    const range = document.getWordRangeAtPosition(position)
-    const identifier = <Word>{
-      name: document.getText(range),
-      point: position,
-      uri: document.uri,
+    const word = this.word(document, position)
+    if (word) {
+      const edit = new WorkspaceEdit()
+      Parser(document.uri, document.getText())
+      cache.forEach((value) => {
+        const members = value.findAll(word)
+        if (members) {
+          members.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.range!, newName))
+        }
+      })
+      return edit
     }
-    const edit = new WorkspaceEdit()
-    Parser(document.uri, document.getText())
-    cache.forEach((item) => item.provideRenameEdits(identifier, newName, edit))
-    return edit
+    return undefined
   }
 
   // prepareRename(document: TextDocument, position: Position): ProviderResult<Range | { range: Range; placeholder: string }> {
