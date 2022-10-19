@@ -1,6 +1,17 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
-import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Range, SymbolKind, Uri } from 'vscode'
+import {
+  CompletionItem,
+  CompletionItemKind,
+  CompletionItemLabel,
+  DocumentSymbol,
+  Hover,
+  Location,
+  MarkdownString,
+  Range,
+  SymbolKind,
+  Uri,
+} from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import MapKinds from '../util/kind'
 import { Identifier } from './identifier'
@@ -47,19 +58,11 @@ export class SemanticNode implements Identifier {
     return this
   }
 
-  findOne(condition: Word): Identifier | undefined {
+  findAll(condition: Word): Identifier[] | undefined {
     if (this.contains(condition)) {
-      if (condition.name === this.name) return this
+      if (condition.name === this.name) return [this]
     }
     return undefined
-  }
-
-  findAll(condition: Word): Identifier[] | undefined {
-    const one = this.findOne(condition)
-    if (one) {
-      return [one]
-    }
-    return one
   }
 
   find(condition: Word): Identifier[] | undefined {
@@ -173,5 +176,18 @@ export class SemanticNode implements Identifier {
 
   completionItem(): CompletionItem {
     return new CompletionItem(this.completionItemLabel(), this.completionItemKind())
+  }
+
+  hover(): Hover {
+    const value = new MarkdownString()
+    value.appendMarkdown(`
+    ${this.name}
+    ${this.detail}
+    `)
+    return new vscode.Hover(value)
+  }
+
+  location(): Location {
+    return new Location(this.getUri()!, this.range!.start)
   }
 }

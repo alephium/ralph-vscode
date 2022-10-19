@@ -1,10 +1,8 @@
 import { CompletionItemKind, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
-import { ParamContext } from '../parser/RalphParser'
 import { SemanticNode } from './ast'
 import { Identifier } from './identifier'
 import { IdentifierKind } from './kinder'
-import { typeNameContext } from './context'
 import caches from '../cache/cache'
 
 export class Property extends SemanticNode {
@@ -24,14 +22,6 @@ export class Property extends SemanticNode {
     super(node)
     this.isMut = false
     this.identifierKind = IdentifierKind.Variable
-  }
-
-  public static FromContext(ctx: ParamContext): Property {
-    const field = new Property(ctx.IDENTIFIER())
-    field.detail = ctx.text
-    field.type_ = typeNameContext(ctx.typeName())
-    if (ctx.MUT()) field.isMut = true
-    return field
   }
 
   getType(): Identifier | undefined {

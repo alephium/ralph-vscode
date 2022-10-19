@@ -15,6 +15,11 @@ export class Enum extends Base {
     return CompletionItemKind.Enum
   }
 
+  constructor(node: TerminalNode) {
+    super(node)
+    this.identifierKind = IdentifierKind.Type
+  }
+
   public static FromContext(ctx: EnumContext): Enum {
     const enumValue = new Enum(ctx.IDENTIFIER())
     ctx.varNameAssign().forEach((value) => {

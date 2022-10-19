@@ -25,7 +25,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     this.members.set(member.name!, member)
   }
 
-  append(identifiers: Identifier[]) {
+  append(...identifiers: Identifier[]) {
     this.identifiers.push(...identifiers)
   }
 
@@ -44,23 +44,6 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return undefined
   }
 
-  // override
-  findOne(identifier: Word): Identifier | undefined {
-    if (this.contains(identifier)) {
-      if (this.name === identifier.name) return this
-      const member = this.members.get(<string>identifier.name)
-      if (!member) {
-        for (const member of this.members.values()) {
-          const one = member.findOne?.(identifier)
-          if (one) return one
-        }
-      } else {
-        return member
-      }
-    }
-    return undefined
-  }
-
   findAll(identifier: Word): Identifier[] | undefined {
     const items: Identifier[] = []
     if (this.contains(identifier)) {
@@ -69,11 +52,11 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
         const is = member.findAll?.(identifier)
         if (is) items.push(...is)
       })
+      this.identifiers.forEach((value) => {
+        if (value.name === identifier.name) items.push(value)
+      })
     }
-    if (items.length > 0) {
-      return items
-    }
-    return undefined
+    return items
   }
 
   defs(): Identifier[] | undefined {
@@ -86,13 +69,16 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   def(word: Word): Identifier | undefined {
     if (this.contains(word)) {
+      const member = this.members.get(word.name)
+      if (member && member.isDef!()) {
+        return member
+      }
       for (const member of this.members.values()) {
         const def = member.def?.(word)
         if (def) return def
       }
-      return super.def(word)
     }
-    return undefined
+    return super.def(word)
   }
 
   ref(): Identifier[] | undefined {
@@ -112,36 +98,6 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     this.members.forEach((member) => {
       item.children.push(member.documentSymbol!())
     })
-    return item
-  }
-
-  provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
-    const range = document.getWordRangeAtPosition(position)
-    const identifier = <Word>{
-      name: document.getText(range),
-      point: position,
-      uri: document.uri,
-    }
-    let item
-    const member = this.findOne(identifier)
-    if (member) {
-      item = new vscode.Hover([member.name!, member.detail ?? ''])
-    }
-    return item
-  }
-
-  provideDefinition(document: TextDocument, position: vscode.Position): ProviderResult<Definition | DefinitionLink[]> {
-    const range = document.getWordRangeAtPosition(position)
-    const identifier = <Word>{
-      name: document.getText(range),
-      point: position,
-      uri: document.uri,
-    }
-    let item
-    const member = this.findOne(identifier)
-    if (member) {
-      item = new Location(member.uri ?? document.uri, member.range ?? position)
-    }
     return item
   }
 

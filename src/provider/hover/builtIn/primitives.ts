@@ -46,13 +46,11 @@ export class BuiltInPrimitivesHoverProvider extends Filter implements vscode.Hov
   constructor() {
     super()
     this.builtItems = new Map()
-    builtInType.forEach((item) => this.builtItems.set(item.name, item))
+    builtInType.forEach((item) => this.builtItems.set(item.name, new Item(item.name, item.detail, item.kind)))
   }
 
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
-    if (this.isSkip(document, position)) return undefined
-    const range = document.getWordRangeAtPosition(position)
-    const item = this.builtItems.get(document.getText(range))!
-    return new vscode.Hover([`(builtIn global ${item.kind}) \n ${item.name}`, item.detail])
+    const word = this.word(document, position)
+    return this.builtItems.get(<string>word?.name)?.hover()
   }
 }
