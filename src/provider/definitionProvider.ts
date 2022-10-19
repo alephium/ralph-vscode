@@ -6,13 +6,14 @@ import { Filter } from './filter'
 
 export class DefinitionProvider extends Filter implements vscode.DefinitionProvider {
   provideDefinition(document: TextDocument, position: Position): ProviderResult<Definition | DefinitionLink[]> {
-    if (this.isSkip(document, position)) return undefined
-    Parser(document.uri, document.getText())
-    let item
-    Array.from(cache.values()).find((elem) => {
-      item = elem.provideDefinition(document, position)
-      if (item) return true
-    })
-    return item
+    const word = this.word(document, position)
+    if (word) {
+      Parser(document.uri, document.getText())
+      for (const value of cache.values()) {
+        const member = value.def(word)
+        if (member) return member.location?.()
+      }
+    }
+    return undefined
   }
 }

@@ -6,6 +6,7 @@ import {
   CompletionItemLabel,
   DocumentSymbol,
   Hover,
+  Location,
   MarkdownString,
   Range,
   SymbolKind,
@@ -192,5 +193,9 @@ export class SemanticNode implements Identifier {
     ${this.detail}
     `)
     return new vscode.Hover(value)
+  }
+
+  location(): Location {
+    return new Location(this.uri!, this.range!)
   }
 }

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Hover, SymbolKind } from 'vscode'
+import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Hover, Location, SymbolKind } from 'vscode'
 import { Kinder, IdentifierKind, SemanticsKind } from './kinder'
 // eslint-disable-next-line import/no-cycle
 import { Finder } from './finder'
@@ -12,6 +12,7 @@ export interface IntelliSense {
   documentSymbol?(): DocumentSymbol
   completionItem?(): CompletionItem
   hover?(): Hover
+  location?(): Location
 }
 
 export interface Identifier extends Kinder, Finder, Position, IntelliSense {

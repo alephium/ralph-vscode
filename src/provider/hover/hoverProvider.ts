@@ -9,7 +9,7 @@ export class HoverProvider extends Filter implements vscode.HoverProvider {
     if (word) {
       Parser(document.uri, document.getText())
       for (const value of cache.values()) {
-        const member = value.findOne(word)
+        const member = value.def(word)
         if (member) return member.hover?.()
       }
     }
