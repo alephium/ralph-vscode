@@ -117,21 +117,6 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return item
   }
 
-  provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
-    const range = document.getWordRangeAtPosition(position)
-    const word = <Word>{
-      name: document.getText(range),
-      point: position,
-      uri: document.uri,
-    }
-    let item
-    const member = this.findOne(word)
-    if (member) {
-      item = new vscode.Hover([member.name!, member.detail ?? ''])
-    }
-    return item
-  }
-
   provideRenameEdits(identifier: Word, newName: string, edit: WorkspaceEdit): void {
     const members = this.findAll(identifier)
     if (members && members.length > 0) {
