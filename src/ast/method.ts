@@ -2,14 +2,15 @@ import { CompletionItemKind, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Base } from './base'
 import { MethodDeclContext } from '../parser/RalphParser'
-import { Variable } from './variable'
-import { blockContext } from './context'
+import { Context } from './context'
+import { IdentifierKind } from './kinder'
 
 export class Method extends Base {
   isPub: boolean
 
   constructor(node: TerminalNode) {
     super(node)
+    this.identifierKind = IdentifierKind.Method
     this.isPub = false
   }
 
@@ -30,15 +31,9 @@ export class Method extends Base {
 
   public static FromContext(ctx: MethodDeclContext): Method {
     const method = new Method(ctx.IDENTIFIER())
-    ctx
-      .paramList()
-      ?.param()
-      .forEach((varCtx) => {
-        const value = Variable.FromContext(varCtx)
-        value.setParent(method)
-        method.append(value.type_!)
-        method.add(value)
-      })
+    method.setRange(ctx.start, ctx.stop)
+    const context = new Context(method)
+    context.paramListContext(ctx.paramList())
 
     method.detail = ''
     if (ctx.annotation()) {
@@ -71,10 +66,8 @@ export class Method extends Base {
       method.detail += `${ctx.result()?.text} `
     }
 
-    method.setRange(ctx.IDENTIFIER().symbol, ctx.block()?.R_CURLY().symbol)
-
     const block = ctx.block()
-    if (block) method.append(...blockContext(block))
+    if (block) method.append(...context.blockContext(block))
     return method
   }
 }

@@ -12,14 +12,13 @@ import {
 import { RalphParserVisitor } from '../parser/RalphParserVisitor'
 
 import { Contract } from '../ast/contract'
-import { Property } from '../ast/property'
 import { Method } from '../ast/method'
 import { Event } from '../ast/event'
 import { Base } from '../ast/base'
 import { Interface } from '../ast/interface'
 import { TxScript } from '../ast/txScript'
 import cache from '../cache/cache'
-import { statementContext } from '../ast/context'
+import { Context } from '../ast/context'
 import { Enum } from '../ast/enum'
 import { AssetScript } from '../ast/assetScript'
 import { Identifier } from '../ast/identifier'
@@ -52,17 +51,16 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
       event.setParent(base)
       base.add(event)
     })
-    ctx.statement().forEach((value) => base.append(...statementContext(value)))
+    const context = new Context(base)
+    base.append(...context.statementContexts(ctx.statement()))
     ctx.enum().forEach((value) => base.add(Enum.FromContext(value).setParent(base)))
   }
 
   visitParams(ctx: ParamListContext | undefined, base: Base) {
-    ctx?.param().forEach((field) => {
-      const value = Property.FromContext(field)
-      value.setParent(base)
-      base.append(value.type_!)
-      base.add(value)
-    })
+    if (ctx) {
+      const context = new Context(base)
+      base.append(...context.paramListContext(ctx))
+    }
   }
 
   visitStruct(ctx: Struct, base: Base): Result {
