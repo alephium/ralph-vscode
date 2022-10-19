@@ -45,13 +45,13 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
   }
 
   // override
-  findOne(identifier: Word): Identifier | undefined {
-    if (this.contains(identifier)) {
-      if (this.name === identifier.name) return this
-      const member = this.members.get(<string>identifier.name)
+  findOne(word: Word): Identifier | undefined {
+    if (this.contains(word)) {
+      if (this.name === word.name) return this
+      const member = this.members.get(word.name)
       if (!member) {
         for (const member of this.members.values()) {
-          const one = member.findOne?.(identifier)
+          const one = member.findOne?.(word)
           if (one) return one
         }
       } else {
@@ -117,13 +117,13 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
     const range = document.getWordRangeAtPosition(position)
-    const identifier = <Word>{
+    const word = <Word>{
       name: document.getText(range),
       point: position,
       uri: document.uri,
     }
     let item
-    const member = this.findOne(identifier)
+    const member = this.findOne(word)
     if (member) {
       item = new vscode.Hover([member.name!, member.detail ?? ''])
     }
@@ -132,13 +132,13 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   provideDefinition(document: TextDocument, position: vscode.Position): ProviderResult<Definition | DefinitionLink[]> {
     const range = document.getWordRangeAtPosition(position)
-    const identifier = <Word>{
+    const word = <Word>{
       name: document.getText(range),
       point: position,
       uri: document.uri,
     }
     let item
-    const member = this.findOne(identifier)
+    const member = this.findOne(word)
     if (member) {
       item = new Location(member.uri ?? document.uri, member.range ?? position)
     }

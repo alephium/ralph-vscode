@@ -1,6 +1,16 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
-import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Range, SymbolKind, Uri } from 'vscode'
+import {
+  CompletionItem,
+  CompletionItemKind,
+  CompletionItemLabel,
+  DocumentSymbol,
+  Hover,
+  MarkdownString,
+  Range,
+  SymbolKind,
+  Uri,
+} from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import MapKinds from '../util/kind'
 import { Identifier } from './identifier'
@@ -173,5 +183,14 @@ export class SemanticNode implements Identifier {
 
   completionItem(): CompletionItem {
     return new CompletionItem(this.completionItemLabel(), this.completionItemKind())
+  }
+
+  hover(): Hover {
+    const value = new MarkdownString()
+    value.appendMarkdown(`
+    ${this.name}
+    ${this.detail}
+    `)
+    return new vscode.Hover(value)
   }
 }
