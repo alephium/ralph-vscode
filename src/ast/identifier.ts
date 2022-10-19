@@ -53,7 +53,7 @@ export interface Identifier extends Kinder, Finder, Position, IntelliSense {
 
   add?(member: Identifier): void
 
-  append?(identifiers: Identifier[]): void
+  append?(...identifiers: Identifier[]): void
 
   label?(): string
 }

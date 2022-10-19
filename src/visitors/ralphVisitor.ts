@@ -52,13 +52,17 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
       event.setParent(base)
       base.add(event)
     })
-
-    ctx.statement().forEach((value) => base.append(statementContext(value)))
+    ctx.statement().forEach((value) => base.append(...statementContext(value)))
     ctx.enum().forEach((value) => base.add(Enum.FromContext(value).setParent(base)))
   }
 
-  visitParams(ctx?: ParamListContext, base?: Base) {
-    ctx?.param().forEach((field) => base?.add(Property.FromContext(field).setParent(base)))
+  visitParams(ctx: ParamListContext | undefined, base: Base) {
+    ctx?.param().forEach((field) => {
+      const value = Property.FromContext(field)
+      value.setParent(base)
+      base.append(value.type_!)
+      base.add(value)
+    })
   }
 
   visitStruct(ctx: Struct, base: Base): Result {

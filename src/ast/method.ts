@@ -34,7 +34,10 @@ export class Method extends Base {
       .paramList()
       ?.param()
       .forEach((varCtx) => {
-        method.add(Variable.FromContext(varCtx).setParent(method))
+        const value = Variable.FromContext(varCtx)
+        value.setParent(method)
+        method.append(value.type_!)
+        method.add(value)
       })
 
     method.detail = ''
@@ -71,7 +74,7 @@ export class Method extends Base {
     method.setRange(ctx.IDENTIFIER().symbol, ctx.block()?.R_CURLY().symbol)
 
     const block = ctx.block()
-    if (block) method.append(blockContext(block))
+    if (block) method.append(...blockContext(block))
     return method
   }
 }

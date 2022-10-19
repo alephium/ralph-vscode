@@ -25,7 +25,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     this.members.set(member.name!, member)
   }
 
-  append(identifiers: Identifier[]) {
+  append(...identifiers: Identifier[]) {
     this.identifiers.push(...identifiers)
   }
 
