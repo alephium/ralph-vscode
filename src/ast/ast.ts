@@ -58,19 +58,11 @@ export class SemanticNode implements Identifier {
     return this
   }
 
-  findOne(condition: Word): Identifier | undefined {
+  findAll(condition: Word): Identifier[] | undefined {
     if (this.contains(condition)) {
-      if (condition.name === this.name) return this
+      if (condition.name === this.name) return [this]
     }
     return undefined
-  }
-
-  findAll(condition: Word): Identifier[] | undefined {
-    const one = this.findOne(condition)
-    if (one) {
-      return [one]
-    }
-    return one
   }
 
   find(condition: Word): Identifier[] | undefined {
@@ -196,6 +188,6 @@ export class SemanticNode implements Identifier {
   }
 
   location(): Location {
-    return new Location(this.uri!, this.range!)
+    return new Location(this.getUri()!, this.range!.start)
   }
 }
