@@ -1,5 +1,6 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import { Uri } from 'vscode'
+import { Token } from 'antlr4ts/Token'
 import {
   AssetScriptContext,
   ContractContext,
@@ -63,9 +64,9 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   visitStruct(ctx: Struct, base: Base): Result {
     base.detail = ctx.text
     base.uri = this.uri
-    base.range(ctx.typeStructBody().L_CURLY().symbol, ctx.typeStructBody().R_CURLY().symbol)
+    base.setRange(ctx.start, ctx.stop)
     this.visitParams(ctx.paramList?.(), base)
-    this.visitBody(ctx.typeStructBody!(), base)
+    this.visitBody(ctx.typeStructBody?.(), base)
     this.cache.set(base.name!, base)
     return base
   }
@@ -88,6 +89,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
 }
 
 interface Struct {
+  start: Token
+  stop: Token | undefined
   paramList?(): ParamListContext | undefined
   typeStructBody(): TypeStructBodyContext
   get text(): string

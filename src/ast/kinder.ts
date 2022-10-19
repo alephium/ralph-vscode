@@ -1,14 +1,17 @@
-import vscode, { CompletionItem, CompletionItemKind, CompletionItemLabel, SymbolKind } from 'vscode'
-
-export interface Kinder {
-  symbolKind?(): SymbolKind
-
-  completionItemKind?(): CompletionItemKind
-
-  completionItemLabel?(): CompletionItemLabel
+export enum IdentifierKind {
+  Variable = 0,
+  Method = 1,
+  Event = 2,
+  Type = 3,
 }
 
-export interface IntelliSense {
-  documentSymbol?(): vscode.DocumentSymbol
-  completionItem?(): CompletionItem
+export enum SemanticsKind {
+  Ref = 0,
+  Def = 1,
+}
+
+export interface Kinder {
+  identifierKind?: IdentifierKind
+
+  semanticsKind?: SemanticsKind
 }
