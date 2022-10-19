@@ -29,7 +29,7 @@ export function refNode(ctx: TerminalNode): Identifier {
 }
 
 function typeNode(typeNode: TerminalNode): Identifier {
-  return <Identifier>refNode(typeNode).setIdentifierKind?.(IdentifierKind.Type)
+  return <Identifier>refNode(typeNode).setIdentifierKind?.(IdentifierKind.Type).setSemanticsKind?.(SemanticsKind.Ref)
 }
 
 export function primitiveTypeContext(ctx: PrimitiveTypeContext): Identifier {
