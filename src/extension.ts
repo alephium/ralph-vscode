@@ -12,6 +12,7 @@ import { IdentifierProvider } from './provider/completion/identifierProvider'
 import { EnumProvider } from './provider/completion/enumProvider'
 import { AnnotationProvider } from './provider/completion/annotationProvider'
 import { MemberProvider } from './provider/completion/memberProvider'
+import { RalphSignatureHelpProvider } from './provider/signatureHelpProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -41,6 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new MemberProvider(), '.'))
   context.subscriptions.push(vscode.languages.registerDefinitionProvider(selector, new DefinitionProvider()))
   context.subscriptions.push(vscode.languages.registerRenameProvider(selector, new RalphRenameProvider()))
+  context.subscriptions.push(vscode.languages.registerSignatureHelpProvider(selector, new RalphSignatureHelpProvider(), '('))
 
   console.log('register push completed!')
 }
