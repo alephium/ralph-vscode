@@ -19,7 +19,7 @@ export interface Fun {
 }
 
 export class FunctionHoverProvider extends Filter implements vscode.HoverProvider {
-  builtItems!: Map<string, Fun>
+  builtItems: Map<string, Fun>
 
   items: Array<Fun>
 
