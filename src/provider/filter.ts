@@ -36,28 +36,26 @@ export class Filter {
     if (this.isSkip(document, position)) return undefined
     Parser(document.uri, document.getText())
     const callChain = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z.]*/i))
-    const wordSet = callChain.split('.')
+    const positionWord = document.getText(document.getWordRangeAtPosition(position))
+    let wordSet = callChain.split('.')
+    wordSet = wordSet.slice(0, wordSet.indexOf(positionWord) + 1)
     let caller = this.getDef({
       name: wordSet[0],
       point: position,
       uri: document.uri,
     })
-    if (wordSet.length === 1) return caller
-    if (wordSet.length > 1) {
-      let i = 1
-      while (true) {
-        const type_ = caller?.getType?.()
-        if (type_ instanceof Base) {
-          caller = type_.members.get(wordSet[i])
-          if (wordSet.length - 1 === i) {
-            return caller
-          }
-          i += 1
-        } else {
-          return undefined
-        }
+    let i = 0
+    while (true) {
+      if (wordSet.length - 1 === i) {
+        return caller
+      }
+      const type_ = caller?.getType?.()
+      if (type_ instanceof Base) {
+        i += 1
+        caller = type_.members.get(wordSet[i])
+      } else {
+        return undefined
       }
     }
-    return undefined
   }
 }

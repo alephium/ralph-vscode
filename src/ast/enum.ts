@@ -5,6 +5,7 @@ import { Base } from './base'
 import { EnumContext } from '../parser/RalphParser'
 import { SemanticNode } from './ast'
 import { IdentifierKind } from './kinder'
+import { Identifier } from './identifier'
 
 export class Enum extends Base {
   symbolKind(): SymbolKind {
@@ -17,7 +18,7 @@ export class Enum extends Base {
 
   constructor(node: TerminalNode) {
     super(node)
-    this.identifierKind = IdentifierKind.Type
+    this.identifierKind = IdentifierKind.Enum
   }
 
   public static FromContext(ctx: EnumContext): Enum {
@@ -28,6 +29,10 @@ export class Enum extends Base {
       enumValue.add(member)
     })
     return enumValue
+  }
+
+  getType(): Identifier | undefined {
+    return this
   }
 }
 
@@ -43,5 +48,9 @@ class EnumMember extends SemanticNode {
   constructor(node: TerminalNode) {
     super(node)
     this.identifierKind = IdentifierKind.Variable
+  }
+
+  getType(): Identifier | undefined {
+    return this.parent
   }
 }

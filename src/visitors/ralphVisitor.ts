@@ -1,11 +1,14 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import { Uri } from 'vscode'
-import { Token } from 'antlr4ts/Token'
+import { CodePointCharStream } from 'antlr4ts/CodePointCharStream'
+import { CommonTokenStream } from 'antlr4ts'
+import { ParserRuleContext } from 'antlr4ts/ParserRuleContext'
 import {
   AssetScriptContext,
   ContractContext,
   InterfaceContext,
   ParamListContext,
+  RalphParser,
   TxScriptContext,
   TypeStructBodyContext,
 } from '../parser/RalphParser'
@@ -23,16 +26,29 @@ import { Enum } from '../ast/enum'
 import { AssetScript } from '../ast/assetScript'
 import { Identifier } from '../ast/identifier'
 import { SemanticNode } from '../ast/ast'
+import { RalphLexer } from '../parser/RalphLexer'
 
 type Result = Identifier | undefined
 
 export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements RalphParserVisitor<Result> {
+  charStream: CodePointCharStream
+
+  lexer: RalphLexer
+
+  tokenStream: CommonTokenStream
+
+  parser: RalphParser
+
   cache!: Map<string, Base>
 
   uri: Uri
 
-  constructor(uri: Uri) {
+  constructor(uri: Uri, parser: RalphParser, lexer: RalphLexer, charStream: CodePointCharStream, tokenStream: CommonTokenStream) {
     super()
+    this.charStream = charStream
+    this.lexer = lexer
+    this.tokenStream = tokenStream
+    this.parser = parser
     this.uri = uri
     this.cache = cache
   }
@@ -43,17 +59,25 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
     // method
-    ctx.methodDecl().forEach((method) => base.add(Method.FromContext(method).setParent(base)))
+    ctx.methodDecl().forEach((method) => {
+      const md = Method.FromContext(method).setParent(base)
+      md.detail = this.tokenStream.getText(method.sourceInterval)
+      base.add(md)
+    })
     // event
     ctx.event().forEach((eventCtx) => {
       const event = new Event(eventCtx.IDENTIFIER())
-      event.detail = eventCtx.text
       event.setParent(base)
+      event.detail = this.tokenStream.getText(eventCtx.sourceInterval)
       base.add(event)
     })
     const context = new Context(base)
     base.append(...context.statementContexts(ctx.statement()))
-    ctx.enum().forEach((value) => base.add(Enum.FromContext(value).setParent(base)))
+    ctx.enum().forEach((value) => {
+      const enumValue = Enum.FromContext(value).setParent(base)
+      enumValue.detail = this.tokenStream.getText(value.sourceInterval)
+      base.add(enumValue)
+    })
   }
 
   visitParams(ctx: ParamListContext | undefined, base: Base) {
@@ -64,7 +88,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   }
 
   visitStruct(ctx: Struct, base: Base): Result {
-    base.detail = ctx.text
+    base.detail = this.tokenStream.getText(ctx.sourceInterval)
     base.uri = this.uri
     base.setRange(ctx.start, ctx.stop)
     this.visitParams(ctx.paramList?.(), base)
@@ -90,10 +114,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   }
 }
 
-interface Struct {
-  start: Token
-  stop: Token | undefined
+declare class Struct extends ParserRuleContext {
   paramList?(): ParamListContext | undefined
+
   typeStructBody(): TypeStructBodyContext
-  get text(): string
 }

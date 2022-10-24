@@ -3,6 +3,7 @@ export enum IdentifierKind {
   Method = 1,
   Event = 2,
   Type = 3,
+  Enum = 4,
 }
 
 export enum SemanticsKind {

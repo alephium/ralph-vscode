@@ -179,12 +179,7 @@ export class SemanticNode implements Identifier {
   }
 
   hover(): Hover {
-    const value = new MarkdownString()
-    value.appendMarkdown(`
-    ${this.name}
-    ${this.detail}
-    `)
-    return new vscode.Hover(value)
+    return new vscode.Hover(new MarkdownString().appendMarkdown(`\r\t ${this.detail} \r\t`))
   }
 
   location(): Location {
