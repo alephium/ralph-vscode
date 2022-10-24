@@ -1,11 +1,14 @@
 import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor'
 import { Uri } from 'vscode'
-import { Token } from 'antlr4ts/Token'
+import { CodePointCharStream } from 'antlr4ts/CodePointCharStream'
+import { CommonTokenStream } from 'antlr4ts'
+import { ParserRuleContext } from 'antlr4ts/ParserRuleContext'
 import {
   AssetScriptContext,
   ContractContext,
   InterfaceContext,
   ParamListContext,
+  RalphParser,
   TxScriptContext,
   TypeStructBodyContext,
 } from '../parser/RalphParser'
@@ -23,16 +26,29 @@ import { Enum } from '../ast/enum'
 import { AssetScript } from '../ast/assetScript'
 import { Identifier } from '../ast/identifier'
 import { SemanticNode } from '../ast/ast'
+import { RalphLexer } from '../parser/RalphLexer'
 
 type Result = Identifier | undefined
 
 export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements RalphParserVisitor<Result> {
+  charStream: CodePointCharStream
+
+  lexer: RalphLexer
+
+  tokenStream: CommonTokenStream
+
+  parser: RalphParser
+
   cache!: Map<string, Base>
 
   uri: Uri
 
-  constructor(uri: Uri) {
+  constructor(uri: Uri, parser: RalphParser, lexer: RalphLexer, charStream: CodePointCharStream, tokenStream: CommonTokenStream) {
     super()
+    this.charStream = charStream
+    this.lexer = lexer
+    this.tokenStream = tokenStream
+    this.parser = parser
     this.uri = uri
     this.cache = cache
   }
@@ -90,10 +106,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   }
 }
 
-interface Struct {
-  start: Token
-  stop: Token | undefined
+declare class Struct extends ParserRuleContext {
   paramList?(): ParamListContext | undefined
+
   typeStructBody(): TypeStructBodyContext
-  get text(): string
 }
