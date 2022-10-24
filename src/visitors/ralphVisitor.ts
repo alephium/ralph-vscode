@@ -69,7 +69,11 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     })
     const context = new Context(base)
     base.append(...context.statementContexts(ctx.statement()))
-    ctx.enum().forEach((value) => base.add(Enum.FromContext(value).setParent(base)))
+    ctx.enum().forEach((value) => {
+      const enumValue = Enum.FromContext(value).setParent(base)
+      enumValue.detail = this.tokenStream.getText(value.sourceInterval)
+      base.add(enumValue)
+    })
   }
 
   visitParams(ctx: ParamListContext | undefined, base: Base) {
@@ -80,7 +84,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   }
 
   visitStruct(ctx: Struct, base: Base): Result {
-    base.detail = ctx.text
+    base.detail = this.tokenStream.getText(ctx.sourceInterval)
     base.uri = this.uri
     base.setRange(ctx.start, ctx.stop)
     this.visitParams(ctx.paramList?.(), base)
