@@ -59,12 +59,16 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
     // method
-    ctx.methodDecl().forEach((method) => base.add(Method.FromContext(method).setParent(base)))
+    ctx.methodDecl().forEach((method) => {
+      const md = Method.FromContext(method).setParent(base)
+      md.detail = this.tokenStream.getText(method.sourceInterval)
+      base.add(md)
+    })
     // event
     ctx.event().forEach((eventCtx) => {
       const event = new Event(eventCtx.IDENTIFIER())
-      event.detail = eventCtx.text
       event.setParent(base)
+      event.detail = this.tokenStream.getText(eventCtx.sourceInterval)
       base.add(event)
     })
     const context = new Context(base)
