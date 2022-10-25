@@ -1,5 +1,4 @@
-import * as vscode from 'vscode'
-import { CompletionItemKind, Definition, DefinitionLink, Location, ProviderResult, SymbolKind, TextDocument, WorkspaceEdit } from 'vscode'
+import { CompletionItemKind, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Identifier } from './identifier'
 import { IdentifierKind, SemanticsKind } from './kinder'
@@ -9,7 +8,7 @@ import { Finder } from './finder'
 import { Position } from './position'
 import { RalphParser } from '../parser/RalphParser'
 
-export class Base extends SemanticNode implements VscodeInterface, Finder {
+export class Base extends SemanticNode implements Finder {
   // TODO Fix use set
   members: Map<string, Identifier>
 
@@ -94,25 +93,10 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return CompletionItemKind.Class
   }
 
-  provideDocumentSymbols(document?: vscode.TextDocument): vscode.DocumentSymbol {
-    const item = this.documentSymbol()
-    this.members.forEach((member) => {
-      item.children.push(member.documentSymbol!())
-    })
-    return item
-  }
-
   parser(): RalphParser | undefined {
     if (this._parser) {
       return this._parser
     }
     return super.parser()
   }
-}
-
-export interface VscodeInterface {
-  provideDocumentSymbols?(document?: vscode.TextDocument): vscode.DocumentSymbol
-  provideHover?(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover>
-  provideDefinition?(document: TextDocument, position: vscode.Position): ProviderResult<Definition | DefinitionLink[]>
-  provideRenameEdits?(identifier: Identifier, newName: string, edit: WorkspaceEdit): void
 }

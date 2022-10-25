@@ -11,7 +11,6 @@ import {
 import { Filter } from './filter'
 import jsonData from './hover/builtIn/ralph-built-in-functions.json'
 import { Fun } from './hover/builtIn/function'
-import cache from '../cache/cache'
 
 export class RalphSignatureHelpProvider extends Filter implements vscode.SignatureHelpProvider {
   items: Array<Fun>
