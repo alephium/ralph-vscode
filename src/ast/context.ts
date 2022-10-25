@@ -34,7 +34,8 @@ export class Context {
   }
 
   node(ctx: TerminalNode): Identifier {
-    return new SemanticNode(ctx).setParent(this.parent)
+    const node = new SemanticNode(ctx).setParent(this.parent)
+    return node
   }
 
   refNode(ctx: TerminalNode): Identifier {
@@ -62,6 +63,7 @@ export class Context {
     } else {
       value = new Property(ctx.IDENTIFIER())
     }
+    value.setRuleContext(ctx)
     value.detail = ctx.text
     value.type_ = this.typeNameContext(ctx.typeName())
     value.setParent(this.parent)

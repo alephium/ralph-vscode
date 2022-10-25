@@ -64,6 +64,7 @@ export class Method extends Base {
   public static FromContext(ctx: MethodDeclContext): Method {
     const method = new Method(ctx.IDENTIFIER())
     method.setRange(ctx.start, ctx.stop)
+    method.setRuleContext(ctx)
     const context = new Context(method)
     context.paramListContext(ctx.paramList())
     const block = ctx.block()

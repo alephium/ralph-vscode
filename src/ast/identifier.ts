@@ -1,9 +1,11 @@
 import * as vscode from 'vscode'
 import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Hover, Location, SymbolKind } from 'vscode'
+import { RuleNode } from 'antlr4ts/tree/RuleNode'
 import { Kinder, IdentifierKind, SemanticsKind } from './kinder'
 // eslint-disable-next-line import/no-cycle
 import { Finder } from './finder'
 import { Position } from './position'
+import { RalphParser } from '../parser/RalphParser'
 
 export interface IntelliSense {
   symbolKind?(): SymbolKind
@@ -25,6 +27,8 @@ export interface Identifier extends Kinder, Finder, Position, IntelliSense {
   range?: vscode.Range
 
   detail?: string
+
+  ruleContext?: RuleNode
 
   parent?: Identifier
 
@@ -57,4 +61,6 @@ export interface Identifier extends Kinder, Finder, Position, IntelliSense {
   append?(...identifiers: Identifier[]): void
 
   label?(): string
+
+  parser?(): RalphParser | undefined
 }

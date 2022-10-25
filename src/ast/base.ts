@@ -7,12 +7,15 @@ import { SemanticNode } from './ast'
 import { Word } from './word'
 import { Finder } from './finder'
 import { Position } from './position'
+import { RalphParser } from '../parser/RalphParser'
 
 export class Base extends SemanticNode implements VscodeInterface, Finder {
   // TODO Fix use set
   members: Map<string, Identifier>
 
   identifiers: Identifier[]
+
+  _parser?: RalphParser
 
   constructor(node: TerminalNode) {
     super(node)
@@ -106,6 +109,13 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     if (members && members.length > 0) {
       members?.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.range!, newName))
     }
+  }
+
+  parser(): RalphParser | undefined {
+    if (this._parser) {
+      return this._parser
+    }
+    return super.parser()
   }
 }
 

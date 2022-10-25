@@ -23,11 +23,10 @@ export class Enum extends Base {
 
   public static FromContext(ctx: EnumContext): Enum {
     const enumValue = new Enum(ctx.IDENTIFIER())
-    ctx.varNameAssign().forEach((value) => {
-      const member = new EnumMember(value.varName().IDENTIFIER()).setParent(enumValue)
-      member.detail = value.text
-      enumValue.add(member)
-    })
+    enumValue.ruleContext = ctx
+    ctx
+      .varNameAssign()
+      .forEach((value) => enumValue.add(new EnumMember(value.varName().IDENTIFIER()).setParent(enumValue).setRuleContext(value)))
     return enumValue
   }
 
