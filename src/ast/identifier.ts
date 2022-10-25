@@ -63,4 +63,6 @@ export interface Identifier extends Kinder, Finder, Position, IntelliSense {
   label?(): string
 
   parser?(): RalphParser | undefined
+
+  getWordRange?(): vscode.Range | undefined
 }

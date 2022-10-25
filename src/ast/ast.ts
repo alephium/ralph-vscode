@@ -43,6 +43,8 @@ export class SemanticNode implements Identifier {
 
   ruleContext: RuleNode | undefined
 
+  token?: Token
+
   constructor(node?: TerminalNode) {
     if (node) {
       this.name = node.symbol.text!
@@ -50,6 +52,7 @@ export class SemanticNode implements Identifier {
       this.semanticsKind = SemanticsKind.Def
       this.identifierKind = IdentifierKind.Type
       this.setRange(node.symbol, node.symbol)
+      this.token = node.symbol
     }
   }
 
@@ -62,18 +65,9 @@ export class SemanticNode implements Identifier {
     return this
   }
 
-  findAll(condition: Word): Identifier[] | undefined {
-    if (this.contains(condition)) {
-      if (condition.name === this.name) return [this]
-    }
-    return undefined
-  }
-
-  find(condition: Word): Identifier[] | undefined {
-    if (this.contains(condition)) {
-      if (condition.name === this.name) return [this]
-    }
-    return undefined
+  findAll(condition: Word): Identifier[] {
+    if (condition.name === this.name) return [this]
+    return []
   }
 
   container(position: Position): Identifier | undefined {
@@ -210,5 +204,11 @@ export class SemanticNode implements Identifier {
   setRuleContext(ctx: RuleNode): this {
     this.ruleContext = ctx
     return this
+  }
+
+  getWordRange(): Range | undefined {
+    if (this.token)
+      return new vscode.Range(this.convert(this.token), this.convert(this.token).translate({ characterDelta: this.name?.length }))
+    return undefined
   }
 }
