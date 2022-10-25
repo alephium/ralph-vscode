@@ -11,14 +11,12 @@ export class MemberProvider extends Filter implements vscode.CompletionItemProvi
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     const word = this.word(document, position, -1)
     if (word) {
-      for (const value of cache.values()) {
-        const def = value.def(word)
-        if (def) {
-          return def
-            .getType?.()
-            ?.defs?.()
-            ?.map((value) => value.completionItem!())
-        }
+      const def = cache.def(word)
+      if (def) {
+        return def
+          .getType?.()
+          ?.defs?.()
+          ?.map((value) => value.completionItem!())
       }
     }
     return undefined

@@ -17,7 +17,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
 
   _parser?: RalphParser
 
-  constructor(node: TerminalNode) {
+  constructor(node?: TerminalNode) {
     super(node)
     this.members = new Map()
     this.kind = IdentifierKind.Type
@@ -60,7 +60,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return items
   }
 
-  defs(): Identifier[] | undefined {
+  defs(): Identifier[] {
     const member = Array.from(this.members.values())
     const identifiers = this.identifiers.filter(
       (value) => value.identifierKind === IdentifierKind.Variable && value.semanticsKind === SemanticsKind.Def
@@ -82,7 +82,7 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
     return super.def(word)
   }
 
-  ref(): Identifier[] | undefined {
+  ref(): Identifier[] {
     return Array.from(this.identifiers.values())
   }
 
@@ -100,13 +100,6 @@ export class Base extends SemanticNode implements VscodeInterface, Finder {
       item.children.push(member.documentSymbol!())
     })
     return item
-  }
-
-  provideRenameEdits(identifier: Word, newName: string, edit: WorkspaceEdit): void {
-    const members = this.findAll(identifier)
-    if (members && members.length > 0) {
-      members?.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.range!, newName))
-    }
   }
 
   parser(): RalphParser | undefined {

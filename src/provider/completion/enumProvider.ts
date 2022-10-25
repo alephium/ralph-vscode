@@ -11,10 +11,8 @@ export class EnumProvider extends Filter implements vscode.CompletionItemProvide
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     const word = this.word(document, position, -1)
     if (word) {
-      for (const value of cache.values()) {
-        const member = value.def(word)
-        if (member) return member?.getChild?.().map((value) => value.completionItem!())
-      }
+      const member = cache.def(word)
+      if (member) return member?.getChild?.().map((value) => value.completionItem!())
     }
     return undefined
   }

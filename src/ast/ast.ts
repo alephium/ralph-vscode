@@ -133,12 +133,12 @@ export class SemanticNode implements Identifier {
     return []
   }
 
-  defs(): Identifier[] | undefined {
-    return undefined
+  defs(): Identifier[] {
+    return []
   }
 
-  ref(): Identifier[] | undefined {
-    return undefined
+  ref(): Identifier[] {
+    return []
   }
 
   def(word: Word): Identifier | undefined {

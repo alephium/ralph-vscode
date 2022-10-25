@@ -27,6 +27,7 @@ import { AssetScript } from '../ast/assetScript'
 import { Identifier } from '../ast/identifier'
 import { SemanticNode } from '../ast/ast'
 import { RalphLexer } from '../parser/RalphLexer'
+import { Root } from '../ast/root'
 
 type Result = Identifier | undefined
 
@@ -39,7 +40,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
 
   parser: RalphParser
 
-  cache!: Map<string, Base>
+  cache: Root
 
   uri: Uri
 
@@ -78,10 +79,11 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     base._parser = this.parser
     base.ruleContext = ctx
     base.uri = this.uri
+    base.setParent(new Root())
     base.setRange(ctx.start, ctx.stop)
     this.visitParams(ctx.paramList?.(), base)
     this.visitBody(ctx.typeStructBody?.(), base)
-    this.cache.set(base.name!, base)
+    this.cache.add(base)
     return base
   }
 
