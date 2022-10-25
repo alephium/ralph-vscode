@@ -21,7 +21,7 @@ export class BuiltInType extends SemanticNode {
   completionItemLabel(): CompletionItemLabel {
     return {
       label: this.name!,
-      detail: this.detail,
+      // detail: this.detail,
       description: this.description,
     }
   }

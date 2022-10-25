@@ -161,7 +161,7 @@ export class SemanticNode implements Identifier {
   completionItemLabel(): CompletionItemLabel {
     return {
       label: this.name!,
-      detail: this.label(),
+      // detail: this.label(),
       description: this.detail,
     }
   }
@@ -200,11 +200,11 @@ export class SemanticNode implements Identifier {
 
   get detail(): string {
     const parser = this.parser()
-
     if (parser && this.ruleContext) {
       return parser.inputStream.getText(this.ruleContext.sourceInterval)
     }
-    return `${this._detail}`
+    if (this._detail) return this._detail
+    return `${this.name}`
   }
 
   setRuleContext(ctx: RuleNode): this {

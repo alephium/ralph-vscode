@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as vscode from 'vscode'
-import { CancellationToken, CompletionContext, CompletionItem, CompletionItemKind, Position, TextDocument } from 'vscode'
+import { CancellationToken, CompletionContext, CompletionItem, CompletionItemKind, Position, SnippetString, TextDocument } from 'vscode'
 import jsonData from '../hover/builtIn/ralph-built-in-functions.json'
 import { Fun } from '../hover/builtIn/function'
 import { Identifier } from '../../ast/identifier'
@@ -38,17 +38,19 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
       .concat(this.builtInLiteral.map((value) => new CompletionItem({ label: value }, CompletionItemKind.Value)))
     if (document.getWordRangeAtPosition(position, /\([a-zA-Z][0-9a-zA-Z, :!().;]*\)/i)) return items
     return this.items
-      .map(
-        (item) =>
-          new CompletionItem(
-            {
-              label: `${item.name}!${item.signature.substring(item.signature.indexOf('('), item.signature.indexOf(')') + 1)}`,
-              detail: item.signature,
-              description: item.doc,
-            },
-            CompletionItemKind.Function
-          )
-      )
+      .map((item) => {
+        const method = new CompletionItem(
+          {
+            label: `🔓${item.name}!${item.signature.substring(item.signature.indexOf('('), item.signature.indexOf(')') + 1)}`,
+            // detail: item.signature, //TODO
+            description: item.doc,
+          },
+          CompletionItemKind.Function
+        )
+        method.commitCharacters = ['.']
+        method.insertText = new SnippetString(`${item.name}!($1)`)
+        return method
+      })
       .concat(items)
   }
 }
