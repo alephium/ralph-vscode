@@ -33,6 +33,10 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
     context: CompletionContext
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     if (this.isSkip(document, position)) return undefined
+    const items = this.builtInType
+      .map((value) => value.completionItem!())
+      .concat(this.builtInLiteral.map((value) => new CompletionItem({ label: value }, CompletionItemKind.Value)))
+    if (document.getWordRangeAtPosition(position, /\([a-zA-Z][0-9a-zA-Z, :!().;]*\)/i)) return items
     return this.items
       .map(
         (item) =>
@@ -45,7 +49,6 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
             CompletionItemKind.Function
           )
       )
-      .concat(this.builtInType.map((value) => value.completionItem!()))
-      .concat(this.builtInLiteral.map((value) => new CompletionItem({ label: value }, CompletionItemKind.Value)))
+      .concat(items)
   }
 }
