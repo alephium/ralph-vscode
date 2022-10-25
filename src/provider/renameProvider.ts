@@ -10,11 +10,7 @@ export class RalphRenameProvider extends Filter implements RenameProvider {
       Parser(document.uri, document.getText())
       const edit = new WorkspaceEdit()
       if (identifier.parent) {
-        const members = identifier.parent.findAll?.({
-          name: identifier.name,
-          uri: identifier.getUri?.(),
-          point: position,
-        })
+        const members = identifier.parent.findAll?.({ name: identifier.name })
         if (members) {
           members.forEach((member) =>
             edit.replace(<Uri>member.getUri?.(), <vscode.Range>member.getWordRange?.(), newName, {
