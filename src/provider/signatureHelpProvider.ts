@@ -22,7 +22,7 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
     super()
     this.builtItems = new Map()
     this.items = Object.assign(new Array<Fun>(), jsonData)
-    this.items.forEach((item) => this.builtItems.set(`${item?.name}!`, item))
+    this.items.forEach((item) => this.builtItems.set(`${item?.name}`, item))
   }
 
   provideSignatureHelp(
