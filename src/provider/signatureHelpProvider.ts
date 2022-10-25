@@ -11,7 +11,6 @@ import {
 import { Filter } from './filter'
 import jsonData from './hover/builtIn/ralph-built-in-functions.json'
 import { Fun } from './hover/builtIn/function'
-import cache from '../cache/cache'
 
 export class RalphSignatureHelpProvider extends Filter implements vscode.SignatureHelpProvider {
   items: Array<Fun>
@@ -22,7 +21,7 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
     super()
     this.builtItems = new Map()
     this.items = Object.assign(new Array<Fun>(), jsonData)
-    this.items.forEach((item) => this.builtItems.set(`${item?.name}!`, item))
+    this.items.forEach((item) => this.builtItems.set(`${item?.name}`, item))
   }
 
   provideSignatureHelp(

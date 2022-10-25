@@ -4,15 +4,13 @@ import { Identifier } from './identifier'
 import { Position } from './position'
 
 export interface Finder {
-  findAll?(condition: Word): Identifier[] | undefined
+  findAll?(condition: Word): Identifier[]
 
-  find?(condition: Word): Identifier[] | undefined
-
-  defs?(): Identifier[] | undefined
+  defs?(): Identifier[]
 
   def?(word: Word): Identifier | undefined
 
-  ref?(): Identifier[] | undefined
+  ref?(): Identifier[]
 
   container?(position: Position): Identifier | undefined
 

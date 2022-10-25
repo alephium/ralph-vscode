@@ -1,36 +1,27 @@
-import vscode, { RenameProvider, WorkspaceEdit, TextDocument, Position, ProviderResult } from 'vscode'
+import { RenameProvider, WorkspaceEdit, TextDocument, Position, ProviderResult, Uri } from 'vscode'
+import * as vscode from 'vscode'
 import Parser from '../parser/parser'
-import cache from '../cache/cache'
 import { Filter } from './filter'
 
 export class RalphRenameProvider extends Filter implements RenameProvider {
   provideRenameEdits(document: TextDocument, position: Position, newName: string): ProviderResult<WorkspaceEdit> {
-    const word = this.word(document, position)
-    if (word) {
-      const edit = new WorkspaceEdit()
+    const identifier = this.callChain(document, position)
+    if (identifier) {
       Parser(document.uri, document.getText())
-      cache.forEach((value) => {
-        const members = value.findAll(word)
+      const edit = new WorkspaceEdit()
+      if (identifier.parent) {
+        const members = identifier.parent.findAll?.({ name: identifier.name })
         if (members) {
-          members.forEach((member) => edit.replace(<vscode.Uri>member.getUri?.(), member.range!, newName))
+          members.forEach((member) =>
+            edit.replace(<Uri>member.getUri?.(), <vscode.Range>member.getWordRange?.(), newName, {
+              label: member.name!,
+              needsConfirmation: true,
+            })
+          )
         }
-      })
+      }
       return edit
     }
     return undefined
   }
-
-  // prepareRename(document: TextDocument, position: Position): ProviderResult<Range | { range: Range; placeholder: string }> {
-  //   const parser = new Parser(document.uri, document.getText())
-  //   const range = document.getWordRangeAtPosition(position)
-  //   const identifier = new Identifier(document.getText(range), position, document.uri)
-  //
-  //   parser.visitor.structs.forEach((item) => {
-  //     const all = item.findAll(identifier)
-  //     if(all){
-  //       return all[0]?.scope
-  //     }
-  //   })
-  // return undefined
-  // }
 }

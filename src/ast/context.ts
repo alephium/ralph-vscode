@@ -34,7 +34,8 @@ export class Context {
   }
 
   node(ctx: TerminalNode): Identifier {
-    return new SemanticNode(ctx).setParent(this.parent)
+    const node = new SemanticNode(ctx).setParent(this.parent)
+    return node
   }
 
   refNode(ctx: TerminalNode): Identifier {
@@ -62,6 +63,7 @@ export class Context {
     } else {
       value = new Property(ctx.IDENTIFIER())
     }
+    value.setRuleContext(ctx)
     value.detail = ctx.text
     value.type_ = this.typeNameContext(ctx.typeName())
     value.setParent(this.parent)
@@ -110,7 +112,7 @@ export class Context {
   expressionContext(ctx: ExpressionContext): Identifier[] {
     const identifiers = []
     const varName = ctx.varName()
-    if (varName) identifiers.push(<Identifier>this.varNameContext(varName).setIdentifierKind?.(IdentifierKind.Variable))
+    if (varName) identifiers.push(<Identifier>this.varNameContext(varName).setSemanticsKind?.(SemanticsKind.Ref))
     const expr = ctx.primaryExpr()?.arrayExpr()
     if (expr) identifiers.push(...this.arrayExprContext(expr))
     const call = ctx.call()
@@ -203,7 +205,7 @@ export class Context {
   forStmtContext(ctx: ForStmtContext): Identifier[] {
     const identifiers: Identifier[] = []
     const varName = ctx.varName()
-    if (varName) identifiers.push(this.varNameContext(varName))
+    if (varName) identifiers.push(this.varNameContext(varName).setSemanticsKind!(SemanticsKind.Ref))
     ctx.expression().forEach((expression) => identifiers.push(...this.expressionContext(expression)))
     identifiers.push(...this.blockContext(ctx.block()))
     return identifiers

@@ -27,6 +27,7 @@ import { AssetScript } from '../ast/assetScript'
 import { Identifier } from '../ast/identifier'
 import { SemanticNode } from '../ast/ast'
 import { RalphLexer } from '../parser/RalphLexer'
+import { Root } from '../ast/root'
 
 type Result = Identifier | undefined
 
@@ -39,7 +40,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
 
   parser: RalphParser
 
-  cache!: Map<string, Base>
+  cache: Root
 
   uri: Uri
 
@@ -59,25 +60,12 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
     // method
-    ctx.methodDecl().forEach((method) => {
-      const md = Method.FromContext(method).setParent(base)
-      md.detail = this.tokenStream.getText(method.sourceInterval)
-      base.add(md)
-    })
+    ctx.methodDecl().forEach((method) => base.add(Method.FromContext(method).setParent(base)))
     // event
-    ctx.event().forEach((eventCtx) => {
-      const event = new Event(eventCtx.IDENTIFIER())
-      event.setParent(base)
-      event.detail = this.tokenStream.getText(eventCtx.sourceInterval)
-      base.add(event)
-    })
+    ctx.event().forEach((eventCtx) => base.add(new Event(eventCtx.IDENTIFIER()).setParent(base).setRuleContext(eventCtx)))
     const context = new Context(base)
     base.append(...context.statementContexts(ctx.statement()))
-    ctx.enum().forEach((value) => {
-      const enumValue = Enum.FromContext(value).setParent(base)
-      enumValue.detail = this.tokenStream.getText(value.sourceInterval)
-      base.add(enumValue)
-    })
+    ctx.enum().forEach((value) => base.add(Enum.FromContext(value).setParent(base)))
   }
 
   visitParams(ctx: ParamListContext | undefined, base: Base) {
@@ -88,12 +76,14 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   }
 
   visitStruct(ctx: Struct, base: Base): Result {
-    base.detail = this.tokenStream.getText(ctx.sourceInterval)
+    base._parser = this.parser
+    base.ruleContext = ctx
     base.uri = this.uri
+    base.setParent(new Root())
     base.setRange(ctx.start, ctx.stop)
     this.visitParams(ctx.paramList?.(), base)
     this.visitBody(ctx.typeStructBody?.(), base)
-    this.cache.set(base.name!, base)
+    this.cache.add(base)
     return base
   }
 

@@ -13,11 +13,13 @@ import {
   Uri,
 } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
+import { RuleNode } from 'antlr4ts/tree/RuleNode'
 import MapKinds from '../util/kind'
 import { Identifier } from './identifier'
 import { Word } from './word'
 import { Position } from './position'
 import { IdentifierKind, SemanticsKind } from './kinder'
+import { RalphParser } from '../parser/RalphParser'
 
 export class SemanticNode implements Identifier {
   name: string | undefined
@@ -28,7 +30,7 @@ export class SemanticNode implements Identifier {
 
   kind: number | undefined
 
-  detail: string | undefined
+  _detail: string | undefined
 
   point: vscode.Position | undefined
 
@@ -39,13 +41,18 @@ export class SemanticNode implements Identifier {
 
   parent: Identifier | undefined
 
+  ruleContext: RuleNode | undefined
+
+  token?: Token
+
   constructor(node?: TerminalNode) {
     if (node) {
       this.name = node.symbol.text!
-      this.detail = this.name
+      this._detail = this.name
       this.semanticsKind = SemanticsKind.Def
       this.identifierKind = IdentifierKind.Type
       this.setRange(node.symbol, node.symbol)
+      this.token = node.symbol
     }
   }
 
@@ -58,18 +65,9 @@ export class SemanticNode implements Identifier {
     return this
   }
 
-  findAll(condition: Word): Identifier[] | undefined {
-    if (this.contains(condition)) {
-      if (condition.name === this.name) return [this]
-    }
-    return undefined
-  }
-
-  find(condition: Word): Identifier[] | undefined {
-    if (this.contains(condition)) {
-      if (condition.name === this.name) return [this]
-    }
-    return undefined
+  findAll(condition: Word): Identifier[] {
+    if (condition.name === this.name) return [this]
+    return []
   }
 
   container(position: Position): Identifier | undefined {
@@ -135,12 +133,12 @@ export class SemanticNode implements Identifier {
     return []
   }
 
-  defs(): Identifier[] | undefined {
-    return undefined
+  defs(): Identifier[] {
+    return []
   }
 
-  ref(): Identifier[] | undefined {
-    return undefined
+  ref(): Identifier[] {
+    return []
   }
 
   def(word: Word): Identifier | undefined {
@@ -157,7 +155,7 @@ export class SemanticNode implements Identifier {
   completionItemLabel(): CompletionItemLabel {
     return {
       label: this.name!,
-      detail: this.label(),
+      // detail: this.label(),
       description: this.detail,
     }
   }
@@ -171,7 +169,7 @@ export class SemanticNode implements Identifier {
   }
 
   documentSymbol(): DocumentSymbol {
-    return new DocumentSymbol(this.label(), this.detail!, this.symbolKind(), this.range!, this.range!)
+    return new DocumentSymbol(this.label(), this.detail, this.symbolKind(), this.range!, this.range!)
   }
 
   completionItem(): CompletionItem {
@@ -184,5 +182,33 @@ export class SemanticNode implements Identifier {
 
   location(): Location {
     return new Location(this.getUri()!, this.range!.start)
+  }
+
+  parser(): RalphParser | undefined {
+    return this.parent?.parser?.()
+  }
+
+  set detail(detail: string) {
+    this._detail = detail
+  }
+
+  get detail(): string {
+    const parser = this.parser()
+    if (parser && this.ruleContext) {
+      return parser.inputStream.getText(this.ruleContext.sourceInterval)
+    }
+    if (this._detail) return this._detail
+    return `${this.name}`
+  }
+
+  setRuleContext(ctx: RuleNode): this {
+    this.ruleContext = ctx
+    return this
+  }
+
+  getWordRange(): Range | undefined {
+    if (this.token)
+      return new vscode.Range(this.convert(this.token), this.convert(this.token).translate({ characterDelta: this.name?.length }))
+    return undefined
   }
 }

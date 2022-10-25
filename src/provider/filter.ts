@@ -25,11 +25,7 @@ export class Filter {
   }
 
   getDef(word: Word): Identifier | undefined {
-    for (const value of cache.values()) {
-      const member = value.def(word)
-      if (member) return member
-    }
-    return undefined
+    return cache.def(word)
   }
 
   callChain(document: TextDocument, position: Position): Identifier | undefined {
