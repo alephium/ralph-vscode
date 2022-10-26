@@ -29,7 +29,7 @@ import { SemanticNode } from '../ast/ast'
 import { RalphLexer } from '../parser/RalphLexer'
 import { Root } from '../ast/root'
 
-type Result = Identifier | undefined
+type Result = Base | Identifier | undefined
 
 export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements RalphParserVisitor<Result> {
   charStream: CodePointCharStream
@@ -88,7 +88,29 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   }
 
   visitContract(ctx: ContractContext): Result {
-    return this.visitStruct(ctx, new Contract(ctx.IDENTIFIER(0)))
+    const contract = new Contract(ctx.IDENTIFIER(0))
+    if (ctx.EXTENDS()) {
+      const identifier = ctx.IDENTIFIER(1)
+      const base = cache.get(identifier.symbol.text!)
+      if (base instanceof Contract) {
+        contract.parentClass = base
+        base.subclass.set(contract.name!, contract)
+      }
+    }
+    if (ctx.IMPLEMENTS()) {
+      const identifier = ctx.IDENTIFIER(1)
+      const base = cache.get(identifier.symbol.text!)
+      if (base instanceof Interface) {
+        contract.interfaces = base
+        base.implementer?.set(contract.name!, contract)
+      }
+    }
+    const list = ctx.expressionList()
+    if (list) {
+      const block = new Context(contract)
+      contract.append(...block.expressionListContext(list))
+    }
+    return this.visitStruct(ctx, contract)
   }
 
   visitInterface(ctx: InterfaceContext): Result {

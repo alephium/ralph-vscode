@@ -24,10 +24,6 @@ export class Filter {
     }
   }
 
-  getDef(word: Word): Identifier | undefined {
-    return cache.def(word)
-  }
-
   callChain(document: TextDocument, position: Position): Identifier | undefined {
     if (this.isSkip(document, position)) return undefined
     Parser(document.uri, document.getText())
@@ -35,7 +31,7 @@ export class Filter {
     const positionWord = document.getText(document.getWordRangeAtPosition(position))
     let wordSet = callChain.split('.')
     wordSet = wordSet.slice(0, wordSet.indexOf(positionWord) + 1)
-    let caller = this.getDef({
+    let caller = cache.def({
       name: wordSet[0],
       point: position,
       uri: document.uri,

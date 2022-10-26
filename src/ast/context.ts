@@ -2,12 +2,13 @@ import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import {
   ArrayExprContext,
   BlockContext,
-  CallContext,
+  CallChainContext,
   EmitContext,
   ExpressionContext,
   ExpressionListContext,
   ForStmtContext,
   IfStmtContext,
+  MethodCallContext,
   ParamContext,
   ParamListContext,
   PrimitiveTypeContext,
@@ -34,8 +35,7 @@ export class Context {
   }
 
   node(ctx: TerminalNode): Identifier {
-    const node = new SemanticNode(ctx).setParent(this.parent)
-    return node
+    return new SemanticNode(ctx).setParent(this.parent)
   }
 
   refNode(ctx: TerminalNode): Identifier {
@@ -111,23 +111,38 @@ export class Context {
 
   expressionContext(ctx: ExpressionContext): Identifier[] {
     const identifiers = []
-    const varName = ctx.varName()
-    if (varName) identifiers.push(<Identifier>this.varNameContext(varName).setSemanticsKind?.(SemanticsKind.Ref))
     const expr = ctx.primaryExpr()?.arrayExpr()
     if (expr) identifiers.push(...this.arrayExprContext(expr))
-    const call = ctx.call()
-    if (call) identifiers.push(...this.callContext(call))
+    const call = ctx.callChain()
+    if (call) identifiers.push(...this.callChain(call))
+    const expression = ctx.expression()
+    if (expression) expression.forEach((value) => identifiers.push(...this.expressionContext(value)))
     return identifiers
   }
 
-  callContext(ctx: CallContext): Identifier[] {
-    // TODO
+  callChain(ctx: CallChainContext): Identifier[] {
     const identifiers: Identifier[] = []
-    ctx
-      .callChain()
-      .varNames()
-      .IDENTIFIER()
-      .forEach((value) => identifiers.push(this.refNode(value)))
+    const varName = ctx.varName()
+    if (varName) identifiers.push(<Identifier>this.varNameContext(varName).setSemanticsKind?.(SemanticsKind.Ref))
+    const methodCall = ctx.methodCall()
+    if (methodCall) identifiers.push(...this.methodCall(methodCall))
+
+    let caller = identifiers[0]
+    const callChains = ctx.callChain()
+    if (callChains) {
+      callChains.forEach((value) => {
+        const callee = this.callChain(value)
+        callee[0].setParent?.(caller) // TODO
+        caller = callee[0]
+        identifiers.push(...callee)
+      })
+    }
+    return identifiers
+  }
+
+  methodCall(ctx: MethodCallContext): Identifier[] {
+    const identifiers: Identifier[] = []
+    identifiers.push(this.refNode(ctx.IDENTIFIER()).setIdentifierKind!(IdentifierKind.Method))
     identifiers.push(...this.expressionListContext(ctx.expressionList()))
     return identifiers
   }

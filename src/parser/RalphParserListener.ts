@@ -7,11 +7,10 @@ import { SourceFileContext } from "./RalphParser";
 import { IdentifierListContext } from "./RalphParser";
 import { VarDeclContext } from "./RalphParser";
 import { VarNameContext } from "./RalphParser";
-import { VarNamesContext } from "./RalphParser";
 import { ExpressionContext } from "./RalphParser";
 import { ExpressionListContext } from "./RalphParser";
 import { CallChainContext } from "./RalphParser";
-import { CallContext } from "./RalphParser";
+import { MethodCallContext } from "./RalphParser";
 import { PrimaryExprContext } from "./RalphParser";
 import { PrimitiveTypeContext } from "./RalphParser";
 import { ArrayTypeContext } from "./RalphParser";
@@ -96,17 +95,6 @@ export interface RalphParserListener extends ParseTreeListener {
 	exitVarName?: (ctx: VarNameContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `RalphParser.varNames`.
-	 * @param ctx the parse tree
-	 */
-	enterVarNames?: (ctx: VarNamesContext) => void;
-	/**
-	 * Exit a parse tree produced by `RalphParser.varNames`.
-	 * @param ctx the parse tree
-	 */
-	exitVarNames?: (ctx: VarNamesContext) => void;
-
-	/**
 	 * Enter a parse tree produced by `RalphParser.expression`.
 	 * @param ctx the parse tree
 	 */
@@ -140,15 +128,15 @@ export interface RalphParserListener extends ParseTreeListener {
 	exitCallChain?: (ctx: CallChainContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `RalphParser.call`.
+	 * Enter a parse tree produced by `RalphParser.methodCall`.
 	 * @param ctx the parse tree
 	 */
-	enterCall?: (ctx: CallContext) => void;
+	enterMethodCall?: (ctx: MethodCallContext) => void;
 	/**
-	 * Exit a parse tree produced by `RalphParser.call`.
+	 * Exit a parse tree produced by `RalphParser.methodCall`.
 	 * @param ctx the parse tree
 	 */
-	exitCall?: (ctx: CallContext) => void;
+	exitMethodCall?: (ctx: MethodCallContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.primaryExpr`.
