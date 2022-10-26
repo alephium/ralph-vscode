@@ -2,7 +2,7 @@ import * as vscode from 'vscode'
 import { Item } from './item'
 import { Filter } from '../../filter'
 
-const keyword = [
+export const keyword = [
   {
     name: 'let',
     detail: 'Assignment: let [mut] <name> = ...',
