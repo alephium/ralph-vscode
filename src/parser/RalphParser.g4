@@ -15,14 +15,10 @@ varDecl
 
 varName: IDENTIFIER;
 
-varNames: IDENTIFIER (DOT IDENTIFIER)*;
-
 //expression
 expression:
 	primaryExpr
-	| varName
-	| varNames
-	| call
+	| callChain
 	| (SUB | NOT) expression
 	| expression (
         CONCAT
@@ -54,11 +50,9 @@ expression:
 
 expressionList: (expression COMMA?)*;
 
-callChain: varNames;
+callChain: (varName | methodCall) (DOT callChain)*;
 
-call:
-    callChain L_PAREN expressionList R_PAREN   // # callStmt
-    ;
+methodCall: IDENTIFIER L_PAREN expressionList R_PAREN;
 
 primaryExpr
 	: basicLit
