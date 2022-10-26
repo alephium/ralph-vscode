@@ -34,8 +34,7 @@ export class Context {
   }
 
   node(ctx: TerminalNode): Identifier {
-    const node = new SemanticNode(ctx).setParent(this.parent)
-    return node
+    return new SemanticNode(ctx).setParent(this.parent)
   }
 
   refNode(ctx: TerminalNode): Identifier {
