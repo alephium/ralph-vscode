@@ -117,6 +117,8 @@ export class Context {
     if (expr) identifiers.push(...this.arrayExprContext(expr))
     const call = ctx.call()
     if (call) identifiers.push(...this.callContext(call))
+    const expression = ctx.expression()
+    if (expression) expression.forEach((value) => identifiers.push(...this.expressionContext(value)))
     return identifiers
   }
 
