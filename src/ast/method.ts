@@ -65,6 +65,9 @@ export class Method extends Base {
     const method = new Method(ctx.IDENTIFIER())
     method.setRange(ctx.start, ctx.stop)
     method.setRuleContext(ctx)
+    if (ctx.PUB()) {
+      method.isPub = true
+    }
     const context = new Context(method)
     context.paramListContext(ctx.paramList())
     const block = ctx.block()
