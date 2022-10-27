@@ -14,7 +14,8 @@ import { AnnotationProvider } from './provider/completion/annotationProvider'
 import { MemberProvider } from './provider/completion/memberProvider'
 import { RalphSignatureHelpProvider } from './provider/signatureHelpProvider'
 import { RalphImplementationProvider } from './provider/implementationProvider'
-import { RalphTypeDefinitionProvider } from "./provider/typeDefinitionProvider";
+import { RalphTypeDefinitionProvider } from './provider/typeDefinitionProvider'
+import { RalphReferenceProvider } from './provider/referenceProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -47,6 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerSignatureHelpProvider(selector, new RalphSignatureHelpProvider(), '('))
   context.subscriptions.push(vscode.languages.registerImplementationProvider(selector, new RalphImplementationProvider()))
   context.subscriptions.push(vscode.languages.registerTypeDefinitionProvider(selector, new RalphTypeDefinitionProvider()))
+  context.subscriptions.push(vscode.languages.registerReferenceProvider(selector, new RalphReferenceProvider()))
 
   console.log('register push completed!')
 }
