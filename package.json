@@ -2,7 +2,7 @@
   "name": "ralph-vscode",
   "displayName": "ralph vscode",
   "description": "ralph vscode",
-  "version": "0.1.0",
+  "version": "0.0.10",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v18.0.0"
