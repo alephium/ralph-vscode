@@ -13,7 +13,7 @@ interface Command {
 export const commands: Command[] = [
   {
     command: 'ralph.download',
-    title: 'Ralph: downloader',
+    title: 'Ralph downloader',
     callback: () => {
       const download = new Downloader()
       download.showQuickPick()
@@ -21,7 +21,7 @@ export const commands: Command[] = [
   },
   {
     command: 'ralph.compile',
-    title: 'Ralph: compiler',
+    title: 'Ralph compiler',
     callback: () => {
       if (vscode.window.activeTextEditor) {
         new Compiler().compiler(vscode.window.activeTextEditor)
