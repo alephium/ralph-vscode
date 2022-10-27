@@ -6,6 +6,8 @@ import { Position } from './position'
 export interface Finder {
   findAll?(condition: Word): Identifier[]
 
+  find?(word: Word): Identifier | undefined
+
   defs?(): Identifier[]
 
   def?(word: Word): Identifier | undefined
