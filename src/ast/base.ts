@@ -59,11 +59,23 @@ export class Base extends SemanticNode implements Finder {
     return items
   }
 
+  find?(word: Word): Identifier | undefined {
+    if (this.contains(word)) {
+      for (const value of this.members.values()) {
+        const member = value.find?.(word)
+        if (member) return member
+      }
+      for (const value of this.identifiers.values()) {
+        const member = value.find?.(word)
+        if (member) return member
+      }
+    }
+    return super.find?.(word)
+  }
+
   defs(): Identifier[] {
     const member = Array.from(this.members.values())
-    const identifiers = this.identifiers.filter(
-      (value) => value.identifierKind === IdentifierKind.Variable && value.semanticsKind === SemanticsKind.Def
-    )
+    const identifiers = this.identifiers.filter((value) => value.semanticsKind === SemanticsKind.Def)
     return member.concat(identifiers)
   }
 

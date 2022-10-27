@@ -28,7 +28,7 @@ export class Filter {
     if (this.isSkip(document, position)) return undefined
     Parser(document.uri, document.getText())
     const callChain = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z.]*/i))
-    const positionWord = document.getText(document.getWordRangeAtPosition(position))
+    const positionWord = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z]*/i))
     let wordSet = callChain.split('.')
     wordSet = wordSet.slice(0, wordSet.indexOf(positionWord) + 1)
     let caller = cache.def({

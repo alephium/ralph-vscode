@@ -89,8 +89,10 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
 
   visitContract(ctx: ContractContext): Result {
     const contract = new Contract(ctx.IDENTIFIER(0))
+    const block = new Context(contract)
     if (ctx.EXTENDS()) {
       const identifier = ctx.IDENTIFIER(1)
+      contract.append(block.typeNode(identifier))
       const base = cache.get(identifier.symbol.text!)
       if (base instanceof Contract) {
         contract.parentClass = base
@@ -99,6 +101,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     }
     if (ctx.IMPLEMENTS()) {
       const identifier = ctx.IDENTIFIER(1)
+      contract.append(block.typeNode(identifier))
       const base = cache.get(identifier.symbol.text!)
       if (base instanceof Interface) {
         contract.interfaces = base
@@ -107,7 +110,6 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     }
     const list = ctx.expressionList()
     if (list) {
-      const block = new Context(contract)
       contract.append(...block.expressionListContext(list))
     }
     return this.visitStruct(ctx, contract)

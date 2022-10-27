@@ -32,8 +32,6 @@ export class SemanticNode implements Identifier {
 
   _detail: string | undefined
 
-  point: vscode.Position | undefined
-
   uri: Uri | undefined
 
   /** * action scope ** */
@@ -56,6 +54,11 @@ export class SemanticNode implements Identifier {
     }
   }
 
+  get point(): vscode.Position | undefined {
+    if (this.token) this.convert(this.token)
+    return undefined
+  }
+
   convert(token: Token): vscode.Position {
     return new vscode.Position(token.line - 1, token.charPositionInLine)
   }
@@ -68,6 +71,13 @@ export class SemanticNode implements Identifier {
   findAll(condition: Word): Identifier[] {
     if (condition.name === this.name) return [this]
     return []
+  }
+
+  find?(word: Word): Identifier | undefined {
+    if (this.point?.isEqual(word.point!) && word.name === this.name) {
+      return this
+    }
+    return undefined
   }
 
   container(position: Position): Identifier | undefined {
