@@ -47,11 +47,11 @@
     "commands": [
       {
         "command": "ralph.download",
-        "title": "Ralph: Download"
+        "title": "Ralph Download"
       },
       {
         "command": "ralph.compile",
-        "title": "Ralph: Compile"
+        "title": "Ralph Compile"
       },
       {
         "command": "ralph.online.compile",
@@ -193,22 +193,22 @@
         {
           "command": "ralph.compile",
           "when": "resourceLangId == ralph",
-          "group": "navigation@1"
+          "group": "1_ralph@1"
         },
         {
           "command": "ralph.download",
           "when": "resourceLangId == ralph",
-          "group": "navigation@2"
+          "group": "1_ralph@2"
         },
         {
           "command": "ralph.online.compile",
           "when": "resourceLangId == ralph",
-          "group": "navigation@3"
+          "group": "1_ralph@3"
         },
         {
           "command": "ralph.online.deploy",
           "when": "resourceLangId == ralph",
-          "group": "navigation@4"
+          "group": "1_ralph@4"
         }
       ]
     },
