@@ -9,8 +9,13 @@ sourceFile: (txScript | contract | interface | assetScript)* EOF;
 
 identifierList: varName (COMMA varName)*;
 
+varDeclSingle: (CONST | (LET MUT?)) varName ASSIGN IDENTIFIER L_PAREN expressionList R_PAREN;
+
+varDeclMulti: (CONST | (LET MUT?)) L_PAREN identifierList R_PAREN ASSIGN callChain;
+
 varDecl
-    : (CONST | (LET MUT?)) ((varName ASSIGN expression) | (L_PAREN identifierList R_PAREN ASSIGN expression)) //# varDeclStmt
+    : varDeclSingle
+    | varDeclMulti //# varDeclStmt
     ;
 
 varName: IDENTIFIER;
@@ -114,20 +119,6 @@ integer
 
 string_: RAW_STRING_LIT | INTERPRETED_STRING_LIT;
 
-//fieldDecl: MUT? IDENTIFIER COLON typeDecl;
-//typeStruct: typeStructHeader typeStructBody;
-
-//typeParam
-//	| INTERFACE
-//	| TXSCRIPT
-//	| CONTRACT
-//	| ASSETSCRIPT
-//	;
-
-//typeStructHeader
-//	: typeParam IDENTIFIER (L_PAREN (paramList)? R_PAREN)? ((EXTENDS | IMPLEMENTS) IDENTIFIER (L_PAREN expressionList R_PAREN)?)?
-//	;
-
 varNameAssign: varName ASSIGN basicLit;
 
 enum: ENUM IDENTIFIER L_CURLY varNameAssign* R_CURLY;
@@ -170,8 +161,6 @@ statement:
 	| ifStmt
 	| whileStmt
     | forStmt
-	// | breakStmt
-	// | continueStmt
 	;
 
 simpleStmt
@@ -192,8 +181,5 @@ whileStmt
     ;
 
 forStmt: FOR L_PAREN (LET MUT varName ASSIGN expression)? SEMI expression? SEMI expression? R_PAREN block;
-
-// breakStmt: BREAK IDENTIFIER?;
-// continueStmt: CONTINUE IDENTIFIER?;
 
 eos: EOS;

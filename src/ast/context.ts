@@ -18,6 +18,8 @@ import {
   StatementContext,
   TypeNameContext,
   VarDeclContext,
+  VarDeclMultiContext,
+  VarDeclSingleContext,
   VarNameContext,
   WhileStmtContext,
 } from '../parser/RalphParser'
@@ -179,17 +181,36 @@ export class Context {
     return this.statementContexts(ctx.statement())
   }
 
+  varDeclSingleContext(ctx: VarDeclSingleContext): Identifier[] {
+    const identifiers: Identifier[] = []
+    const value = new Variable(ctx.varName().IDENTIFIER())
+    const typeName = this.typeNode(ctx.IDENTIFIER())
+    value.type_ = typeName
+    value.setRuleContext(ctx)
+    value.setParent(this.parent)
+    if (ctx.MUT()) value.isMut = true
+    this.parent.add?.(value)
+    identifiers.push(typeName, ...this.expressionListContext(ctx.expressionList()))
+    return identifiers
+  }
+
+  varDeclMultiContext(ctx: VarDeclMultiContext): Identifier[] {
+    const identifiers: Identifier[] = []
+    ctx
+      .identifierList()
+      .varName()
+      .forEach((value) => identifiers.push(<Identifier>this.varNameContext(value)))
+    identifiers.push(...this.callChain(ctx.callChain()))
+    return identifiers
+  }
+
   // todo
   varDeclContext(ctx: VarDeclContext): Identifier[] {
     const identifiers: Identifier[] = []
-    const varName = ctx.varName()
-    if (varName) identifiers.push(<Identifier>this.varNameContext(varName))
-    const expression = ctx.expression()
-    if (expression) identifiers.push(...this.expressionContext(expression))
-    ctx
-      .identifierList()
-      ?.varName()
-      .forEach((value) => identifiers.push(<Identifier>this.varNameContext(value)))
+    const varDeclSingle = ctx.varDeclSingle()
+    if (varDeclSingle) identifiers.push(...this.varDeclSingleContext(varDeclSingle))
+    const varDeclMulti = ctx.varDeclMulti()
+    if (varDeclMulti) identifiers.push(...this.varDeclMultiContext(varDeclMulti))
     return identifiers
   }
 

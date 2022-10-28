@@ -5,6 +5,8 @@ import { ParseTreeListener } from "antlr4ts/tree/ParseTreeListener";
 
 import { SourceFileContext } from "./RalphParser";
 import { IdentifierListContext } from "./RalphParser";
+import { VarDeclSingleContext } from "./RalphParser";
+import { VarDeclMultiContext } from "./RalphParser";
 import { VarDeclContext } from "./RalphParser";
 import { VarNameContext } from "./RalphParser";
 import { ExpressionContext } from "./RalphParser";
@@ -71,6 +73,28 @@ export interface RalphParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitIdentifierList?: (ctx: IdentifierListContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.varDeclSingle`.
+	 * @param ctx the parse tree
+	 */
+	enterVarDeclSingle?: (ctx: VarDeclSingleContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.varDeclSingle`.
+	 * @param ctx the parse tree
+	 */
+	exitVarDeclSingle?: (ctx: VarDeclSingleContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.varDeclMulti`.
+	 * @param ctx the parse tree
+	 */
+	enterVarDeclMulti?: (ctx: VarDeclMultiContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.varDeclMulti`.
+	 * @param ctx the parse tree
+	 */
+	exitVarDeclMulti?: (ctx: VarDeclMultiContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.varDecl`.
