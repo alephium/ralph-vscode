@@ -1,16 +1,30 @@
-import { CompletionItemKind, SymbolKind } from 'vscode'
+import { CompletionItem, CompletionItemKind, SnippetString, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Base } from './base'
 import { MethodDeclContext } from '../parser/RalphParser'
-import { Variable } from './variable'
-import { blockContext } from './context'
+import { Context } from './context'
+import { IdentifierKind } from './kinder'
 
 export class Method extends Base {
   isPub: boolean
 
   constructor(node: TerminalNode) {
     super(node)
+    this.identifierKind = IdentifierKind.Method
     this.isPub = false
+  }
+
+  paramList(): string {
+    let text = ''
+    let { size } = this.members
+    this.members.forEach((value) => {
+      text += `${value.name}: ${value.type_?.name}`
+      size -= 1
+      if (size !== 0) {
+        text += ', '
+      }
+    })
+    return text
   }
 
   symbolKind(): SymbolKind {
@@ -19,6 +33,25 @@ export class Method extends Base {
 
   completionItemKind(): CompletionItemKind {
     return CompletionItemKind.Method
+  }
+
+  completionItem(): CompletionItem {
+    const item = new CompletionItem(this.completionItemLabel(), this.completionItemKind())
+    item.preselect = true
+    item.commitCharacters = ['.']
+    const text = new SnippetString(`${this.name}`)
+    text.appendText('(')
+    let { size } = this.members
+    this.members.forEach((value) => {
+      text.appendTabstop().appendPlaceholder(`${value.name}: ${value.type_?.name}`)
+      size -= 1
+      if (size !== 0) {
+        text.appendText(', ')
+      }
+    })
+    text.appendText(')')
+    item.insertText = text
+    return item
   }
 
   label(): string {
@@ -30,48 +63,15 @@ export class Method extends Base {
 
   public static FromContext(ctx: MethodDeclContext): Method {
     const method = new Method(ctx.IDENTIFIER())
-    ctx
-      .paramList()
-      ?.param()
-      .forEach((varCtx) => {
-        method.add(Variable.FromContext(varCtx).setParent(method))
-      })
-
-    method.detail = ''
-    if (ctx.annotation()) {
-      method.detail += `${ctx.annotation()?.text} `
-    }
+    method.setRange(ctx.start, ctx.stop)
+    method.setRuleContext(ctx)
     if (ctx.PUB()) {
       method.isPub = true
-      method.detail += `${ctx.PUB()?.text} `
     }
-    method.detail += `${ctx.FN().text} `
-    method.detail += `${ctx.IDENTIFIER().text}`
-
-    if (ctx.L_PAREN()) {
-      method.detail += `${ctx.L_PAREN()?.text} `
-    }
-
-    if (ctx.paramList()) {
-      method.detail += `${ctx.paramList()?.text}`
-    }
-
-    if (ctx.R_PAREN()) {
-      method.detail += `${ctx.R_PAREN()?.text} `
-    }
-
-    if (ctx.R_ARROW()) {
-      method.detail += `${ctx.R_ARROW()?.text} `
-    }
-
-    if (ctx.result()) {
-      method.detail += `${ctx.result()?.text} `
-    }
-
-    method.range(ctx.IDENTIFIER().symbol, ctx.block()?.R_CURLY().symbol)
-
+    const context = new Context(method)
+    context.paramListContext(ctx.paramList())
     const block = ctx.block()
-    if (block) method.append(blockContext(block))
+    if (block) method.append(...context.blockContext(block))
     return method
   }
 }

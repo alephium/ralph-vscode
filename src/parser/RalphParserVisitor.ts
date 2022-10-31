@@ -5,13 +5,14 @@ import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
 
 import { SourceFileContext } from "./RalphParser";
 import { IdentifierListContext } from "./RalphParser";
+import { VarDeclSingleContext } from "./RalphParser";
+import { VarDeclMultiContext } from "./RalphParser";
 import { VarDeclContext } from "./RalphParser";
 import { VarNameContext } from "./RalphParser";
-import { VarNamesContext } from "./RalphParser";
 import { ExpressionContext } from "./RalphParser";
 import { ExpressionListContext } from "./RalphParser";
 import { CallChainContext } from "./RalphParser";
-import { CallContext } from "./RalphParser";
+import { MethodCallContext } from "./RalphParser";
 import { PrimaryExprContext } from "./RalphParser";
 import { PrimitiveTypeContext } from "./RalphParser";
 import { ArrayTypeContext } from "./RalphParser";
@@ -42,6 +43,7 @@ import { EmptyStmtContext } from "./RalphParser";
 import { ReturnStmtContext } from "./RalphParser";
 import { IfStmtContext } from "./RalphParser";
 import { WhileStmtContext } from "./RalphParser";
+import { ForStmtContext } from "./RalphParser";
 import { EosContext } from "./RalphParser";
 
 
@@ -68,6 +70,20 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitIdentifierList?: (ctx: IdentifierListContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by `RalphParser.varDeclSingle`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVarDeclSingle?: (ctx: VarDeclSingleContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.varDeclMulti`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVarDeclMulti?: (ctx: VarDeclMultiContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by `RalphParser.varDecl`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -80,13 +96,6 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitVarName?: (ctx: VarNameContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `RalphParser.varNames`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitVarNames?: (ctx: VarNamesContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.expression`.
@@ -110,11 +119,11 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitCallChain?: (ctx: CallChainContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `RalphParser.call`.
+	 * Visit a parse tree produced by `RalphParser.methodCall`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitCall?: (ctx: CallContext) => Result;
+	visitMethodCall?: (ctx: MethodCallContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.primaryExpr`.
@@ -325,6 +334,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitWhileStmt?: (ctx: WhileStmtContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.forStmt`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitForStmt?: (ctx: ForStmtContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.eos`.

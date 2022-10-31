@@ -1,4 +1,4 @@
-import { Base } from '../ast/base'
+import { Root } from '../ast/root'
 
-let cache: Map<string, Base>
-export default cache = new Map<string, Base>()
+const cache = new Root()
+export default cache

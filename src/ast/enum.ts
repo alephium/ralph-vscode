@@ -4,7 +4,8 @@ import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Base } from './base'
 import { EnumContext } from '../parser/RalphParser'
 import { SemanticNode } from './ast'
-import { IdentifierKind } from './identifier'
+import { IdentifierKind } from './kinder'
+import { Identifier } from './identifier'
 
 export class Enum extends Base {
   symbolKind(): SymbolKind {
@@ -15,14 +16,22 @@ export class Enum extends Base {
     return CompletionItemKind.Enum
   }
 
+  constructor(node: TerminalNode) {
+    super(node)
+    this.identifierKind = IdentifierKind.Enum
+  }
+
   public static FromContext(ctx: EnumContext): Enum {
     const enumValue = new Enum(ctx.IDENTIFIER())
-    ctx.varNameAssign().forEach((value) => {
-      const member = new EnumMember(value.varName().IDENTIFIER()).setParent(enumValue)
-      member.detail = value.text
-      enumValue.add(member)
-    })
+    enumValue.ruleContext = ctx
+    ctx
+      .varNameAssign()
+      .forEach((value) => enumValue.add(new EnumMember(value.varName().IDENTIFIER()).setParent(enumValue).setRuleContext(value)))
     return enumValue
+  }
+
+  getType(): Identifier | undefined {
+    return this
   }
 }
 
@@ -38,5 +47,9 @@ class EnumMember extends SemanticNode {
   constructor(node: TerminalNode) {
     super(node)
     this.identifierKind = IdentifierKind.Variable
+  }
+
+  getType(): Identifier | undefined {
+    return this.parent
   }
 }

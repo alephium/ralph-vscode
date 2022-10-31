@@ -1,11 +1,26 @@
 import { Token } from 'antlr4ts/Token'
 import * as vscode from 'vscode'
-import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Range, SymbolKind, Uri } from 'vscode'
+import {
+  CompletionItem,
+  CompletionItemKind,
+  CompletionItemLabel,
+  DocumentSymbol,
+  Hover,
+  Location,
+  MarkdownString,
+  Range,
+  SymbolInformation,
+  SymbolKind,
+  Uri,
+} from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
+import { RuleNode } from 'antlr4ts/tree/RuleNode'
 import MapKinds from '../util/kind'
-import { Identifier, IdentifierKind, SemanticsKind } from './identifier'
+import { Identifier } from './identifier'
 import { Word } from './word'
 import { Position } from './position'
+import { IdentifierKind, SemanticsKind } from './kinder'
+import { RalphParser } from '../parser/RalphParser'
 
 export class SemanticNode implements Identifier {
   name: string | undefined
@@ -16,65 +31,61 @@ export class SemanticNode implements Identifier {
 
   kind: number | undefined
 
-  detail: string | undefined
-
-  point: vscode.Position | undefined
+  _detail: string | undefined
 
   uri: Uri | undefined
 
   /** * action scope ** */
-  scope: Range | undefined
+  range: Range | undefined
 
   parent: Identifier | undefined
+
+  ruleContext: RuleNode | undefined
+
+  token?: Token
 
   constructor(node?: TerminalNode) {
     if (node) {
       this.name = node.symbol.text!
-      this.detail = this.name
+      this._detail = this.name
       this.semanticsKind = SemanticsKind.Def
       this.identifierKind = IdentifierKind.Type
-      this.range(node.symbol, node.symbol)
+      this.setRange(node.symbol, node.symbol)
+      this.token = node.symbol
     }
+  }
+
+  get point(): vscode.Position | undefined {
+    if (this.token) this.convert(this.token)
+    return undefined
   }
 
   convert(token: Token): vscode.Position {
     return new vscode.Position(token.line - 1, token.charPositionInLine)
   }
 
-  range(begin: Token, end: Token | undefined) {
-    this.scope = new vscode.Range(this.convert(begin), this.convert(end ?? begin))
+  setRange(begin: Token, end: Token | undefined): this {
+    this.range = new vscode.Range(this.convert(begin), this.convert(end ?? begin))
+    return this
   }
 
-  findOne(condition: Word): Identifier | undefined {
-    if (this.isScope(condition)) {
-      if (condition.name === this.name) return this
+  findAll(condition: Word): Identifier[] {
+    if (condition.name === this.name) return [this]
+    return []
+  }
+
+  find?(word: Word): Identifier | undefined {
+    if (this.point?.isEqual(word.point!) && word.name === this.name) {
+      return this
     }
     return undefined
   }
 
-  findAll(condition: Word): Identifier[] | undefined {
-    const one = this.findOne(condition)
-    if (one) {
-      return [one]
-    }
-    return one
-  }
-
-  find(condition: Word): Identifier[] | undefined {
-    if (this.isScope(condition)) {
-      if (condition.name === this.name) return [this]
+  container(position: Position): Identifier | undefined {
+    if (this.contains(position)) {
+      return this.parent
     }
     return undefined
-  }
-
-  container(position?: Position): Identifier | undefined {
-    if (position) {
-      if (this.isScope(position)) {
-        return this.parent
-      }
-      return undefined
-    }
-    return this.parent
   }
 
   isDef(): boolean {
@@ -85,15 +96,15 @@ export class SemanticNode implements Identifier {
     return this.semanticsKind === SemanticsKind.Ref
   }
 
-  isScope(position: Position): boolean {
+  contains(position: Position): boolean {
     this.uri = this.getUri()
     if (this.uri && position.uri) {
       if (this.uri.path !== position.uri.path) {
         return false
       }
     }
-    if (this.scope) {
-      return this.scope.contains(position.point!)
+    if (this.range) {
+      return this.range.contains(position.point!)
     }
     return false
   }
@@ -102,8 +113,8 @@ export class SemanticNode implements Identifier {
     return `name: ${this.name},
             detail: ${this.detail}, 
             uri?.path: ${this.getUri()?.path ?? ''},
-            scope?.start.line: ${this.scope?.start.line ?? 0},
-            scope?.end.line: ${this.scope?.end.line ?? 0}
+            scope?.start.line: ${this.range?.start.line ?? 0},
+            scope?.end.line: ${this.range?.end.line ?? 0}
             `
   }
 
@@ -129,14 +140,33 @@ export class SemanticNode implements Identifier {
     return this.parent?.getUri?.()
   }
 
+  getChild(): Identifier[] {
+    return []
+  }
+
+  defs(): Identifier[] {
+    return []
+  }
+
+  ref(): Identifier[] {
+    return []
+  }
+
+  def(word: Word): Identifier | undefined {
+    if (this.isDef() && word.name === this.name) {
+      return this
+    }
+    return undefined
+  }
+
   symbolKind(): SymbolKind {
     return MapKinds().get(this.kind!)!
   }
 
   completionItemLabel(): CompletionItemLabel {
     return {
-      label: this.label(),
-      // detail: this.detail,
+      label: this.name!,
+      // detail: this.label(),
       description: this.detail,
     }
   }
@@ -150,10 +180,50 @@ export class SemanticNode implements Identifier {
   }
 
   documentSymbol(): DocumentSymbol {
-    return new DocumentSymbol(this.label(), this.detail!, this.symbolKind(), this.scope!, this.scope!)
+    return new DocumentSymbol(this.label(), this.detail, this.symbolKind(), this.range!, this.range!)
+  }
+
+  symbolInformation(): SymbolInformation {
+    return new SymbolInformation(this.label(), this.symbolKind(), this.range!, this.getUri()!, this.parent?.name)
   }
 
   completionItem(): CompletionItem {
     return new CompletionItem(this.completionItemLabel(), this.completionItemKind())
+  }
+
+  hover(): Hover {
+    return new vscode.Hover(new MarkdownString().appendMarkdown(`\r\t ${this.detail} \r\t`))
+  }
+
+  location(): Location {
+    return new Location(this.getUri()!, this.range!.start)
+  }
+
+  parser(): RalphParser | undefined {
+    return this.parent?.parser?.()
+  }
+
+  set detail(detail: string) {
+    this._detail = detail
+  }
+
+  get detail(): string {
+    const parser = this.parser()
+    if (parser && this.ruleContext) {
+      return parser.inputStream.getText(this.ruleContext.sourceInterval)
+    }
+    if (this._detail) return this._detail
+    return `${this.name}`
+  }
+
+  setRuleContext(ctx: RuleNode): this {
+    this.ruleContext = ctx
+    return this
+  }
+
+  getWordRange(): Range | undefined {
+    if (this.token)
+      return new vscode.Range(this.convert(this.token), this.convert(this.token).translate({ characterDelta: this.name?.length }))
+    return undefined
   }
 }

@@ -10,12 +10,12 @@ export class Compiler {
 
   log: logger.Logger
 
-  option: Option | undefined
+  option: CompileOption | undefined
 
   constructor() {
     this.log = new logger.Logger('Compiler')
     this.cmd = vscode.workspace.getConfiguration().get('ralph.compile.command')
-    this.option = vscode.workspace.getConfiguration().get('ralph.compile.option') as Option
+    this.option = vscode.workspace.getConfiguration().get('ralph.compile.option') as CompileOption
   }
 
   async compiler(editor: vscode.TextEditor) {

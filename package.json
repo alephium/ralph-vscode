@@ -2,7 +2,7 @@
   "name": "ralph-vscode",
   "displayName": "ralph vscode",
   "description": "ralph vscode",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v18.0.0"
@@ -47,11 +47,19 @@
     "commands": [
       {
         "command": "ralph.download",
-        "title": "Ralph: Download"
+        "title": "Ralph Download"
       },
       {
         "command": "ralph.compile",
-        "title": "Ralph: Compile"
+        "title": "Ralph Compile"
+      },
+      {
+        "command": "ralph.online.compile",
+        "title": "Ralph Online Compile"
+      },
+      {
+        "command": "ralph.online.deploy",
+        "title": "Ralph Online Deploy"
       }
     ],
     "configuration": {
@@ -120,6 +128,45 @@
           "type": "boolean",
           "default": false,
           "description": "debug mode"
+        },
+        "ralph.online.configuration": {
+          "type": "object",
+          "default": {
+            "deploymentScriptDir": "deploymentDir",
+            "sourceDir": "contracts",
+            "artifactDir": "artifacts",
+            "defaultNetwork": "devnet",
+            "toDeployGroups": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "networks": {
+              "devnet": {
+                "nodeUrl": "http://localhost:22973",
+                "mnemonic": "vault alarm sad mass witness property virus style good flower rice alpha viable evidence run glare pretty scout evil judge enroll refuse another lava",
+                "settings": {
+                  "issueTokenAmount": "100n"
+                }
+              },
+              "testnet": {
+                "nodeUrl": "http://localhost:22973",
+                "mnemonic": "vault alarm sad mass witness property virus style good flower rice alpha viable evidence run glare pretty scout evil judge enroll refuse another lava",
+                "settings": {
+                  "issueTokenAmount": "100n"
+                }
+              },
+              "mainnet": {
+                "nodeUrl": "http://localhost:22973",
+                "mnemonic": "vault alarm sad mass witness property virus style good flower rice alpha viable evidence run glare pretty scout evil judge enroll refuse another lava",
+                "settings": {
+                  "issueTokenAmount": "100n"
+                }
+              }
+            }
+          },
+          "description": "alephium configuration"
         }
       }
     },
@@ -146,12 +193,22 @@
         {
           "command": "ralph.compile",
           "when": "resourceLangId == ralph",
-          "group": "navigation@1"
+          "group": "1_ralph@1"
         },
         {
           "command": "ralph.download",
           "when": "resourceLangId == ralph",
-          "group": "navigation@2"
+          "group": "1_ralph@2"
+        },
+        {
+          "command": "ralph.online.compile",
+          "when": "resourceLangId == ralph",
+          "group": "1_ralph@3"
+        },
+        {
+          "command": "ralph.online.deploy",
+          "when": "resourceLangId == ralph",
+          "group": "1_ralph@4"
         }
       ]
     },
@@ -199,6 +256,9 @@
     "antlr4ts": "antlr4ts -visitor ./src/parser/*.g4"
   },
   "dependencies": {
+    "@alephium/cli": "^0.2.0-rc.36",
+    "@alephium/web3": "^0.2.0-rc.36",
+    "@alephium/web3-test": "^0.2.0-rc.36",
     "antlr4ts": "^0.5.0-alpha.4",
     "execa": "^6.1.0",
     "node-fetch": "^3.2.10",
@@ -209,6 +269,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.3.3",
+    "@types/crypto-js": "^4.1.1",
     "@types/node": "^18.8.2",
     "@types/prettier": "^2.7.1",
     "@types/request-promise-native": "^1.0.18",

@@ -1,31 +1,40 @@
 import * as vscode from 'vscode'
-import { IntelliSense, Kinder } from './kinder'
+import {
+  CompletionItem,
+  CompletionItemKind,
+  CompletionItemLabel,
+  DocumentSymbol,
+  Hover,
+  Location,
+  SymbolInformation,
+  SymbolKind,
+} from 'vscode'
+import { RuleNode } from 'antlr4ts/tree/RuleNode'
+import { Kinder, IdentifierKind, SemanticsKind } from './kinder'
 // eslint-disable-next-line import/no-cycle
 import { Finder } from './finder'
 import { Position } from './position'
+import { RalphParser } from '../parser/RalphParser'
 
-export enum IdentifierKind {
-  Variable = 0,
-  Method = 1,
-  Event = 2,
-  Type = 3,
-}
-
-export enum SemanticsKind {
-  Ref = 0,
-  Def = 1,
+export interface IntelliSense {
+  symbolKind?(): SymbolKind
+  completionItemKind?(): CompletionItemKind
+  completionItemLabel?(): CompletionItemLabel
+  documentSymbol?(): DocumentSymbol
+  symbolInformation?(): SymbolInformation
+  completionItem?(): CompletionItem
+  hover?(): Hover
+  location?(): Location
 }
 
 export interface Identifier extends Kinder, Finder, Position, IntelliSense {
   name?: string
 
-  identifierKind?: IdentifierKind
-
-  semanticsKind?: SemanticsKind
-
-  scope?: vscode.Range
+  range?: vscode.Range
 
   detail?: string
+
+  ruleContext?: RuleNode
 
   parent?: Identifier
 
@@ -35,7 +44,7 @@ export interface Identifier extends Kinder, Finder, Position, IntelliSense {
 
   toString?(): string
 
-  isScope?(identifier: Position): boolean
+  contains?(identifier: Position): boolean
 
   isDef?(): boolean
 
@@ -55,7 +64,11 @@ export interface Identifier extends Kinder, Finder, Position, IntelliSense {
 
   add?(member: Identifier): void
 
-  append?(identifiers: Identifier[]): void
+  append?(...identifiers: Identifier[]): void
 
   label?(): string
+
+  parser?(): RalphParser | undefined
+
+  getWordRange?(): vscode.Range | undefined
 }
