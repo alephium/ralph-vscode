@@ -1,5 +1,14 @@
 import * as vscode from 'vscode'
-import { CompletionItem, CompletionItemKind, CompletionItemLabel, DocumentSymbol, Hover, Location, SymbolKind } from 'vscode'
+import {
+  CompletionItem,
+  CompletionItemKind,
+  CompletionItemLabel,
+  DocumentSymbol,
+  Hover,
+  Location,
+  SymbolInformation,
+  SymbolKind,
+} from 'vscode'
 import { RuleNode } from 'antlr4ts/tree/RuleNode'
 import { Kinder, IdentifierKind, SemanticsKind } from './kinder'
 // eslint-disable-next-line import/no-cycle
@@ -12,6 +21,7 @@ export interface IntelliSense {
   completionItemKind?(): CompletionItemKind
   completionItemLabel?(): CompletionItemLabel
   documentSymbol?(): DocumentSymbol
+  symbolInformation?(): SymbolInformation
   completionItem?(): CompletionItem
   hover?(): Hover
   location?(): Location
