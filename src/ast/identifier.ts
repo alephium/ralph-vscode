@@ -20,10 +20,6 @@ export interface IntelliSense {
 export interface Identifier extends Kinder, Finder, Position, IntelliSense {
   name?: string
 
-  identifierKind?: IdentifierKind
-
-  semanticsKind?: SemanticsKind
-
   range?: vscode.Range
 
   detail?: string
