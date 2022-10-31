@@ -37,6 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
   hoverProvider().forEach((value) => context.subscriptions.push(vscode.languages.registerHoverProvider(selector, value)))
   context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(selector, new FormatterProvider()))
   context.subscriptions.push(vscode.languages.registerDocumentSymbolProvider(selector, new SymbolProvider()))
+  context.subscriptions.push(vscode.languages.registerWorkspaceSymbolProvider(new SymbolProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GlobalProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new BuiltInProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new IdentifierProvider()))

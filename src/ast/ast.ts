@@ -9,6 +9,7 @@ import {
   Location,
   MarkdownString,
   Range,
+  SymbolInformation,
   SymbolKind,
   Uri,
 } from 'vscode'
@@ -180,6 +181,10 @@ export class SemanticNode implements Identifier {
 
   documentSymbol(): DocumentSymbol {
     return new DocumentSymbol(this.label(), this.detail, this.symbolKind(), this.range!, this.range!)
+  }
+
+  symbolInformation(): SymbolInformation {
+    return new SymbolInformation(this.label(), this.symbolKind(), this.range!, this.getUri()!, this.parent?.name)
   }
 
   completionItem(): CompletionItem {
