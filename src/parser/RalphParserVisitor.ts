@@ -19,7 +19,6 @@ import { ArrayTypeContext } from "./RalphParser";
 import { ArrayExprContext } from "./RalphParser";
 import { TypeNameContext } from "./RalphParser";
 import { ResultContext } from "./RalphParser";
-import { ParamAnnotationContext } from "./RalphParser";
 import { ParamContext } from "./RalphParser";
 import { ParamListContext } from "./RalphParser";
 import { MethodDeclContext } from "./RalphParser";
@@ -166,13 +165,6 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitResult?: (ctx: ResultContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `RalphParser.paramAnnotation`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitParamAnnotation?: (ctx: ParamAnnotationContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.param`.
