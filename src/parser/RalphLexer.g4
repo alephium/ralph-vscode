@@ -39,6 +39,7 @@ EVENT                  :'event';
 EMIT                   :'emit';
 
 //@using|using
+ATUSING                :'@using';
 USING                  :'using';
 AT                     :'@';
 BOOL                   :'Bool';
@@ -48,6 +49,7 @@ BYTE                   :'Byte';
 BYTEVEC                :'ByteVec';
 ADDRESS                :'Address';
 
+ATUNUSED               :'@unused';
 UNUSED                 :'unused';
 
 //->

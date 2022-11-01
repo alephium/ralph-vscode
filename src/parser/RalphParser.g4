@@ -88,10 +88,7 @@ result
     | L_PAREN (typeName (COMMA typeName)* COMMA?)? R_PAREN
     ;
 
-
-paramAnnotation: AT 'unused';
-
-param: paramAnnotation? MUT? IDENTIFIER COLON typeName;
+param: ATUNUSED? MUT? IDENTIFIER COLON typeName;
 
 paramList: (param COMMA?)*;
 
@@ -149,7 +146,7 @@ emit
 
 //  [@using(preapprovedAssets = <Bool>, assetsInContract = <Bool>)]
 annotation
-    : AT USING L_PAREN expressionList R_PAREN
+    : ATUSING L_PAREN expressionList R_PAREN
     ;
 
 block: L_CURLY (statement)* R_CURLY;
