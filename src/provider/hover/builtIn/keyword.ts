@@ -4,6 +4,11 @@ import { Filter } from '../../filter'
 
 export const keyword = [
   {
+    name: 'const',
+    detail: 'const varName = value',
+    kind: 'keyword',
+  },
+  {
     name: 'let',
     detail: 'Assignment: let [mut] <name> = ...',
     kind: 'keyword',
@@ -49,6 +54,11 @@ export const keyword = [
     kind: 'keyword',
   },
   {
+    name: 'for',
+    detail: 'for (let mut index = 0; index <= length; index = index + 1){...}',
+    kind: 'keyword',
+  },
+  {
     name: 'event',
     detail: 'event <TupleName>(field1: <type>, field2: <type>, fieldN: <type>, ...)',
     kind: 'keyword',
@@ -86,6 +96,41 @@ export const keyword = [
   {
     name: 'TxScript',
     detail: 'TxScript <ScriptName>([mut] fieldN: <type>) { ... }',
+    kind: 'keyword',
+  },
+  {
+    name: 'enum',
+    detail: 'enum{...}',
+    kind: 'keyword',
+  },
+  {
+    name: 'Abstract',
+    detail: 'Abstract',
+    kind: 'keyword',
+  },
+  {
+    name: 'using',
+    detail: '@using(approvedAssets = true)',
+    kind: 'keyword',
+  },
+  {
+    name: '@using',
+    detail: '@using(approvedAssets = true)',
+    kind: 'keyword',
+  },
+  {
+    name: 'unused',
+    detail: '@unused value: type',
+    kind: 'keyword',
+  },
+  {
+    name: '@unused',
+    detail: '@unused value: type',
+    kind: 'keyword',
+  },
+  {
+    name: 'alph',
+    detail: 'alph',
     kind: 'keyword',
   },
 ]
