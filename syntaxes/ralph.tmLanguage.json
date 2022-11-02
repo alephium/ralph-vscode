@@ -69,7 +69,7 @@
           "name": "keyword.event.ralph"
         },
         {
-          "match": "\\b(@using|using|!)\\b",
+          "match": "\\b(@using|using|@unused|unused|!)\\b",
           "name": "keyword.annotation.ralph"
         },
         {
