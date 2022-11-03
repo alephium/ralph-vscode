@@ -1,4 +1,4 @@
-import { CompletionItem, CompletionItemKind, SnippetString, SymbolKind } from 'vscode'
+import { CompletionItem, CompletionItemKind, SignatureHelp, SignatureInformation, SnippetString, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Base } from './base'
 import { MethodDeclContext } from '../parser/RalphParser'
@@ -33,6 +33,10 @@ export class Method extends Base {
 
   completionItemKind(): CompletionItemKind {
     return CompletionItemKind.Method
+  }
+
+  signatureInformation(): SignatureInformation {
+    return new SignatureInformation(this.paramList())
   }
 
   completionItem(): CompletionItem {
