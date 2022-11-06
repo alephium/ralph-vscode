@@ -1,5 +1,6 @@
-import { CompletionItem, CompletionItemKind, SignatureHelp, SignatureInformation, SnippetString, SymbolKind } from 'vscode'
+import { CompletionItem, CompletionItemKind, SignatureInformation, SnippetString, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
+import { Interval } from 'antlr4ts/misc/Interval'
 import { Base } from './base'
 import { MethodDeclContext } from '../parser/RalphParser'
 import { Context } from './context'
@@ -76,6 +77,7 @@ export class Method extends Base {
     context.paramListContext(ctx.paramList())
     const block = ctx.block()
     if (block) method.append(...context.blockContext(block))
+    method._sourceInterval = new Interval((ctx.PUB() ?? ctx.FN()).sourceInterval.a, (ctx.result() ?? ctx.R_PAREN()).sourceInterval.b)
     return method
   }
 }

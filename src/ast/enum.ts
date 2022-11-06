@@ -1,6 +1,7 @@
 // eslint-disable-next-line max-classes-per-file
 import { CompletionItemKind, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
+import { Interval } from 'antlr4ts/misc/Interval'
 import { Base } from './base'
 import { EnumContext } from '../parser/RalphParser'
 import { SemanticNode } from './ast'
@@ -24,6 +25,7 @@ export class Enum extends Base {
   public static FromContext(ctx: EnumContext): Enum {
     const enumValue = new Enum(ctx.IDENTIFIER())
     enumValue.ruleContext = ctx
+    enumValue._sourceInterval = new Interval(ctx.ENUM().sourceInterval.a, ctx.IDENTIFIER().sourceInterval.b)
     ctx
       .varNameAssign()
       .forEach((value) => enumValue.add(new EnumMember(value.varName().IDENTIFIER()).setParent(enumValue).setRuleContext(value)))

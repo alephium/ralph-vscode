@@ -17,15 +17,7 @@ export class SymbolProvider implements vscode.DocumentSymbolProvider, vscode.Wor
     return cache
       .defs()
       ?.filter((c) => c.getUri?.()?.path === document.uri.path)
-      .map((contract) => {
-        const item = contract.documentSymbol!()
-        if (item) {
-          contract.defs?.().forEach((member) => {
-            item.children.push(member.documentSymbol!())
-          })
-        }
-        return item
-      })
+      .map((item) => item.documentSymbol!())
   }
 
   /**
