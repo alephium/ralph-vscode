@@ -19,7 +19,6 @@ import { ArrayTypeContext } from "./RalphParser";
 import { ArrayExprContext } from "./RalphParser";
 import { TypeNameContext } from "./RalphParser";
 import { ResultContext } from "./RalphParser";
-import { ParamAnnotationContext } from "./RalphParser";
 import { ParamContext } from "./RalphParser";
 import { ParamListContext } from "./RalphParser";
 import { MethodDeclContext } from "./RalphParser";
@@ -227,17 +226,6 @@ export interface RalphParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitResult?: (ctx: ResultContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `RalphParser.paramAnnotation`.
-	 * @param ctx the parse tree
-	 */
-	enterParamAnnotation?: (ctx: ParamAnnotationContext) => void;
-	/**
-	 * Exit a parse tree produced by `RalphParser.paramAnnotation`.
-	 * @param ctx the parse tree
-	 */
-	exitParamAnnotation?: (ctx: ParamAnnotationContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.param`.

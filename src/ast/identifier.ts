@@ -6,6 +6,7 @@ import {
   DocumentSymbol,
   Hover,
   Location,
+  SignatureInformation,
   SymbolInformation,
   SymbolKind,
 } from 'vscode'
@@ -23,6 +24,7 @@ export interface IntelliSense {
   documentSymbol?(): DocumentSymbol
   symbolInformation?(): SymbolInformation
   completionItem?(): CompletionItem
+  signatureInformation?(): SignatureInformation
   hover?(): Hover
   location?(): Location
 }
