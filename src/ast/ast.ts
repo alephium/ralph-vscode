@@ -21,6 +21,7 @@ import { Word } from './word'
 import { Position } from './position'
 import { IdentifierKind, SemanticsKind } from './kinder'
 import { RalphParser } from '../parser/RalphParser'
+import { Interval } from 'antlr4ts/misc/Interval'
 
 export class SemanticNode implements Identifier {
   name: string | undefined
@@ -32,6 +33,8 @@ export class SemanticNode implements Identifier {
   kind: number | undefined
 
   _detail: string | undefined
+
+  _sourceInterval: Interval | undefined
 
   uri: Uri | undefined
 
@@ -210,6 +213,9 @@ export class SemanticNode implements Identifier {
   get detail(): string {
     const parser = this.parser()
     if (parser && this.ruleContext) {
+      if (this._sourceInterval) {
+        return parser.inputStream.getText(this._sourceInterval)
+      }
       return parser.inputStream.getText(this.ruleContext.sourceInterval)
     }
     if (this._detail) return this._detail
