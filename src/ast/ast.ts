@@ -15,13 +15,13 @@ import {
 } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { RuleNode } from 'antlr4ts/tree/RuleNode'
+import { Interval } from 'antlr4ts/misc/Interval'
 import MapKinds from '../util/kind'
 import { Identifier } from './identifier'
 import { Word } from './word'
 import { Position } from './position'
 import { IdentifierKind, SemanticsKind } from './kinder'
 import { RalphParser } from '../parser/RalphParser'
-import { Interval } from 'antlr4ts/misc/Interval'
 
 export class SemanticNode implements Identifier {
   name: string | undefined
