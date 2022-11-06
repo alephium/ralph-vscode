@@ -1,4 +1,4 @@
-import { CompletionItemKind, SymbolKind } from 'vscode'
+import { CompletionItemKind, DocumentSymbol, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Identifier } from './identifier'
 import { IdentifierKind, SemanticsKind } from './kinder'
@@ -110,5 +110,11 @@ export class Base extends SemanticNode implements Finder {
       return this._parser
     }
     return super.parser()
+  }
+
+  documentSymbol(): DocumentSymbol {
+    const doc = super.documentSymbol()
+    doc.children = Array.from(this.members.values()).map((child) => child.documentSymbol!())
+    return doc
   }
 }
