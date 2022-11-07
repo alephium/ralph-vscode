@@ -53,7 +53,7 @@
           "name": "keyword.let.ralph"
         },
         {
-          "match": "\\b(fn|pub|payable)\\b",
+          "match": "\\b(fn|pub)\\b",
           "name": "keyword.function.ralph"
         },
         {

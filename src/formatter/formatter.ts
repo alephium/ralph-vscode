@@ -37,7 +37,6 @@ export class FormatterProvider implements vscode.DocumentFormattingEditProvider 
       'Interface',
       'fn',
       'pub',
-      'payable',
       'extends',
       'Abstract',
       'implements',

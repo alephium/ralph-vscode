@@ -25,17 +25,17 @@ export const keyword = [
   },
   {
     name: 'pub',
-    detail: 'Function: [pub] [payable] fn <name>(arg: <type>) -> <type> { return <thingN, ...> }',
+    detail: 'Function: [pub] fn <name>(arg: <type>) -> <type> { return <thingN, ...> }',
     kind: 'keyword',
   },
   {
     name: 'fn',
-    detail: 'Function: [pub] [payable] fn <name>(arg: <type>) -> <type> { return <thingN, ...> }',
+    detail: 'Function: [pub] fn <name>(arg: <type>) -> <type> { return <thingN, ...> }',
     kind: 'keyword',
   },
   {
     name: 'return',
-    detail: 'Function: [pub] [payable] fn <name>(arg: <type>) -> <type> { return <thingN, ...> }',
+    detail: 'Function: [pub] fn <name>(arg: <type>) -> <type> { return <thingN, ...> }',
     kind: 'keyword',
   },
   {
