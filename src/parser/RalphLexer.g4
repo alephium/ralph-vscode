@@ -2,10 +2,6 @@ lexer grammar RalphLexer;
 
 // LEXER
 // src/main/scala/org/alephium/protocol/vm/lang/Lexer.scala
-// Keywords
-// IMPORT                 : 'import';
-// PACKAGE                : 'package';
-// PAYABLE                : 'payable';
 FN                     : 'fn';
 PUB                    : 'pub';
 RETURN                 : 'return' ;
@@ -22,11 +18,6 @@ WHILE                  : 'while';
 FOR                    : 'for';
 // BREAK                  : 'break';
 // CONTINUE               : 'continue';
-// DEFAULT                : 'default';
-// GOTO                   : 'goto';
-// SWITCH                 : 'switch';
-// CASE                   : 'case';
-// TYPE                   : 'type';
 
 LET                    : 'let';
 CONST                  : 'const';

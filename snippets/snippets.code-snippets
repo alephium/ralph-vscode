@@ -142,19 +142,19 @@
 		"description": "emit"
 	},
 	//----------------------------------------------------------------------------------------------------------------
-	"pub payable fn main() -> () {}": {
+	"pub fn main() -> () {}": {
 		"prefix": "main",
 		"body": [
-			"pub payable fn main() -> ${1:()} {",
+			"pub fn main() -> ${1:()} {",
 				"\t$2",
 			"}"
 		],
 		"description": "To create an main function"
 	},
-	"pub payable fn $1(arg: $2) -> $3": {
+	"pub fn $1(arg: $2) -> $3": {
 		"prefix": "fn",
 		"body": [
-			"pub payable fn $1(arg: $2) -> ($3) {",
+			"pub fn $1(arg: $2) -> ($3) {",
 				"\t$4",
 				"\treturn $5",  
 			"}"
@@ -223,7 +223,7 @@
 		"body": [
 			"// invoke contract:",
 			"TxScript $1 {",
-				"\tpub payable fn main() -> () {",
+				"\tpub fn main() -> () {",
 					"\t\t$2",
 				"\t}",
 			"}"
@@ -235,7 +235,7 @@
 		"body": [
 			"// invoke contract:",
 			"TxScript $1 {",
-			   "\tpub payable fn main() -> () {",
+			   "\tpub fn main() -> () {",
 			   		"\t\t$2",
 			   "\t}",
 			"}"
