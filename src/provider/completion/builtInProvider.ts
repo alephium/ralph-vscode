@@ -44,7 +44,8 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
       .map((item) => {
         const method = new CompletionItem(
           {
-            label: `🔓${item.name}!${item.signature.substring(item.signature.indexOf('('), item.signature.indexOf(')') + 1)}`,
+            // label: `🔓${item.name}!${item.signature.substring(item.signature.indexOf('('), item.signature.indexOf(')') + 1)}`,
+            label: `🔓${item.signature.substring(3)}`,
             // detail: item.signature, //TODO
             description: item.doc,
           },
