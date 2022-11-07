@@ -20,5 +20,5 @@ export function parse(text: string, parsers: any, options: any) {
   const tokenStream = new CommonTokenStream(lexer)
   const parser = new RalphParser(tokenStream)
   // Parse the input, where `sourceFile` is whatever entry point you defined
-  const tree = parser.sourceFile()
+  const root = parser.sourceFile()
 }
