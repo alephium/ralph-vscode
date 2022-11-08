@@ -11,15 +11,17 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
 - Snippet ✅
 - Formatting ✅（simple format）
 - Complie ✅ ( ctl[cmd] + shift + p => Ralph: compile )
-- IntelliSense ⏳
-  - Provide a hover for builtIn function and primitive type. ✅
+- IntelliSense ✅
   - Provide a hover for the given code position. ✅
   - Document symbol provider. ✅
-  - Jump to definition. ✅
-  - Rename Variable. ✅
-- Linting ✅
-- Debugging ⏳
-- Deploy ⏳
+  - Rename Symbol. ✅
+  - Symbol completion. ✅
+  - Find All symbol. ✅
+  - Go to symbol. ✅
+  - Peek symbol. ✅
+  - ...
+- Linting. ✅
+- Deploy. ✅
 
 ## Extension Settings
 

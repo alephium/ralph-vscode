@@ -58,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {}
 
 async function init() {
-  const files = await vscode.workspace.findFiles('**/*.ral')
+  const files = await vscode.workspace.findFiles('**/*.ral', '**/node_modules/**')
   files.forEach(async (uri) => {
     const doc = await vscode.workspace.openTextDocument(uri)
     Parser(doc.uri, doc.getText())
