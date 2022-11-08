@@ -2,7 +2,7 @@
   "name": "ralph-vscode",
   "displayName": "ralph vscode",
   "description": "ralph vscode",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v18.0.0"
@@ -73,7 +73,7 @@
         "ralph.download.config.url": {
           "type": "string",
           "description": "download link",
-          "default": "https://github.com/alephium/ralphc/releases/download/v1.5.0-rc11/ralphc.jar"
+          "default": "https://github.com/alephium/ralphc/releases/download/v1.5.0/ralphc.jar"
         },
         "ralph.download.config.target": {
           "type": "string",
