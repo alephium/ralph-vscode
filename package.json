@@ -265,7 +265,8 @@
     "prettier": "^2.7.1",
     "request": "^2.88.2",
     "request-progress": "^3.0.0",
-    "request-promise-native": "^1.0.9"
+    "request-promise-native": "^1.0.9",
+    "semver": "^7.3.8"
   },
   "devDependencies": {
     "@types/chai": "^4.3.3",
