@@ -9,6 +9,7 @@ import {
   SignatureInformation,
   SymbolInformation,
   SymbolKind,
+  TypeHierarchyItem,
 } from 'vscode'
 import { RuleNode } from 'antlr4ts/tree/RuleNode'
 import { Kinder, IdentifierKind, SemanticsKind } from './kinder'
@@ -27,6 +28,7 @@ export interface IntelliSense {
   signatureInformation?(): SignatureInformation
   hover?(): Hover
   location?(): Location
+  typeHierarchyItem?(): TypeHierarchyItem
 }
 
 export interface Identifier extends Kinder, Finder, Position, IntelliSense {

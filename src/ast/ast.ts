@@ -11,6 +11,7 @@ import {
   Range,
   SymbolInformation,
   SymbolKind,
+  TypeHierarchyItem,
   Uri,
 } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
@@ -200,6 +201,10 @@ export class SemanticNode implements Identifier {
 
   location(): Location {
     return new Location(this.getUri()!, this.range!.start)
+  }
+
+  typeHierarchyItem(): TypeHierarchyItem {
+    return new TypeHierarchyItem(this.symbolKind(), this.label(), this.detail, this.getUri()!, this.range!, this.range!)
   }
 
   parser(): RalphParser | undefined {

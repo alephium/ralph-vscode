@@ -16,6 +16,7 @@ import { RalphSignatureHelpProvider } from './provider/signatureHelpProvider'
 import { RalphImplementationProvider } from './provider/implementationProvider'
 import { RalphTypeDefinitionProvider } from './provider/typeDefinitionProvider'
 import { RalphReferenceProvider } from './provider/referenceProvider'
+import { RalphTypeHierarchyProvider } from './provider/typeHierarchyProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -50,6 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerImplementationProvider(selector, new RalphImplementationProvider()))
   context.subscriptions.push(vscode.languages.registerTypeDefinitionProvider(selector, new RalphTypeDefinitionProvider()))
   context.subscriptions.push(vscode.languages.registerReferenceProvider(selector, new RalphReferenceProvider()))
+  context.subscriptions.push(vscode.languages.registerTypeHierarchyProvider(selector, new RalphTypeHierarchyProvider()))
 
   console.log('register push completed!')
 }
