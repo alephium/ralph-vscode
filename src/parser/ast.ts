@@ -126,14 +126,12 @@ export interface FunctionDefinition extends BaseASTNode {
   name: string | null
   parameters: VariableDeclaration[]
   modifiers: ModifierInvocation[]
-  stateMutability: 'pure' | 'constant' | 'payable' | 'view' | null
-  visibility: 'default' | 'external' | 'internal' | 'public' | 'private'
+  stateMutability: 'mut' | 'constant' | null
+  visibility: 'default' | 'public' | 'private'
   returnParameters: VariableDeclaration[] | null
   body: Block | null
   override: UserDefinedTypeName[] | null
   isConstructor: boolean
-  isReceiveEther: boolean
-  isFallback: boolean
   isVirtual: boolean
 }
 
@@ -153,7 +151,6 @@ export interface EventDefinition extends BaseASTNode {
   type: 'EventDefinition'
   name: string
   parameters: VariableDeclaration[]
-  isAnonymous: boolean
 }
 export interface EnumValue extends BaseASTNode {
   type: 'EnumValue'
