@@ -37,7 +37,7 @@ export class Enum extends Base {
   }
 }
 
-class EnumMember extends SemanticNode {
+export class EnumMember extends SemanticNode {
   symbolKind(): SymbolKind {
     return SymbolKind.EnumMember
   }
