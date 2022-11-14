@@ -1,6 +1,8 @@
 import * as vscode from 'vscode'
 import cache from '../../cache/cache'
 import { Filter } from '../filter'
+import { Method } from '../../ast/method'
+import { EnumMember } from '../../ast/enum'
 
 export class MemberProvider extends Filter implements vscode.CompletionItemProvider {
   provideCompletionItems(
@@ -15,6 +17,10 @@ export class MemberProvider extends Filter implements vscode.CompletionItemProvi
         .def(word)
         ?.getType?.()
         ?.defs?.()
+        .filter((value) => {
+          if (value instanceof Method) return value.isPub
+          return value instanceof EnumMember
+        })
         ?.map((value) => value.completionItem!())
     }
     return undefined
