@@ -18,9 +18,16 @@ export class AnnotationProvider extends Filter implements vscode.CompletionItemP
     context: CompletionContext
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     if (this.isSkip(document, position)) return undefined
-    const { text } = document.lineAt(position)
-    if (text && text.trim().indexOf('@using') >= 0) {
-      return this.annotationField.map((item) => new CompletionItem({ label: `${item} = true` }, CompletionItemKind.Variable))
+
+    if (context.triggerCharacter === '@') {
+      return ['using', 'unused'].map((item) => new CompletionItem({ label: item }, CompletionItemKind.Keyword))
+    }
+
+    if (context.triggerCharacter === '(') {
+      const { text } = document.lineAt(position)
+      if (text && text.trim().indexOf('@using') >= 0) {
+        return this.annotationField.map((item) => new CompletionItem({ label: `${item} = true` }, CompletionItemKind.Variable))
+      }
     }
     return undefined
   }

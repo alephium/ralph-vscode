@@ -42,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GlobalProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new BuiltInProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new IdentifierProvider()))
-  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new AnnotationProvider()))
+  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new AnnotationProvider(), '@', '('))
   // context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new EnumProvider(), '.'))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new MemberProvider(), '.'))
   context.subscriptions.push(vscode.languages.registerDefinitionProvider(selector, new DefinitionProvider()))
