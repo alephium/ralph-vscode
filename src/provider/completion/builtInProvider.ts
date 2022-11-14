@@ -47,12 +47,15 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
             // label: `🔓${item.name}!${item.signature.substring(item.signature.indexOf('('), item.signature.indexOf(')') + 1)}`,
             label: `🔓${item.signature.substring(3)}`,
             // detail: item.signature, //TODO
-            description: item.doc,
+            // description: item.doc,
           },
           CompletionItemKind.Function
         )
-        method.commitCharacters = ['.']
-        method.insertText = new SnippetString(`${item.name}!($1)`)
+
+        method.filterText = item.name
+        method.sortText = item.name
+        method.preselect = true
+        method.insertText = new SnippetString(`${item.name}!`)
         return method
       })
       .concat(items)
