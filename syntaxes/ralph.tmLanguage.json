@@ -1,7 +1,9 @@
 {
   "name": "ralph",
+  "fileTypes": ["sol"],
   "scopeName": "source.ral",
   "patterns": [
+    { "include": "#comment" },
     { "include": "#keywords" },
     { "include": "#types" },
     { "include": "#global" },
@@ -9,6 +11,40 @@
     { "include": "#constant" }
   ],
   "repository": {
+    "comment": {
+      "patterns": [
+        {
+          "include": "#comment-line"
+        },
+        {
+          "include": "#comment-block"
+        }
+      ]
+    },
+    "comment-todo": {
+      "match": "(?i)\\b(FIXME|TODO|CHANGED|XXX|IDEA|HACK|NOTE|REVIEW|NB|BUG|QUESTION|COMBAK|TEMP|SUPPRESS|LINT|\\w+-disable|\\w+-suppress)\\b(?-i)",
+      "name": "keyword.comment.todo.ralph"
+    },
+    "comment-line": {
+      "begin": "(?<!tp:)//",
+      "end": "$",
+      "name": "comment.line",
+      "patterns": [
+        {
+          "include": "#comment-todo"
+        }
+      ]
+    },
+    "comment-block": {
+      "begin": "/\\*",
+      "end": "\\*/",
+      "name": "comment.block",
+      "patterns": [
+        {
+          "include": "#comment-todo"
+        }
+      ]
+    },
     "operators": {
       "comment": "Note that the order here is very important!",
       "patterns": [
@@ -41,10 +77,6 @@
           "match": "\\b(if|else|while|for|return)\\b"
         },
         {
-          "match": "\\b(import)\\b",
-          "name": "keyword.import.ralph"
-        },
-        {
           "match": "\\b(alph)\\b",
           "name": "keyword.alph.ralph"
         },
@@ -69,15 +101,14 @@
           "name": "keyword.event.ralph"
         },
         {
-          "match": "\\b(@using|using|@unused|unused|!)\\b",
+          "match": "(@using|@unused)\\b",
           "name": "keyword.annotation.ralph"
         },
         {
-          "match": "\\b(struct|TxScript|TxContract|Contract|AssetScript|enum)\\b",
+          "match": "\\b(TxScript|TxContract|Contract|AssetScript|enum)\\b",
           "name": "keyword.struct.ralph"
         },
-        { "include": "#operators" },
-        { "include": "#comment-todo" }
+        { "include": "#operators" }
       ]
     },
     "types": {
@@ -87,7 +118,7 @@
           "match": "(?<![A-Za-z])(Bool|I256|U256|Address|ByteVec)\\b",
           "captures": {
             "1": {
-              "name": "entity.name.type.numeric.ralph"
+              "name": "support.type.primitive.ralph"
             }
           }
         }
@@ -111,29 +142,10 @@
         }
       ]
     },
-    "comment-todo": {
-      "match": "(?i)\\b(FIXME|TODO|CHANGED|XXX|IDEA|HACK|NOTE|REVIEW|NB|BUG|QUESTION|COMBAK|TEMP|SUPPRESS|LINT|\\w+-disable|\\w+-suppress)\\b(?-i)",
-      "name": "keyword.comment.todo.ralph"
-    },
     "global": {
       "patterns": [
         {
-          "include": "#global-variables"
-        },
-        {
           "include": "#global-functions"
-        }
-      ]
-    },
-    "global-variables": {
-      "patterns": [
-        {
-          "match": "\\b(this)\\b",
-          "name": "variable.language.this.ralph"
-        },
-        {
-          "match": "\\b(msg\\.sender|msg|block|tx|now)\\b",
-          "name": "variable.language.transaction.ralph"
         }
       ]
     },
