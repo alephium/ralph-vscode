@@ -40,7 +40,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
 
   parser: RalphParser
 
-  cache: Root
+  cache: Identifier[]
 
   uri: Uri
 
@@ -51,7 +51,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     this.tokenStream = tokenStream
     this.parser = parser
     this.uri = uri
-    this.cache = cache
+    this.cache = []
   }
 
   protected defaultResult(): Result {
@@ -84,7 +84,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     base.setRange(ctx.start, ctx.stop)
     this.visitParams(ctx.paramList?.(), base)
     this.visitBody(ctx.typeStructBody?.(), base)
-    this.cache.add(base)
+    this.cache.push(base)
     return base
   }
 

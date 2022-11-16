@@ -1,6 +1,5 @@
 import * as vscode from 'vscode'
 import { CancellationToken, ProviderResult, SymbolInformation } from 'vscode'
-import Parser from '../parser/parser'
 import cache from '../cache/cache'
 
 export class SymbolProvider implements vscode.DocumentSymbolProvider, vscode.WorkspaceSymbolProvider {
@@ -13,7 +12,6 @@ export class SymbolProvider implements vscode.DocumentSymbolProvider, vscode.Wor
    * signaled by returning `undefined`, `null`, or an empty array.
    */
   provideDocumentSymbols(document: vscode.TextDocument): vscode.ProviderResult<vscode.DocumentSymbol[] | vscode.SymbolInformation[]> {
-    Parser(document.uri, document.getText())
     return cache
       .defs()
       ?.filter((c) => c.getUri?.()?.path === document.uri.path)

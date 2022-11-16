@@ -3,7 +3,6 @@ import { Word } from '../ast/word'
 import { Identifier } from '../ast/identifier'
 import cache from '../cache/cache'
 import { Base } from '../ast/base'
-import Parser from '../parser/parser'
 
 export class Filter {
   isSkip(document: TextDocument, position: Position): boolean {
@@ -26,7 +25,6 @@ export class Filter {
 
   callChain(document: TextDocument, position: Position): Identifier | undefined {
     if (this.isSkip(document, position)) return undefined
-    Parser(document.uri, document.getText())
     const callChain = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z.]*/i))
     const positionWord = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z]*/i))
     let wordSet = callChain.split('.')

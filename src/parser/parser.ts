@@ -3,8 +3,9 @@ import { Uri } from 'vscode'
 import { RalphLexer } from './RalphLexer'
 import { RalphParser } from './RalphParser'
 import { RalphVisitor } from '../visitors/ralphVisitor'
+import { Identifier } from '../ast/identifier'
 
-export default function Parser(uri: Uri, text: string) {
+export default function Parser(uri: Uri, text: string): Identifier[]{
     // Create the lexer and parser
     const charStream = CharStreams.fromString(text, uri.path)
     const lexer = new RalphLexer(charStream)
@@ -14,4 +15,5 @@ export default function Parser(uri: Uri, text: string) {
     const tree = parser.sourceFile()
     const visitor = new RalphVisitor(uri, parser, lexer, charStream, tokenStream)
     visitor.visit(tree)
+    return visitor.cache
 }

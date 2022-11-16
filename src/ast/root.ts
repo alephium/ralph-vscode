@@ -1,3 +1,4 @@
+import { Uri } from 'vscode'
 import { Base } from './base'
 import { Position } from './position'
 import { Identifier } from './identifier'
@@ -12,6 +13,15 @@ export class Root extends Base {
 
   contains(position: Position): boolean {
     return true
+  }
+
+  merge(uri: Uri, members: Identifier[]) {
+    Array.from(this.members.values()).forEach((value) => {
+      if (value.getUri!() === uri) {
+        this.members.delete(value.name!)
+      }
+    })
+    members.forEach((value) => this.add(value))
   }
 
   add(member: Identifier) {
