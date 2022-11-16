@@ -196,7 +196,7 @@ export class SemanticNode implements Identifier {
   }
 
   hover(): Hover {
-    return new vscode.Hover(new MarkdownString().appendMarkdown(`\r\t ${this.detail} \r\t`))
+    return new vscode.Hover(new MarkdownString().appendMarkdown(`\r\t${this.documentSymbolDetail()}\r\t`))
   }
 
   location(): Location {
@@ -217,11 +217,23 @@ export class SemanticNode implements Identifier {
 
   get detail(): string {
     const parser = this.parser()
+    if (parser && this._sourceInterval) {
+      return parser.inputStream.getText(this._sourceInterval)
+    }
     if (parser && this.ruleContext) {
-      if (this._sourceInterval) {
-        return parser.inputStream.getText(this._sourceInterval)
-      }
       return parser.inputStream.getText(this.ruleContext.sourceInterval)
+    }
+    if (this._detail) return this._detail
+    return `${this.name}`
+  }
+
+  documentSymbolDetail(): string {
+    const parser = this.parser()
+    if (parser && this.ruleContext) {
+      return parser.inputStream.getText(this.ruleContext.sourceInterval)
+    }
+    if (parser && this._sourceInterval) {
+      return parser.inputStream.getText(this._sourceInterval)
     }
     if (this._detail) return this._detail
     return `${this.name}`
