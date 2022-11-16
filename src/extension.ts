@@ -17,6 +17,8 @@ import { RalphImplementationProvider } from './provider/implementationProvider'
 import { RalphTypeDefinitionProvider } from './provider/typeDefinitionProvider'
 import { RalphReferenceProvider } from './provider/referenceProvider'
 import { RalphTypeHierarchyProvider } from './provider/typeHierarchyProvider'
+import { analyseDiagnostic } from './diagnostics'
+import cache from './cache/cache'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -26,6 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension is now active!')
 
   init()
+  analyseDiagnostic()
 
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
@@ -63,6 +66,7 @@ async function init() {
   const files = await vscode.workspace.findFiles('**/*.ral', '**/node_modules/**')
   files.forEach(async (uri) => {
     const doc = await vscode.workspace.openTextDocument(uri)
-    Parser(doc.uri, doc.getText())
+    const identifiers = Parser(doc.uri, doc.getText())
+    cache.merge(uri, identifiers)
   })
 }
