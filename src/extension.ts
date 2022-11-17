@@ -19,6 +19,7 @@ import { RalphReferenceProvider } from './provider/referenceProvider'
 import { RalphTypeHierarchyProvider } from './provider/typeHierarchyProvider'
 import { analyseDiagnostic } from './diagnostics'
 import cache from './cache/cache'
+import { EmitProvider } from './provider/completion/emitProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -45,6 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GlobalProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new BuiltInProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new IdentifierProvider()))
+  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new EmitProvider(), 'emit'))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new AnnotationProvider(), '@', '('))
   // context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new EnumProvider(), '.'))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new MemberProvider(), '.'))
