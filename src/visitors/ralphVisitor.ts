@@ -6,6 +6,9 @@ import { ParserRuleContext } from 'antlr4ts/ParserRuleContext'
 import {
   AssetScriptContext,
   ContractContext,
+  ContractExtendsContext,
+  ExtendsContext,
+  ImplementsContext,
   InterfaceContext,
   ParamListContext,
   RalphParser,
@@ -89,31 +92,42 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   }
 
   visitContract(ctx: ContractContext): Result {
-    const contract = new Contract(ctx.IDENTIFIER(0))
+    const contract = new Contract(ctx.IDENTIFIER())
+    const extendList = ctx.extends()
+    if (extendList) this.visitExtendsContext(extendList, contract)
+    const implementer = ctx.implements()
+    if (implementer) this.visitImplementsContext(implementer, contract)
+    return this.visitStruct(ctx, contract)
+  }
+
+  visitExtendsContext(ctx: ExtendsContext, contract: Contract) {
+    ctx.contractExtends().forEach((value) => this.visitContractExtendsContext(value, contract))
+  }
+
+  visitContractExtendsContext(ctx: ContractExtendsContext, contract: Contract) {
     const block = new Context(contract)
-    if (ctx.EXTENDS()) {
-      const identifier = ctx.IDENTIFIER(1)
-      contract.append(block.typeNode(identifier))
-      const base = cache.get(identifier.symbol.text!)
-      if (base instanceof Contract) {
-        contract.parentClass = base
-        base.subclass.set(contract.name!, contract)
-      }
-    }
-    if (ctx.IMPLEMENTS()) {
-      const identifier = ctx.IDENTIFIER(1)
-      contract.append(block.typeNode(identifier))
-      const base = cache.get(identifier.symbol.text!)
-      if (base instanceof Interface) {
-        contract.interfaces = base
-        base.implementer?.set(contract.name!, contract)
-      }
+    const identifier = ctx.IDENTIFIER()
+    contract.append(block.typeNode(identifier))
+    const base = cache.get(identifier.symbol.text!)
+    if (base instanceof Contract) {
+      contract.parentClass.set(base.name!, base)
+      base.subclass.set(contract.name!, contract)
     }
     const list = ctx.expressionList()
     if (list) {
       contract.append(...block.expressionListContext(list))
     }
-    return this.visitStruct(ctx, contract)
+  }
+
+  visitImplementsContext(ctx: ImplementsContext, contract: Contract) {
+    const identifier = ctx.IDENTIFIER()
+    const block = new Context(contract)
+    contract.append(block.typeNode(identifier))
+    const base = cache.get(identifier.symbol.text!)
+    if (base instanceof Interface) {
+      contract.interfaces = base
+      base.implementer?.set(contract.name!, contract)
+    }
   }
 
   visitInterface(ctx: InterfaceContext): Result {

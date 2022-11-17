@@ -3,6 +3,7 @@ import {
   ArrayExprContext,
   BlockContext,
   CallChainContext,
+  CallContext,
   EmitContext,
   ExpressionContext,
   ExpressionListContext,
@@ -184,13 +185,20 @@ export class Context {
   varDeclSingleContext(ctx: VarDeclSingleContext): Identifier[] {
     const identifiers: Identifier[] = []
     const value = new Variable(ctx.varName().IDENTIFIER())
-    const typeName = this.typeNode(ctx.IDENTIFIER())
-    value.type_ = typeName
     value.setRuleContext(ctx)
     value.setParent(this.parent)
     if (ctx.MUT()) value.isMut = true
-    this.parent.add?.(value)
-    identifiers.push(typeName, ...this.expressionListContext(ctx.expressionList()))
+
+    const identifier = ctx.IDENTIFIER()
+    if (identifier) {
+      const typeName = this.typeNode(identifier)
+      value.type_ = typeName
+      this.parent.add?.(value)
+      const list = ctx.expressionList()
+      if (list) identifiers.push(typeName, ...this.expressionListContext(list))
+    }
+    const expr = ctx.expression()
+    if (expr) identifiers.push(...this.expressionContext(expr))
     return identifiers
   }
 

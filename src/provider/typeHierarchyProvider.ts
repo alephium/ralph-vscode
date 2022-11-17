@@ -41,7 +41,7 @@ export class RalphTypeHierarchyProvider extends Filter implements TypeHierarchyP
     const parts = []
     if (instance instanceof Contract) {
       if (instance.interfaces) parts.push(instance.interfaces.typeHierarchyItem())
-      if (instance.parentClass) parts.push(instance.parentClass.typeHierarchyItem())
+      if (instance.parentClass) parts.push(...Array.from(instance.parentClass.values()).map((value) => value.typeHierarchyItem()))
     }
     return parts
   }

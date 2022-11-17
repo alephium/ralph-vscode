@@ -6,13 +6,14 @@ import { Interface } from './interface'
 export class Contract extends Base {
   interfaces: Interface | undefined
 
-  parentClass: Contract | undefined
+  parentClass: Map<string, Contract>
 
   subclass: Map<string, Contract>
 
   constructor(node: TerminalNode) {
     super(node)
     this.subclass = new Map()
+    this.parentClass = new Map()
   }
 
   symbolKind(): SymbolKind {
