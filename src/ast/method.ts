@@ -1,4 +1,4 @@
-import { CompletionItem, CompletionItemKind, SignatureInformation, SnippetString, SymbolKind } from 'vscode'
+import { CompletionItem, CompletionItemKind, ParameterInformation, SignatureInformation, SnippetString, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Interval } from 'antlr4ts/misc/Interval'
 import { Base } from './base'
@@ -37,7 +37,9 @@ export class Method extends Base {
   }
 
   signatureInformation(): SignatureInformation {
-    return new SignatureInformation(this.paramList())
+    const signature = new SignatureInformation(this.detail)
+    signature.parameters = Array.from(this.members.values()).map((value) => new ParameterInformation(value.name!))
+    return signature
   }
 
   completionItem(): CompletionItem {
