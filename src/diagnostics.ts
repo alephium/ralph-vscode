@@ -1,6 +1,5 @@
-import vscode, { Diagnostic } from 'vscode'
+import vscode, { Diagnostic, TextDocument } from 'vscode'
 import cache from './cache/cache'
-import Parser from './parser/parser'
 
 function isUpperCase(ch: string) {
   return ch >= 'A' && ch <= 'Z'
@@ -12,13 +11,6 @@ function isLowerCase(ch: string) {
 
 export function analyseDiagnostic() {
   upperCamelCase()
-  vscode.workspace.onDidChangeTextDocument((event) => {
-    const identifiers = Parser(event.document.uri, event.document.getText())
-    cache.merge(event.document.uri, identifiers)
-  })
-  vscode.workspace.onDidSaveTextDocument((doc) => {
-    upperCamelCase()
-  })
 }
 
 function upperCamelCase() {
