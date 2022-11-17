@@ -16,12 +16,16 @@ export class Root extends Base {
   }
 
   merge(uri: Uri, members: Identifier[]) {
+    this.remove(uri)
+    members.forEach((value) => this.add(value))
+  }
+
+  remove(uri: Uri) {
     Array.from(this.members.values()).forEach((value) => {
       if (value.getUri!() === uri) {
         this.members.delete(value.name!)
       }
     })
-    members.forEach((value) => this.add(value))
   }
 
   add(member: Identifier) {

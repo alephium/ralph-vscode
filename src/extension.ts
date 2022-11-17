@@ -20,6 +20,7 @@ import { RalphTypeHierarchyProvider } from './provider/typeHierarchyProvider'
 import { analyseDiagnostic } from './diagnostics'
 import cache from './cache/cache'
 import { EmitProvider } from './provider/completion/emitProvider'
+import { registerEvent } from './event'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -29,6 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension is now active!')
 
   init()
+  registerEvent()
   analyseDiagnostic()
 
   // The command has been defined in the package.json file
