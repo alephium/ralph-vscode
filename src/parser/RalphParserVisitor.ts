@@ -13,6 +13,7 @@ import { ExpressionContext } from "./RalphParser";
 import { ExpressionListContext } from "./RalphParser";
 import { CallChainContext } from "./RalphParser";
 import { MethodCallContext } from "./RalphParser";
+import { CallContext } from "./RalphParser";
 import { PrimaryExprContext } from "./RalphParser";
 import { PrimitiveTypeContext } from "./RalphParser";
 import { ArrayTypeContext } from "./RalphParser";
@@ -31,6 +32,9 @@ import { TypeStructBodyContext } from "./RalphParser";
 import { TxScriptContext } from "./RalphParser";
 import { AssetScriptContext } from "./RalphParser";
 import { ContractContext } from "./RalphParser";
+import { ExtendsContext } from "./RalphParser";
+import { ContractExtendsContext } from "./RalphParser";
+import { ImplementsContext } from "./RalphParser";
 import { InterfaceContext } from "./RalphParser";
 import { EventContext } from "./RalphParser";
 import { EmitContext } from "./RalphParser";
@@ -123,6 +127,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitMethodCall?: (ctx: MethodCallContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.call`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitCall?: (ctx: CallContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.primaryExpr`.
@@ -249,6 +260,27 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitContract?: (ctx: ContractContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.extends`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitExtends?: (ctx: ExtendsContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.contractExtends`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitContractExtends?: (ctx: ContractExtendsContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.implements`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitImplements?: (ctx: ImplementsContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.interface`.

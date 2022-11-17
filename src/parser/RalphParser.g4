@@ -9,7 +9,7 @@ sourceFile: (txScript | contract | interface | assetScript)* EOF;
 
 identifierList: varName (COMMA varName)*;
 
-varDeclSingle: (CONST | (LET MUT?)) varName ASSIGN IDENTIFIER L_PAREN expressionList R_PAREN;
+varDeclSingle: (CONST | (LET MUT?)) varName ASSIGN (IDENTIFIER L_PAREN expressionList R_PAREN | expression);
 
 varDeclMulti: (CONST | (LET MUT?)) L_PAREN identifierList R_PAREN ASSIGN callChain;
 
@@ -58,6 +58,8 @@ expressionList: (expression COMMA?)*;
 callChain: (varName | methodCall) (DOT callChain)*;
 
 methodCall: IDENTIFIER L_PAREN expressionList R_PAREN;
+
+call: IDENTIFIER L_PAREN expressionList R_PAREN;
 
 primaryExpr
 	: basicLit
@@ -131,7 +133,17 @@ assetScript
     ;
 
 contract
-    : CONTRACT IDENTIFIER (L_PAREN paramList R_PAREN)? ((EXTENDS | IMPLEMENTS) IDENTIFIER (L_PAREN expressionList R_PAREN)?)? typeStructBody // # contractDeclStmt
+    : ABSTRACT? CONTRACT IDENTIFIER (L_PAREN paramList R_PAREN)? extends? implements? typeStructBody // # contractDeclStmt
+    ;
+
+extends
+    : EXTENDS contractExtends (COMMA contractExtends)*
+    ;
+
+contractExtends: IDENTIFIER L_PAREN expressionList R_PAREN;
+
+implements
+    : IMPLEMENTS IDENTIFIER
     ;
 
 interface
@@ -177,6 +189,6 @@ whileStmt
     : WHILE L_PAREN expression? R_PAREN block
     ;
 
-forStmt: FOR L_PAREN (LET MUT varName ASSIGN expression)? SEMI expression? SEMI expression? R_PAREN block;
+forStmt: FOR L_PAREN LET MUT varName ASSIGN expression SEMI expression SEMI expression R_PAREN block;
 
 eos: EOS;
