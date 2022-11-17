@@ -13,7 +13,9 @@ export interface Fun {
 
   doc: string
 
-  params: [string]
+  params: string[]
+
+  paramValue: string[]
 
   returns: string
 }
