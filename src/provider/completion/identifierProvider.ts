@@ -16,13 +16,14 @@ export class IdentifierProvider extends Filter implements vscode.CompletionItemP
     return this.defs(container)
   }
 
-  defs(container: Identifier | undefined): vscode.CompletionItem[] {
-    let items: vscode.CompletionItem[] = []
-    if (container) {
-      const subItem = container.defs?.()?.map((value) => value.completionItem!())
-      if (subItem) items = items.concat(subItem)
-      items = items.concat(this.defs(container.parent))
+  defs(identifier: Identifier | undefined): vscode.CompletionItem[] {
+    if (identifier) {
+      const subItems = identifier.defs?.().map((value) => value.completionItem!())
+      const items: vscode.CompletionItem[] = []
+      if (subItems) items.push(...subItems)
+      items.push(...this.defs(identifier.parent))
+      return items
     }
-    return items
+    return []
   }
 }

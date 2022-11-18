@@ -24,11 +24,13 @@ export class Base extends SemanticNode implements Finder {
   }
 
   add(member: Identifier) {
-    this.members.set(member.name!, member)
+    if (member && member.name) {
+      this.members.set(member.name, member)
+    }
   }
 
   append(...identifiers: Identifier[]) {
-    this.identifiers.push(...identifiers)
+    identifiers.forEach((value) => value && this.identifiers.push(value))
   }
 
   getChild(): Identifier[] {
@@ -74,9 +76,9 @@ export class Base extends SemanticNode implements Finder {
   }
 
   defs(): Identifier[] {
-    const member = Array.from(this.members.values())
-    const identifiers = this.identifiers.filter((value) => value.semanticsKind === SemanticsKind.Def)
-    return member.concat(identifiers)
+    const members = Array.from(this.members.values())
+    const identifiers = this.identifiers.filter((value) => value && value.semanticsKind && value.semanticsKind === SemanticsKind.Def)
+    return members.concat(identifiers)
   }
 
   def(word: Word): Identifier | undefined {

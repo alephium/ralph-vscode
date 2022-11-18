@@ -40,10 +40,6 @@ export class Root extends Base {
     })
   }
 
-  add(member: Identifier) {
-    this.members.set(member.name!, member)
-  }
-
   get(name: string) {
     return this.members.get(name)
   }
