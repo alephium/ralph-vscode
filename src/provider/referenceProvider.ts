@@ -21,6 +21,8 @@ export class RalphReferenceProvider extends Filter implements ReferenceProvider 
   ): ProviderResult<Location[]> {
     if (this.isSkip(document, position)) return undefined
     const word = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z]*/i))
+    console.log(`-------word`)
+    console.log(word)
     return cache.findAll({ name: word }).map((value) => value.location!())
   }
 }
