@@ -16,6 +16,18 @@ export class Root extends Base {
   }
 
   merge(uri: Uri, members: Identifier[]) {
+    members.forEach((member) => {
+      if (this.members.has(member.name!)) {
+        const has = this.members.get(member.name!)
+        if (member instanceof Interface && has instanceof Interface) {
+          member.implementer = has.implementer
+        }
+
+        if (member instanceof Contract && has instanceof Contract) {
+          member.subclass = has.subclass
+        }
+      }
+    })
     this.remove(uri)
     members.forEach((value) => this.add(value))
   }
@@ -29,16 +41,6 @@ export class Root extends Base {
   }
 
   add(member: Identifier) {
-    if (this.members.has(member.name!)) {
-      const has = this.members.get(member.name!)
-      if (member instanceof Interface && has instanceof Interface) {
-        member.implementer = has.implementer
-      }
-
-      if (member instanceof Contract && has instanceof Contract) {
-        member.subclass = has.subclass
-      }
-    }
     this.members.set(member.name!, member)
   }
 
