@@ -24,11 +24,13 @@ export class Base extends SemanticNode implements Finder {
   }
 
   add(member: Identifier) {
-    this.members.set(member.name!, member)
+    if (member && member.name) {
+      this.members.set(member.name, member)
+    }
   }
 
   append(...identifiers: Identifier[]) {
-    this.identifiers.push(...identifiers)
+    identifiers.forEach((value) => value && this.identifiers.push(value))
   }
 
   getChild(): Identifier[] {

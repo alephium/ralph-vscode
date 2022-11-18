@@ -30,7 +30,6 @@ import { AssetScript } from '../ast/assetScript'
 import { Identifier } from '../ast/identifier'
 import { SemanticNode } from '../ast/ast'
 import { RalphLexer } from '../parser/RalphLexer'
-import { Root } from '../ast/root'
 
 type Result = Base | Identifier | undefined
 
