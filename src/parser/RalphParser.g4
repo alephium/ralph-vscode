@@ -24,6 +24,8 @@ varName: IDENTIFIER;
 expression:
 	primaryExpr
 	| callChain
+	| ifStmt
+	| L_PAREN expression R_PAREN
 	| (SUB | NOT) expression
 	| expression (
         CONCAT
@@ -57,9 +59,12 @@ expressionList: (expression COMMA?)*;
 
 callChain: (varName | methodCall) (DOT callChain)*;
 
-methodCall: IDENTIFIER L_PAREN expressionList R_PAREN;
+methodCall: IDENTIFIER aps? L_PAREN expressionList R_PAREN;
 
-call: IDENTIFIER L_PAREN expressionList R_PAREN;
+apsAlph: expression R_ARROW expression;
+apsToken: apsAlph COLON expression;
+apsBoth: apsAlph COMMA expression COLON expression;
+aps: L_CURLY (apsAlph | apsToken | apsBoth) R_CURLY;
 
 primaryExpr
 	: basicLit
@@ -161,7 +166,10 @@ annotation
     : ATUSING L_PAREN expressionList R_PAREN
     ;
 
-block: L_CURLY (statement)* R_CURLY;
+block
+    : L_CURLY (statement)* R_CURLY
+    | simpleStmt
+    ;
 
 statement:
 	simpleStmt

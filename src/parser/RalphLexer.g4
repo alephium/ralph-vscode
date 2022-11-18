@@ -91,9 +91,10 @@ AND                    : '&&';
 OR                     : '||';
 NOT                    : '!';
 
-BYTE_LIT               : '#' LETTER*;
-ADDRESS_LIT            : '@' LETTER*;
-ALPH_LIT               : DIGIT* ' '? 'alph';
+ALPH                   : 'alph';
+
+ADDRESS_LIT            : '#' (DIGIT | LETTER)*;
+ALPH_LIT               : DIGIT+ [ ]+ ALPH;
 BOOL_LIT               : 'true' | 'false';
 
 //TODO
