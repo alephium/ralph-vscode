@@ -5,11 +5,11 @@ import { analyseDiagnostic } from './diagnostics'
 
 export function registerEvent() {
   vscode.workspace.onDidChangeTextDocument((event) => parser(event.document))
-  vscode.workspace.onDidOpenTextDocument((doc) => {
-    parser(doc)
-    analyseDiagnostic()
-  })
-  vscode.workspace.onDidCloseTextDocument((doc) => parser(doc))
+  // vscode.workspace.onDidOpenTextDocument((doc) => {
+  //   parser(doc)
+  //   analyseDiagnostic()
+  // })
+  // vscode.workspace.onDidCloseTextDocument((doc) => parser(doc))
   vscode.workspace.onDidDeleteFiles((events) => events.files.forEach((e) => cache.remove(e)))
   vscode.workspace.onDidSaveTextDocument((doc) => {
     parser(doc)
