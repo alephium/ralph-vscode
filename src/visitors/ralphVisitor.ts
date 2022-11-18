@@ -83,7 +83,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     base.ruleContext = ctx
     base.uri = this.uri
     base._sourceInterval = ctx.sourceInterval.differenceNotProperlyContained(ctx.typeStructBody().sourceInterval)
-    base.setParent(new Root())
+    base.setParent(cache)
     base.setRange(ctx.start, ctx.stop)
     this.visitParams(ctx.paramList?.(), base)
     this.visitBody(ctx.typeStructBody?.(), base)
