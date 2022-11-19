@@ -48,6 +48,7 @@ import { SimpleStmtContext } from "./RalphParser";
 import { EmptyStmtContext } from "./RalphParser";
 import { ReturnStmtContext } from "./RalphParser";
 import { IfStmtContext } from "./RalphParser";
+import { ElseStmtContext } from "./RalphParser";
 import { WhileStmtContext } from "./RalphParser";
 import { ForStmtContext } from "./RalphParser";
 import { EosContext } from "./RalphParser";
@@ -552,6 +553,17 @@ export interface RalphParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitIfStmt?: (ctx: IfStmtContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.elseStmt`.
+	 * @param ctx the parse tree
+	 */
+	enterElseStmt?: (ctx: ElseStmtContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.elseStmt`.
+	 * @param ctx the parse tree
+	 */
+	exitElseStmt?: (ctx: ElseStmtContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.whileStmt`.

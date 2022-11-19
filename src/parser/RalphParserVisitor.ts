@@ -48,6 +48,7 @@ import { SimpleStmtContext } from "./RalphParser";
 import { EmptyStmtContext } from "./RalphParser";
 import { ReturnStmtContext } from "./RalphParser";
 import { IfStmtContext } from "./RalphParser";
+import { ElseStmtContext } from "./RalphParser";
 import { WhileStmtContext } from "./RalphParser";
 import { ForStmtContext } from "./RalphParser";
 import { EosContext } from "./RalphParser";
@@ -375,6 +376,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitIfStmt?: (ctx: IfStmtContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.elseStmt`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitElseStmt?: (ctx: ElseStmtContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.whileStmt`.
