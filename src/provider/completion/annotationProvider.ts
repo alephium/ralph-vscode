@@ -23,7 +23,7 @@ export class AnnotationProvider extends Filter implements vscode.CompletionItemP
       return ['using', 'unused'].map((item) => new CompletionItem({ label: item }, CompletionItemKind.Keyword))
     }
 
-    if (context.triggerCharacter === '(') {
+    if (context.triggerCharacter === '(' || context.triggerCharacter === ')') {
       const { text } = document.lineAt(position)
       if (text && text.trim().indexOf('@using') >= 0) {
         return this.annotationField.map((item) => new CompletionItem({ label: `${item} = true` }, CompletionItemKind.Variable))

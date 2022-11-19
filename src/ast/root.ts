@@ -25,6 +25,8 @@ export class Root extends Base {
 
         if (member instanceof Contract && has instanceof Contract) {
           member.subclass = has.subclass
+          member.interfaces = has.interfaces
+          member.parentClass = has.parentClass
         }
       }
     })
