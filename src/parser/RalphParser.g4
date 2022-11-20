@@ -9,9 +9,9 @@ sourceFile: (txScript | contract | interface | assetScript)* EOF;
 
 identifierList: varName (COMMA varName)*;
 
-varDeclSingle: (CONST | (LET MUT?)) varName ASSIGN (IDENTIFIER L_PAREN expressionList R_PAREN | expression);
+varDeclSingle: (CONST | (LET MUT?)) varName ASSIGN expression;
 
-varDeclMulti: (CONST | (LET MUT?)) L_PAREN identifierList R_PAREN ASSIGN callChain;
+varDeclMulti: (CONST | (LET MUT?)) L_PAREN identifierList R_PAREN ASSIGN expression;
 
 varDecl
     : varDeclSingle
@@ -168,13 +168,11 @@ annotation
 
 block
     : L_CURLY (statement)* R_CURLY
-    | simpleStmt
+    | statement
     ;
 
 statement:
 	simpleStmt
-	| returnStmt
-	| block
 	| ifStmt
 	| whileStmt
     | forStmt
@@ -182,6 +180,7 @@ statement:
 
 simpleStmt
 	: emptyStmt
+    | returnStmt
 	| varDecl
 	| expression
 	| emit
@@ -191,7 +190,9 @@ emptyStmt: eos;
 
 returnStmt: RETURN expressionList;
 
-ifStmt: IF L_PAREN expression R_PAREN block (ELSE (block | ifStmt))?;
+ifStmt: IF L_PAREN expression R_PAREN block elseStmt?;
+
+elseStmt: ELSE (block | ifStmt);
 
 whileStmt
     : WHILE L_PAREN expression? R_PAREN block

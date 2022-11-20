@@ -3,6 +3,7 @@ import {
   ArrayExprContext,
   BlockContext,
   CallChainContext,
+  ElseStmtContext,
   EmitContext,
   ExpressionContext,
   ExpressionListContext,
@@ -117,6 +118,8 @@ export class Context {
     if (expr) identifiers.push(...this.arrayExprContext(expr))
     const call = ctx.callChain()
     if (call) identifiers.push(...this.callChain(call))
+    const ifStmt = ctx.ifStmt()
+    if (ifStmt) identifiers.push(...this.ifStmtContext(ifStmt))
     const expression = ctx.expression()
     if (expression) expression.forEach((value) => identifiers.push(...this.expressionContext(value)))
     return identifiers
@@ -124,8 +127,10 @@ export class Context {
 
   callChain(ctx: CallChainContext): Identifier[] {
     const identifiers: Identifier[] = []
+
     const varName = ctx.varName()
     if (varName) identifiers.push(<Identifier>this.varNameContext(varName).setSemanticsKind?.(SemanticsKind.Ref))
+
     const methodCall = ctx.methodCall()
     if (methodCall) identifiers.push(...this.methodCall(methodCall))
 
@@ -171,7 +176,16 @@ export class Context {
   ifStmtContext(ctx: IfStmtContext): Identifier[] {
     const identifiers: Identifier[] = []
     identifiers.push(...this.expressionContext(ctx.expression()))
-    ctx.block().forEach((value) => identifiers.push(...this.blockContext(value)))
+    identifiers.push(...this.blockContext(ctx.block()))
+    const elseStmt = ctx.elseStmt()
+    if (elseStmt) identifiers.push(...this.elseStmtContext(elseStmt))
+    return identifiers
+  }
+
+  elseStmtContext(ctx: ElseStmtContext): Identifier[] {
+    const identifiers: Identifier[] = []
+    const block = ctx.block()
+    if (block) identifiers.push(...this.blockContext(block))
     const ifStmt = ctx.ifStmt()
     if (ifStmt) identifiers.push(...this.ifStmtContext(ifStmt))
     return identifiers
@@ -187,17 +201,8 @@ export class Context {
     value.setRuleContext(ctx)
     value.setParent(this.parent)
     if (ctx.MUT()) value.isMut = true
-
-    const identifier = ctx.IDENTIFIER()
-    if (identifier) {
-      const typeName = this.typeNode(identifier)
-      value.type_ = typeName
-      this.parent.add?.(value)
-      const list = ctx.expressionList()
-      if (list) identifiers.push(typeName, ...this.expressionListContext(list))
-    }
-    const expr = ctx.expression()
-    if (expr) identifiers.push(...this.expressionContext(expr))
+    this.parent.add?.(value)
+    identifiers.push(...this.expressionContext(ctx.expression()))
     return identifiers
   }
 
@@ -206,8 +211,13 @@ export class Context {
     ctx
       .identifierList()
       .varName()
-      .forEach((value) => identifiers.push(<Identifier>this.varNameContext(value)))
-    identifiers.push(...this.callChain(ctx.callChain()))
+      .forEach((varName) => {
+        const value = new Variable(varName.IDENTIFIER())
+        value.setRuleContext(ctx)
+        value.setParent(this.parent)
+        this.parent.add?.(value)
+      })
+    identifiers.push(...this.expressionContext(ctx.expression()))
     return identifiers
   }
 
@@ -228,12 +238,14 @@ export class Context {
 
   simpleStmtContext(ctx: SimpleStmtContext): Identifier[] {
     const identifiers: Identifier[] = []
+    const varDecl = ctx.varDecl()
+    if (varDecl) identifiers.push(...this.varDeclContext(varDecl))
     const emit = ctx.emit()
     if (emit) identifiers.push(...this.emitContext(emit))
     const expression = ctx.expression()
     if (expression) identifiers.push(...this.expressionContext(expression))
-    const varDecl = ctx.varDecl()
-    if (varDecl) identifiers.push(...this.varDeclContext(varDecl))
+    const returnStmt = ctx.returnStmt()
+    if (returnStmt) identifiers.push(...this.returnStmtContext(returnStmt))
     return identifiers
   }
 
@@ -262,16 +274,19 @@ export class Context {
 
   statementContext(ctx: StatementContext): Identifier[] {
     const identifiers: Identifier[] = []
-    const ifStmt = ctx.ifStmt()
-    if (ifStmt) identifiers.push(...this.ifStmtContext(ifStmt))
+
     const simpleStmt = ctx.simpleStmt()
     if (simpleStmt) identifiers.push(...this.simpleStmtContext(simpleStmt))
+
+    const ifStmt = ctx.ifStmt()
+    if (ifStmt) identifiers.push(...this.ifStmtContext(ifStmt))
+
     const whileStmt = ctx.whileStmt()
     if (whileStmt) identifiers.push(...this.whileStmtContext(whileStmt))
-    const block = ctx.block()
-    if (block) identifiers.push(...this.blockContext(block))
-    const returnStmt = ctx.returnStmt()
-    if (returnStmt) identifiers.push(...this.returnStmtContext(returnStmt))
+
+    const forStmt = ctx.forStmt()
+    if (forStmt) identifiers.push(...this.forStmtContext(forStmt))
+
     return identifiers
   }
 }
