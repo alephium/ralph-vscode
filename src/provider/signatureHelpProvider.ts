@@ -60,7 +60,7 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
       return signature
     }
     const callMethod = this.callChain(document, position.with(position.line, position.character - 1))
-    if (callMethod && callMethod.identifierKind === IdentifierKind.Method && callMethod.semanticsKind === SemanticsKind.Def) {
+    if (callMethod && callMethod.semanticsKind === SemanticsKind.Def) {
       signature.signatures.push(callMethod.signatureInformation!())
       return signature
     }

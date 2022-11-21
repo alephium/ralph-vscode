@@ -1,4 +1,4 @@
-import { CompletionItemKind, DocumentSymbol, SymbolKind } from 'vscode'
+import { CompletionItemKind, DocumentSymbol, ParameterInformation, SignatureInformation, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Identifier } from './identifier'
 import { IdentifierKind, SemanticsKind } from './kinder'
@@ -7,6 +7,7 @@ import { Word } from './word'
 import { Finder } from './finder'
 import { Position } from './position'
 import { RalphParser } from '../parser/RalphParser'
+import { Property } from './property'
 
 export class Base extends SemanticNode implements Finder {
   // TODO Fix use set
@@ -118,5 +119,13 @@ export class Base extends SemanticNode implements Finder {
     const doc = super.documentSymbol()
     doc.children = Array.from(this.members.values()).map((child) => child.documentSymbol!())
     return doc
+  }
+
+  signatureInformation(): SignatureInformation {
+    const signature = new SignatureInformation(this.detail)
+    signature.parameters = Array.from(this.members.values())
+      .filter((value) => value instanceof Property)
+      .map((value) => new ParameterInformation(value.name!))
+    return signature
   }
 }

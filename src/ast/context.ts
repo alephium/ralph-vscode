@@ -60,12 +60,7 @@ export class Context {
   }
 
   paramContext(ctx: ParamContext): Identifier[] {
-    let value
-    if (this.parent.identifierKind === IdentifierKind.Method) {
-      value = new Variable(ctx.IDENTIFIER())
-    } else {
-      value = new Property(ctx.IDENTIFIER())
-    }
+    const value = new Property(ctx.IDENTIFIER())
     value.setRuleContext(ctx)
     value.detail = ctx.text
     value.type_ = this.typeNameContext(ctx.typeName())
@@ -199,6 +194,11 @@ export class Context {
     const identifiers: Identifier[] = []
     const value = new Variable(ctx.varName().IDENTIFIER())
     value.setRuleContext(ctx)
+    if (ctx.CONST()) {
+      value._sourceIntervalDetail = ctx.sourceInterval
+    } else {
+      value._sourceIntervalDetail = ctx.varName().IDENTIFIER().sourceInterval
+    }
     value.setParent(this.parent)
     if (ctx.MUT()) value.isMut = true
     this.parent.add?.(value)
@@ -214,6 +214,7 @@ export class Context {
       .forEach((varName) => {
         const value = new Variable(varName.IDENTIFIER())
         value.setRuleContext(ctx)
+        value._sourceIntervalDetail = varName.IDENTIFIER().sourceInterval
         value.setParent(this.parent)
         this.parent.add?.(value)
       })
