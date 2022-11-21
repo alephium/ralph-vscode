@@ -60,12 +60,7 @@ export class Context {
   }
 
   paramContext(ctx: ParamContext): Identifier[] {
-    let value
-    if (this.parent.identifierKind === IdentifierKind.Method) {
-      value = new Variable(ctx.IDENTIFIER())
-    } else {
-      value = new Property(ctx.IDENTIFIER())
-    }
+    const value = new Property(ctx.IDENTIFIER())
     value.setRuleContext(ctx)
     value.detail = ctx.text
     value.type_ = this.typeNameContext(ctx.typeName())
