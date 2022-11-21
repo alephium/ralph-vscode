@@ -35,7 +35,7 @@ export class SemanticNode implements Identifier {
 
   _detail: string | undefined
 
-  _sourceInterval: Interval | undefined
+  _sourceIntervalDetail: Interval | undefined
 
   uri: Uri | undefined
 
@@ -217,8 +217,8 @@ export class SemanticNode implements Identifier {
 
   get detail(): string {
     const parser = this.parser()
-    if (parser && this._sourceInterval) {
-      return parser.inputStream.getText(this._sourceInterval)
+    if (parser && this._sourceIntervalDetail) {
+      return parser.inputStream.getText(this._sourceIntervalDetail)
     }
     if (parser && this.ruleContext) {
       return parser.inputStream.getText(this.ruleContext.sourceInterval)
@@ -232,8 +232,8 @@ export class SemanticNode implements Identifier {
     if (parser && this.ruleContext) {
       return parser.inputStream.getText(this.ruleContext.sourceInterval)
     }
-    if (parser && this._sourceInterval) {
-      return parser.inputStream.getText(this._sourceInterval)
+    if (parser && this._sourceIntervalDetail) {
+      return parser.inputStream.getText(this._sourceIntervalDetail)
     }
     if (this._detail) return this._detail
     return `${this.name}`

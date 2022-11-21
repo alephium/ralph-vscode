@@ -24,11 +24,16 @@ export class Enum extends Base {
 
   public static FromContext(ctx: EnumContext): Enum {
     const enumValue = new Enum(ctx.IDENTIFIER())
-    enumValue.ruleContext = ctx
-    enumValue._sourceInterval = new Interval(ctx.ENUM().sourceInterval.a, ctx.IDENTIFIER().sourceInterval.b)
-    ctx
-      .varNameAssign()
-      .forEach((value) => enumValue.add(new EnumMember(value.varName().IDENTIFIER()).setParent(enumValue).setRuleContext(value)))
+    enumValue.setRuleContext(ctx)
+    enumValue.setRange(ctx.start, ctx.stop)
+    enumValue._sourceIntervalDetail = new Interval(ctx.ENUM().sourceInterval.a, ctx.IDENTIFIER().sourceInterval.b)
+    ctx.varNameAssign().forEach((ctx) => {
+      const member = new EnumMember(ctx.varName().IDENTIFIER()).setParent(enumValue).setRuleContext(ctx)
+      member._sourceIntervalDetail = ctx.sourceInterval
+      member.setRuleContext(ctx)
+      member.setRange(ctx.start, ctx.stop)
+      enumValue.add(member)
+    })
     return enumValue
   }
 

@@ -29,11 +29,12 @@ export class Filter {
     const positionWord = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z]*/i))
     let wordSet = callChain.split('.')
     wordSet = wordSet.slice(0, wordSet.indexOf(positionWord) + 1)
-    let caller = cache.def({
+    const word = {
       name: wordSet[0],
       point: position,
       uri: document.uri,
-    })
+    }
+    let caller = cache.def(word)
     let i = 0
     while (true) {
       if (wordSet.length - 1 === i) {
