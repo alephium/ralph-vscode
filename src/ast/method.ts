@@ -79,7 +79,7 @@ export class Method extends Base {
     context.paramListContext(ctx.paramList())
     const block = ctx.block()
     if (block) method.append(...context.blockContext(block))
-    method._sourceInterval = new Interval((ctx.PUB() ?? ctx.FN()).sourceInterval.a, (ctx.result() ?? ctx.R_PAREN()).sourceInterval.b)
+    method._sourceIntervalDetail = new Interval((ctx.PUB() ?? ctx.FN()).sourceInterval.a, (ctx.result() ?? ctx.R_PAREN()).sourceInterval.b)
     return method
   }
 }

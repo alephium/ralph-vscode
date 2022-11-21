@@ -61,12 +61,12 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
   }
 
   visitBody(ctx: TypeStructBodyContext, base: Base) {
+    const context = new Context(base)
+    base.append(...context.statementContexts(ctx.statement()))
     // method
     ctx.methodDecl().forEach((method) => base.add(Method.FromContext(method).setParent(base)))
     // event
-    ctx.event().forEach((eventCtx) => base.add(new Event(eventCtx.IDENTIFIER()).setParent(base).setRuleContext(eventCtx)))
-    const context = new Context(base)
-    base.append(...context.statementContexts(ctx.statement()))
+    ctx.event().forEach((eventCtx) => base.add(Event.FromContext(eventCtx).setParent(base)))
     ctx.enum().forEach((value) => base.add(Enum.FromContext(value).setParent(base)))
   }
 
@@ -79,9 +79,9 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
 
   visitStruct(ctx: Struct, base: Base): Result {
     base._parser = this.parser
-    base.ruleContext = ctx
+    base.setRuleContext(ctx)
     base.uri = this.uri
-    base._sourceInterval = ctx.sourceInterval.differenceNotProperlyContained(ctx.typeStructBody().sourceInterval)
+    base._sourceIntervalDetail = ctx.sourceInterval.differenceNotProperlyContained(ctx.typeStructBody().sourceInterval)
     base.setParent(cache)
     base.setRange(ctx.start, ctx.stop)
     this.visitParams(ctx.paramList?.(), base)
