@@ -36,12 +36,6 @@ export class Method extends Base {
     return CompletionItemKind.Method
   }
 
-  signatureInformation(): SignatureInformation {
-    const signature = new SignatureInformation(this.detail)
-    signature.parameters = Array.from(this.members.values()).map((value) => new ParameterInformation(value.name!))
-    return signature
-  }
-
   completionItem(): CompletionItem {
     const item = new CompletionItem(this.completionItemLabel(), this.completionItemKind())
     item.preselect = true
