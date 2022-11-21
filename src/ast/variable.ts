@@ -1,4 +1,4 @@
-import { CompletionItemKind, SymbolKind } from 'vscode'
+import { CompletionItemKind, CompletionItemLabel, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { SemanticNode } from './ast'
 import { Identifier } from './identifier'
@@ -31,5 +31,13 @@ export class Variable extends SemanticNode {
   label(): string {
     if (this.isMut) return `(mut) ${this.name}`
     return this.name!
+  }
+
+  completionItemLabel(): CompletionItemLabel {
+    return {
+      label: this.name!,
+      // detail: this.label(),
+      description: this.hoverSymbolDetail(),
+    }
   }
 }
