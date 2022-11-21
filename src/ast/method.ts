@@ -46,18 +46,18 @@ export class Method extends Base {
     const item = new CompletionItem(this.completionItemLabel(), this.completionItemKind())
     item.preselect = true
     item.commitCharacters = ['.']
-    const text = new SnippetString(`${this.name}`)
-    text.appendText('(')
-    let { size } = this.members
-    this.members.forEach((value) => {
-      text.appendTabstop().appendPlaceholder(`${value.name}: ${value.type_?.name}`)
-      size -= 1
-      if (size !== 0) {
-        text.appendText(', ')
-      }
-    })
-    text.appendText(')')
-    item.insertText = text
+    // const text = new SnippetString(`${this.name}`)
+    // text.appendText('(')
+    // let { size } = this.members
+    // this.members.forEach((value) => {
+    //   text.appendTabstop().appendPlaceholder(`${value.name}: ${value.type_?.name}`)
+    //   size -= 1
+    //   if (size !== 0) {
+    //     text.appendText(', ')
+    //   }
+    // })
+    // text.appendText(')')
+    // item.insertText = text
     return item
   }
 
