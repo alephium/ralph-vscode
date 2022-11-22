@@ -70,7 +70,7 @@ export class Method extends Base {
       method.isPub = true
     }
     const context = new Context(method)
-    context.paramListContext(ctx.paramList())
+    method.identifiers.push(...context.paramListContext(ctx.paramList()))
     const block = ctx.block()
     if (block) method.append(...context.blockContext(block))
     method._sourceIntervalDetail = new Interval((ctx.PUB() ?? ctx.FN()).sourceInterval.a, (ctx.result() ?? ctx.R_PAREN()).sourceInterval.b)
