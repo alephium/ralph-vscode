@@ -113,6 +113,8 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
       parent.subclass.set(contract.name!, contract)
       // todo fix
       Array.from(parent.members.values()).forEach((member) => contract.add(member))
+    } else {
+      contract.parentClass.set(identifier.symbol.text!, undefined)
     }
     const list = ctx.expressionList()
     if (list) {
