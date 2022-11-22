@@ -6,7 +6,7 @@ import { Interface } from './interface'
 export class Contract extends Base {
   interfaces: Interface | undefined
 
-  parentClass: Map<string, Contract>
+  parentClass: Map<string, Contract | undefined>
 
   subclass: Map<string, Contract>
 

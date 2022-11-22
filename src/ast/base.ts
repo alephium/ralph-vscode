@@ -1,5 +1,6 @@
 import { CompletionItemKind, DocumentSymbol, ParameterInformation, SignatureInformation, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
+import { OrderedMap } from 'immutable'
 import { Identifier } from './identifier'
 import { IdentifierKind, SemanticsKind } from './kinder'
 import { SemanticNode } from './ast'
@@ -11,7 +12,7 @@ import { Property } from './property'
 
 export class Base extends SemanticNode implements Finder {
   // TODO Fix use set
-  members: Map<string, Identifier>
+  members: OrderedMap<string, Identifier>
 
   identifiers: Identifier[]
 
@@ -19,14 +20,14 @@ export class Base extends SemanticNode implements Finder {
 
   constructor(node?: TerminalNode) {
     super(node)
-    this.members = new Map()
+    this.members = OrderedMap()
     this.kind = IdentifierKind.Type
     this.identifiers = []
   }
 
   add(member: Identifier) {
     if (member && member.name) {
-      this.members.set(member.name, member)
+      this.members = this.members.set(member.name, member)
     }
   }
 
