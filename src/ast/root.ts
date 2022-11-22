@@ -37,7 +37,7 @@ export class Root extends Base {
   remove(uri: Uri) {
     Array.from(this.members.values()).forEach((value) => {
       if (value.getUri!() === uri) {
-        this.members.delete(value.name!)
+        this.members = this.members.delete(value.name!)
       }
     })
   }
