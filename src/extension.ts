@@ -72,6 +72,7 @@ async function init() {
     const doc = await vscode.workspace.openTextDocument(uri)
     const identifiers = Parser(doc.uri, doc.getText())
     cache.merge(uri, identifiers)
+    cache.analyse()
     console.log(`parser uri: ${uri.path}`)
   })
 }

@@ -45,4 +45,53 @@ export class Root extends Base {
   get(name: string) {
     return this.members.get(name)
   }
+
+  analyse() {
+    this.members
+      .valueSeq()
+      .toArray()
+      .forEach((identifier) => {
+        if (identifier instanceof Contract) {
+          identifier.subclass.forEach((value, key) => {
+            const member = this.members.get(key)
+            if (member && member instanceof Contract) {
+              identifier.subclass.set(key, member)
+              member.members = member.members.merge(identifier.members)
+            } else {
+              identifier.subclass.delete(key)
+            }
+          })
+
+          identifier.interfaces.forEach((value, key) => {
+            const member = this.members.get(key)
+            if (member && member instanceof Interface) {
+              identifier.members = identifier.members.merge(member.members)
+            } else {
+              identifier.members = identifier.members.delete(key)
+            }
+          })
+
+          identifier.parentClass.forEach((value, key) => {
+            const member = this.members.get(key)
+            if (member && member instanceof Contract) {
+              identifier.members = identifier.members.merge(member.members)
+            } else {
+              identifier.members = identifier.members.delete(key)
+            }
+          })
+        }
+
+        if (identifier instanceof Interface) {
+          identifier.implementer.forEach((value, key) => {
+            const member = this.members.get(key)
+            if (member && member instanceof Base) {
+              identifier.implementer.set(key, member)
+              member.members = member.members.merge(identifier.members)
+            } else {
+              identifier.implementer.delete(key)
+            }
+          })
+        }
+      })
+  }
 }

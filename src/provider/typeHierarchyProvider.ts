@@ -38,14 +38,15 @@ export class RalphTypeHierarchyProvider extends Filter implements TypeHierarchyP
    */
   provideTypeHierarchySupertypes(item: TypeHierarchyItem, token: CancellationToken): ProviderResult<TypeHierarchyItem[]> {
     const instance = cache.get(item.name)
-    const parts = []
+    const parts: TypeHierarchyItem[] = []
     if (instance instanceof Contract) {
-      if (instance.interfaces) parts.push(instance.interfaces.typeHierarchyItem())
+      if (instance.interfaces)
+        Array.from(instance.interfaces.values()).forEach((value) => {
+          if (value) parts.push(value.typeHierarchyItem())
+        })
       if (instance.parentClass)
         Array.from(instance.parentClass.values()).forEach((value) => {
-          if (value) {
-            parts.push(value.typeHierarchyItem())
-          }
+          if (value) parts.push(value.typeHierarchyItem())
         })
     }
     return parts

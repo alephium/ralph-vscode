@@ -4,7 +4,7 @@ import { Base } from './base'
 import { Interface } from './interface'
 
 export class Contract extends Base {
-  interfaces: Interface | undefined
+  interfaces: Map<string, Interface | undefined>
 
   parentClass: Map<string, Contract | undefined>
 
@@ -14,6 +14,7 @@ export class Contract extends Base {
     super(node)
     this.subclass = new Map()
     this.parentClass = new Map()
+    this.interfaces = new Map()
   }
 
   symbolKind(): SymbolKind {
