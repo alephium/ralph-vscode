@@ -128,10 +128,12 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     contract.append(block.typeNode(identifier))
     const parent = cache.get(identifier.symbol.text!)
     if (parent instanceof Interface) {
-      contract.interfaces = parent
-      parent.implementer?.set(contract.name!, contract)
+      contract.interfaces.set(parent.name!, parent)
+      parent.implementer.set(contract.name!, contract)
       // todo fix
       Array.from(parent.members.values()).forEach((member) => contract.add(member))
+    } else {
+      contract.interfaces.set(identifier.symbol.text!, undefined)
     }
   }
 
