@@ -19,9 +19,17 @@ export function registerEvent() {
       parser(doc)
     })
   })
+  vscode.window.onDidChangeActiveTextEditor((event) => {
+    if (event) {
+      parser(event.document)
+    }
+  })
+  vscode.window.onDidChangeVisibleTextEditors((editors) => editors.forEach((editor) => parser(editor.document)))
 }
 
-function parser(doc: TextDocument) {
-  const identifiers = Parser(doc.uri, doc.getText())
-  cache.merge(doc.uri, identifiers)
+export function parser(doc: TextDocument) {
+  if (!doc.isDirty && doc.languageId === 'ralph') {
+    const identifiers = Parser(doc.uri, doc.getText())
+    cache.merge(doc.uri, identifiers)
+  }
 }
