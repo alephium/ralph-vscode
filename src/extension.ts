@@ -64,7 +64,9 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+  clearInterval(timerId)
+}
 
 async function init() {
   const files = await vscode.workspace.findFiles('**/*.ral', '**/{node_modules,.git}/**')
@@ -76,3 +78,7 @@ async function init() {
     console.log(`parser uri: ${uri.path}`)
   })
 }
+
+const timerId = setInterval((value) => {
+  cache.analyse()
+}, 1000 * 60 * 5)
