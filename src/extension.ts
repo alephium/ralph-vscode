@@ -6,7 +6,6 @@ import { SymbolProvider } from './provider/symbolProvider'
 import { GlobalProvider } from './provider/completion/globalProvider'
 import { DefinitionProvider } from './provider/definitionProvider'
 import { RalphRenameProvider } from './provider/renameProvider'
-import Parser from './parser/parser'
 import { BuiltInProvider } from './provider/completion/builtInProvider'
 import { IdentifierProvider } from './provider/completion/identifierProvider'
 import { EnumProvider } from './provider/completion/enumProvider'
@@ -20,7 +19,7 @@ import { RalphTypeHierarchyProvider } from './provider/typeHierarchyProvider'
 import { analyseDiagnostic } from './diagnostics'
 import cache from './cache/cache'
 import { EmitProvider } from './provider/completion/emitProvider'
-import { registerEvent } from './event'
+import { parser, registerEvent } from './event'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -64,15 +63,20 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+  clearInterval(timerId)
+}
 
 async function init() {
   const files = await vscode.workspace.findFiles('**/*.ral', '**/{node_modules,.git}/**')
   files.forEach(async (uri) => {
     const doc = await vscode.workspace.openTextDocument(uri)
-    const identifiers = Parser(doc.uri, doc.getText())
-    cache.merge(uri, identifiers)
+    parser(doc)
     cache.analyse()
     console.log(`parser uri: ${uri.path}`)
   })
 }
+
+const timerId = setInterval((value) => {
+  cache.analyse()
+}, 1000 * 60 * 5)

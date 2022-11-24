@@ -5,11 +5,8 @@ import { analyseDiagnostic } from './diagnostics'
 
 export function registerEvent() {
   vscode.workspace.onDidChangeTextDocument((event) => parser(event.document))
-  // vscode.workspace.onDidOpenTextDocument((doc) => {
-  //   parser(doc)
-  //   analyseDiagnostic()
-  // })
-  // vscode.workspace.onDidCloseTextDocument((doc) => parser(doc))
+  vscode.workspace.onDidOpenTextDocument((doc) => parser(doc))
+  vscode.workspace.onDidCloseTextDocument((doc) => parser(doc))
   vscode.workspace.onDidDeleteFiles((events) => events.files.forEach((e) => cache.remove(e)))
   vscode.workspace.onDidSaveTextDocument((doc) => {
     parser(doc)
@@ -22,9 +19,17 @@ export function registerEvent() {
       parser(doc)
     })
   })
+  vscode.window.onDidChangeActiveTextEditor((event) => {
+    if (event) {
+      parser(event.document)
+    }
+  })
+  vscode.window.onDidChangeVisibleTextEditors((editors) => editors.forEach((editor) => parser(editor.document)))
 }
 
-function parser(doc: TextDocument) {
-  const identifiers = Parser(doc.uri, doc.getText())
-  cache.merge(doc.uri, identifiers)
+export function parser(doc: TextDocument) {
+  if (!doc.isDirty && doc.languageId === 'ralph') {
+    const identifiers = Parser(doc.uri, doc.getText())
+    cache.merge(doc.uri, identifiers)
+  }
 }
