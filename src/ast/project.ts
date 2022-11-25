@@ -21,7 +21,14 @@ export class MultiProjects {
   }
 
   merge(path: Uri, members: Identifier[]) {
-    this.root(path)?.merge(path, members)
+    const dir = this.projectDir(path)
+    if (this.projects.get(dir)) {
+      this.root(path)?.merge(path, members)
+    } else {
+      const root = new Root()
+      root.merge(path, members)
+      this.projects.set(dir, root)
+    }
   }
 
   remove(path: Uri) {
@@ -54,5 +61,9 @@ export class MultiProjects {
 
   root(path: Uri | string): Root | undefined {
     return this.projects.get(this.projectDir(path))
+  }
+
+  analyse() {
+    this.projects.forEach((root) => root.analyse())
   }
 }
