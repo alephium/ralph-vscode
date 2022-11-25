@@ -20,6 +20,7 @@ import { analyseDiagnostic } from './diagnostics'
 import cache from './cache/cache'
 import { EmitProvider } from './provider/completion/emitProvider'
 import { parser, registerEvent } from './event'
+import { global } from './config/global'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -68,7 +69,12 @@ export function deactivate() {
 }
 
 async function init() {
-  const files = await vscode.workspace.findFiles('**/*.ral', '**/{node_modules,.git}/**')
+  let files = []
+  if (global.contractsDir) {
+    files = await vscode.workspace.findFiles(`**/${global.contractsDir}/*.ral`, '**/{node_modules,.git}/**')
+  } else {
+    files = await vscode.workspace.findFiles('**/*.ral', '**/{node_modules,.git}/**')
+  }
   files.forEach(async (uri) => {
     const doc = await vscode.workspace.openTextDocument(uri)
     parser(doc)
