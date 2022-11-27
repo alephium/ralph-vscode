@@ -12,7 +12,7 @@ export class IdentifierProvider extends Filter implements vscode.CompletionItemP
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     if (this.isSkip(document, position)) return undefined
     const pos = { uri: document.uri, point: position }
-    const container = cache.container(pos)
+    const container = cache.container(document.uri, pos)
     return this.defs(container)
   }
 

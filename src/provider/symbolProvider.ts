@@ -13,7 +13,7 @@ export class SymbolProvider implements vscode.DocumentSymbolProvider, vscode.Wor
    */
   provideDocumentSymbols(document: vscode.TextDocument): vscode.ProviderResult<vscode.DocumentSymbol[] | vscode.SymbolInformation[]> {
     return cache
-      .defs()
+      .defs(document.uri)
       ?.filter((c) => c.getUri?.()?.path === document.uri.path)
       .map((item) => item.documentSymbol!())
   }
@@ -36,6 +36,9 @@ export class SymbolProvider implements vscode.DocumentSymbolProvider, vscode.Wor
    * signaled by returning `undefined`, `null`, or an empty array.
    */
   provideWorkspaceSymbols(query: string, token: CancellationToken): ProviderResult<SymbolInformation[]> {
-    return cache.findAll({ name: query }).map((value) => value.symbolInformation!())
+    if (vscode.window.activeTextEditor) {
+      return cache.findAll(vscode.window.activeTextEditor.document.uri, { name: query }).map((value) => value.symbolInformation!())
+    }
+    return undefined
   }
 }

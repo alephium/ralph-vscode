@@ -14,7 +14,9 @@ export class MultiProjects {
 
   projectDir(projectPath: Uri | string): string {
     if (projectPath instanceof Uri) {
-      if (vscode.workspace.rootPath) projectPath.path.split(vscode.workspace.rootPath)[1].split(path.sep)[0]
+      if (vscode.workspace.rootPath) {
+        return projectPath.path.split(vscode.workspace.rootPath)[1].split(path.sep)[1]
+      }
       return 'root'
     }
     return <string>projectPath
@@ -39,10 +41,15 @@ export class MultiProjects {
     return this.root(path)?.def(word)
   }
 
-  defs(path: Uri | string): Identifier[] {
-    const root = this.root(path)
-    if (root) return root.defs()
-    return []
+  defs(path?: Uri | string): Identifier[] {
+    if (path) {
+      const root = this.root(path)
+      if (root) return root.defs()
+      return []
+    }
+    const items: Identifier[] = []
+    this.projects.forEach((root) => items.push(...root.defs()))
+    return items
   }
 
   get(path: Uri | string, name: string): Identifier | undefined {
@@ -59,8 +66,11 @@ export class MultiProjects {
     return []
   }
 
-  root(path: Uri | string): Root | undefined {
-    return this.projects.get(this.projectDir(path))
+  root(path: Uri | string): Root {
+    const dir = this.projectDir(path)
+    const root = this.projects.get(dir)
+    if (root) return root
+    return new Root()
   }
 
   analyse() {

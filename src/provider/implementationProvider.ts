@@ -12,7 +12,7 @@ export class RalphImplementationProvider extends Filter implements vscode.Implem
   ): ProviderResult<Definition | DefinitionLink[]> {
     const word = this.word(document, position)
     if (word && word.name) {
-      const base = cache.get(word.name)
+      const base = cache.get(document.uri, word.name)
       if (base instanceof Interface) {
         return Array.from(base.implementer.values()).map((value) => value.location())
       }

@@ -29,7 +29,7 @@ export class RalphRenameProvider extends Filter implements RenameProvider {
     //   }
     // }
     const word = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z]*/i))
-    cache.findAll({ name: word }).forEach((member) =>
+    cache.findAll(document.uri, { name: word }).forEach((member) =>
       edit.replace(<Uri>member.getUri?.(), <vscode.Range>member.getWordRange?.(), newName, {
         label: member.name!,
         needsConfirmation: true,
