@@ -82,7 +82,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     base.setRuleContext(ctx)
     base.uri = this.uri
     base._sourceIntervalDetail = ctx.sourceInterval.differenceNotProperlyContained(ctx.typeStructBody().sourceInterval)
-    base.setParent(cache)
+    base.setParent(cache.root(this.uri))
     base.setRange(ctx.start, ctx.stop)
     this.visitParams(ctx.paramList?.(), base)
     this.visitBody(ctx.typeStructBody?.(), base)
@@ -107,7 +107,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     const block = new Context(contract)
     const identifier = ctx.IDENTIFIER()
     contract.append(block.typeNode(identifier))
-    const parent = cache.get(identifier.symbol.text!)
+    const parent = cache.get(this.uri, identifier.symbol.text!)
     if (parent instanceof Contract) {
       contract.parentClass.set(parent.name!, parent)
       parent.subclass.set(contract.name!, contract)
@@ -126,7 +126,7 @@ export class RalphVisitor extends AbstractParseTreeVisitor<Result> implements Ra
     const identifier = ctx.IDENTIFIER()
     const block = new Context(contract)
     contract.append(block.typeNode(identifier))
-    const parent = cache.get(identifier.symbol.text!)
+    const parent = cache.get(this.uri, identifier.symbol.text!)
     if (parent instanceof Interface) {
       contract.interfaces.set(parent.name!, parent)
       parent.implementer.set(contract.name!, contract)

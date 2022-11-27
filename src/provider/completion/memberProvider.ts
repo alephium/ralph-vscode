@@ -14,7 +14,7 @@ export class MemberProvider extends Filter implements vscode.CompletionItemProvi
     const word = this.word(document, position, -1)
     if (word) {
       return cache
-        .def(word)
+        .def(document.uri, word)
         ?.getType?.()
         ?.defs?.()
         .filter((value) => {

@@ -1,4 +1,5 @@
-import { Root } from '../ast/root'
+import { MultiProjects } from '../ast/project'
 
-const cache = new Root()
+// const cache = new Root()
+const cache = new MultiProjects()
 export default cache

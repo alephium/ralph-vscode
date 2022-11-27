@@ -25,7 +25,7 @@ export class Property extends SemanticNode {
   }
 
   getType(): Identifier | undefined {
-    return caches.get(<string>this.type_?.name)
+    return caches.get(this.getUri()!, <string>this.type_?.name)
   }
 
   label(): string {

@@ -34,7 +34,7 @@ export class Filter {
       point: position,
       uri: document.uri,
     }
-    let caller = cache.def(word)
+    let caller = cache.def(document.uri, word)
     let i = 0
     while (true) {
       if (wordSet.length - 1 === i) {

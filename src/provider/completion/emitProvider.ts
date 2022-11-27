@@ -13,7 +13,7 @@ export class EmitProvider extends Filter implements vscode.CompletionItemProvide
     token: vscode.CancellationToken,
     context: vscode.CompletionContext
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
-    return this.emitter(cache.container({ point: position, uri: document.uri }))
+    return this.emitter(cache.container(document.uri, { point: position, uri: document.uri }))
   }
 
   resolveCompletionItem(item: vscode.CompletionItem, token: CancellationToken): ProviderResult<vscode.CompletionItem> {

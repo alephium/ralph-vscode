@@ -1,4 +1,5 @@
 import { CancellationToken, Position, ProviderResult, TextDocument, TypeHierarchyItem, TypeHierarchyProvider } from 'vscode'
+import it from 'node:test'
 import { Filter } from './filter'
 import cache from '../cache/cache'
 import { Contract } from '../ast/contract'
@@ -22,7 +23,7 @@ export class RalphTypeHierarchyProvider extends Filter implements TypeHierarchyP
     token: CancellationToken
   ): ProviderResult<TypeHierarchyItem | TypeHierarchyItem[]> {
     const word = this.word(document, position)
-    if (word && word.name) return cache.get(word.name)?.typeHierarchyItem?.()
+    if (word && word.name) return cache.get(document.uri, word.name)?.typeHierarchyItem?.()
     return undefined
   }
 
@@ -37,7 +38,7 @@ export class RalphTypeHierarchyProvider extends Filter implements TypeHierarchyP
    * signaled by returning `undefined` or `null`.
    */
   provideTypeHierarchySupertypes(item: TypeHierarchyItem, token: CancellationToken): ProviderResult<TypeHierarchyItem[]> {
-    const instance = cache.get(item.name)
+    const instance = cache.get(item.uri, item.name)
     const parts: TypeHierarchyItem[] = []
     if (instance instanceof Contract) {
       if (instance.interfaces)
@@ -63,7 +64,7 @@ export class RalphTypeHierarchyProvider extends Filter implements TypeHierarchyP
    * signaled by returning `undefined` or `null`.
    */
   provideTypeHierarchySubtypes(item: TypeHierarchyItem, token: CancellationToken): ProviderResult<TypeHierarchyItem[]> {
-    const instance = cache.get(item.name)
+    const instance = cache.get(item.uri, item.name)
     const parts = []
     if (instance instanceof Contract) parts.push(...Array.from(instance.subclass.values()).map((value) => value.typeHierarchyItem()))
     if (instance instanceof Interface) parts.push(...Array.from(instance.implementer.values()).map((value) => value.typeHierarchyItem()))

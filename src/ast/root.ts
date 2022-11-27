@@ -42,7 +42,7 @@ export class Root extends Base {
     })
   }
 
-  get(name: string) {
+  get(name: string): Identifier | undefined {
     return this.members.get(name)
   }
 

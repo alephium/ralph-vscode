@@ -9,7 +9,7 @@ export class RalphTypeDefinitionProvider extends Filter implements TypeDefinitio
     token: CancellationToken
   ): ProviderResult<Definition | DefinitionLink[]> {
     const word = this.word(document, position)
-    if (word && word.name) return cache.get(word.name)?.location?.()
+    if (word && word.name) return cache.get(document.uri, word.name)?.location?.()
     return undefined
   }
 }
