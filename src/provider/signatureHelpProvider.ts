@@ -48,7 +48,7 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
         return context.activeSignatureHelp
       }
     }
-    const range = document.getWordRangeAtPosition(position.with(position.line, position.character - 1), /[a-zA-Z][0-9a-zA-Z]*!?/i)
+    const range = document.getWordRangeAtPosition(position.with(position.line, position.character - 1), /[a-zA-Z_][0-9a-zA-Z_]*!?/i)
     const word = document.getText(range)
     const item = this.builtItems.get(word)
     const signature = new SignatureHelp()
