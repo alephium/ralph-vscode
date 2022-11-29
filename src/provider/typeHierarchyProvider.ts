@@ -1,5 +1,4 @@
 import { CancellationToken, Position, ProviderResult, TextDocument, TypeHierarchyItem, TypeHierarchyProvider } from 'vscode'
-import it from 'node:test'
 import { Filter } from './filter'
 import cache from '../cache/cache'
 import { Contract } from '../ast/contract'
