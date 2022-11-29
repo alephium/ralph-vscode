@@ -1,6 +1,7 @@
 import * as vscode from 'vscode'
 import * as path from 'path'
-import * as os from 'os'
+import { existsSync } from 'fs'
+import { exec } from 'child_process'
 import { Downloader } from '../downloader/downloader'
 import * as logger from '../logger/logger'
 import { Logger } from '../logger/logger'
@@ -33,8 +34,10 @@ export class Compiler {
     }
     if (!this.cmd && vscode.workspace.rootPath) {
       const d = new Downloader()
-      await d.showQuickPick()
-      const jar = path.join(os.homedir(), '.alephium-dev', d.config.target)
+      const jar = d.jarPath()
+      if (!existsSync(jar)) {
+        await d.showQuickPick()
+      }
       const warn = this.warning()
       let debug = ''
       if (this.option?.debug) {
@@ -44,18 +47,17 @@ export class Compiler {
     }
 
     this.log.info(`Compiler.cmd: ${this.cmd}`)
-    const { exec } = require('child_process')
-
     vscode.window.setStatusBarMessage(`Execute command: ${this.cmd}`)
-
-    exec(this.cmd, (_error: any, stdout: string, stderr: string) => {
-      if (stderr) {
-        this.log.info(stderr)
-        vscode.window.showErrorMessage(stderr)
-      } else if (stdout) {
-        this.log.info(stdout)
-      }
-    })
+    if (this.cmd != null) {
+      exec(this.cmd, (_error: any, stdout: string, stderr: string) => {
+        if (stderr) {
+          this.log.info(stderr)
+          vscode.window.showErrorMessage(stderr)
+        } else if (stdout) {
+          this.log.info(stdout)
+        }
+      })
+    }
   }
 
   warning(): string {
