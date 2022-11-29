@@ -12,7 +12,7 @@ import {
 import { Filter } from './filter'
 import jsonData from './hover/builtIn/ralph-built-in-functions.json'
 import { Fun } from './hover/builtIn/function'
-import { IdentifierKind, SemanticsKind } from '../ast/kinder'
+import { SemanticsKind } from '../ast/kinder'
 
 export class RalphSignatureHelpProvider extends Filter implements vscode.SignatureHelpProvider {
   items: Array<Fun>

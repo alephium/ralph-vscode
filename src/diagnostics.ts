@@ -26,6 +26,3 @@ function upperCamelCase() {
     }
   })
 }
-
-// const watcher = vscode.workspace.createFileSystemWatcher('**/*.ral')
-// watcher.onDidChange((uri) => )
