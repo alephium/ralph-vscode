@@ -39,7 +39,7 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
       .concat(this.builtInLiteral.map((value) => new CompletionItem({ label: value }, CompletionItemKind.Value)))
       .concat(keyword.map((value) => new CompletionItem({ label: value.name, description: value.detail }, CompletionItemKind.Keyword)))
 
-    if (document.getWordRangeAtPosition(position, /\([a-zA-Z][0-9a-zA-Z, :!().;]*\)/i)) return items
+    if (document.getWordRangeAtPosition(position, /\([a-zA-Z_][0-9a-zA-Z_, :!().;]*\)/i)) return items
     return this.items
       .map((item) => {
         const method = new CompletionItem(

@@ -20,7 +20,7 @@ export class RalphReferenceProvider extends Filter implements ReferenceProvider 
     token: CancellationToken
   ): ProviderResult<Location[]> {
     if (this.isSkip(document, position)) return undefined
-    const word = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z]*/i))
+    const word = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z_][0-9a-zA-Z_]*/i))
     return cache.findAll(document.uri, { name: word }).map((value) => value.location!())
   }
 }
