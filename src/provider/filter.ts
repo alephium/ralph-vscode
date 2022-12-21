@@ -25,8 +25,8 @@ export class Filter {
 
   callChain(document: TextDocument, position: Position): Identifier | undefined {
     if (this.isSkip(document, position)) return undefined
-    const callChain = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z.]*/i))
-    const positionWord = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z][0-9a-zA-Z]*/i))
+    const callChain = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z_][0-9a-zA-Z._]*/i))
+    const positionWord = document.getText(document.getWordRangeAtPosition(position, /[a-zA-Z_][0-9a-zA-Z_]*/i))
     let wordSet = callChain.split('.')
     wordSet = wordSet.slice(0, wordSet.indexOf(positionWord) + 1)
     const word = {
