@@ -56,10 +56,6 @@
       {
         "command": "ralph.online.compile",
         "title": "Ralph Online Compile"
-      },
-      {
-        "command": "ralph.online.deploy",
-        "title": "Ralph Online Deploy"
       }
     ],
     "configuration": {
@@ -141,7 +137,6 @@
         "ralph.online.configuration": {
           "type": "object",
           "default": {
-            "deploymentScriptDir": "deploymentDir",
             "sourceDir": "contracts",
             "artifactDir": "artifacts",
             "defaultNetwork": "devnet",
@@ -213,11 +208,6 @@
           "command": "ralph.online.compile",
           "when": "resourceLangId == ralph",
           "group": "1_ralph@3"
-        },
-        {
-          "command": "ralph.online.deploy",
-          "when": "resourceLangId == ralph",
-          "group": "1_ralph@4"
         }
       ]
     },
