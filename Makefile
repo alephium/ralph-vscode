@@ -1,13 +1,13 @@
 compile:
-	yarn run compile
+	pnpm run compile
 
 build: dep compile package
 
 package: compile
-	yarn vsce package
+	pnpm vsce package --no-dependencies
 
 dep:
-	yarn install
+	pnpm install
 
 publish:
 	./node_modules/vsce/vsce publish
@@ -19,17 +19,17 @@ clean:
 
 
 fmt:
-	yarn run fmt
+	pnpm run fmt
 
 lint:
-	yarn run lint
+	pnpm run lint
 
 antlr4ts:
-	yarn run antlr4ts
+	pnpm run antlr4ts
 
 
 test:
-	yarn run test
+	pnpm run test
 
 downLoadBuildIn:
 	wget https://raw.githubusercontent.com/alephium/alephium/master/protocol/src/main/resources/ralph-built-in-functions.json -O ./src/provider/hover/builtIn/ralph-built-in-functions.json
