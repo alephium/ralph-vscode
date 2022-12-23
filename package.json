@@ -91,42 +91,47 @@
         "ralph.compile.option.ignoreUnusedConstantsWarnings": {
           "type": "boolean",
           "default": false,
-          "description": "ignore unused constants warning"
+          "description": "ignore unused constants warnings"
         },
         "ralph.compile.option.ignoreUnusedVariablesWarnings": {
           "type": "boolean",
           "default": false,
-          "description": "ignore unused variables warning"
+          "description": "ignore unused variables warnings"
         },
         "ralph.compile.option.ignoreUnusedFieldsWarnings": {
           "type": "boolean",
           "default": false,
-          "description": "ignore unused fields warning"
+          "description": "ignore unused fields warnings"
         },
-        "ralph.compile.option.ignoreReadonlyCheckWarnings": {
+        "ralph.compile.option.ignoreUpdateFieldCheckWarnings": {
           "type": "boolean",
           "default": false,
-          "description": "ignore readonly check warning"
+          "description": "ignore update field check warnings"
         },
         "ralph.compile.option.ignoreUnusedPrivateFunctionsWarnings": {
           "type": "boolean",
           "default": false,
-          "description": "ignore unused private functions warning"
+          "description": "ignore unused private functions warnings"
         },
         "ralph.compile.option.ignoreExternalCallCheckWarnings": {
           "type": "boolean",
           "default": false,
-          "description": "ignore external call check warning"
+          "description": "ignore external call check warnings"
         },
-        "ralph.compile.option.projectDir": {
+        "ralph.compile.option.contracts": {
           "type": "string",
-          "default": "",
-          "description": "project path"
+          "default": "./contracts",
+          "description": "Contract folder"
         },
-        "ralph.compile.option.warningAsError": {
+        "ralph.compile.option.artifacts": {
+          "type": "string",
+          "default": "./artifacts",
+          "description": "Artifact folder"
+        },
+        "ralph.compile.option.warningsAsError": {
           "type": "boolean",
           "default": false,
-          "description": "Consider warnings as errors"
+          "description": "Treat warnings as errors"
         },
         "ralph.compile.option.debug": {
           "type": "boolean",

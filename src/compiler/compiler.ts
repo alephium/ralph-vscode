@@ -28,10 +28,7 @@ export class Compiler {
     if (editor.document.isDirty) {
       editor.document.save()
     }
-    let project = this.option?.projectDir
-    if (project === undefined || project.length === 0) {
-      project = path.dirname(fullFileName)
-    }
+
     if (!this.cmd && vscode.workspace.rootPath) {
       const d = new Downloader()
       const jar = d.jarPath()
@@ -43,7 +40,7 @@ export class Compiler {
       if (this.option?.debug) {
         debug = '-d'
       }
-      this.cmd = `java -jar ${jar} ${debug} --project ${project} ${warn} -f ${fullFileName}`
+      this.cmd = `java -jar ${jar} ${debug} -c ${this.option?.contracts} -a ${this.option?.artifacts} ${warn} `
     }
 
     this.log.info(`Compiler.cmd: ${this.cmd}`)
@@ -73,7 +70,7 @@ export class Compiler {
       warning += '--if '
     }
 
-    if (this.option?.ignoreReadonlyCheckWarnings) {
+    if (this.option?.ignoreUpdateFieldsCheckWarnings) {
       warning += '--ir '
     }
 
@@ -85,8 +82,8 @@ export class Compiler {
       warning += '--ie '
     }
 
-    if (this.option?.warningAsError) {
-      warning += '--warning '
+    if (this.option?.warningsAsError) {
+      warning += '-w '
     }
     return warning
   }

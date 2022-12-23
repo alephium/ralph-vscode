@@ -5,15 +5,17 @@ class CompileOption {
 
   ignoreUnusedFieldsWarnings = false
 
-  ignoreReadonlyCheckWarnings = false
+  ignoreUpdateFieldsCheckWarnings = false
 
   ignoreUnusedPrivateFunctionsWarnings = false
 
   ignoreExternalCallCheckWarnings = false
 
-  warningAsError = false
+  warningsAsError = false
 
-  projectDir: string | undefined
+  debug = false
 
-  debug: string | undefined
+  contracts = './contracts'
+
+  artifacts = './artifacts'
 }
