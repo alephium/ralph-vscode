@@ -1,5 +1,4 @@
 import * as vscode from 'vscode'
-import * as path from 'path'
 import { existsSync } from 'fs'
 import { exec } from 'child_process'
 import { Downloader } from '../downloader/downloader'
