@@ -8,7 +8,7 @@ export class AnnotationProvider extends Filter implements vscode.CompletionItemP
 
   constructor() {
     super()
-    this.annotationField = ['preapprovedAssets', 'assetsInContract', 'externalCallCheck', 'readonly', 'updateFields']
+    this.annotationField = ['preapprovedAssets', 'assetsInContract', 'externalCallCheck', 'updateFields']
   }
 
   provideCompletionItems(
