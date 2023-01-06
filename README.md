@@ -21,7 +21,6 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
   - Peek symbol. ✅
   - ...
 - Linting. ✅
-- Deploy. ✅
 
 ## Extension Settings
 
@@ -58,12 +57,12 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
 ### Command compile
 
 ```shell
-java -jar ${home}/.alephium-dev/ralphc.jar --project ./tests/contracts/
+java -jar ${home}/.alephium-dev/alephium-ralphc-*.jar -c ./contracts -a ./artifacts
 ```
 
 #### More command compile
 
-https://github.com/alephium/ralphc
+https://github.com/alephium/alephium
 
 ## More Feature
 

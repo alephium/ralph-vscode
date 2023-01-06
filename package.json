@@ -2,7 +2,7 @@
   "name": "ralph-vscode",
   "displayName": "ralph vscode",
   "description": "ralph vscode",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v18.0.0"
@@ -65,20 +65,15 @@
           "type": "string",
           "description": "contractsDir"
         },
-        "ralph.download.config.name": {
-          "type": "string",
-          "description": "compile name",
-          "default": "ralphc"
-        },
         "ralph.download.config.url": {
           "type": "string",
           "description": "download link",
-          "default": "https://github.com/alephium/ralphc/releases/download/v1.5.4/ralphc.jar"
+          "default": "https://github.com/alephium/alephium/releases/download/v1.6.0-rc4/alephium-ralphc-1.6.0-rc4.jar"
         },
         "ralph.download.config.target": {
           "type": "string",
           "description": "compiler jar",
-          "default": "ralphc-1.5.4.jar"
+          "default": "alephium-ralphc-1.6.0-rc4.jar"
         },
         "ralph.compile.command": {
           "type": "string",
@@ -255,12 +250,12 @@
     "antlr4ts": "antlr4ts -visitor ./src/parser/*.g4"
   },
   "dependencies": {
-    "@alephium/cli": "^0.2.2",
-    "@alephium/web3": "^0.2.2",
-    "@alephium/web3-test": "^0.2.2",
+    "@alephium/cli": "0.3.0-rc.0",
+    "@alephium/web3": "0.3.0-rc.0",
+    "@alephium/web3-test": "0.3.0-rc.0",
     "antlr4ts": "0.5.0-alpha.4",
     "execa": "^6.1.0",
-    "immutable": "^4.2.0",
+    "immutable": "^4.2.1",
     "node-fetch": "^3.3.0",
     "prettier": "^2.8.1",
     "request": "^2.88.2",
@@ -270,19 +265,19 @@
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/crypto-js": "^4.1.1",
-    "@types/node": "^18.11.17",
+    "@types/node": "^18.11.18",
     "@types/prettier": "^2.7.2",
     "@types/request": "^2.48.8",
     "@types/request-promise-native": "^1.0.18",
     "@types/vscode": "1.69.0",
-    "@typescript-eslint/eslint-plugin": "^5.47.0",
-    "@typescript-eslint/parser": "^5.47.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
     "antlr4ts-cli": "0.5.0-alpha.4",
     "assert": "^2.0.0",
     "chai": "^4.3.7",
     "eslint": "8.22.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-import-resolver-webpack": "^0.13.2",
     "eslint-plugin-import": "^2.26.0",
