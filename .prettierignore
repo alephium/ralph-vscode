@@ -2,3 +2,4 @@ node_modules
 dist
 snippets/snippets.code-snippets
 src/parser
+tests

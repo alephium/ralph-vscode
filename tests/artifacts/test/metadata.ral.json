@@ -1,0 +1,40 @@
+{
+  "version": "v1.6.0",
+  "name": "MetaData",
+  "bytecode": "00010700000000000102",
+  "codeHash": "6d760b29e9479d910e22b9bc953d2f27a4b9205fbe5ab6a4c83b1261d593b6ae",
+  "fieldsSig": {
+    "names": [
+      
+    ],
+    "types": [
+      
+    ],
+    "isMutable": [
+      
+    ]
+  },
+  "eventsSig": [
+    
+  ],
+  "functions": [
+    {
+      "name": "baz",
+      "usePreapprovedAssets": false,
+      "useAssetsInContract": false,
+      "isPublic": false,
+      "paramNames": [
+        
+      ],
+      "paramTypes": [
+        
+      ],
+      "paramIsMutable": [
+        
+      ],
+      "returnTypes": [
+        
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "compilerOptionsUsed": {
+    "ignoreUnusedConstantsWarnings": false,
+    "ignoreUnusedVariablesWarnings": false,
+    "ignoreUnusedFieldsWarnings": false,
+    "ignoreUnusedPrivateFunctionsWarnings": false,
+    "ignoreUpdateFieldsCheckWarnings": false,
+    "ignoreExternalCallCheckWarnings": false
+  },
+  "infos": {
+    "Add": {
+      "sourceFile": "add/add.ral",
+      "sourceCodeHash": "c1e952e47d26bdf616ba4254030a830a477e6a3e1bb5cb551b63fab877d574c8",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "a20cffb6f8f9416decd7aec0375b12e04475e8cf19ba80775f8f2d7633e2556d",
+      "warnings": [
+        "Function \"Add.addPrivate\" changes state, please use @using(updateFields = true) for the function"
+      ]
+    },
+    "Greeter": {
+      "sourceFile": "greeter/greeter.ral",
+      "sourceCodeHash": "66c5ae4dc1029150388645f19e5658daf97420c6357cf8ea849038f1de2ee74a",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "23a48462286d2c2ffc6d3a19192060dd42c178e7d331819e75e059c5be3c042f",
+      "warnings": [
+        
+      ]
+    },
+    "GreeterInterface": {
+      "sourceFile": "greeter/greeter_interface.ral",
+      "sourceCodeHash": "00adef627e3e3d00a232cb082ffead857cc8001c86036831675e676336bb7935",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": [
+        
+      ]
+    },
+    "GreeterMain": {
+      "sourceFile": "greeter_main.ral",
+      "sourceCodeHash": "b73c6e7ace059017085a9aba7bc6b797c6e26bc1b10312c0862ff84e973dfdff",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": [
+        
+      ]
+    },
+    "Main": {
+      "sourceFile": "main.ral",
+      "sourceCodeHash": "8cc5c1a2de002650a5904078f91005932982e700f7b0a393cbe4e3a64cfdf842",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "",
+      "warnings": [
+        
+      ]
+    },
+    "MetaData": {
+      "sourceFile": "test/metadata.ral",
+      "sourceCodeHash": "e57e6d30dab566b62a5c500e816f1e9d481fc1b49aac964461949777a66d09bc",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "6d760b29e9479d910e22b9bc953d2f27a4b9205fbe5ab6a4c83b1261d593b6ae",
+      "warnings": [
+        "Private function MetaData.baz is not used"
+      ]
+    },
+    "Sub": {
+      "sourceFile": "sub/sub.ral",
+      "sourceCodeHash": "409518aa25bdace56cefe167d6607f04cd955204a7050f00a050466703cdf0f0",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "513645f5c95a28d55a51070f3d5c51edbda05a98f46b23cad59952e2ee4846a1",
+      "warnings": [
+        "Function \"Sub.sub\" changes state, please use @using(updateFields = true) for the function"
+      ]
+    },
+    "Warnings": {
+      "sourceFile": "test/warnings.ral",
+      "sourceCodeHash": "974d69b74d3b88e9c5c23e8c8674d78dcd2e9b261fcae7be5adafddb777a3d01",
+      "bytecodeDebugPatch": "",
+      "codeHashDebug": "9a0c90d67d729a478062d6794cf7b75c27483c50f6fe2ad13c5ed8873ad1fde2",
+      "warnings": [
+        "Found unused variables in Warnings: foo.y",
+        "Found unused constants in Warnings: C",
+        "Found unused fields in Warnings: b"
+      ]
+    }
+  }
+}

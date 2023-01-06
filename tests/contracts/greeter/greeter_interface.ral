@@ -1,4 +1,3 @@
 Interface GreeterInterface {
-    @using(readonly = true)
     pub fn greet() -> U256
 }
