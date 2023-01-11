@@ -1,4 +1,4 @@
-import { CompletionItem, CompletionItemKind, ParameterInformation, SignatureInformation, SnippetString, SymbolKind } from 'vscode'
+import { CompletionItem, CompletionItemKind, SymbolKind } from 'vscode'
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode'
 import { Interval } from 'antlr4ts/misc/Interval'
 import { Base } from './base'
