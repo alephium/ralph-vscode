@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as vscode from 'vscode'
 import { CancellationToken, CompletionContext, CompletionItem, CompletionItemKind, Position, SnippetString, TextDocument } from 'vscode'
-import jsonData from '../hover/builtIn/ralph-built-in-functions.json'
-import { Fun } from '../hover/builtIn/function'
+import jsonData from '../builtIn/ralph-built-in-functions.json'
+import { Fun } from '../builtIn/fun'
 import { Identifier } from '../../ast/identifier'
 import { BuiltInType } from '../../ast/builtInType'
 import { builtInType } from '../hover/builtIn/primitives'

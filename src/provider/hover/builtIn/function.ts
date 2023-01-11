@@ -1,24 +1,8 @@
 import * as vscode from 'vscode'
 import { MarkdownString } from 'vscode'
-import jsonData from './ralph-built-in-functions.json'
+import jsonData from '../../builtIn/ralph-built-in-functions.json'
 import { Filter } from '../../filter'
-
-// https://raw.githubusercontent.com/alephium/alephium/master/protocol/src/main/resources/ralph-built-in-functions.json
-export interface Fun {
-  name: string
-
-  category: string
-
-  signature: string
-
-  doc: string
-
-  params: string[]
-
-  paramValue: string[]
-
-  returns: string
-}
+import { Fun } from '../../builtIn/fun'
 
 export class FunctionHoverProvider extends Filter implements vscode.HoverProvider {
   builtItems: Map<string, Fun>

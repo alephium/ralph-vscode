@@ -32,4 +32,4 @@ test:
 	pnpm run test
 
 downLoadBuildIn:
-	wget https://raw.githubusercontent.com/alephium/alephium/master/protocol/src/main/resources/ralph-built-in-functions.json -O ./src/provider/hover/builtIn/ralph-built-in-functions.json
+	wget https://raw.githubusercontent.com/alephium/alephium/master/protocol/src/main/resources/ralph-built-in-functions.json -O ./src/provider/builtIn/ralph-built-in-functions.json

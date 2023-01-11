@@ -10,8 +10,8 @@ import {
   TextDocument,
 } from 'vscode'
 import { Filter } from './filter'
-import jsonData from './hover/builtIn/ralph-built-in-functions.json'
-import { Fun } from './hover/builtIn/function'
+import jsonData from './builtIn/ralph-built-in-functions.json'
+import { Fun } from './builtIn/fun'
 import { SemanticsKind } from '../ast/kinder'
 
 export class RalphSignatureHelpProvider extends Filter implements vscode.SignatureHelpProvider {
