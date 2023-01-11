@@ -1,9 +1,9 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@alephium/cli': 0.3.0-rc.0
-  '@alephium/web3': 0.3.0-rc.0
-  '@alephium/web3-test': 0.3.0-rc.0
+  '@alephium/cli': 0.3.0-rc.4
+  '@alephium/web3': 0.3.0-rc.4
+  '@alephium/web3-test': 0.3.0-rc.4
   '@types/chai': ^4.3.4
   '@types/crypto-js': ^4.1.1
   '@types/node': ^18.11.18
@@ -41,9 +41,9 @@ specifiers:
   webpack-cli: ^4.10.0
 
 dependencies:
-  '@alephium/cli': 0.3.0-rc.0_@types+node@18.11.18
-  '@alephium/web3': 0.3.0-rc.0
-  '@alephium/web3-test': 0.3.0-rc.0
+  '@alephium/cli': 0.3.0-rc.4_@types+node@18.11.18
+  '@alephium/web3': 0.3.0-rc.4
+  '@alephium/web3-test': 0.3.0-rc.4
   antlr4ts: 0.5.0-alpha.4
   execa: 6.1.0
   immutable: 4.2.1
@@ -83,13 +83,13 @@ devDependencies:
   webpack-cli: 4.10.0_webpack@5.75.0
 
 packages:
-  /@alephium/cli/0.3.0-rc.0_@types+node@18.11.18:
-    resolution: { integrity: sha512-CWbvv1q8TFXu+TZCfC0x9Kixc5etOfW5C6fOCZWRKWjIyw+7a7AwhpchAbC9Zd1ideOBznqA5ZTtGnU/3bbqBg== }
+  /@alephium/cli/0.3.0-rc.4_@types+node@18.11.18:
+    resolution: { integrity: sha512-NSUJ6pnV9pDhuO8MWDvzLM+gJivrviKEr9ZUsDhvbDddv9anJwcDLxdbv4KbKcIdsAM9vC1bGuglJJ/aHDm/tg== }
     engines: { node: '>=16.0.0', npm: '>=7.0.0' }
     hasBin: true
     dependencies:
-      '@alephium/web3': 0.3.0-rc.0
-      '@alephium/web3-wallet': 0.3.0-rc.0
+      '@alephium/web3': 0.3.0-rc.4
+      '@alephium/web3-wallet': 0.3.0-rc.4
       commander: 9.4.1
       cross-fetch: 3.1.5
       crypto-js: 4.1.1
@@ -103,12 +103,12 @@ packages:
       - ts-node
     dev: false
 
-  /@alephium/web3-test/0.3.0-rc.0:
-    resolution: { integrity: sha512-6CjWZOqzee0cF2ku4Vj4g9u99cTOFWRyzBifOmNmpabAoD9Uv8TgPxSZ8YtI4Dcl6dAxF0Z9YtyZZf9DWmkIRw== }
+  /@alephium/web3-test/0.3.0-rc.4:
+    resolution: { integrity: sha512-jiYZ2+b32SCj4O4rUl1FQ+rQY7z1Wxis4kYihpmxeXZ0HMm8wUCATIThkEni0ne967F6qvci+JKQIl5DJHuY/w== }
     engines: { node: '>=16.0.0', npm: '>=7.0.0' }
     dependencies:
-      '@alephium/web3': 0.3.0-rc.0
-      '@alephium/web3-wallet': 0.3.0-rc.0
+      '@alephium/web3': 0.3.0-rc.4
+      '@alephium/web3-wallet': 0.3.0-rc.4
       '@types/node': 16.7.8
       bip32: 2.0.6
       bip39: 3.0.4
@@ -118,11 +118,11 @@ packages:
       - encoding
     dev: false
 
-  /@alephium/web3-wallet/0.3.0-rc.0:
-    resolution: { integrity: sha512-5CewpLaS/tUSJnH5Azlw9yrbFDEdO6ihmrblKUsJ7WtS1BZiAMtUwB2T8GLQudk0p1o2TOSXIK09+5EtUjAe3w== }
+  /@alephium/web3-wallet/0.3.0-rc.4:
+    resolution: { integrity: sha512-Lt9HihB5bLf1FdDbTOQwExaSG2zdiW6b1YNNNC0uwyWUXyruez+K+9tt0EB294da523a09TjLHUdPOO55aCOQw== }
     engines: { node: '>=16.0.0', npm: '>=7.0.0' }
     dependencies:
-      '@alephium/web3': 0.3.0-rc.0
+      '@alephium/web3': 0.3.0-rc.4
       '@types/node': 16.7.8
       bip32: 3.1.0
       bip39: 3.0.4
@@ -133,8 +133,8 @@ packages:
       - encoding
     dev: false
 
-  /@alephium/web3/0.3.0-rc.0:
-    resolution: { integrity: sha512-AbP+YIpELZZbZID5JmwVPlf/IrGLY11sNXJ28UID5ocGMaNLrL0Z2RvqqKjefqEL5oG8BeRT84O0BXnrstGzmQ== }
+  /@alephium/web3/0.3.0-rc.4:
+    resolution: { integrity: sha512-S1xSqDx/rrvTdYz0fu5PtpV96HguhMshDS9kKFnkMTheVT8h0zfyF3S5CMYz5zyDEK+Rliu4J6ubhoWxif1ZHg== }
     engines: { node: '>=16.0.0', npm: '>=7.0.0' }
     dependencies:
       base-x: 4.0.0
