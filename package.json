@@ -2,7 +2,7 @@
   "name": "ralph-vscode",
   "displayName": "ralph vscode",
   "description": "ralph vscode",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v18.0.0"
@@ -68,12 +68,12 @@
         "ralph.download.config.url": {
           "type": "string",
           "description": "download link",
-          "default": "https://github.com/alephium/alephium/releases/download/v1.6.0-rc4/alephium-ralphc-1.6.0-rc4.jar"
+          "default": "https://github.com/alephium/alephium/releases/download/v1.6.0-rc5/alephium-ralphc-1.6.0-rc5.jar"
         },
         "ralph.download.config.target": {
           "type": "string",
           "description": "compiler jar",
-          "default": "alephium-ralphc-1.6.0-rc4.jar"
+          "default": "alephium-ralphc-1.6.0-rc5.jar"
         },
         "ralph.compile.command": {
           "type": "string",
@@ -250,9 +250,9 @@
     "antlr4ts": "antlr4ts -visitor ./src/parser/*.g4"
   },
   "dependencies": {
-    "@alephium/cli": "0.3.0-rc.0",
-    "@alephium/web3": "0.3.0-rc.0",
-    "@alephium/web3-test": "0.3.0-rc.0",
+    "@alephium/cli": "0.3.0-rc.4",
+    "@alephium/web3": "0.3.0-rc.4",
+    "@alephium/web3-test": "0.3.0-rc.4",
     "antlr4ts": "0.5.0-alpha.4",
     "execa": "^6.1.0",
     "immutable": "^4.2.1",
