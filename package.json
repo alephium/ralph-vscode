@@ -104,7 +104,7 @@
           "default": false,
           "description": "ignore unused private functions warnings"
         },
-        "ralph.compile.option.ignoreExternalCallCheckWarnings": {
+        "ralph.compile.option.ignoreCheckExternalCallerWarnings": {
           "type": "boolean",
           "default": false,
           "description": "ignore external call check warnings"

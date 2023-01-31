@@ -77,7 +77,7 @@ export class Compiler {
       warning += '--ip '
     }
 
-    if (this.option?.ignoreExternalCallCheckWarnings) {
+    if (this.option?.ignoreCheckExternalCallerWarnings) {
       warning += '--ie '
     }
 

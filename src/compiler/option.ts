@@ -9,7 +9,7 @@ class CompileOption {
 
   ignoreUnusedPrivateFunctionsWarnings = false
 
-  ignoreExternalCallCheckWarnings = false
+  ignoreCheckExternalCallerWarnings = false
 
   warningsAsError = false
 
