@@ -5,7 +5,7 @@
     "ignoreUnusedFieldsWarnings": false,
     "ignoreUnusedPrivateFunctionsWarnings": false,
     "ignoreUpdateFieldsCheckWarnings": false,
-    "ignoreExternalCallCheckWarnings": false
+    "ignoreCheckExternalCallerWarnings": false
   },
   "infos": {
     "Add": {
@@ -64,7 +64,7 @@
     },
     "Sub": {
       "sourceFile": "sub/sub.ral",
-      "sourceCodeHash": "409518aa25bdace56cefe167d6607f04cd955204a7050f00a050466703cdf0f0",
+      "sourceCodeHash": "c47faef24d632e854aa18e226b58b52dc56150a8464f4afc65111e8113c9f0ab",
       "bytecodeDebugPatch": "",
       "codeHashDebug": "513645f5c95a28d55a51070f3d5c51edbda05a98f46b23cad59952e2ee4846a1",
       "warnings": [
