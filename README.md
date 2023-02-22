@@ -24,10 +24,6 @@ Ralph is the language used in alephium to write smart contracts.
 
 ## Extension Settings
 
-### Theme
-
-![img.png](./img/setTheme.png)
-
 ### Configuration
 
 ![img.png](img/userSet.png)
