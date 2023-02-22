@@ -1,8 +1,8 @@
 {
   "name": "ralph-vscode",
-  "displayName": "ralph vscode",
-  "description": "ralph vscode",
-  "version": "0.2.3",
+  "displayName": "Ralph (Alephium)",
+  "description": "Alephium Ralph language for Visual Studio code",
+  "version": "0.3.0",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v18.0.0"

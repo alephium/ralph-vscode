@@ -2,19 +2,24 @@
   {
     "name": "createContract",
     "category": "Contract",
-    "signature": "fn createContract!(bytecode:ByteVec, encodedFields:ByteVec) -> (ByteVec)",
+    "signature": "fn createContract!(bytecode:ByteVec, encodedImmFields:ByteVec, encodedMutFields:ByteVec) -> (ByteVec)",
     "doc": "Creates a new contract without token issuance.",
-    "params": ["@param bytecode the bytecode of the contract to be created", "@param encodedFields the encoded fields as a ByteVec"],
+    "params": [
+      "@param bytecode the bytecode of the contract to be created",
+      "@param encodedImmFields the encoded immutable fields as a ByteVec",
+      "@param encodedMutFields the encoded mutable fields as a ByteVec"
+    ],
     "returns": "@returns the id of the created contract"
   },
   {
     "name": "createContractWithToken",
     "category": "Contract",
-    "signature": "fn createContractWithToken!(bytecode:ByteVec, encodedFields:ByteVec, issueTokenAmount:U256, issueTo?:Address) -> (ByteVec)",
+    "signature": "fn createContractWithToken!(bytecode:ByteVec, encodedImmFields:ByteVec, encodedMutFields:ByteVec, issueTokenAmount:U256, issueTo?:Address) -> (ByteVec)",
     "doc": "Creates a new contract with token issuance.",
     "params": [
       "@param bytecode the bytecode of the contract to be created",
-      "@param encodedFields the encoded fields as a ByteVec",
+      "@param encodedImmFields the encoded immutable fields as a ByteVec",
+      "@param encodedMutFields the encoded mutable fields as a ByteVec",
       "@param issueTokenAmount the amount of token to be issued",
       "@param issueTo (optional) a designated address to receive issued token"
     ],
@@ -23,19 +28,24 @@
   {
     "name": "copyCreateContract",
     "category": "Contract",
-    "signature": "fn copyCreateContract!(contractId:ByteVec, encodedFields:ByteVec) -> (ByteVec)",
+    "signature": "fn copyCreateContract!(contractId:ByteVec, encodedImmFields:ByteVec, encodedMutFields:ByteVec) -> (ByteVec)",
     "doc": "Creates a new contract without token issuance by copying another contract's code. This costs less gas than createContract!(...).",
-    "params": ["@param contractId the id of the contract to be copied", "@param encodedFields the encoded fields as a ByteVec"],
+    "params": [
+      "@param contractId the id of the contract to be copied",
+      "@param encodedImmFields the encoded immutable fields as a ByteVec",
+      "@param encodedMutFields the encoded mutable fields as a ByteVec"
+    ],
     "returns": "@returns the id of the created contract"
   },
   {
     "name": "copyCreateContractWithToken",
     "category": "Contract",
-    "signature": "fn copyCreateContractWithToken!(contractId:ByteVec, encodedFields:ByteVec, issueTokenAmount:U256, issueTo?:Address) -> (ByteVec)",
+    "signature": "fn copyCreateContractWithToken!(contractId:ByteVec, encodedImmFields:ByteVec, encodedMutFields:ByteVec, issueTokenAmount:U256, issueTo?:Address) -> (ByteVec)",
     "doc": "Creates a new contract with token issuance by copying another contract's code. This costs less gas than createContractWithToken!(...).",
     "params": [
       "@param contractId the id of the contract to be copied",
-      "@param encodedFields the encoded fields as a ByteVec",
+      "@param encodedImmFields the encoded immutable fields as a ByteVec",
+      "@param encodedMutFields the encoded mutable fields as a ByteVec",
       "@param issueTokenAmount the amount of token to be issued",
       "@param issueTo (optional) a designated address to receive issued token"
     ],
@@ -46,7 +56,9 @@
     "category": "Contract",
     "signature": "fn selfAddress!() -> (Address)",
     "doc": "Returns the address of the contract.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the address of the contract"
   },
   {
@@ -54,7 +66,9 @@
     "category": "Contract",
     "signature": "fn selfContractId!() -> (ByteVec)",
     "doc": "Returns the id (ByteVec) of the contract.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the id (ByteVec) of the contract"
   },
   {
@@ -62,7 +76,9 @@
     "category": "Contract",
     "signature": "fn selfTokenId!() -> (ByteVec)",
     "doc": "Returns the token id (ByteVec) of the contract.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the token id (ByteVec) of the contract"
   },
   {
@@ -70,7 +86,9 @@
     "category": "Contract",
     "signature": "fn callerContractId!() -> (ByteVec)",
     "doc": "Returns the contract id of the caller.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the contract id of the caller"
   },
   {
@@ -78,7 +96,9 @@
     "category": "Contract",
     "signature": "fn callerAddress!() -> (Address)",
     "doc": "Returns the address of the caller. When used in a TxScript, it returns the unique input address if the input addresses are the same, otherwise it fails.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the address of the caller. When used in a TxScript, it returns the unique input address if the input addresses are the same, otherwise it fails"
   },
   {
@@ -86,7 +106,9 @@
     "category": "Contract",
     "signature": "fn contractInitialStateHash!(contractId:ByteVec) -> (ByteVec)",
     "doc": "Returns the initial state hash of the contract.",
-    "params": ["@param contractId the id of the input contract"],
+    "params": [
+      "@param contractId the id of the input contract"
+    ],
     "returns": "@returns the initial state hash of the contract"
   },
   {
@@ -94,7 +116,9 @@
     "category": "Contract",
     "signature": "fn contractCodeHash!(contractId:ByteVec) -> (ByteVec)",
     "doc": "Returns the contract code hash of the contract.",
-    "params": ["@param contractId the id of the input contract"],
+    "params": [
+      "@param contractId the id of the input contract"
+    ],
     "returns": "@returns the contract code hash of the contract"
   },
   {
@@ -102,7 +126,9 @@
     "category": "Contract",
     "signature": "fn callerInitialStateHash!() -> (ByteVec)",
     "doc": "Returns the initial state hash of the caller contract.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the initial state hash of the caller contract"
   },
   {
@@ -110,7 +136,9 @@
     "category": "Contract",
     "signature": "fn callerCodeHash!() -> (ByteVec)",
     "doc": "Returns the contract code hash of the caller contract.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the contract code hash of the caller contract"
   },
   {
@@ -118,7 +146,9 @@
     "category": "Contract",
     "signature": "fn contractExists!(contractId:ByteVec) -> (Bool)",
     "doc": "Checks whether the contract exists with the given id.",
-    "params": ["@param contractId the input contract id to be tested"],
+    "params": [
+      "@param contractId the input contract id to be tested"
+    ],
     "returns": "@returns ture if the contract exists on the chain, false otherwise"
   },
   {
@@ -126,7 +156,9 @@
     "category": "Contract",
     "signature": "fn destroySelf!(refundAddress:Address) -> ()",
     "doc": "Destroys the contract and transfer the remaining assets to a designated address.",
-    "params": ["@param refundAddress the address to receive the remaining assets in the contract"],
+    "params": [
+      "@param refundAddress the address to receive the remaining assets in the contract"
+    ],
     "returns": "@returns "
   },
   {
@@ -134,17 +166,20 @@
     "category": "Contract",
     "signature": "fn migrate!(newBytecode:ByteVec) -> ()",
     "doc": "Migrates the code of the contract.",
-    "params": ["@param newBytecode the new bytecode for the contract to migrate to"],
+    "params": [
+      "@param newBytecode the new bytecode for the contract to migrate to"
+    ],
     "returns": "@returns "
   },
   {
     "name": "migrateWithFields",
     "category": "Contract",
-    "signature": "fn migrateWithFields!(newBytecode:ByteVec, newEncodedFields:ByteVec) -> ()",
+    "signature": "fn migrateWithFields!(newBytecode:ByteVec, newEncodedImmFields:ByteVec, newEncodedMutFields:ByteVec) -> ()",
     "doc": "Migrates both the code and the fields of the contract.",
     "params": [
       "@param newBytecode the bytecode for the contract to migrate to",
-      "@param newEncodedFields the new fields for the contract to migrate to"
+      "@param newEncodedImmFields the encoded immutable fields for the contract to migrate to",
+      "@param newEncodedMutFields the encoded mutable fields for the contract to migrate to"
     ],
     "returns": "@returns "
   },
@@ -153,30 +188,34 @@
     "category": "Contract",
     "signature": "fn isCalledFromTxScript!() -> (Bool)",
     "doc": "Checks whether the function is called by a TxScript.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns true if the function is called by a TxScript, false otherwise"
   },
   {
     "name": "createSubContract",
     "category": "SubContract",
-    "signature": "fn createSubContract!(subContractPath:ByteVec, bytecode:ByteVec, encodedFields:ByteVec) -> (ByteVec)",
+    "signature": "fn createSubContract!(subContractPath:ByteVec, bytecode:ByteVec, encodedImmFields:ByteVec, encodedMutFields:ByteVec) -> (ByteVec)",
     "doc": "Creates a new sub-contract without token issuance.",
     "params": [
       "@param subContractPath the path of the sub-contract to be created",
       "@param bytecode the bytecode of the sub-contract to be created",
-      "@param encodedFields the encoded fields as a ByteVec"
+      "@param encodedImmFields the encoded immutable fields as a ByteVec",
+      "@param encodedMutFields the encoded mutable fields as a ByteVec"
     ],
     "returns": "@returns the id of the created contract"
   },
   {
     "name": "createSubContractWithToken",
     "category": "SubContract",
-    "signature": "fn createSubContractWithToken!(subContractPath:ByteVec, bytecode:ByteVec, encodedFields:ByteVec, issueTokenAmount:U256, issueTo?:Address) -> (ByteVec)",
+    "signature": "fn createSubContractWithToken!(subContractPath:ByteVec, bytecode:ByteVec, encodedImmFields:ByteVec, encodedMutFields:ByteVec, issueTokenAmount:U256, issueTo?:Address) -> (ByteVec)",
     "doc": "Creates a new sub-contract with token issuance.",
     "params": [
       "@param subContractPath the path of the sub-contract to be created",
       "@param bytecode the bytecode of the sub-contract to be created",
-      "@param encodedFields the encoded fields as a ByteVec",
+      "@param encodedImmFields the encoded immutable fields as a ByteVec",
+      "@param encodedMutFields the encoded mutable fields as a ByteVec",
       "@param issueTokenAmount the amount of token to be issued",
       "@param issueTo (optional) a designated address to receive issued token"
     ],
@@ -185,24 +224,26 @@
   {
     "name": "copyCreateSubContract",
     "category": "SubContract",
-    "signature": "fn copyCreateSubContract!(subContractPath:ByteVec, contractId:ByteVec, encodedFields:ByteVec) -> (ByteVec)",
+    "signature": "fn copyCreateSubContract!(subContractPath:ByteVec, contractId:ByteVec, encodedImmFields:ByteVec, encodedMutFields:ByteVec) -> (ByteVec)",
     "doc": "Creates a new sub-contract without token issuance by copying another contract's code. This costs less gas than createSubContract!(...).",
     "params": [
       "@param subContractPath the path of the sub-contract to be created",
       "@param contractId the id of the contract to be copied",
-      "@param encodedFields the encoded fields as a ByteVec"
+      "@param encodedImmFields the encoded immutable fields as a ByteVec",
+      "@param encodedMutFields the encoded mutable fields as a ByteVec"
     ],
     "returns": "@returns the id of the created contract"
   },
   {
     "name": "copyCreateSubContractWithToken",
     "category": "SubContract",
-    "signature": "fn copyCreateSubContractWithToken!(subContractPath:ByteVec, contractId:ByteVec, encodedFields:ByteVec, issueTokenAmount:U256, issueTo?:Address) -> (ByteVec)",
+    "signature": "fn copyCreateSubContractWithToken!(subContractPath:ByteVec, contractId:ByteVec, encodedImmFields:ByteVec, encodedMutFields:ByteVec, issueTokenAmount:U256, issueTo?:Address) -> (ByteVec)",
     "doc": "Creates a new sub-contract with token issuance by copying another contract's code. This costs less gas than createSubContractWithToken!(...).",
     "params": [
       "@param subContractPath the path of the sub-contract to be created",
       "@param contractId the id of the contract to be copied",
-      "@param encodedFields the encoded fields as a ByteVec",
+      "@param encodedImmFields the encoded immutable fields as a ByteVec",
+      "@param encodedMutFields the encoded mutable fields as a ByteVec",
       "@param issueTokenAmount the amount of token to be issued",
       "@param issueTo (optional) a designated address to receive issued token"
     ],
@@ -213,7 +254,9 @@
     "category": "SubContract",
     "signature": "fn subContractId!(subContractPath:ByteVec) -> (ByteVec)",
     "doc": "Returns the id of the sub contract.",
-    "params": ["@param subContractPath the path of the sub-contract"],
+    "params": [
+      "@param subContractPath the path of the sub-contract"
+    ],
     "returns": "@returns the id of the sub contract"
   },
   {
@@ -221,7 +264,10 @@
     "category": "SubContract",
     "signature": "fn subContractIdOf!(contract:<Contract>, subContractPath:ByteVec) -> (ByteVec)",
     "doc": "Returns the id of the sub contract.",
-    "params": ["@param contract the parent contract of the sub-contract", "@param subContractPath the path of the sub-contract"],
+    "params": [
+      "@param contract the parent contract of the sub-contract",
+      "@param subContractPath the path of the sub-contract"
+    ],
     "returns": "@returns the id of the sub contract"
   },
   {
@@ -241,7 +287,10 @@
     "category": "Asset",
     "signature": "fn tokenRemaining!(address:Address, tokenId:ByteVec) -> (U256)",
     "doc": "Returns the amount of the remaining token amount in the input assets of the function.",
-    "params": ["@param address the input address", "@param tokenId the token id"],
+    "params": [
+      "@param address the input address",
+      "@param tokenId the token id"
+    ],
     "returns": "@returns the amount of the remaining token amount in the input assets of the function"
   },
   {
@@ -298,7 +347,10 @@
     "category": "Asset",
     "signature": "fn lockApprovedAssets!(address:Address, timestamp:U256) -> ()",
     "doc": "Locks the current approved assets.",
-    "params": ["@param address the address to lock assets to", "@param timestamp the timestamp that the assets will be locked until"],
+    "params": [
+      "@param address the address to lock assets to",
+      "@param timestamp the timestamp that the assets will be locked until"
+    ],
     "returns": "@returns "
   },
   {
@@ -306,7 +358,10 @@
     "category": "Utils",
     "signature": "fn assert!(condition:Bool, errorCode:U256) -> ()",
     "doc": "Tests the condition or checks invariants.",
-    "params": ["@param condition the condition to be checked", "@param errorCode the error code to throw if the check fails"],
+    "params": [
+      "@param condition the condition to be checked",
+      "@param errorCode the error code to throw if the check fails"
+    ],
     "returns": "@returns true if the condition is satisfied, false otherwise"
   },
   {
@@ -314,7 +369,10 @@
     "category": "Utils",
     "signature": "fn checkCaller!(condition:Bool, errorCode:U256) -> ()",
     "doc": "Checks conditions of the external caller of the function.",
-    "params": ["@param condition the condition to be checked", "@param errorCode the error code to throw if the check fails"],
+    "params": [
+      "@param condition the condition to be checked",
+      "@param errorCode the error code to throw if the check fails"
+    ],
     "returns": "@returns "
   },
   {
@@ -322,7 +380,9 @@
     "category": "Utils",
     "signature": "fn isAssetAddress!(address:Address) -> (Bool)",
     "doc": "Returns whether an address is an asset address.",
-    "params": ["@param address the input address to be tested"],
+    "params": [
+      "@param address the input address to be tested"
+    ],
     "returns": "@returns true if the address is an asset address, false otherwise"
   },
   {
@@ -330,7 +390,9 @@
     "category": "Utils",
     "signature": "fn isContractAddress!(address:Address) -> (Bool)",
     "doc": "Returns whether an address is a contract address.",
-    "params": ["@param address the input address to be tested"],
+    "params": [
+      "@param address the input address to be tested"
+    ],
     "returns": "@returns true if the address is a contract address, false otherwise"
   },
   {
@@ -338,7 +400,9 @@
     "category": "Utils",
     "signature": "fn zeros!(n:U256) -> (ByteVec)",
     "doc": "Returns a ByteVec of zeros.",
-    "params": ["@param n the number of zeros"],
+    "params": [
+      "@param n the number of zeros"
+    ],
     "returns": "@returns a ByteVec of zeros"
   },
   {
@@ -346,7 +410,9 @@
     "category": "Utils",
     "signature": "fn panic!(errorCode?: U256) -> (Never)",
     "doc": "Terminates the application immediately.",
-    "params": ["@param errorCode (optional) the error code to be thrown when the panic!(...) is called"],
+    "params": [
+      "@param errorCode (optional) the error code to be thrown when the panic!(...) is called"
+    ],
     "returns": "@returns "
   },
   {
@@ -354,7 +420,9 @@
     "category": "Utils",
     "signature": "fn nullContractAddress!() -> (Address)",
     "doc": "Returns the null contract address with contract id being zeros.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the null contract address with contract id being zeros"
   },
   {
@@ -362,7 +430,9 @@
     "category": "Chain",
     "signature": "fn networkId!() -> (ByteVec)",
     "doc": "Returns the network id (a single byte).",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the network id (a single byte)"
   },
   {
@@ -370,7 +440,9 @@
     "category": "Chain",
     "signature": "fn blockHash!() -> (ByteVec)",
     "doc": "Returns the block hash of the current block.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the block hash of the current block"
   },
   {
@@ -378,7 +450,9 @@
     "category": "Chain",
     "signature": "fn blockTimeStamp!() -> (U256)",
     "doc": "Returns the block timestamp.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the block timestamp"
   },
   {
@@ -386,7 +460,9 @@
     "category": "Chain",
     "signature": "fn blockTarget!() -> (U256)",
     "doc": "Returns the block difficulty target.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the block difficulty target"
   },
   {
@@ -394,7 +470,9 @@
     "category": "Chain",
     "signature": "fn txId!() -> (ByteVec)",
     "doc": "Returns the current transaction id.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the current transaction id"
   },
   {
@@ -402,7 +480,9 @@
     "category": "Chain",
     "signature": "fn txInputAddress!(txInputIndex:U256) -> (Address)",
     "doc": "Returns the n-th transaction input address.",
-    "params": ["@param txInputIndex the index of the transaction input"],
+    "params": [
+      "@param txInputIndex the index of the transaction input"
+    ],
     "returns": "@returns the n-th transaction input address"
   },
   {
@@ -410,7 +490,9 @@
     "category": "Chain",
     "signature": "fn txInputsSize!() -> (U256)",
     "doc": "Returns the number of transaction inputs.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the number of transaction inputs"
   },
   {
@@ -418,7 +500,9 @@
     "category": "Chain",
     "signature": "fn txGasPrice!() -> (U256)",
     "doc": "Returns the current transaction gas price.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the current transaction gas price"
   },
   {
@@ -426,7 +510,9 @@
     "category": "Chain",
     "signature": "fn txGasAmount!() -> (U256)",
     "doc": "Returns the current transaction gas amount.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the current transaction gas amount"
   },
   {
@@ -434,7 +520,9 @@
     "category": "Chain",
     "signature": "fn txGasFee!() -> (U256)",
     "doc": "Returns the current transaction gas fee.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the current transaction gas fee"
   },
   {
@@ -442,7 +530,9 @@
     "category": "Chain",
     "signature": "fn verifyAbsoluteLocktime!(lockUntil:U256) -> ()",
     "doc": "Verifies that the absolute locktime is before the block timestamp, otherwise it fails.",
-    "params": ["@param lockUntil the timestamp until which the lock is valid"],
+    "params": [
+      "@param lockUntil the timestamp until which the lock is valid"
+    ],
     "returns": "@returns "
   },
   {
@@ -450,7 +540,10 @@
     "category": "Chain",
     "signature": "fn verifyRelativeLocktime!(txInputIndex:U256, lockDuration:U256) -> ()",
     "doc": "Verifies that the input's creation timestamp + lock duration is before the block timestamp, otherwise it fails.",
-    "params": ["@param txInputIndex the index of the transaction input", "@param lockDuration the duration that the input is locked for"],
+    "params": [
+      "@param txInputIndex the index of the transaction input",
+      "@param lockDuration the duration that the input is locked for"
+    ],
     "returns": "@returns "
   },
   {
@@ -458,7 +551,9 @@
     "category": "Chain",
     "signature": "fn dustAmount!() -> (U256)",
     "doc": "Returns the dust amount of an UTXO.",
-    "params": [],
+    "params": [
+      
+    ],
     "returns": "@returns the dust amount of an UTXO"
   },
   {
@@ -466,7 +561,9 @@
     "category": "Conversion",
     "signature": "fn toI256!(from:U256) -> (I256)",
     "doc": "Converts U256 to I256.",
-    "params": ["@param from a U256 to be converted"],
+    "params": [
+      "@param from a U256 to be converted"
+    ],
     "returns": "@returns a I256"
   },
   {
@@ -474,7 +571,9 @@
     "category": "Conversion",
     "signature": "fn toU256!(from:I256) -> (U256)",
     "doc": "Converts I256 to U256.",
-    "params": ["@param from a I256 to be converted"],
+    "params": [
+      "@param from a I256 to be converted"
+    ],
     "returns": "@returns a U256"
   },
   {
@@ -482,7 +581,9 @@
     "category": "Conversion",
     "signature": "fn toByteVec!(from:Bool|I256|U256|Address) -> (ByteVec)",
     "doc": "Converts Bool/I256/U256/Address to ByteVec",
-    "params": ["@param from a Bool|I256|U256|Address to be converted"],
+    "params": [
+      "@param from a Bool|I256|U256|Address to be converted"
+    ],
     "returns": "@returns a ByteVec"
   },
   {
@@ -490,7 +591,9 @@
     "category": "Conversion",
     "signature": "fn contractIdToAddress!(contractId:ByteVec) -> (Address)",
     "doc": "Converts contract id (ByteVec) to contract address (Address).",
-    "params": ["@param contractId the input contract id"],
+    "params": [
+      "@param contractId the input contract id"
+    ],
     "returns": "@returns a contract Address"
   },
   {
@@ -498,7 +601,9 @@
     "category": "Conversion",
     "signature": "fn byteVecToAddress!(bytes:ByteVec) -> (Address)",
     "doc": "Converts ByteVec to Address.",
-    "params": ["@param bytes the input ByteVec"],
+    "params": [
+      "@param bytes the input ByteVec"
+    ],
     "returns": "@returns an Address"
   },
   {
@@ -506,7 +611,9 @@
     "category": "Conversion",
     "signature": "fn u256To1Byte!(u256:U256) -> (ByteVec)",
     "doc": "Converts U256 to 1 byte.",
-    "params": ["@param u256 the input U256"],
+    "params": [
+      "@param u256 the input U256"
+    ],
     "returns": "@returns 1 byte"
   },
   {
@@ -514,7 +621,9 @@
     "category": "Conversion",
     "signature": "fn u256To2Byte!(u256:U256) -> (ByteVec)",
     "doc": "Converts U256 to 2 big-endian bytes.",
-    "params": ["@param u256 the input U256"],
+    "params": [
+      "@param u256 the input U256"
+    ],
     "returns": "@returns 2 bytes"
   },
   {
@@ -522,7 +631,9 @@
     "category": "Conversion",
     "signature": "fn u256To4Byte!(u256:U256) -> (ByteVec)",
     "doc": "Converts U256 to 4 big-endian bytes.",
-    "params": ["@param u256 the input U256"],
+    "params": [
+      "@param u256 the input U256"
+    ],
     "returns": "@returns 4 bytes"
   },
   {
@@ -530,7 +641,9 @@
     "category": "Conversion",
     "signature": "fn u256To8Byte!(u256:U256) -> (ByteVec)",
     "doc": "Converts U256 to 8 big-endian bytes.",
-    "params": ["@param u256 the input U256"],
+    "params": [
+      "@param u256 the input U256"
+    ],
     "returns": "@returns 8 bytes"
   },
   {
@@ -538,7 +651,9 @@
     "category": "Conversion",
     "signature": "fn u256To16Byte!(u256:U256) -> (ByteVec)",
     "doc": "Converts U256 to 16 big-endian bytes.",
-    "params": ["@param u256 the input U256"],
+    "params": [
+      "@param u256 the input U256"
+    ],
     "returns": "@returns 16 bytes"
   },
   {
@@ -546,7 +661,9 @@
     "category": "Conversion",
     "signature": "fn u256To32Byte!(u256:U256) -> (ByteVec)",
     "doc": "Converts U256 to 32 big-endian bytes.",
-    "params": ["@param u256 the input U256"],
+    "params": [
+      "@param u256 the input U256"
+    ],
     "returns": "@returns 32 bytes"
   },
   {
@@ -554,7 +671,9 @@
     "category": "Conversion",
     "signature": "fn u256From1Byte!(bytes:ByteVec) -> (U256)",
     "doc": "Converts 1 byte to U256.",
-    "params": ["@param bytes the input ByteVec"],
+    "params": [
+      "@param bytes the input ByteVec"
+    ],
     "returns": "@returns an U256"
   },
   {
@@ -562,7 +681,9 @@
     "category": "Conversion",
     "signature": "fn u256From2Byte!(bytes:ByteVec) -> (U256)",
     "doc": "Converts 2 big-endian bytes to U256.",
-    "params": ["@param bytes the input ByteVec"],
+    "params": [
+      "@param bytes the input ByteVec"
+    ],
     "returns": "@returns an U256"
   },
   {
@@ -570,7 +691,9 @@
     "category": "Conversion",
     "signature": "fn u256From4Byte!(bytes:ByteVec) -> (U256)",
     "doc": "Converts 4 big-endian bytes to U256.",
-    "params": ["@param bytes the input ByteVec"],
+    "params": [
+      "@param bytes the input ByteVec"
+    ],
     "returns": "@returns an U256"
   },
   {
@@ -578,7 +701,9 @@
     "category": "Conversion",
     "signature": "fn u256From8Byte!(bytes:ByteVec) -> (U256)",
     "doc": "Converts 8 big-endian bytes to U256.",
-    "params": ["@param bytes the input ByteVec"],
+    "params": [
+      "@param bytes the input ByteVec"
+    ],
     "returns": "@returns an U256"
   },
   {
@@ -586,7 +711,9 @@
     "category": "Conversion",
     "signature": "fn u256From16Byte!(bytes:ByteVec) -> (U256)",
     "doc": "Converts 16 big-endian bytes to U256.",
-    "params": ["@param bytes the input ByteVec"],
+    "params": [
+      "@param bytes the input ByteVec"
+    ],
     "returns": "@returns an U256"
   },
   {
@@ -594,7 +721,9 @@
     "category": "Conversion",
     "signature": "fn u256From32Byte!(bytes:ByteVec) -> (U256)",
     "doc": "Converts 32 big-endian bytes to U256.",
-    "params": ["@param bytes the input ByteVec"],
+    "params": [
+      "@param bytes the input ByteVec"
+    ],
     "returns": "@returns an U256"
   },
   {
@@ -602,7 +731,9 @@
     "category": "ByteVec",
     "signature": "fn size!(bytes:ByteVec) -> (U256)",
     "doc": "Returns the size of the ByteVec.",
-    "params": ["@param bytes a ByteVec"],
+    "params": [
+      "@param bytes a ByteVec"
+    ],
     "returns": "@returns the size of the ByteVec"
   },
   {
@@ -621,8 +752,10 @@
     "name": "encodeToByteVec",
     "category": "ByteVec",
     "signature": "fn encodeToByteVec!(...any) -> (ByteVec)",
-    "doc": "Encodes inputs as ByteVec.",
-    "params": ["@param any a sequence of input values"],
+    "doc": "Encodes inputs as big-endian ByteVec.",
+    "params": [
+      "@param any a sequence of input values"
+    ],
     "returns": "@returns a ByteVec encoding the inputs"
   },
   {
@@ -630,7 +763,9 @@
     "category": "Cryptography",
     "signature": "fn blake2b!(data:ByteVec) -> (ByteVec)",
     "doc": "Computes the Blake2b hash of the input.",
-    "params": ["@param data the input data to be hashed"],
+    "params": [
+      "@param data the input data to be hashed"
+    ],
     "returns": "@returns the hash result"
   },
   {
@@ -638,7 +773,9 @@
     "category": "Cryptography",
     "signature": "fn keccak256!(data:ByteVec) -> (ByteVec)",
     "doc": "Computes the Keccak256 hash of the input.",
-    "params": ["@param data the input data to be hashed"],
+    "params": [
+      "@param data the input data to be hashed"
+    ],
     "returns": "@returns the hash result"
   },
   {
@@ -646,7 +783,9 @@
     "category": "Cryptography",
     "signature": "fn sha256!(data:ByteVec) -> (ByteVec)",
     "doc": "Computes the Sha256 hash of the input.",
-    "params": ["@param data the input data to be hashed"],
+    "params": [
+      "@param data the input data to be hashed"
+    ],
     "returns": "@returns the hash result"
   },
   {
@@ -654,16 +793,30 @@
     "category": "Cryptography",
     "signature": "fn sha3!(data:ByteVec) -> (ByteVec)",
     "doc": "Computes the Sha3 hash of the input.",
-    "params": ["@param data the input data to be hashed"],
+    "params": [
+      "@param data the input data to be hashed"
+    ],
     "returns": "@returns the hash result"
   },
   {
     "name": "verifyTxSignature",
     "category": "Cryptography",
     "signature": "fn verifyTxSignature!(publicKey:ByteVec) -> ()",
-    "doc": "Verifies the transaction signature of a public key. The signature is signed against the transaction id.",
-    "params": ["@param publicKey the public key of the signer"],
+    "doc": "Verifies the transaction SecP256K1 signature of a public key. The signature is signed against the transaction id.",
+    "params": [
+      "@param publicKey the public key (33 bytes) of the signer"
+    ],
     "returns": "@returns true if the signature is valid, false otherwise"
+  },
+  {
+    "name": "getSegregatedSignature",
+    "category": "Cryptography",
+    "signature": "fn getSegregatedSignature!() -> (ByteVec)",
+    "doc": "The segregated signature of the transaction",
+    "params": [
+      
+    ],
+    "returns": "@returns the segregated signature of the transaction"
   },
   {
     "name": "verifySecP256K1",
@@ -671,9 +824,9 @@
     "signature": "fn verifySecP256K1!(data:ByteVec, publicKey:ByteVec, signature:ByteVec) -> ()",
     "doc": "Verifies the SecP256K1 signature of the input and public key.",
     "params": [
-      "@param data the data that was supposed to have been signed",
-      "@param publicKey the public key of the signer",
-      "@param signature the signature value"
+      "@param data the data (32 bytes) that was supposed to have been signed",
+      "@param publicKey the public key (33 bytes) of the signer",
+      "@param signature the signature (64 bytes) value"
     ],
     "returns": "@returns true if the signature is valid, false otherwise"
   },
@@ -683,9 +836,21 @@
     "signature": "fn verifyED25519!(data:ByteVec, publicKey:ByteVec, signature:ByteVec) -> ()",
     "doc": "Verifies the ED25519 signature of the input and public key.",
     "params": [
-      "@param data the data that was supposed to have been signed",
-      "@param publicKey the public key of the signer",
-      "@param signature the signature value"
+      "@param data the data (32 bytes) that was supposed to have been signed",
+      "@param publicKey the public key (32 bytes) of the signer",
+      "@param signature the signature value (64 bytes)"
+    ],
+    "returns": "@returns true if the signature is valid, false otherwise"
+  },
+  {
+    "name": "verifyBIP340Schnorr",
+    "category": "Cryptography",
+    "signature": "fn verifyBIP340Schnorr!(data:ByteVec, publicKey:ByteVec, signature:ByteVec) -> ()",
+    "doc": "Verifies the BIP340 Schnorr signature of the input and public key.",
+    "params": [
+      "@param data the data (32 bytes) that was supposed to have been signed",
+      "@param publicKey the public key (32 bytes) of the signer",
+      "@param signature the signature value (64 bytes)"
     ],
     "returns": "@returns true if the signature is valid, false otherwise"
   },
@@ -694,7 +859,10 @@
     "category": "Cryptography",
     "signature": "fn ethEcRecover!(data:ByteVec, signature:ByteVec) -> (ByteVec)",
     "doc": "Recovers the ETH account that signed the data.",
-    "params": ["@param data the data that was supposed to have been signed", "@param signature the signature value"],
+    "params": [
+      "@param data the data that was supposed to have been signed",
+      "@param signature the signature value"
+    ],
     "returns": "@returns the ETH account that signed the data"
   }
 ]
