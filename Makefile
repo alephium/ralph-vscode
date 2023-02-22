@@ -1,35 +1,34 @@
 compile:
-	pnpm run compile
+	npm run compile
 
 build: dep compile package
 
 package: compile
-	pnpm vsce package --no-dependencies
+	./node_modules/.bin/vsce package --no-dependencies
 
 dep:
-	pnpm install
+	npm install
 
 publish:
-	./node_modules/vsce/vsce publish
+	./node_modules/.bin/vsce publish
 
 clean:
 	rm -rf ./ralph-vscode-*.vsix
 	rm -rf ./dist
 	rm -rf node_modules
 
-
 fmt:
-	pnpm run fmt
+	npm run fmt
 
 lint:
-	pnpm run lint
+	npm run lint
 
 antlr4ts:
-	pnpm run antlr4ts
+	npm run antlr4ts
 
 
 test:
-	pnpm run test
+	npm run test
 
 downLoadBuildIn:
 	wget https://raw.githubusercontent.com/alephium/alephium/master/protocol/src/main/resources/ralph-built-in-functions.json -O ./src/provider/builtIn/ralph-built-in-functions.json
