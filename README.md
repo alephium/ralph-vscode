@@ -2,15 +2,15 @@
 
 ## Overview
 
-Ralph is the language used in alephium to create smart contracts, ralph-vscode is vscode extension.
+Ralph is the language used in alephium to write smart contracts.
 
 ## Features
 
-- Set theme appear more friendly ✅
+- Friendly theme setting ✅
 - Highlighting ✅
 - Snippet ✅
 - Formatting ✅（simple format）
-- Complie ✅ ( ctl[cmd] + shift + p => Ralph: compile )
+- Compile ✅ ( ctl[cmd] + shift + p => Ralph: compile )
 - IntelliSense ✅
   - Provide a hover for the given code position. ✅
   - Document symbol provider. ✅
@@ -53,12 +53,6 @@ Ralph is the language used in alephium to create smart contracts, ralph-vscode i
 ### Log output
 
 ![img.png](./img/logOut.png)
-
-### Command compile
-
-```shell
-cd tests && java -jar ${home}/.alephium-dev/alephium-ralphc-*.jar -c ./contracts -a ./artifacts
-```
 
 #### More command compile
 
