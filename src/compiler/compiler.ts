@@ -2,18 +2,16 @@ import * as vscode from 'vscode'
 import * as fs from 'fs'
 import { exec } from 'child_process'
 import path from 'path'
+import { cwd } from 'process'
 import * as logger from '../logger/logger'
 import { Logger } from '../logger/logger'
-import { getCompileCommand, getWorkspaceFolder } from '../util/util'
+import { getCLI, getCompileCommand, getWorkspaceFolder } from '../util/util'
 
 export class Compiler {
-  cmd: string | undefined
-
   log: logger.Logger
 
   constructor() {
     this.log = new logger.Logger('Compiler')
-    this.cmd = getCompileCommand()
   }
 
   async compile(editor: vscode.TextEditor) {
@@ -33,19 +31,25 @@ export class Compiler {
       editor.document.save()
     }
 
-    Logger.show()
-    this.log.info(`CMD: ${this.cmd}`)
-    vscode.window.setStatusBarMessage(`Execute command: ${this.cmd}`)
-
-    if (this.cmd != null) {
-      exec(this.cmd, { cwd: `${workspace}` }, (_error: any, stdout: string, stderr: string) => {
-        if (stderr) {
-          this.log.info(stderr)
-          vscode.window.showErrorMessage(stderr)
-        } else if (stdout) {
-          this.log.info(stdout)
-        }
-      })
+    const cli = getCLI()
+    if (!cli) {
+      vscode.window.showErrorMessage('Please add `@alephium/cli` as dev dependency\n\nnpm i D @alephium/cli')
+      return
     }
+
+    const cmd = `node ${cli} compile -n devnet`
+    Logger.show()
+    this.log.info(`CMD: ${cmd}`)
+    vscode.window.setStatusBarMessage(`Execute command: ${cmd}`)
+
+    this.log.info(`cwd: ${workspace}`)
+    exec(cmd, { cwd: `${workspace}` }, (_error: any, stdout: string, stderr: string) => {
+      if (stderr) {
+        this.log.info(stderr)
+        vscode.window.showErrorMessage(stderr)
+      } else if (stdout) {
+        this.log.info(stdout)
+      }
+    })
   }
 }

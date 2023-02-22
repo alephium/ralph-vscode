@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import * as vscode from 'vscode'
 import * as request from 'request'
+import path from 'path'
 import { Logger } from '../logger/logger'
 
 const requestProgress = require('request-progress')
@@ -43,6 +44,15 @@ export function getCompileCommand(): string {
 
 export function updateCompileCommandVersion(initialCmd: string, newVersion: string): string {
   return initialCmd.replace(/@alephium\/cli[^\s]*/, `@alephium/cli@${newVersion}`)
+}
+
+export function getCLI(): string | undefined {
+  const workspaceFolder = getWorkspaceFolder()
+  const cli = path.join(workspaceFolder ?? '', 'node_modules/@alephium/cli/cli.js')
+  if (workspaceFolder && fs.existsSync(cli)) {
+    return cli
+  }
+  return undefined
 }
 
 export async function fsExists(path: fs.PathLike): Promise<boolean> {
