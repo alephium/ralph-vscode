@@ -93,6 +93,11 @@
           "command": "ralph.compile",
           "when": "resourceLangId == ralph",
           "group": "1_ralph@1"
+        },
+        {
+          "command": "ralph.deploy",
+          "when": "resourceLangId == ralph",
+          "group": "1_ralph@2"
         }
       ]
     },
