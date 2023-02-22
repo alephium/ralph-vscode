@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import * as vscode from 'vscode'
 import * as request from 'request'
+import { Logger } from '../logger/logger'
 
 const requestProgress = require('request-progress')
 
@@ -20,6 +21,28 @@ export function download(srcUrl: string, destPath: fs.PathLike, progress: (state
       .on('error', (err: any) => reject(err))
       .pipe(fs.createWriteStream(destPath))
   })
+}
+
+export function getWorkspaceFolder(): string | undefined {
+  if (vscode.workspace.workspaceFolders === undefined) {
+    vscode.window.showErrorMessage('Working folder not found, open a folder and try again')
+    return undefined
+  }
+  return vscode.workspace.workspaceFolders[0].uri.path
+}
+
+export function getConfigString(key: string, defaultValue: string): string {
+  return vscode.workspace.getConfiguration().get<string>(key) ?? defaultValue
+}
+
+export function getCompileCommand(): string {
+  const cmd = getConfigString('ralph.compile.command', 'npx --yes @alephium/cli compile -n devnet')
+  const version = getConfigString('ralph.compile.cliVersion', 'latest')
+  return updateCompileCommandVersion(cmd, version)
+}
+
+export function updateCompileCommandVersion(initialCmd: string, newVersion: string): string {
+  return initialCmd.replace(/@alephium\/cli[^\s]*/, `@alephium/cli@${newVersion}`)
 }
 
 export async function fsExists(path: fs.PathLike): Promise<boolean> {

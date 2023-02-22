@@ -1,8 +1,6 @@
 import * as vscode from 'vscode'
-import { Downloader } from '../downloader/downloader'
 import { Compiler } from '../compiler/compiler'
 import { deployToDevnet } from '../deploy/deploy'
-import { build } from '../deploy/build'
 
 interface Command {
   command: string
@@ -12,50 +10,26 @@ interface Command {
 
 export const commands: Command[] = [
   {
-    command: 'ralph.download',
-    title: 'Ralph downloader',
-    callback: () => {
-      const download = new Downloader()
-      download.showQuickPick()
-    },
-  },
-  {
     command: 'ralph.compile',
-    title: 'Ralph compiler',
+    title: 'Ralph compile',
     callback: () => {
       if (vscode.window.activeTextEditor) {
-        new Compiler().compiler(vscode.window.activeTextEditor)
+        new Compiler().compile(vscode.window.activeTextEditor)
       }
     },
   },
   {
-    command: 'ralph.online.compile',
-    title: 'Ralph Online Compile',
+    command: 'ralph.deploy',
+    title: 'Ralph deploy',
     callback: () => {
-      console.log('begin remote Compile')
-      build()
-        .catch((err) => {
-          console.log(err)
-          vscode.window.showErrorMessage(err.message)
-        })
-        .then((value) => {
-          vscode.window.showInformationMessage('Ralph Online Compile End!')
-        })
-      console.log('end remote Compile')
-    },
-  },
-  {
-    command: 'ralph.online.deploy',
-    title: 'Ralph Online Deploy',
-    callback: () => {
-      console.log('begin deploy')
+      console.log('Begin deploy')
       deployToDevnet()
         .catch((err) => {
           console.log(err)
           vscode.window.showErrorMessage(err.message)
         })
         .then((value) => {
-          vscode.window.showInformationMessage('Ralph Online Deploy End!')
+          vscode.window.showInformationMessage('Contracts deployed!')
         })
       console.log('end deploy')
     },

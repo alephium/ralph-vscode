@@ -41,131 +41,31 @@
   "activationEvents": [
     "onLanguage:ralph",
     "onCommand:ralph.compile",
-    "onCommand:ralph.download"
+    "onCommand:ralph.deploy"
   ],
   "contributes": {
     "commands": [
-      {
-        "command": "ralph.download",
-        "title": "Ralph Download"
-      },
       {
         "command": "ralph.compile",
         "title": "Ralph Compile"
       },
       {
-        "command": "ralph.online.compile",
-        "title": "Ralph Online Compile"
+        "command": "ralph.deploy",
+        "title": "Ralph Deploy To Devnet"
       }
     ],
     "configuration": {
       "title": "Ralph settings",
       "properties": {
-        "ralph.set.global.contractsDir": {
+        "ralph.compile.cliVersion": {
           "type": "string",
-          "description": "contractsDir"
-        },
-        "ralph.download.config.url": {
-          "type": "string",
-          "description": "download link",
-          "default": "https://github.com/alephium/alephium/releases/download/v1.6.4/alephium-ralphc-1.6.4.jar"
-        },
-        "ralph.download.config.target": {
-          "type": "string",
-          "description": "compiler jar",
-          "default": "alephium-ralphc-1.6.4.jar"
+          "default": "latest",
+          "description": "The version of CLI for compilation"
         },
         "ralph.compile.command": {
           "type": "string",
-          "description": "compile command"
-        },
-        "ralph.compile.option.ignoreUnusedConstantsWarnings": {
-          "type": "boolean",
-          "default": false,
-          "description": "ignore unused constants warnings"
-        },
-        "ralph.compile.option.ignoreUnusedVariablesWarnings": {
-          "type": "boolean",
-          "default": false,
-          "description": "ignore unused variables warnings"
-        },
-        "ralph.compile.option.ignoreUnusedFieldsWarnings": {
-          "type": "boolean",
-          "default": false,
-          "description": "ignore unused fields warnings"
-        },
-        "ralph.compile.option.ignoreUpdateFieldCheckWarnings": {
-          "type": "boolean",
-          "default": false,
-          "description": "ignore update field check warnings"
-        },
-        "ralph.compile.option.ignoreUnusedPrivateFunctionsWarnings": {
-          "type": "boolean",
-          "default": false,
-          "description": "ignore unused private functions warnings"
-        },
-        "ralph.compile.option.ignoreCheckExternalCallerWarnings": {
-          "type": "boolean",
-          "default": false,
-          "description": "ignore external call check warnings"
-        },
-        "ralph.compile.option.contracts": {
-          "type": "string",
-          "default": "./contracts",
-          "description": "Contract folder"
-        },
-        "ralph.compile.option.artifacts": {
-          "type": "string",
-          "default": "./artifacts",
-          "description": "Artifact folder"
-        },
-        "ralph.compile.option.warningsAsError": {
-          "type": "boolean",
-          "default": false,
-          "description": "Treat warnings as errors"
-        },
-        "ralph.compile.option.debug": {
-          "type": "boolean",
-          "default": false,
-          "description": "debug mode"
-        },
-        "ralph.online.configuration": {
-          "type": "object",
-          "default": {
-            "sourceDir": "contracts",
-            "artifactDir": "artifacts",
-            "defaultNetwork": "devnet",
-            "toDeployGroups": [
-              0,
-              1,
-              2,
-              3
-            ],
-            "networks": {
-              "devnet": {
-                "nodeUrl": "http://localhost:22973",
-                "mnemonic": "vault alarm sad mass witness property virus style good flower rice alpha viable evidence run glare pretty scout evil judge enroll refuse another lava",
-                "settings": {
-                  "issueTokenAmount": "100n"
-                }
-              },
-              "testnet": {
-                "nodeUrl": "http://localhost:22973",
-                "mnemonic": "vault alarm sad mass witness property virus style good flower rice alpha viable evidence run glare pretty scout evil judge enroll refuse another lava",
-                "settings": {
-                  "issueTokenAmount": "100n"
-                }
-              },
-              "mainnet": {
-                "nodeUrl": "http://localhost:22973",
-                "mnemonic": "vault alarm sad mass witness property virus style good flower rice alpha viable evidence run glare pretty scout evil judge enroll refuse another lava",
-                "settings": {
-                  "issueTokenAmount": "100n"
-                }
-              }
-            }
-          },
-          "description": "alephium configuration"
+          "default": "npx --yes @alephium/cli compile -n devnet",
+          "description": "The command to compile Ralph projects"
         }
       }
     },
@@ -193,16 +93,6 @@
           "command": "ralph.compile",
           "when": "resourceLangId == ralph",
           "group": "1_ralph@1"
-        },
-        {
-          "command": "ralph.download",
-          "when": "resourceLangId == ralph",
-          "group": "1_ralph@2"
-        },
-        {
-          "command": "ralph.online.compile",
-          "when": "resourceLangId == ralph",
-          "group": "1_ralph@3"
         }
       ]
     },

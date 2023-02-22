@@ -1,13 +1,23 @@
-import { deploy, Deployments } from '@alephium/cli'
-import * as path from 'path'
 import * as vscode from 'vscode'
-import { defaultConfiguration as config } from './config'
+import { exec } from 'child_process'
+import { Logger } from '../logger/logger'
+import { getWorkspaceFolder } from '../util/util'
 
-export async function deployToDevnet(): Promise<Deployments> {
-  process.chdir(vscode.workspace.rootPath!)
-  const deployments = Deployments.empty()
-  // const configuration = await loadConfig(getConfigFile())
-  await deploy(config, config.defaultNetwork, deployments)
-  await deployments.saveToFile(path.join(<string>config.deploymentScriptDir ?? vscode.workspace.rootPath, 'deployments.project.json'))
-  return deployments
+const logger = new Logger('Deployer')
+
+export async function deployToDevnet(): Promise<void> {
+  const workspaceFolder = getWorkspaceFolder()
+  if (workspaceFolder === undefined) {
+    return
+  }
+
+  const cmd = `npx --yes @alephium/cli@latest deploy -n devnet`
+  exec(cmd, { cwd: `${workspaceFolder}` }, (_error: any, stdout: string, stderr: string) => {
+    if (stderr) {
+      logger.info(stderr)
+      vscode.window.showErrorMessage(stderr)
+    } else if (stdout) {
+      logger.info(stdout)
+    }
+  })
 }
