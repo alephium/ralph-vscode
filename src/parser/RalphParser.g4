@@ -137,8 +137,10 @@ assetScript
     : ASSETSCRIPT IDENTIFIER (L_PAREN paramList R_PAREN)? typeStructBody
     ;
 
+importStmt: IMPORT IMPORT_PATH ;
+
 contract
-    : ABSTRACT? CONTRACT IDENTIFIER (L_PAREN paramList R_PAREN)? extends? implements? typeStructBody // # contractDeclStmt
+    : (importStmt)* ABSTRACT? CONTRACT IDENTIFIER (L_PAREN paramList R_PAREN)? extends? implements? typeStructBody // # contractDeclStmt
     ;
 
 extends

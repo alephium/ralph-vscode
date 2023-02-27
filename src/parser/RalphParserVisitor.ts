@@ -34,6 +34,7 @@ import { EnumContext } from "./RalphParser";
 import { TypeStructBodyContext } from "./RalphParser";
 import { TxScriptContext } from "./RalphParser";
 import { AssetScriptContext } from "./RalphParser";
+import { ImportStmtContext } from "./RalphParser";
 import { ContractContext } from "./RalphParser";
 import { ExtendsContext } from "./RalphParser";
 import { ContractExtendsContext } from "./RalphParser";
@@ -278,6 +279,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitAssetScript?: (ctx: AssetScriptContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.importStmt`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitImportStmt?: (ctx: ImportStmtContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.contract`.

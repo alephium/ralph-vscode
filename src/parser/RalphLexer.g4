@@ -11,6 +11,7 @@ ENUM                   : 'enum';
 TXSCRIPT               : 'TxScript';
 CONTRACT               : 'Contract';
 ASSETSCRIPT            : 'AssetScript';
+IMPORT                 : 'import';
 
 IF                     : 'if';
 ELSE                   : 'else';
@@ -48,6 +49,7 @@ R_ARROW                :'->';
 
 
 IDENTIFIER             : LETTER (LETTER | DIGIT)* '!'?;
+IMPORT_PATH            : '"' ~["./]+ '/' (~'"')* (DIGIT | LETTER)* ('.ral')? '"' ;
 
 // Punctuation
 L_PAREN                : '(';
