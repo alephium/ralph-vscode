@@ -63,7 +63,6 @@ COMMA                  : ',';
 SEMI                   : ';';
 COLON                  : ':';
 DOT                    : '.';
-POUND                  : '#';
 DOUBT                  : '?';
 
 //Operator

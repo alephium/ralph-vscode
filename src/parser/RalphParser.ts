@@ -74,60 +74,59 @@ export class RalphParser extends Parser {
 	public static readonly SEMI = 44;
 	public static readonly COLON = 45;
 	public static readonly DOT = 46;
-	public static readonly POUND = 47;
-	public static readonly DOUBT = 48;
-	public static readonly CONCAT = 49;
-	public static readonly ADD = 50;
-	public static readonly SUB = 51;
-	public static readonly MUL = 52;
-	public static readonly DIV = 53;
-	public static readonly MOD = 54;
-	public static readonly EXP = 55;
-	public static readonly MOD_EXP = 56;
-	public static readonly MODADD = 57;
-	public static readonly MODSUB = 58;
-	public static readonly MODMUL = 59;
-	public static readonly SHL = 60;
-	public static readonly SHR = 61;
-	public static readonly BITAND = 62;
-	public static readonly XOR = 63;
-	public static readonly BITOR = 64;
-	public static readonly EQ = 65;
-	public static readonly NQ = 66;
-	public static readonly LT = 67;
-	public static readonly LE = 68;
-	public static readonly GT = 69;
-	public static readonly GE = 70;
-	public static readonly AND = 71;
-	public static readonly OR = 72;
-	public static readonly NOT = 73;
-	public static readonly ALPH = 74;
-	public static readonly ALPH_TOKEN_ID = 75;
-	public static readonly ADDRESS_LIT = 76;
-	public static readonly ALPH_LIT = 77;
-	public static readonly BOOL_LIT = 78;
-	public static readonly BYTEVEC_LIT = 79;
-	public static readonly DECIMAL_LIT = 80;
-	public static readonly BINARY_LIT = 81;
-	public static readonly OCTAL_LIT = 82;
-	public static readonly HEX_LIT = 83;
-	public static readonly FLOAT_LIT = 84;
-	public static readonly DECIMAL_FLOAT_LIT = 85;
-	public static readonly HEX_FLOAT_LIT = 86;
-	public static readonly IMAGINARY_LIT = 87;
-	public static readonly RUNE_LIT = 88;
-	public static readonly BYTE_VALUE = 89;
-	public static readonly OCTAL_BYTE_VALUE = 90;
-	public static readonly HEX_BYTE_VALUE = 91;
-	public static readonly LITTLE_U_VALUE = 92;
-	public static readonly BIG_U_VALUE = 93;
-	public static readonly RAW_STRING_LIT = 94;
-	public static readonly INTERPRETED_STRING_LIT = 95;
-	public static readonly WS = 96;
-	public static readonly COMMENT = 97;
-	public static readonly LINE_COMMENT = 98;
-	public static readonly TERMINATOR = 99;
-	public static readonly EOS = 100;
+	public static readonly DOUBT = 47;
+	public static readonly CONCAT = 48;
+	public static readonly ADD = 49;
+	public static readonly SUB = 50;
+	public static readonly MUL = 51;
+	public static readonly DIV = 52;
+	public static readonly MOD = 53;
+	public static readonly EXP = 54;
+	public static readonly MOD_EXP = 55;
+	public static readonly MODADD = 56;
+	public static readonly MODSUB = 57;
+	public static readonly MODMUL = 58;
+	public static readonly SHL = 59;
+	public static readonly SHR = 60;
+	public static readonly BITAND = 61;
+	public static readonly XOR = 62;
+	public static readonly BITOR = 63;
+	public static readonly EQ = 64;
+	public static readonly NQ = 65;
+	public static readonly LT = 66;
+	public static readonly LE = 67;
+	public static readonly GT = 68;
+	public static readonly GE = 69;
+	public static readonly AND = 70;
+	public static readonly OR = 71;
+	public static readonly NOT = 72;
+	public static readonly ALPH = 73;
+	public static readonly ALPH_TOKEN_ID = 74;
+	public static readonly ADDRESS_LIT = 75;
+	public static readonly ALPH_LIT = 76;
+	public static readonly BOOL_LIT = 77;
+	public static readonly BYTEVEC_LIT = 78;
+	public static readonly DECIMAL_LIT = 79;
+	public static readonly BINARY_LIT = 80;
+	public static readonly OCTAL_LIT = 81;
+	public static readonly HEX_LIT = 82;
+	public static readonly FLOAT_LIT = 83;
+	public static readonly DECIMAL_FLOAT_LIT = 84;
+	public static readonly HEX_FLOAT_LIT = 85;
+	public static readonly IMAGINARY_LIT = 86;
+	public static readonly RUNE_LIT = 87;
+	public static readonly BYTE_VALUE = 88;
+	public static readonly OCTAL_BYTE_VALUE = 89;
+	public static readonly HEX_BYTE_VALUE = 90;
+	public static readonly LITTLE_U_VALUE = 91;
+	public static readonly BIG_U_VALUE = 92;
+	public static readonly RAW_STRING_LIT = 93;
+	public static readonly INTERPRETED_STRING_LIT = 94;
+	public static readonly WS = 95;
+	public static readonly COMMENT = 96;
+	public static readonly LINE_COMMENT = 97;
+	public static readonly TERMINATOR = 98;
+	public static readonly EOS = 99;
 	public static readonly RULE_sourceFile = 0;
 	public static readonly RULE_identifierList = 1;
 	public static readonly RULE_varDeclSingle = 2;
@@ -197,10 +196,10 @@ export class RalphParser extends Parser {
 		"'event'", "'emit'", "'@using'", "'using'", "'@'", "'Bool'", "'I256'", 
 		"'U256'", "'Byte'", "'ByteVec'", "'Address'", "'@unused'", "'unused'", 
 		"'->'", undefined, undefined, "'('", "')'", "'{'", "'}'", "'['", "']'", 
-		"'='", "','", "';'", "':'", "'.'", "'#'", "'?'", "'++'", "'+'", "'-'", 
-		"'*'", "'/'", "'%'", "'**'", "'|**|'", undefined, undefined, undefined, 
-		"'<<'", "'>>'", "'&'", "'^'", "'|'", "'=='", "'!='", "'<'", "'<='", "'>'", 
-		"'>='", "'&&'", "'||'", "'!'", "'alph'", "'ALPH'",
+		"'='", "','", "';'", "':'", "'.'", "'?'", "'++'", "'+'", "'-'", "'*'", 
+		"'/'", "'%'", "'**'", "'|**|'", undefined, undefined, undefined, "'<<'", 
+		"'>>'", "'&'", "'^'", "'|'", "'=='", "'!='", "'<'", "'<='", "'>'", "'>='", 
+		"'&&'", "'||'", "'!'", "'alph'", "'ALPH'",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
 		undefined, "FN", "PUB", "RETURN", "INTERFACE", "ENUM", "TXSCRIPT", "CONTRACT", 
@@ -209,8 +208,8 @@ export class RalphParser extends Parser {
 		"USING", "AT", "BOOL", "I256", "U256", "BYTE", "BYTEVEC", "ADDRESS", "ATUNUSED", 
 		"UNUSED", "R_ARROW", "IDENTIFIER", "IMPORT_PATH", "L_PAREN", "R_PAREN", 
 		"L_CURLY", "R_CURLY", "L_BRACKET", "R_BRACKET", "ASSIGN", "COMMA", "SEMI", 
-		"COLON", "DOT", "POUND", "DOUBT", "CONCAT", "ADD", "SUB", "MUL", "DIV", 
-		"MOD", "EXP", "MOD_EXP", "MODADD", "MODSUB", "MODMUL", "SHL", "SHR", "BITAND", 
+		"COLON", "DOT", "DOUBT", "CONCAT", "ADD", "SUB", "MUL", "DIV", "MOD", 
+		"EXP", "MOD_EXP", "MODADD", "MODSUB", "MODMUL", "SHL", "SHR", "BITAND", 
 		"XOR", "BITOR", "EQ", "NQ", "LT", "LE", "GT", "GE", "AND", "OR", "NOT", 
 		"ALPH", "ALPH_TOKEN_ID", "ADDRESS_LIT", "ALPH_LIT", "BOOL_LIT", "BYTEVEC_LIT", 
 		"DECIMAL_LIT", "BINARY_LIT", "OCTAL_LIT", "HEX_LIT", "FLOAT_LIT", "DECIMAL_FLOAT_LIT", 
@@ -640,7 +639,7 @@ export class RalphParser extends Parser {
 						}
 						this.state = 160;
 						_la = this._input.LA(1);
-						if (!(((((_la - 49)) & ~0x1F) === 0 && ((1 << (_la - 49)) & ((1 << (RalphParser.CONCAT - 49)) | (1 << (RalphParser.ADD - 49)) | (1 << (RalphParser.SUB - 49)) | (1 << (RalphParser.MUL - 49)) | (1 << (RalphParser.DIV - 49)) | (1 << (RalphParser.MOD - 49)) | (1 << (RalphParser.EXP - 49)) | (1 << (RalphParser.MOD_EXP - 49)) | (1 << (RalphParser.MODADD - 49)) | (1 << (RalphParser.MODSUB - 49)) | (1 << (RalphParser.MODMUL - 49)) | (1 << (RalphParser.SHL - 49)) | (1 << (RalphParser.SHR - 49)) | (1 << (RalphParser.BITAND - 49)) | (1 << (RalphParser.XOR - 49)) | (1 << (RalphParser.BITOR - 49)))) !== 0))) {
+						if (!(((((_la - 48)) & ~0x1F) === 0 && ((1 << (_la - 48)) & ((1 << (RalphParser.CONCAT - 48)) | (1 << (RalphParser.ADD - 48)) | (1 << (RalphParser.SUB - 48)) | (1 << (RalphParser.MUL - 48)) | (1 << (RalphParser.DIV - 48)) | (1 << (RalphParser.MOD - 48)) | (1 << (RalphParser.EXP - 48)) | (1 << (RalphParser.MOD_EXP - 48)) | (1 << (RalphParser.MODADD - 48)) | (1 << (RalphParser.MODSUB - 48)) | (1 << (RalphParser.MODMUL - 48)) | (1 << (RalphParser.SHL - 48)) | (1 << (RalphParser.SHR - 48)) | (1 << (RalphParser.BITAND - 48)) | (1 << (RalphParser.XOR - 48)) | (1 << (RalphParser.BITOR - 48)))) !== 0))) {
 						this._errHandler.recoverInline(this);
 						} else {
 							if (this._input.LA(1) === Token.EOF) {
@@ -665,7 +664,7 @@ export class RalphParser extends Parser {
 						}
 						this.state = 163;
 						_la = this._input.LA(1);
-						if (!(((((_la - 65)) & ~0x1F) === 0 && ((1 << (_la - 65)) & ((1 << (RalphParser.EQ - 65)) | (1 << (RalphParser.NQ - 65)) | (1 << (RalphParser.LT - 65)) | (1 << (RalphParser.LE - 65)) | (1 << (RalphParser.GT - 65)) | (1 << (RalphParser.GE - 65)))) !== 0))) {
+						if (!(((((_la - 64)) & ~0x1F) === 0 && ((1 << (_la - 64)) & ((1 << (RalphParser.EQ - 64)) | (1 << (RalphParser.NQ - 64)) | (1 << (RalphParser.LT - 64)) | (1 << (RalphParser.LE - 64)) | (1 << (RalphParser.GT - 64)) | (1 << (RalphParser.GE - 64)))) !== 0))) {
 						this._errHandler.recoverInline(this);
 						} else {
 							if (this._input.LA(1) === Token.EOF) {
@@ -1016,7 +1015,7 @@ export class RalphParser extends Parser {
 				this.state = 221;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while (_la === RalphParser.IF || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & ((1 << (RalphParser.IDENTIFIER - 34)) | (1 << (RalphParser.L_PAREN - 34)) | (1 << (RalphParser.L_BRACKET - 34)) | (1 << (RalphParser.SUB - 34)))) !== 0) || ((((_la - 73)) & ~0x1F) === 0 && ((1 << (_la - 73)) & ((1 << (RalphParser.NOT - 73)) | (1 << (RalphParser.ALPH_TOKEN_ID - 73)) | (1 << (RalphParser.ADDRESS_LIT - 73)) | (1 << (RalphParser.ALPH_LIT - 73)) | (1 << (RalphParser.BOOL_LIT - 73)) | (1 << (RalphParser.BYTEVEC_LIT - 73)) | (1 << (RalphParser.DECIMAL_LIT - 73)) | (1 << (RalphParser.BINARY_LIT - 73)) | (1 << (RalphParser.OCTAL_LIT - 73)) | (1 << (RalphParser.HEX_LIT - 73)) | (1 << (RalphParser.IMAGINARY_LIT - 73)) | (1 << (RalphParser.RUNE_LIT - 73)) | (1 << (RalphParser.RAW_STRING_LIT - 73)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 73)))) !== 0));
+			} while (_la === RalphParser.IF || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & ((1 << (RalphParser.IDENTIFIER - 34)) | (1 << (RalphParser.L_PAREN - 34)) | (1 << (RalphParser.L_BRACKET - 34)) | (1 << (RalphParser.SUB - 34)))) !== 0) || ((((_la - 72)) & ~0x1F) === 0 && ((1 << (_la - 72)) & ((1 << (RalphParser.NOT - 72)) | (1 << (RalphParser.ALPH_TOKEN_ID - 72)) | (1 << (RalphParser.ADDRESS_LIT - 72)) | (1 << (RalphParser.ALPH_LIT - 72)) | (1 << (RalphParser.BOOL_LIT - 72)) | (1 << (RalphParser.BYTEVEC_LIT - 72)) | (1 << (RalphParser.DECIMAL_LIT - 72)) | (1 << (RalphParser.BINARY_LIT - 72)) | (1 << (RalphParser.OCTAL_LIT - 72)) | (1 << (RalphParser.HEX_LIT - 72)) | (1 << (RalphParser.IMAGINARY_LIT - 72)) | (1 << (RalphParser.RUNE_LIT - 72)) | (1 << (RalphParser.RAW_STRING_LIT - 72)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 72)))) !== 0));
 			this.state = 223;
 			this.match(RalphParser.R_CURLY);
 			}
@@ -1640,7 +1639,7 @@ export class RalphParser extends Parser {
 			{
 			this.state = 326;
 			_la = this._input.LA(1);
-			if (!(((((_la - 79)) & ~0x1F) === 0 && ((1 << (_la - 79)) & ((1 << (RalphParser.BYTEVEC_LIT - 79)) | (1 << (RalphParser.DECIMAL_LIT - 79)) | (1 << (RalphParser.BINARY_LIT - 79)) | (1 << (RalphParser.OCTAL_LIT - 79)) | (1 << (RalphParser.HEX_LIT - 79)) | (1 << (RalphParser.IMAGINARY_LIT - 79)) | (1 << (RalphParser.RUNE_LIT - 79)))) !== 0))) {
+			if (!(((((_la - 78)) & ~0x1F) === 0 && ((1 << (_la - 78)) & ((1 << (RalphParser.BYTEVEC_LIT - 78)) | (1 << (RalphParser.DECIMAL_LIT - 78)) | (1 << (RalphParser.BINARY_LIT - 78)) | (1 << (RalphParser.OCTAL_LIT - 78)) | (1 << (RalphParser.HEX_LIT - 78)) | (1 << (RalphParser.IMAGINARY_LIT - 78)) | (1 << (RalphParser.RUNE_LIT - 78)))) !== 0))) {
 			this._errHandler.recoverInline(this);
 			} else {
 				if (this._input.LA(1) === Token.EOF) {
@@ -1790,7 +1789,7 @@ export class RalphParser extends Parser {
 			this.state = 352;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << RalphParser.FN) | (1 << RalphParser.PUB) | (1 << RalphParser.RETURN) | (1 << RalphParser.ENUM) | (1 << RalphParser.IF) | (1 << RalphParser.WHILE) | (1 << RalphParser.FOR) | (1 << RalphParser.LET) | (1 << RalphParser.CONST) | (1 << RalphParser.EVENT) | (1 << RalphParser.EMIT) | (1 << RalphParser.ATUSING))) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & ((1 << (RalphParser.IDENTIFIER - 34)) | (1 << (RalphParser.L_PAREN - 34)) | (1 << (RalphParser.L_BRACKET - 34)) | (1 << (RalphParser.SUB - 34)))) !== 0) || ((((_la - 73)) & ~0x1F) === 0 && ((1 << (_la - 73)) & ((1 << (RalphParser.NOT - 73)) | (1 << (RalphParser.ADDRESS_LIT - 73)) | (1 << (RalphParser.ALPH_LIT - 73)) | (1 << (RalphParser.BOOL_LIT - 73)) | (1 << (RalphParser.BYTEVEC_LIT - 73)) | (1 << (RalphParser.DECIMAL_LIT - 73)) | (1 << (RalphParser.BINARY_LIT - 73)) | (1 << (RalphParser.OCTAL_LIT - 73)) | (1 << (RalphParser.HEX_LIT - 73)) | (1 << (RalphParser.IMAGINARY_LIT - 73)) | (1 << (RalphParser.RUNE_LIT - 73)) | (1 << (RalphParser.RAW_STRING_LIT - 73)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 73)) | (1 << (RalphParser.EOS - 73)))) !== 0)) {
+			while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << RalphParser.FN) | (1 << RalphParser.PUB) | (1 << RalphParser.RETURN) | (1 << RalphParser.ENUM) | (1 << RalphParser.IF) | (1 << RalphParser.WHILE) | (1 << RalphParser.FOR) | (1 << RalphParser.LET) | (1 << RalphParser.CONST) | (1 << RalphParser.EVENT) | (1 << RalphParser.EMIT) | (1 << RalphParser.ATUSING))) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & ((1 << (RalphParser.IDENTIFIER - 34)) | (1 << (RalphParser.L_PAREN - 34)) | (1 << (RalphParser.L_BRACKET - 34)) | (1 << (RalphParser.SUB - 34)))) !== 0) || ((((_la - 72)) & ~0x1F) === 0 && ((1 << (_la - 72)) & ((1 << (RalphParser.NOT - 72)) | (1 << (RalphParser.ADDRESS_LIT - 72)) | (1 << (RalphParser.ALPH_LIT - 72)) | (1 << (RalphParser.BOOL_LIT - 72)) | (1 << (RalphParser.BYTEVEC_LIT - 72)) | (1 << (RalphParser.DECIMAL_LIT - 72)) | (1 << (RalphParser.BINARY_LIT - 72)) | (1 << (RalphParser.OCTAL_LIT - 72)) | (1 << (RalphParser.HEX_LIT - 72)) | (1 << (RalphParser.IMAGINARY_LIT - 72)) | (1 << (RalphParser.RUNE_LIT - 72)) | (1 << (RalphParser.RAW_STRING_LIT - 72)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 72)) | (1 << (RalphParser.EOS - 72)))) !== 0)) {
 				{
 				this.state = 350;
 				this._errHandler.sync(this);
@@ -2332,7 +2331,7 @@ export class RalphParser extends Parser {
 				this.state = 451;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-				while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << RalphParser.RETURN) | (1 << RalphParser.IF) | (1 << RalphParser.WHILE) | (1 << RalphParser.FOR) | (1 << RalphParser.LET) | (1 << RalphParser.CONST) | (1 << RalphParser.EMIT))) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & ((1 << (RalphParser.IDENTIFIER - 34)) | (1 << (RalphParser.L_PAREN - 34)) | (1 << (RalphParser.L_BRACKET - 34)) | (1 << (RalphParser.SUB - 34)))) !== 0) || ((((_la - 73)) & ~0x1F) === 0 && ((1 << (_la - 73)) & ((1 << (RalphParser.NOT - 73)) | (1 << (RalphParser.ADDRESS_LIT - 73)) | (1 << (RalphParser.ALPH_LIT - 73)) | (1 << (RalphParser.BOOL_LIT - 73)) | (1 << (RalphParser.BYTEVEC_LIT - 73)) | (1 << (RalphParser.DECIMAL_LIT - 73)) | (1 << (RalphParser.BINARY_LIT - 73)) | (1 << (RalphParser.OCTAL_LIT - 73)) | (1 << (RalphParser.HEX_LIT - 73)) | (1 << (RalphParser.IMAGINARY_LIT - 73)) | (1 << (RalphParser.RUNE_LIT - 73)) | (1 << (RalphParser.RAW_STRING_LIT - 73)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 73)) | (1 << (RalphParser.EOS - 73)))) !== 0)) {
+				while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << RalphParser.RETURN) | (1 << RalphParser.IF) | (1 << RalphParser.WHILE) | (1 << RalphParser.FOR) | (1 << RalphParser.LET) | (1 << RalphParser.CONST) | (1 << RalphParser.EMIT))) !== 0) || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & ((1 << (RalphParser.IDENTIFIER - 34)) | (1 << (RalphParser.L_PAREN - 34)) | (1 << (RalphParser.L_BRACKET - 34)) | (1 << (RalphParser.SUB - 34)))) !== 0) || ((((_la - 72)) & ~0x1F) === 0 && ((1 << (_la - 72)) & ((1 << (RalphParser.NOT - 72)) | (1 << (RalphParser.ADDRESS_LIT - 72)) | (1 << (RalphParser.ALPH_LIT - 72)) | (1 << (RalphParser.BOOL_LIT - 72)) | (1 << (RalphParser.BYTEVEC_LIT - 72)) | (1 << (RalphParser.DECIMAL_LIT - 72)) | (1 << (RalphParser.BINARY_LIT - 72)) | (1 << (RalphParser.OCTAL_LIT - 72)) | (1 << (RalphParser.HEX_LIT - 72)) | (1 << (RalphParser.IMAGINARY_LIT - 72)) | (1 << (RalphParser.RUNE_LIT - 72)) | (1 << (RalphParser.RAW_STRING_LIT - 72)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 72)) | (1 << (RalphParser.EOS - 72)))) !== 0)) {
 					{
 					{
 					this.state = 448;
@@ -2682,7 +2681,7 @@ export class RalphParser extends Parser {
 			this.state = 492;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la === RalphParser.IF || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & ((1 << (RalphParser.IDENTIFIER - 34)) | (1 << (RalphParser.L_PAREN - 34)) | (1 << (RalphParser.L_BRACKET - 34)) | (1 << (RalphParser.SUB - 34)))) !== 0) || ((((_la - 73)) & ~0x1F) === 0 && ((1 << (_la - 73)) & ((1 << (RalphParser.NOT - 73)) | (1 << (RalphParser.ADDRESS_LIT - 73)) | (1 << (RalphParser.ALPH_LIT - 73)) | (1 << (RalphParser.BOOL_LIT - 73)) | (1 << (RalphParser.BYTEVEC_LIT - 73)) | (1 << (RalphParser.DECIMAL_LIT - 73)) | (1 << (RalphParser.BINARY_LIT - 73)) | (1 << (RalphParser.OCTAL_LIT - 73)) | (1 << (RalphParser.HEX_LIT - 73)) | (1 << (RalphParser.IMAGINARY_LIT - 73)) | (1 << (RalphParser.RUNE_LIT - 73)) | (1 << (RalphParser.RAW_STRING_LIT - 73)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 73)))) !== 0)) {
+			if (_la === RalphParser.IF || ((((_la - 34)) & ~0x1F) === 0 && ((1 << (_la - 34)) & ((1 << (RalphParser.IDENTIFIER - 34)) | (1 << (RalphParser.L_PAREN - 34)) | (1 << (RalphParser.L_BRACKET - 34)) | (1 << (RalphParser.SUB - 34)))) !== 0) || ((((_la - 72)) & ~0x1F) === 0 && ((1 << (_la - 72)) & ((1 << (RalphParser.NOT - 72)) | (1 << (RalphParser.ADDRESS_LIT - 72)) | (1 << (RalphParser.ALPH_LIT - 72)) | (1 << (RalphParser.BOOL_LIT - 72)) | (1 << (RalphParser.BYTEVEC_LIT - 72)) | (1 << (RalphParser.DECIMAL_LIT - 72)) | (1 << (RalphParser.BINARY_LIT - 72)) | (1 << (RalphParser.OCTAL_LIT - 72)) | (1 << (RalphParser.HEX_LIT - 72)) | (1 << (RalphParser.IMAGINARY_LIT - 72)) | (1 << (RalphParser.RUNE_LIT - 72)) | (1 << (RalphParser.RAW_STRING_LIT - 72)) | (1 << (RalphParser.INTERPRETED_STRING_LIT - 72)))) !== 0)) {
 				{
 				this.state = 491;
 				this.expression(0);
@@ -2809,7 +2808,7 @@ export class RalphParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03f\u0204\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03e\u0204\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04" +
 		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x04" +
@@ -2864,8 +2863,8 @@ export class RalphParser extends Parser {
 		"\x14\x02\x16\x02\x18\x02\x1A\x02\x1C\x02\x1E\x02 \x02\"\x02$\x02&\x02" +
 		"(\x02*\x02,\x02.\x020\x022\x024\x026\x028\x02:\x02<\x02>\x02@\x02B\x02" +
 		"D\x02F\x02H\x02J\x02L\x02N\x02P\x02R\x02T\x02V\x02X\x02Z\x02\\\x02^\x02" +
-		"`\x02b\x02\x02\b\x04\x0255KK\x03\x023B\x03\x02CH\x03\x02IJ\x04\x02QUY" +
-		"Z\x03\x02`a\x02\u0221\x02j\x03\x02\x02\x02\x04o\x03\x02\x02\x02\x06|\x03" +
+		"`\x02b\x02\x02\b\x04\x0244JJ\x03\x022A\x03\x02BG\x03\x02HI\x04\x02PTX" +
+		"Y\x03\x02_`\x02\u0221\x02j\x03\x02\x02\x02\x04o\x03\x02\x02\x02\x06|\x03" +
 		"\x02\x02\x02\b\x87\x03\x02\x02\x02\n\x91\x03\x02\x02\x02\f\x93\x03\x02" +
 		"\x02\x02\x0E\x9F\x03\x02\x02\x02\x10\xB8\x03\x02\x02\x02\x12\xBD\x03\x02" +
 		"\x02\x02\x14\xC6\x03\x02\x02\x02\x16\xCE\x03\x02\x02\x02\x18\xD2\x03\x02" +
@@ -2921,7 +2920,7 @@ export class RalphParser extends Parser {
 		"\x05\x1A\x0E\x02\xC8\xC7\x03\x02\x02\x02\xC8\xC9\x03\x02\x02\x02\xC9\xCA" +
 		"\x03\x02\x02\x02\xCA\xCB\x07&\x02\x02\xCB\xCC\x05\x10\t\x02\xCC\xCD\x07" +
 		"\'\x02\x02\xCD\x15\x03\x02\x02\x02\xCE\xCF\x05\x0E\b\x02\xCF\x17\x03\x02" +
-		"\x02\x02\xD0\xD3\x07M\x02\x02\xD1\xD3\x05\x0E\b\x02\xD2\xD0\x03\x02\x02" +
+		"\x02\x02\xD0\xD3\x07L\x02\x02\xD1\xD3\x05\x0E\b\x02\xD2\xD0\x03\x02\x02" +
 		"\x02\xD2\xD1\x03\x02\x02\x02\xD3\x19\x03\x02\x02\x02\xD4\xD5\x07(\x02" +
 		"\x02\xD5\xD6\x05\x16\f\x02\xD6\xDD\x07#\x02\x02\xD7\xD8\x05\x18\r\x02" +
 		"\xD8\xD9\x07/\x02\x02\xD9\xDB\x05\x0E\b\x02\xDA\xDC\x07-\x02\x02\xDB\xDA" +
@@ -2971,7 +2970,7 @@ export class RalphParser extends Parser {
 		"\x03\x02\x02\x02\u013D\u013F\x03\x02\x02\x02\u013E\u0140\x05P)\x02\u013F" +
 		"\u013E\x03\x02\x02\x02\u013F\u0140\x03\x02\x02\x02\u0140-\x03\x02\x02" +
 		"\x02\u0141\u0147\x050\x19\x02\u0142\u0147\x052\x1A\x02\u0143\u0147\x07" +
-		"N\x02\x02\u0144\u0147\x07O\x02\x02\u0145\u0147\x07P\x02\x02\u0146\u0141" +
+		"M\x02\x02\u0144\u0147\x07N\x02\x02\u0145\u0147\x07O\x02\x02\u0146\u0141" +
 		"\x03\x02\x02\x02\u0146\u0142\x03\x02\x02\x02\u0146\u0143\x03\x02\x02\x02" +
 		"\u0146\u0144\x03\x02\x02\x02\u0146\u0145\x03\x02\x02\x02\u0147/\x03\x02" +
 		"\x02\x02\u0148\u0149\t\x06\x02\x02\u01491\x03\x02\x02\x02\u014A\u014B" +
@@ -3051,7 +3050,7 @@ export class RalphParser extends Parser {
 		"\u01F7\u01F8\x05\f\x07\x02\u01F8\u01F9\x07,\x02\x02\u01F9\u01FA\x05\x0E" +
 		"\b\x02\u01FA\u01FB\x07.\x02\x02\u01FB\u01FC\x05\x0E\b\x02\u01FC\u01FD" +
 		"\x07.\x02\x02\u01FD\u01FE\x05\x0E\b\x02\u01FE\u01FF\x07\'\x02\x02\u01FF" +
-		"\u0200\x05P)\x02\u0200a\x03\x02\x02\x02\u0201\u0202\x07f\x02\x02\u0202" +
+		"\u0200\x05P)\x02\u0200a\x03\x02\x02\x02\u0201\u0202\x07e\x02\x02\u0202" +
 		"c\x03\x02\x02\x02:hjtz|\x85\x87\x91\x9F\xAD\xAF\xB4\xB8\xBD\xC3\xC8\xD2" +
 		"\xDB\xDF\xE5\xEE\xF7\xFF\u0106\u0111\u0115\u0117\u011A\u011D\u0120\u0128" +
 		"\u012C\u0130\u0133\u013C\u013F\u0146\u0156\u0160\u0162\u016D\u0177\u0181" +
