@@ -1,9 +1,7 @@
 import vscode, { TextDocument } from 'vscode'
-import * as path from 'path'
 import cache from './cache/cache'
 import Parser from './parser/parser'
 import { analyseDiagnostic } from './diagnostics'
-import { global } from './config/global'
 
 export function registerEvent() {
   vscode.workspace.onDidChangeTextDocument((event) => parser(event.document))
@@ -37,8 +35,8 @@ export function parser(doc: TextDocument) {
 }
 
 function includes(file: string): boolean {
-  if (vscode.workspace.rootPath && global.contractsDir) {
-    return file.includes(path.join(vscode.workspace.rootPath, global.contractsDir))
+  if (vscode.workspace.rootPath) {
+    return file.includes(vscode.workspace.rootPath)
   }
   return true
 }
