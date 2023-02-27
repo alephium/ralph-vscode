@@ -63,10 +63,9 @@ callChain: (varName | methodCall) (DOT callChain)*;
 
 methodCall: IDENTIFIER aps? L_PAREN expressionList R_PAREN;
 
-apsAlph: expression R_ARROW expression;
-apsToken: apsAlph COLON expression;
-apsBoth: apsAlph COMMA expression COLON expression;
-aps: L_CURLY (apsAlph | apsToken | apsBoth) R_CURLY;
+payer: expression;
+apsTokenId: ALPH_TOKEN_ID | expression;
+aps: L_CURLY payer R_ARROW (apsTokenId COLON expression COMMA?)+ R_CURLY;
 
 primaryExpr
 	: basicLit

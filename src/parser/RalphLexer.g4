@@ -96,6 +96,7 @@ OR                     : '||';
 NOT                    : '!';
 
 ALPH                   : 'alph';
+ALPH_TOKEN_ID          : 'ALPH';
 
 ADDRESS_LIT            : '@' (DIGIT | LETTER)*;
 ALPH_LIT               : DIGIT+ [ ]+ ALPH;

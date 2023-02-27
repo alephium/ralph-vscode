@@ -13,9 +13,8 @@ import { ExpressionContext } from "./RalphParser";
 import { ExpressionListContext } from "./RalphParser";
 import { CallChainContext } from "./RalphParser";
 import { MethodCallContext } from "./RalphParser";
-import { ApsAlphContext } from "./RalphParser";
-import { ApsTokenContext } from "./RalphParser";
-import { ApsBothContext } from "./RalphParser";
+import { PayerContext } from "./RalphParser";
+import { ApsTokenIdContext } from "./RalphParser";
 import { ApsContext } from "./RalphParser";
 import { PrimaryExprContext } from "./RalphParser";
 import { PrimitiveTypeContext } from "./RalphParser";
@@ -171,37 +170,26 @@ export interface RalphParserListener extends ParseTreeListener {
 	exitMethodCall?: (ctx: MethodCallContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `RalphParser.apsAlph`.
+	 * Enter a parse tree produced by `RalphParser.payer`.
 	 * @param ctx the parse tree
 	 */
-	enterApsAlph?: (ctx: ApsAlphContext) => void;
+	enterPayer?: (ctx: PayerContext) => void;
 	/**
-	 * Exit a parse tree produced by `RalphParser.apsAlph`.
+	 * Exit a parse tree produced by `RalphParser.payer`.
 	 * @param ctx the parse tree
 	 */
-	exitApsAlph?: (ctx: ApsAlphContext) => void;
+	exitPayer?: (ctx: PayerContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `RalphParser.apsToken`.
+	 * Enter a parse tree produced by `RalphParser.apsTokenId`.
 	 * @param ctx the parse tree
 	 */
-	enterApsToken?: (ctx: ApsTokenContext) => void;
+	enterApsTokenId?: (ctx: ApsTokenIdContext) => void;
 	/**
-	 * Exit a parse tree produced by `RalphParser.apsToken`.
+	 * Exit a parse tree produced by `RalphParser.apsTokenId`.
 	 * @param ctx the parse tree
 	 */
-	exitApsToken?: (ctx: ApsTokenContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `RalphParser.apsBoth`.
-	 * @param ctx the parse tree
-	 */
-	enterApsBoth?: (ctx: ApsBothContext) => void;
-	/**
-	 * Exit a parse tree produced by `RalphParser.apsBoth`.
-	 * @param ctx the parse tree
-	 */
-	exitApsBoth?: (ctx: ApsBothContext) => void;
+	exitApsTokenId?: (ctx: ApsTokenIdContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.aps`.

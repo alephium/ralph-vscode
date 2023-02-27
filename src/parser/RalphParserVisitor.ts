@@ -13,9 +13,8 @@ import { ExpressionContext } from "./RalphParser";
 import { ExpressionListContext } from "./RalphParser";
 import { CallChainContext } from "./RalphParser";
 import { MethodCallContext } from "./RalphParser";
-import { ApsAlphContext } from "./RalphParser";
-import { ApsTokenContext } from "./RalphParser";
-import { ApsBothContext } from "./RalphParser";
+import { PayerContext } from "./RalphParser";
+import { ApsTokenIdContext } from "./RalphParser";
 import { ApsContext } from "./RalphParser";
 import { PrimaryExprContext } from "./RalphParser";
 import { PrimitiveTypeContext } from "./RalphParser";
@@ -134,25 +133,18 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitMethodCall?: (ctx: MethodCallContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `RalphParser.apsAlph`.
+	 * Visit a parse tree produced by `RalphParser.payer`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitApsAlph?: (ctx: ApsAlphContext) => Result;
+	visitPayer?: (ctx: PayerContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `RalphParser.apsToken`.
+	 * Visit a parse tree produced by `RalphParser.apsTokenId`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitApsToken?: (ctx: ApsTokenContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `RalphParser.apsBoth`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitApsBoth?: (ctx: ApsBothContext) => Result;
+	visitApsTokenId?: (ctx: ApsTokenIdContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.aps`.
