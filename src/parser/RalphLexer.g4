@@ -73,9 +73,11 @@ SUB                    : '-';
 MUL                    : '*';
 DIV                    : '/';
 MOD                    : '%';
-MODADD                 : '⊕' | '`+`';
-MODSUB                 : '⊖' | '`-`';
-MODMUL                 : '⊗' | '`*`';
+EXP                    : '**';
+MOD_EXP                : '|**|';
+MODADD                 : '⊕' | '|+|';
+MODSUB                 : '⊖' | '|-|';
+MODMUL                 : '⊗' | '|*|';
 SHL                    : '<<';
 SHR                    : '>>';
 BITAND                 : '&';
@@ -95,9 +97,10 @@ NOT                    : '!';
 
 ALPH                   : 'alph';
 
-ADDRESS_LIT            : '#' (DIGIT | LETTER)*;
+ADDRESS_LIT            : '@' (DIGIT | LETTER)*;
 ALPH_LIT               : DIGIT+ [ ]+ ALPH;
 BOOL_LIT               : 'true' | 'false';
+BYTEVEC_LIT            : '#' (HEX_DIGIT)*;
 
 //TODO
 // Number literals

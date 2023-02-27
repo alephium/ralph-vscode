@@ -34,6 +34,8 @@ expression:
         | MUL
         | DIV
         | MOD
+        | EXP
+        | MOD_EXP
         | MODADD
         | MODSUB
         | MODMUL
@@ -119,6 +121,7 @@ integer
 	| HEX_LIT
 	| IMAGINARY_LIT
 	| RUNE_LIT
+    | BYTEVEC_LIT
     ;
 
 string_: RAW_STRING_LIT | INTERPRETED_STRING_LIT;
