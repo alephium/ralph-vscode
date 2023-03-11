@@ -1,9 +1,10 @@
 {
   "name": "ralph",
-  "fileTypes": ["sol"],
+  "fileTypes": ["ral"],
   "scopeName": "source.ral",
   "patterns": [
     { "include": "#comment" },
+    { "include": "#imports" },
     { "include": "#keywords" },
     { "include": "#types" },
     { "include": "#global" },
@@ -14,34 +15,33 @@
     "comment": {
       "patterns": [
         {
-          "include": "#comment-line"
-        },
-        {
-          "include": "#comment-block"
+          "name": "comment.line.double-slash.ralph",
+          "begin": "(\\/\\/)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.comment.ralph"
+            }
+          },
+          "end": "(?:\\n|$)"
         }
       ]
     },
-    "comment-todo": {
-      "match": "(?i)\\b(FIXME|TODO|CHANGED|XXX|IDEA|HACK|NOTE|REVIEW|NB|BUG|QUESTION|COMBAK|TEMP|SUPPRESS|LINT|\\w+-disable|\\w+-suppress)\\b(?-i)",
-      "name": "keyword.comment.todo.ralph"
-    },
-    "comment-line": {
-      "begin": "(?<!tp:)//",
-      "end": "$",
-      "name": "comment.line",
+    "imports": {
       "patterns": [
         {
-          "include": "#comment-todo"
-        }
-      ]
-    },
-    "comment-block": {
-      "begin": "/\\*",
-      "end": "\\*/",
-      "name": "comment.block",
-      "patterns": [
-        {
-          "include": "#comment-todo"
+          "begin": "\\b(import)\\s+\"",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.import.ralph"
+            }
+          },
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "entity.name.import.ralph",
+              "match": "[^\"]*"
+            }
+          ]
         }
       ]
     },

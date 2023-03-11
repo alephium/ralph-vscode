@@ -2,7 +2,7 @@
   "name": "ralph-vscode-alephium",
   "displayName": "Ralph (Alephium)",
   "description": "Alephium Ralph language for Visual Studio code",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v18.0.0"
@@ -112,23 +112,6 @@
       {
         "language": "ralph",
         "path": "./snippets/snippets.code-snippets"
-      }
-    ],
-    "themes": [
-      {
-        "label": "Ralph Visual Developer Dark",
-        "uiTheme": "vs-dark",
-        "path": "./themes/OneDarkAuditor.json"
-      },
-      {
-        "label": "Ralph Visual Developer Solarized Light",
-        "uiTheme": "vs",
-        "path": "./themes/solarized-light-color-theme.json"
-      },
-      {
-        "label": "Ralph Visual Developer Light (Visual Studio)",
-        "uiTheme": "vs",
-        "path": "./themes/light_vs.json"
       }
     ]
   },
