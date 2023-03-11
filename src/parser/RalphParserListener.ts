@@ -13,9 +13,8 @@ import { ExpressionContext } from "./RalphParser";
 import { ExpressionListContext } from "./RalphParser";
 import { CallChainContext } from "./RalphParser";
 import { MethodCallContext } from "./RalphParser";
-import { ApsAlphContext } from "./RalphParser";
-import { ApsTokenContext } from "./RalphParser";
-import { ApsBothContext } from "./RalphParser";
+import { ApsPerAddressContext } from "./RalphParser";
+import { ApsTokenPartContext } from "./RalphParser";
 import { ApsContext } from "./RalphParser";
 import { PrimaryExprContext } from "./RalphParser";
 import { PrimitiveTypeContext } from "./RalphParser";
@@ -32,6 +31,7 @@ import { String_Context } from "./RalphParser";
 import { VarNameAssignContext } from "./RalphParser";
 import { EnumContext } from "./RalphParser";
 import { TypeStructBodyContext } from "./RalphParser";
+import { ImportsContext } from "./RalphParser";
 import { TxScriptContext } from "./RalphParser";
 import { AssetScriptContext } from "./RalphParser";
 import { ContractContext } from "./RalphParser";
@@ -170,37 +170,26 @@ export interface RalphParserListener extends ParseTreeListener {
 	exitMethodCall?: (ctx: MethodCallContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `RalphParser.apsAlph`.
+	 * Enter a parse tree produced by `RalphParser.apsPerAddress`.
 	 * @param ctx the parse tree
 	 */
-	enterApsAlph?: (ctx: ApsAlphContext) => void;
+	enterApsPerAddress?: (ctx: ApsPerAddressContext) => void;
 	/**
-	 * Exit a parse tree produced by `RalphParser.apsAlph`.
+	 * Exit a parse tree produced by `RalphParser.apsPerAddress`.
 	 * @param ctx the parse tree
 	 */
-	exitApsAlph?: (ctx: ApsAlphContext) => void;
+	exitApsPerAddress?: (ctx: ApsPerAddressContext) => void;
 
 	/**
-	 * Enter a parse tree produced by `RalphParser.apsToken`.
+	 * Enter a parse tree produced by `RalphParser.apsTokenPart`.
 	 * @param ctx the parse tree
 	 */
-	enterApsToken?: (ctx: ApsTokenContext) => void;
+	enterApsTokenPart?: (ctx: ApsTokenPartContext) => void;
 	/**
-	 * Exit a parse tree produced by `RalphParser.apsToken`.
+	 * Exit a parse tree produced by `RalphParser.apsTokenPart`.
 	 * @param ctx the parse tree
 	 */
-	exitApsToken?: (ctx: ApsTokenContext) => void;
-
-	/**
-	 * Enter a parse tree produced by `RalphParser.apsBoth`.
-	 * @param ctx the parse tree
-	 */
-	enterApsBoth?: (ctx: ApsBothContext) => void;
-	/**
-	 * Exit a parse tree produced by `RalphParser.apsBoth`.
-	 * @param ctx the parse tree
-	 */
-	exitApsBoth?: (ctx: ApsBothContext) => void;
+	exitApsTokenPart?: (ctx: ApsTokenPartContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.aps`.
@@ -377,6 +366,17 @@ export interface RalphParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTypeStructBody?: (ctx: TypeStructBodyContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.imports`.
+	 * @param ctx the parse tree
+	 */
+	enterImports?: (ctx: ImportsContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.imports`.
+	 * @param ctx the parse tree
+	 */
+	exitImports?: (ctx: ImportsContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.txScript`.

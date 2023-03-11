@@ -20,7 +20,10 @@ export class FunctionHoverProvider extends Filter implements vscode.HoverProvide
     if (this.isSkip(document, position)) return undefined
     const range = document.getWordRangeAtPosition(position)
     const globalFun = document.getText(range?.with(range.start, new vscode.Position(range.end.line, range.end.character + 1)))
-    const item = this.builtItems.get(globalFun)!
+    const item = this.builtItems.get(globalFun)
+    if (!item) {
+      return undefined
+    }
     const detail = new MarkdownString()
     detail.appendMarkdown(`
     builtIn global function: ${item?.name}!

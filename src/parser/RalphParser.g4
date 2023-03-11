@@ -5,7 +5,7 @@ options
    tokenVocab = RalphLexer;
 }
 
-sourceFile: (txScript | contract | interface | assetScript)* EOF;
+sourceFile: imports (txScript | contract | interface | assetScript)* EOF;
 
 identifierList: varName (COMMA varName)*;
 
@@ -61,10 +61,9 @@ callChain: (varName | methodCall) (DOT callChain)*;
 
 methodCall: IDENTIFIER aps? L_PAREN expressionList R_PAREN;
 
-apsAlph: expression R_ARROW expression;
-apsToken: apsAlph COLON expression;
-apsBoth: apsAlph COMMA expression COLON expression;
-aps: L_CURLY (apsAlph | apsToken | apsBoth) R_CURLY;
+apsPerAddress: expression R_ARROW apsTokenPart (COMMA apsTokenPart)*;
+apsTokenPart: expression COLON expression;
+aps: L_CURLY apsPerAddress (SEMI apsPerAddress)* R_CURLY;
 
 primaryExpr
 	: basicLit
@@ -110,6 +109,7 @@ basicLit
 	| ADDRESS_LIT
 	| ALPH_LIT
 	| BOOL_LIT
+    | ALPH_TOKEN
 	;
 
 integer
@@ -128,6 +128,8 @@ varNameAssign: varName ASSIGN basicLit;
 enum: ENUM IDENTIFIER L_CURLY varNameAssign* R_CURLY;
 
 typeStructBody: L_CURLY (statement | event | methodDecl | enum)* R_CURLY;
+
+imports: (IMPORT INTERPRETED_STRING_LIT)*;
 
 txScript
     : TXSCRIPT IDENTIFIER (L_PAREN paramList R_PAREN)? typeStructBody // # txScriptDeclStmt

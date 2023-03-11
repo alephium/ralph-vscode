@@ -5,6 +5,7 @@ lexer grammar RalphLexer;
 FN                     : 'fn';
 PUB                    : 'pub';
 RETURN                 : 'return' ;
+IMPORT                 : 'import' ;
 
 INTERFACE              : 'Interface';
 ENUM                   : 'enum';
@@ -71,9 +72,9 @@ SUB                    : '-';
 MUL                    : '*';
 DIV                    : '/';
 MOD                    : '%';
-MODADD                 : '⊕' | '`+`';
-MODSUB                 : '⊖' | '`-`';
-MODMUL                 : '⊗' | '`*`';
+MODADD                 : '⊕' | '|+|';
+MODSUB                 : '⊖' | '|-|';
+MODMUL                 : '⊗' | '|*|';
 SHL                    : '<<';
 SHR                    : '>>';
 BITAND                 : '&';
@@ -92,6 +93,7 @@ OR                     : '||';
 NOT                    : '!';
 
 ALPH                   : 'alph';
+ALPH_TOKEN             : 'ALPH';
 
 ADDRESS_LIT            : '#' (DIGIT | LETTER)*;
 ALPH_LIT               : DIGIT+ [ ]+ ALPH;

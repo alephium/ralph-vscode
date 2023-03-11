@@ -3,7 +3,6 @@ import * as path from 'path'
 import cache from './cache/cache'
 import Parser from './parser/parser'
 import { analyseDiagnostic } from './diagnostics'
-import { global } from './config/global'
 
 export function registerEvent() {
   vscode.workspace.onDidChangeTextDocument((event) => parser(event.document))
@@ -31,14 +30,18 @@ export function registerEvent() {
 
 export function parser(doc: TextDocument) {
   if (includes(doc.uri.path) && !doc.isDirty && doc.languageId === 'ralph') {
-    const identifiers = Parser(doc.uri, doc.getText())
-    cache.merge(doc.uri, identifiers)
+    try {
+      const identifiers = Parser(doc.uri, doc.getText())
+      cache.merge(doc.uri, identifiers)
+    } catch (err) {
+      console.log(`Parser error: ${doc.uri}`, err)
+    }
   }
 }
 
 function includes(file: string): boolean {
-  if (vscode.workspace.rootPath && global.contractsDir) {
-    return file.includes(path.join(vscode.workspace.rootPath, global.contractsDir))
-  }
+  // if (vscode.workspace.rootPath && global.contractsDir) {
+  //   return file.includes(path.join(vscode.workspace.rootPath, global.contractsDir))
+  // }
   return true
 }

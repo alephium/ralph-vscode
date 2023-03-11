@@ -13,9 +13,8 @@ import { ExpressionContext } from "./RalphParser";
 import { ExpressionListContext } from "./RalphParser";
 import { CallChainContext } from "./RalphParser";
 import { MethodCallContext } from "./RalphParser";
-import { ApsAlphContext } from "./RalphParser";
-import { ApsTokenContext } from "./RalphParser";
-import { ApsBothContext } from "./RalphParser";
+import { ApsPerAddressContext } from "./RalphParser";
+import { ApsTokenPartContext } from "./RalphParser";
 import { ApsContext } from "./RalphParser";
 import { PrimaryExprContext } from "./RalphParser";
 import { PrimitiveTypeContext } from "./RalphParser";
@@ -32,6 +31,7 @@ import { String_Context } from "./RalphParser";
 import { VarNameAssignContext } from "./RalphParser";
 import { EnumContext } from "./RalphParser";
 import { TypeStructBodyContext } from "./RalphParser";
+import { ImportsContext } from "./RalphParser";
 import { TxScriptContext } from "./RalphParser";
 import { AssetScriptContext } from "./RalphParser";
 import { ContractContext } from "./RalphParser";
@@ -133,25 +133,18 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitMethodCall?: (ctx: MethodCallContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `RalphParser.apsAlph`.
+	 * Visit a parse tree produced by `RalphParser.apsPerAddress`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitApsAlph?: (ctx: ApsAlphContext) => Result;
+	visitApsPerAddress?: (ctx: ApsPerAddressContext) => Result;
 
 	/**
-	 * Visit a parse tree produced by `RalphParser.apsToken`.
+	 * Visit a parse tree produced by `RalphParser.apsTokenPart`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitApsToken?: (ctx: ApsTokenContext) => Result;
-
-	/**
-	 * Visit a parse tree produced by `RalphParser.apsBoth`.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	visitApsBoth?: (ctx: ApsBothContext) => Result;
+	visitApsTokenPart?: (ctx: ApsTokenPartContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.aps`.
@@ -264,6 +257,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitTypeStructBody?: (ctx: TypeStructBodyContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.imports`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitImports?: (ctx: ImportsContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.txScript`.

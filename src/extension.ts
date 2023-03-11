@@ -20,16 +20,15 @@ import { analyseDiagnostic } from './diagnostics'
 import cache from './cache/cache'
 import { EmitProvider } from './provider/completion/emitProvider'
 import { parser, registerEvent } from './event'
-import { global } from './config/global'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
   console.log('Congratulations, your extension is now active!')
 
-  init()
+  await init()
   registerEvent()
   analyseDiagnostic()
 
@@ -69,20 +68,18 @@ export function deactivate() {
 }
 
 async function init() {
-  let files = []
-  if (global.contractsDir) {
-    files = await vscode.workspace.findFiles(`**/${global.contractsDir}/*.ral`, '**/{node_modules,.git}/**')
-  } else {
-    files = await vscode.workspace.findFiles('**/*.ral', '**/{node_modules,.git}/**')
-  }
+  const files = await vscode.workspace.findFiles('**/*.ral', '**/{node_modules,.git}/**')
   files.forEach(async (uri) => {
     const doc = await vscode.workspace.openTextDocument(uri)
-    parser(doc)
-    cache.analyse()
-    console.log(`parser uri: ${uri.path}`)
+    try {
+      parser(doc)
+      cache.analyse()
+    } catch (err) {
+      console.log(`Init failed ${uri}`, err)
+    }
   })
 }
 
-const timerId = setInterval((value) => {
+const timerId = setInterval(() => {
   cache.analyse()
 }, 1000 * 60 * 5)
