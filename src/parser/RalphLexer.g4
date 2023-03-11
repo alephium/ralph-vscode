@@ -49,6 +49,7 @@ R_ARROW                :'->';
 
 
 IDENTIFIER             : LETTER (LETTER | DIGIT)* '!'?;
+IMPORT_PATH : '"' ~["./]+ '/' (~'"')* (DIGIT | LETTER)* ('.ral')? '"' ;
 
 // Punctuation
 L_PAREN                : '(';
@@ -62,7 +63,6 @@ COMMA                  : ',';
 SEMI                   : ';';
 COLON                  : ':';
 DOT                    : '.';
-POUND                  : '#';
 DOUBT                  : '?';
 
 //Operator
@@ -72,6 +72,8 @@ SUB                    : '-';
 MUL                    : '*';
 DIV                    : '/';
 MOD                    : '%';
+EXP                    : '**';
+MODEXP                 : '|**|';
 MODADD                 : '⊕' | '|+|';
 MODSUB                 : '⊖' | '|-|';
 MODMUL                 : '⊗' | '|*|';
@@ -95,9 +97,10 @@ NOT                    : '!';
 ALPH                   : 'alph';
 ALPH_TOKEN             : 'ALPH';
 
-ADDRESS_LIT            : '#' (DIGIT | LETTER)*;
+ADDRESS_LIT            : '@' (DIGIT | LETTER)*;
 ALPH_LIT               : DIGIT+ [ ]+ ALPH;
 BOOL_LIT               : 'true' | 'false';
+BYTEVEC_LIT : '#' (HEX_DIGIT)*;
 
 //TODO
 // Number literals

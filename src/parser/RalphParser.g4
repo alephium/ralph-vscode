@@ -33,10 +33,12 @@ expression:
         | SUB
         | MUL
         | DIV
+        | EXP
         | MOD
         | MODADD
         | MODSUB
         | MODMUL
+        | MODEXP
         | SHL
         | SHR
         | BITAND
@@ -119,6 +121,7 @@ integer
 	| HEX_LIT
 	| IMAGINARY_LIT
 	| RUNE_LIT
+    | BYTEVEC_LIT
     ;
 
 string_: RAW_STRING_LIT | INTERPRETED_STRING_LIT;
@@ -129,7 +132,7 @@ enum: ENUM IDENTIFIER L_CURLY varNameAssign* R_CURLY;
 
 typeStructBody: L_CURLY (statement | event | methodDecl | enum)* R_CURLY;
 
-imports: (IMPORT INTERPRETED_STRING_LIT)*;
+imports: (IMPORT IMPORT_PATH)*;
 
 txScript
     : TXSCRIPT IDENTIFIER (L_PAREN paramList R_PAREN)? typeStructBody // # txScriptDeclStmt
