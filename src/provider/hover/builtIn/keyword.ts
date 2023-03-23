@@ -74,8 +74,8 @@ export const keyword = [
     kind: 'keyword',
   },
   {
-    name: 'TxContract',
-    detail: 'Contract ContractName([mut] fieldN: <type>) [extends <InterfaceName>] { ... }',
+    name: 'AssetScript',
+    detail: 'AssetScript <ScriptName>([mut] fieldN: <type>) { ... }',
     kind: 'keyword',
   },
   {

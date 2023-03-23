@@ -30,7 +30,6 @@ export class FormatterProvider implements vscode.DocumentFormattingEditProvider 
       'emit',
       'struct',
       'TxScript',
-      'TxContract',
       'Contract',
       'AssetScript',
       'enum',

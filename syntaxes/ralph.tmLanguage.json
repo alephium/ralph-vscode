@@ -5,11 +5,14 @@
   "patterns": [
     { "include": "#comment" },
     { "include": "#imports" },
-    { "include": "#keywords" },
     { "include": "#types" },
+    { "include": "#storages" },
+    { "include": "#functions" },
+    { "include": "#keywords" },
     { "include": "#global" },
     { "include": "#number" },
-    { "include": "#constant" }
+    { "include": "#constant" },
+    { "include": "#variables" }
   ],
   "repository": {
     "comment": {
@@ -89,26 +92,26 @@
           "name": "keyword.function.ralph"
         },
         {
-          "match": "\\b(extends|Abstract|implements)\\b",
-          "name": "keyword.extends.ralph"
-        },
-        {
-          "match": "\\b(Interface)\\b",
-          "name": "keyword.Interface.ralph"
-        },
-        {
-          "match": "\\b(event|emit)\\b",
-          "name": "keyword.event.ralph"
+          "match": "\\b(emit)\\b",
+          "name": "keyword.emit.ralph"
         },
         {
           "match": "(@using|@unused)\\b",
           "name": "keyword.annotation.ralph"
         },
-        {
-          "match": "\\b(TxScript|TxContract|Contract|AssetScript|enum)\\b",
-          "name": "keyword.struct.ralph"
-        },
         { "include": "#operators" }
+      ]
+    },
+    "storages" : {
+      "patterns": [
+        {
+          "match": "\\b(Interface|TxScript|Contract|AssetScript|enum|event)\\b",
+          "name": "storage.type.ralph"
+        },
+        {
+          "match": "\\b(extends|Abstract|implements)\\b",
+          "name": "storage.modifier.ralph"
+        }
       ]
     },
     "types": {
@@ -119,6 +122,18 @@
           "captures": {
             "1": {
               "name": "support.type.primitive.ralph"
+            }
+          }
+        },
+        {
+          "comment": "storage declarations",
+          "match": "\\b(Interface|TxScript|Contract|AssetScript|enum|event)\\s+([A-Z][A-Za-z0-9]*)\\b",
+          "captures": {
+            "1": {
+              "name": "storage.type.ralph"
+            },
+            "2": {
+              "name": "entity.name.type.ralph"
             }
           }
         }
@@ -146,6 +161,9 @@
       "patterns": [
         {
           "include": "#global-functions"
+        },
+        {
+          "include": "#global-types"
         }
       ]
     },
@@ -154,6 +172,53 @@
         {
           "match": "\\w*?\\!",
           "name": "support.function.builtIn.ralph"
+        }
+      ]
+    },
+    "global-types": {
+      "patterns": [
+        {
+          "comment": "types",
+          "name": "entity.name.type.ralph",
+          "match": "\\b[A-Z][A-Za-z0-9]*\\b(?!!)"
+        }
+
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "match": "\\b(fn)\\s+([A-Za-z][A-Za-z0-9]*)\\(",
+          "captures": {
+            "1": {
+              "name": "keyword.function.ralph"
+            },
+            "2": {
+              "name": "entity.name.function.ralph"
+            }
+          }
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "match": "\\b([A-Za-z][A-Za-z0-9]*)\\s*:\\s*([A-Z][A-Za-z0-9]*)\\b",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.ralph"
+            },
+            "2": {
+              "name": "entity.name.type.ralph"
+            }
+          }
+        },{
+          "match": "\\b([A-Za-z][A-Za-z0-9]*)\\s*=",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.ralph"
+            }
+          }
         }
       ]
     }
