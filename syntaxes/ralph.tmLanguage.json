@@ -10,7 +10,8 @@
     { "include": "#keywords" },
     { "include": "#global" },
     { "include": "#number" },
-    { "include": "#constant" }
+    { "include": "#constant" },
+    { "include": "#variables" }
   ],
   "repository": {
     "comment": {
@@ -181,6 +182,28 @@
           "match": "\\b[A-Z][A-Za-z0-9]*\\b(?!!)"
         }
 
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "match": "\\b([A-Za-z][A-Za-z0-9]*)\\s*:\\s*([A-Z][A-Za-z0-9]*)\\b",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.ralph"
+            },
+            "2": {
+              "name": "entity.name.type.ralph"
+            }
+          }
+        },{
+          "match": "\\b([A-Za-z][A-Za-z0-9]*)\\s*=",
+          "captures": {
+            "1": {
+              "name": "variable.parameter.ralph"
+            }
+          }
+        }
       ]
     }
   }
