@@ -7,6 +7,7 @@
     { "include": "#imports" },
     { "include": "#types" },
     { "include": "#storages" },
+    { "include": "#functions" },
     { "include": "#keywords" },
     { "include": "#global" },
     { "include": "#number" },
@@ -182,6 +183,21 @@
           "match": "\\b[A-Z][A-Za-z0-9]*\\b(?!!)"
         }
 
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "match": "\\b(fn)\\s+([A-Za-z][A-Za-z0-9]*)\\(",
+          "captures": {
+            "1": {
+              "name": "keyword.function.ralph"
+            },
+            "2": {
+              "name": "entity.name.function.ralph"
+            }
+          }
+        }
       ]
     },
     "variables": {
