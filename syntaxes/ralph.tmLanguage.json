@@ -179,7 +179,7 @@
       "patterns": [
         {
           "comment": "types",
-          "name": "entity.name.type.rust",
+          "name": "entity.name.type.ralph",
           "match": "\\b[A-Z][A-Za-z0-9]*\\b(?!!)"
         }
 
