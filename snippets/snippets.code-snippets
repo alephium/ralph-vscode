@@ -194,11 +194,11 @@
 		],
 		"description": "To create an interface"
 	},
-	"create TxContract": {
-		"prefix": "contract",
+	"create AssetScript": {
+		"prefix": "AssetScript",
 		"body": [
 			"// create contract:",
-			"Contract $1 {",
+			"AssetScript $1 {",
 				"\tevent $2($3)",
 				"\tpub fn $4() -> ($5)",
 				"\tpub fn $6() -> ($7)",

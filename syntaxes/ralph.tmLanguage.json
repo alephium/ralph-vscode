@@ -103,7 +103,7 @@
     "storages" : {
       "patterns": [
         {
-          "match": "\\b(Interface|TxScript|TxContract|Contract|AssetScript|enum|event)\\b",
+          "match": "\\b(Interface|TxScript|Contract|AssetScript|enum|event)\\b",
           "name": "storage.type.ralph"
         },
         {
@@ -125,7 +125,7 @@
         },
         {
           "comment": "storage declarations",
-          "match": "\\b(Interface|TxScript|TxContract|Contract|AssetScript|enum|event)\\s+([A-Z][A-Za-z0-9]*)\\b",
+          "match": "\\b(Interface|TxScript|Contract|AssetScript|enum|event)\\s+([A-Z][A-Za-z0-9]*)\\b",
           "captures": {
             "1": {
               "name": "storage.type.ralph"
