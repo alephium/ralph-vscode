@@ -38,6 +38,7 @@ import { ContractContext } from "./RalphParser";
 import { ExtendsContext } from "./RalphParser";
 import { ContractExtendsContext } from "./RalphParser";
 import { ImplementsContext } from "./RalphParser";
+import { StdAnnotationContext } from "./RalphParser";
 import { InterfaceContext } from "./RalphParser";
 import { EventContext } from "./RalphParser";
 import { EmitContext } from "./RalphParser";
@@ -443,6 +444,17 @@ export interface RalphParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitImplements?: (ctx: ImplementsContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `RalphParser.stdAnnotation`.
+	 * @param ctx the parse tree
+	 */
+	enterStdAnnotation?: (ctx: StdAnnotationContext) => void;
+	/**
+	 * Exit a parse tree produced by `RalphParser.stdAnnotation`.
+	 * @param ctx the parse tree
+	 */
+	exitStdAnnotation?: (ctx: StdAnnotationContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `RalphParser.interface`.
