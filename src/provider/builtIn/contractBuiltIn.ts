@@ -20,7 +20,7 @@ export function getEncodeFunc(fields: Property[], funcName: string, doc: string)
     category: 'Contract',
     signature,
     doc,
-    params: fieldsNameAndType.map(([name, _]) => `${name}`),
+    params: fieldsNameAndType.map(([name, type]) => `${name}: ${type}`),
     paramValue: [],
     returns: '@returns a ByteVec encoding the inputs',
   }
