@@ -3,9 +3,7 @@ import { MarkdownString } from 'vscode'
 import jsonData from '../../builtIn/ralph-built-in-functions.json'
 import { Filter } from '../../filter'
 import { Fun } from '../../builtIn/fun'
-import { ContractBuiltInFuncNames, ContractBuiltInFuncs } from '../../builtIn/contractBuiltIn'
-import cache from '../../../cache/cache'
-import { Contract } from '../../../ast/contract'
+import { tryGetContractBuiltInFunction } from '../../builtIn/contractBuiltIn'
 
 export class FunctionHoverProvider extends Filter implements vscode.HoverProvider {
   builtItems: Map<string, Fun>
@@ -19,30 +17,6 @@ export class FunctionHoverProvider extends Filter implements vscode.HoverProvide
     this.items.forEach((item) => this.builtItems.set(`${item?.name}!`, item))
   }
 
-  private tryGetContractBuiltInFunction(
-    document: vscode.TextDocument,
-    range: vscode.Range,
-    builtInFuncName: string
-  ): vscode.ProviderResult<vscode.Hover> {
-    if (!builtInFuncName.endsWith('!')) {
-      return undefined
-    }
-    const funcName = builtInFuncName.slice(0, -1)
-    if (!ContractBuiltInFuncNames.includes(funcName)) {
-      return undefined
-    }
-    const regex = new RegExp(`[A-Z][a-zA-Z0-9_]*\\.${funcName}`)
-    const fullyQualifiedRange = document.getWordRangeAtPosition(range.start, regex)
-    const fullyQualifiedName = document.getText(fullyQualifiedRange)
-    const typeId = fullyQualifiedName.split('.')[0]
-    const contractDef = cache.get(document.uri, typeId)
-    if (contractDef === undefined || !(contractDef instanceof Contract)) {
-      return undefined
-    }
-    const func = ContractBuiltInFuncs[`${funcName}`](contractDef)
-    return this.getHoverDetail(func, 'contract builtin function')
-  }
-
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
     if (this.isSkip(document, position)) return undefined
     const range = document.getWordRangeAtPosition(position)
@@ -51,10 +25,14 @@ export class FunctionHoverProvider extends Filter implements vscode.HoverProvide
     }
     const funcName = document.getText(range.with(range.start, new vscode.Position(range.end.line, range.end.character + 1)))
     const item = this.builtItems.get(funcName)
-    if (item === undefined) {
-      return this.tryGetContractBuiltInFunction(document, range, funcName)
+    if (item !== undefined) {
+      return this.getHoverDetail(item, 'global builtin function')
     }
-    return this.getHoverDetail(item, 'global builtin function')
+    const contractBuiltInFunc = tryGetContractBuiltInFunction(document, range, funcName)
+    if (contractBuiltInFunc === undefined) {
+      return undefined
+    }
+    return this.getHoverDetail(contractBuiltInFunc, 'contract builtin function')
   }
 
   private getHoverDetail(func: Fun, prefix: string): vscode.Hover {
