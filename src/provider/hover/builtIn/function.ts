@@ -2,18 +2,18 @@ import * as vscode from 'vscode'
 import { MarkdownString } from 'vscode'
 import jsonData from '../../builtIn/ralph-built-in-functions.json'
 import { Filter } from '../../filter'
-import { Fun } from '../../builtIn/fun'
+import { Func } from '../../builtIn/func'
 import { tryGetContractBuiltInFunction } from '../../builtIn/contractBuiltIn'
 
 export class FunctionHoverProvider extends Filter implements vscode.HoverProvider {
-  builtItems: Map<string, Fun>
+  builtItems: Map<string, Func>
 
-  items: Array<Fun>
+  items: Array<Func>
 
   constructor() {
     super()
     this.builtItems = new Map()
-    this.items = Object.assign(new Array<Fun>(), jsonData)
+    this.items = Object.assign(new Array<Func>(), jsonData)
     this.items.forEach((item) => this.builtItems.set(`${item?.name}!`, item))
   }
 
@@ -35,7 +35,7 @@ export class FunctionHoverProvider extends Filter implements vscode.HoverProvide
     return this.getHoverDetail(contractBuiltInFunc, 'contract builtin function')
   }
 
-  private getHoverDetail(func: Fun, prefix: string): vscode.Hover {
+  private getHoverDetail(func: Func, prefix: string): vscode.Hover {
     const detail = new MarkdownString()
     detail.appendMarkdown(`
     ${prefix}: ${func.name}!

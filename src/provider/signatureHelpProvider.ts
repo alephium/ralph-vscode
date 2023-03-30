@@ -11,23 +11,23 @@ import {
 } from 'vscode'
 import { Filter } from './filter'
 import jsonData from './builtIn/ralph-built-in-functions.json'
-import { Fun } from './builtIn/fun'
+import { Func } from './builtIn/func'
 import { SemanticsKind } from '../ast/kinder'
 import { tryGetContractBuiltInFunction } from './builtIn/contractBuiltIn'
 
 export class RalphSignatureHelpProvider extends Filter implements vscode.SignatureHelpProvider {
-  items: Array<Fun>
+  items: Array<Func>
 
-  builtItems: Map<string, Fun>
+  builtItems: Map<string, Func>
 
   constructor() {
     super()
     this.builtItems = new Map()
-    this.items = Object.assign(new Array<Fun>(), jsonData)
+    this.items = Object.assign(new Array<Func>(), jsonData)
     this.items.forEach((item) => this.builtItems.set(`${item?.name}!`, item))
   }
 
-  splitParam(fun: Fun) {
+  splitParam(fun: Func) {
     fun.paramValue = fun.params.map((param) => {
       const values = param.trim().split(/\s+/)
       return values[1]
