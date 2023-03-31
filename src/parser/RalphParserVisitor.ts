@@ -38,6 +38,7 @@ import { ContractContext } from "./RalphParser";
 import { ExtendsContext } from "./RalphParser";
 import { ContractExtendsContext } from "./RalphParser";
 import { ImplementsContext } from "./RalphParser";
+import { StdAnnotationContext } from "./RalphParser";
 import { InterfaceContext } from "./RalphParser";
 import { EventContext } from "./RalphParser";
 import { EmitContext } from "./RalphParser";
@@ -306,6 +307,13 @@ export interface RalphParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitImplements?: (ctx: ImplementsContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `RalphParser.stdAnnotation`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitStdAnnotation?: (ctx: StdAnnotationContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `RalphParser.interface`.

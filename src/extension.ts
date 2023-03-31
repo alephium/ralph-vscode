@@ -20,6 +20,7 @@ import { analyseDiagnostic } from './diagnostics'
 import cache from './cache/cache'
 import { EmitProvider } from './provider/completion/emitProvider'
 import { parser, registerEvent } from './event'
+import { ContractBuiltInProvider } from './provider/completion/contractBuiltinProvider'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -45,6 +46,7 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerDocumentSymbolProvider(selector, new SymbolProvider()))
   context.subscriptions.push(vscode.languages.registerWorkspaceSymbolProvider(new SymbolProvider()))
   // context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GlobalProvider()))
+  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new ContractBuiltInProvider(), '.'))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new BuiltInProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new IdentifierProvider()))
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new EmitProvider(), 'emit'))

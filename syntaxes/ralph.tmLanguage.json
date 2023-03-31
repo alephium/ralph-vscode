@@ -96,13 +96,13 @@
           "name": "keyword.emit.ralph"
         },
         {
-          "match": "(@using|@unused)\\b",
+          "match": "(@using|@unused|@std)\\b",
           "name": "keyword.annotation.ralph"
         },
         { "include": "#operators" }
       ]
     },
-    "storages" : {
+    "storages": {
       "patterns": [
         {
           "match": "\\b(Interface|TxScript|Contract|AssetScript|enum|event)\\b",
@@ -182,7 +182,6 @@
           "name": "entity.name.type.ralph",
           "match": "\\b[A-Z][A-Za-z0-9]*\\b(?!!)"
         }
-
       ]
     },
     "functions": {
@@ -212,7 +211,8 @@
               "name": "entity.name.type.ralph"
             }
           }
-        },{
+        },
+        {
           "match": "\\b([A-Za-z][A-Za-z0-9]*)\\s*=",
           "captures": {
             "1": {

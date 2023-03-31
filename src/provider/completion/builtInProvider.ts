@@ -2,7 +2,7 @@
 import * as vscode from 'vscode'
 import { CancellationToken, CompletionContext, CompletionItem, CompletionItemKind, Position, SnippetString, TextDocument } from 'vscode'
 import jsonData from '../builtIn/ralph-built-in-functions.json'
-import { Fun } from '../builtIn/fun'
+import { Func } from '../builtIn/func'
 import { Identifier } from '../../ast/identifier'
 import { BuiltInType } from '../../ast/builtInType'
 import { builtInType } from '../hover/builtIn/primitives'
@@ -10,7 +10,7 @@ import { keyword } from '../hover/builtIn/keyword'
 import { Filter } from '../filter'
 
 export class BuiltInProvider extends Filter implements vscode.CompletionItemProvider {
-  items: Array<Fun>
+  items: Array<Func>
 
   builtInType: Array<Identifier>
 
@@ -18,7 +18,7 @@ export class BuiltInProvider extends Filter implements vscode.CompletionItemProv
 
   constructor() {
     super()
-    this.items = Object.assign(new Array<Fun>(), jsonData)
+    this.items = Object.assign(new Array<Func>(), jsonData)
     this.builtInType = builtInType.map((value) => {
       const obj = new BuiltInType(value.name)
       obj.description = `${value.kind}: ${value.detail}`

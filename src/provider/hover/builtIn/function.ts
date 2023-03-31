@@ -2,37 +2,49 @@ import * as vscode from 'vscode'
 import { MarkdownString } from 'vscode'
 import jsonData from '../../builtIn/ralph-built-in-functions.json'
 import { Filter } from '../../filter'
-import { Fun } from '../../builtIn/fun'
+import { Func } from '../../builtIn/func'
+import { tryGetContractBuiltInFunction } from '../../builtIn/contractBuiltIn'
 
 export class FunctionHoverProvider extends Filter implements vscode.HoverProvider {
-  builtItems: Map<string, Fun>
+  builtItems: Map<string, Func>
 
-  items: Array<Fun>
+  items: Array<Func>
 
   constructor() {
     super()
     this.builtItems = new Map()
-    this.items = Object.assign(new Array<Fun>(), jsonData)
+    this.items = Object.assign(new Array<Func>(), jsonData)
     this.items.forEach((item) => this.builtItems.set(`${item?.name}!`, item))
   }
 
   provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
     if (this.isSkip(document, position)) return undefined
     const range = document.getWordRangeAtPosition(position)
-    const globalFun = document.getText(range?.with(range.start, new vscode.Position(range.end.line, range.end.character + 1)))
-    const item = this.builtItems.get(globalFun)
-    if (!item) {
+    if (range === undefined) {
       return undefined
     }
+    const funcName = document.getText(range.with(range.start, new vscode.Position(range.end.line, range.end.character + 1)))
+    const item = this.builtItems.get(funcName)
+    if (item !== undefined) {
+      return this.getHoverDetail(item, 'global builtin function')
+    }
+    const contractBuiltInFunc = tryGetContractBuiltInFunction(document, range, funcName)
+    if (contractBuiltInFunc === undefined) {
+      return undefined
+    }
+    return this.getHoverDetail(contractBuiltInFunc, 'contract builtin function')
+  }
+
+  private getHoverDetail(func: Func, prefix: string): vscode.Hover {
     const detail = new MarkdownString()
     detail.appendMarkdown(`
-    builtIn global function: ${item?.name}!
-    ${item.doc}\n\t
-    ${item.signature}
+    ${prefix}: ${func.name}!
+    ${func.doc}\n\t
+    ${func.signature}
     \n---\n\t
     `)
-    item.params.map((param) => detail.appendMarkdown(`${param}\n\t`))
-    detail.appendMarkdown(`${item.returns}\n\t`)
+    func.params.map((param) => detail.appendMarkdown(`${param}\n\t`))
+    detail.appendMarkdown(`${func.returns}\n\t`)
     return new vscode.Hover(detail)
   }
 }
