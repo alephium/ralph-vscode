@@ -52,23 +52,28 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
     const range = document.getWordRangeAtPosition(position.with(position.line, position.character - 1), /[a-zA-Z_][0-9a-zA-Z_]*!?/i)
     const funcName = document.getText(range)
     const item = this.builtItems.get(funcName)
-    const signature = new SignatureHelp()
     if (item) {
       this.splitParam(item)
-      const info = new SignatureInformation(item.signature)
-      info.parameters.push(...item.paramValue.map((value) => new ParameterInformation(value)))
-      signature.signatures.push(info)
-      return signature
+      return this.toSignatureHelp(item)
     }
     if (funcName.endsWith('!')) {
       return this.tryGetContractBuiltIn(document, range, funcName)
     }
     const callMethod = this.callChain(document, position.with(position.line, position.character - 1))
     if (callMethod && callMethod.semanticsKind === SemanticsKind.Def) {
+      const signature = new SignatureHelp()
       signature.signatures.push(callMethod.signatureInformation!())
       return signature
     }
     return undefined
+  }
+
+  private toSignatureHelp(func: Func): vscode.SignatureHelp {
+    const signature = new SignatureHelp()
+    const info = new SignatureInformation(func.signature)
+    info.parameters.push(...func.paramValue.map((value) => new ParameterInformation(value)))
+    signature.signatures.push(info)
+    return signature
   }
 
   private tryGetContractBuiltIn(
@@ -83,8 +88,6 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
     if (func === undefined) {
       return undefined
     }
-    const signature = new SignatureHelp()
-    signature.signatures.push(new SignatureInformation(func.signature))
-    return signature
+    return this.toSignatureHelp(func)
   }
 }

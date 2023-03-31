@@ -21,7 +21,7 @@ export function getEncodeFunc(fields: Property[], funcName: string, doc: string)
     signature,
     doc,
     params: fieldsNameAndType.map(([name, type]) => `${name}: ${type}`),
-    paramValue: [],
+    paramValue: fieldsNameAndType.map(([name, _]) => name),
     returns: '@returns a ByteVec encoding the inputs',
   }
 }
