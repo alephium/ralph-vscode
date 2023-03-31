@@ -128,9 +128,8 @@
     "antlr4ts": "antlr4ts -visitor ./src/parser/*.g4"
   },
   "dependencies": {
-    "@alephium/cli": "0.3.0-rc.7",
-    "@alephium/web3": "0.3.0-rc.7",
-    "@alephium/web3-test": "0.3.0-rc.7",
+    "@alephium/cli": "^0.8.0",
+    "@alephium/web3": "^0.8.0",
     "antlr4ts": "0.5.0-alpha.4",
     "execa": "^6.1.0",
     "immutable": "^4.2.1",
