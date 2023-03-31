@@ -28,7 +28,7 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
   }
 
   splitParam(fun: Func) {
-    fun.paramValue = fun.params.map((param) => {
+    fun.paramNames = fun.params.map((param) => {
       const values = param.trim().split(/\s+/)
       return values[1]
     })
@@ -71,7 +71,7 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
   private toSignatureHelp(func: Func): vscode.SignatureHelp {
     const signature = new SignatureHelp()
     const info = new SignatureInformation(func.signature)
-    info.parameters.push(...func.paramValue.map((value) => new ParameterInformation(value)))
+    info.parameters.push(...func.paramNames.map((value) => new ParameterInformation(value)))
     signature.signatures.push(info)
     return signature
   }

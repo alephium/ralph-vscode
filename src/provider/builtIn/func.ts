@@ -10,7 +10,7 @@ export interface Func {
 
   params: string[]
 
-  paramValue: string[]
+  paramNames: string[]
 
   returns: string
 }
