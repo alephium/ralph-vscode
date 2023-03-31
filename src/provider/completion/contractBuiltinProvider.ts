@@ -14,18 +14,17 @@ export class ContractBuiltInProvider extends Filter implements vscode.Completion
   ): vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     if (this.isSkip(document, position)) return undefined
 
-    if (context.triggerCharacter !== '.') {
+    const line = document.lineAt(position.line)
+    const matched = line.text.substring(0, position.character).match(/([A-Z][a-zA-Z0-9_]*\.([a-z][a-zA-Z0-9_]*)?)/)
+    if (matched === null || matched.length < 1) {
       return undefined
     }
-    const wordRange = document.getWordRangeAtPosition(position, /[A-Z][a-zA-Z0-9_]*\./)
-    if (wordRange === undefined) {
+    const staticCall = matched[0]
+    const tokens = staticCall.split('.')
+    if (tokens.length < 1) {
       return undefined
     }
-    const word = document.getText(wordRange).trim()
-    if (!word.endsWith('.')) {
-      return undefined
-    }
-    const typeId = word.slice(0, -1)
+    const typeId = tokens[0]
     const contractDef = cache.get(document.uri, typeId)
     if (contractDef === undefined || !(contractDef instanceof Contract)) {
       return undefined
