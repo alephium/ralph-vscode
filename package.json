@@ -115,6 +115,9 @@
       }
     ]
   },
+  "config": {
+    "alephium_version": "2.0.4"
+  },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
     "compile": "webpack",
@@ -125,7 +128,8 @@
     "lint": "eslint src --ext ts,js --fix",
     "fmt": "prettier --write .",
     "test": "jest",
-    "antlr4ts": "antlr4ts -visitor ./src/parser/*.g4"
+    "antlr4ts": "antlr4ts -visitor ./src/parser/*.g4",
+    "update-builtin-schema": "curl -o ./src/provider/builtin/ralph-built-in-functions.json https://raw.githubusercontent.com/alephium/alephium/v${npm_package_config_alephium_version}/protocol/src/main/resources/ralph-built-in-functions.json"
   },
   "dependencies": {
     "@alephium/cli": "^0.8.0",
