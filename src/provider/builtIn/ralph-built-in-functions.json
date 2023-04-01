@@ -82,6 +82,16 @@
     "returns": "@returns the token id (ByteVec) of the contract"
   },
   {
+    "name": "tokenId",
+    "category": "Contract",
+    "signature": "fn tokenId!(contract:<Contract>) -> (ByteVec)",
+    "doc": "Returns the id of the contract",
+    "params": [
+      "@param contract the contract variable"
+    ],
+    "returns": "@returns the id of the contract"
+  },
+  {
     "name": "callerContractId",
     "category": "Contract",
     "signature": "fn callerContractId!() -> (ByteVec)",
@@ -416,6 +426,60 @@
     "returns": "@returns "
   },
   {
+    "name": "mulModN",
+    "category": "Utils",
+    "signature": "fn mulModN!(x:U256, y:U256, n:U256) -> (U256)",
+    "doc": "Returns compute the x * y % n.",
+    "params": [
+      "@param x x",
+      "@param y y",
+      "@param n n"
+    ],
+    "returns": "@returns compute the x * y % n"
+  },
+  {
+    "name": "addModN",
+    "category": "Utils",
+    "signature": "fn addModN!(x:U256, y:U256, n:U256) -> (U256)",
+    "doc": "Returns compute the (x + y) % n.",
+    "params": [
+      "@param x x",
+      "@param y y",
+      "@param n n"
+    ],
+    "returns": "@returns compute the (x + y) % n"
+  },
+  {
+    "name": "u256Max",
+    "category": "Utils",
+    "signature": "fn u256Max!() -> (U256)",
+    "doc": "Returns the max value of U256.",
+    "params": [
+      
+    ],
+    "returns": "@returns the max value of U256"
+  },
+  {
+    "name": "i256Max",
+    "category": "Utils",
+    "signature": "fn i256Max!() -> (I256)",
+    "doc": "Returns the max value of I256.",
+    "params": [
+      
+    ],
+    "returns": "@returns the max value of I256"
+  },
+  {
+    "name": "i256Min",
+    "category": "Utils",
+    "signature": "fn i256Min!() -> (I256)",
+    "doc": "Returns the min value of I256.",
+    "params": [
+      
+    ],
+    "returns": "@returns the min value of I256"
+  },
+  {
     "name": "nullContractAddress",
     "category": "Utils",
     "signature": "fn nullContractAddress!() -> (Address)",
@@ -665,6 +729,36 @@
       "@param u256 the input U256"
     ],
     "returns": "@returns 32 bytes"
+  },
+  {
+    "name": "u256ToString",
+    "category": "Conversion",
+    "signature": "fn u256ToString!(u256:U256) -> (ByteVec)",
+    "doc": "Converts U256 to string in ByteVec.",
+    "params": [
+      "@param u256 the input U256"
+    ],
+    "returns": "@returns Converted string in ByteVec"
+  },
+  {
+    "name": "i256ToString",
+    "category": "Conversion",
+    "signature": "fn i256ToString!(i256:I256) -> (ByteVec)",
+    "doc": "Converts I256 to string in ByteVec.",
+    "params": [
+      "@param i256 the input I256"
+    ],
+    "returns": "@returns Converted string in ByteVec"
+  },
+  {
+    "name": "boolToString",
+    "category": "Conversion",
+    "signature": "fn boolToString!(bool:Bool) -> (ByteVec)",
+    "doc": "Converts Bool to string in ByteVec.",
+    "params": [
+      "@param bool the input Bool"
+    ],
+    "returns": "@returns Converted string in ByteVec"
   },
   {
     "name": "u256From1Byte",

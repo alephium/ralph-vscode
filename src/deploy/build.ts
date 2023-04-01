@@ -7,5 +7,5 @@ export async function build() {
   web3.setCurrentNodeProvider(network.nodeUrl)
   process.chdir(vscode.workspace.rootPath!)
   // Compile the contracts of the project if they are not compiled
-  await Project.build({}, config.sourceDir!, config.artifactDir)
+  await Project.build({}, vscode.workspace.rootPath!, config.sourceDir!, config.artifactDir)
 }

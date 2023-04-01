@@ -26,24 +26,24 @@ export class FunctionHoverProvider extends Filter implements vscode.HoverProvide
     const funcName = document.getText(range.with(range.start, new vscode.Position(range.end.line, range.end.character + 1)))
     const item = this.builtItems.get(funcName)
     if (item !== undefined) {
-      return this.getHoverDetail(item, 'global builtin function')
+      return this.getHoverDetail(item, false)
     }
     const contractBuiltInFunc = tryGetContractBuiltInFunction(document, range, funcName)
     if (contractBuiltInFunc === undefined) {
       return undefined
     }
-    return this.getHoverDetail(contractBuiltInFunc, 'contract builtin function')
+    return this.getHoverDetail(contractBuiltInFunc, true)
   }
 
-  private getHoverDetail(func: Func, prefix: string): vscode.Hover {
+  private getHoverDetail(func: Func, isContractBuiltInFunc: boolean): vscode.Hover {
     const detail = new MarkdownString()
     detail.appendMarkdown(`
-    ${prefix}: ${func.name}!
-    ${func.doc}\n\t
     ${func.signature}
     \n---\n\t
     `)
-    func.params.map((param) => detail.appendMarkdown(`${param}\n\t`))
+    if (!isContractBuiltInFunc) {
+      func.params.map((param) => detail.appendMarkdown(`${param}\n\t`))
+    }
     detail.appendMarkdown(`${func.returns}\n\t`)
     return new vscode.Hover(detail)
   }
