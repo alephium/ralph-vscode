@@ -11,22 +11,23 @@ import {
 } from 'vscode'
 import { Filter } from './filter'
 import jsonData from './builtIn/ralph-built-in-functions.json'
-import { Fun } from './builtIn/fun'
+import { Func } from './builtIn/func'
 import { SemanticsKind } from '../ast/kinder'
+import { tryGetContractBuiltInFunction } from './builtIn/contractBuiltIn'
 
 export class RalphSignatureHelpProvider extends Filter implements vscode.SignatureHelpProvider {
-  items: Array<Fun>
+  items: Array<Func>
 
-  builtItems: Map<string, Fun>
+  builtItems: Map<string, Func>
 
   constructor() {
     super()
     this.builtItems = new Map()
-    this.items = Object.assign(new Array<Fun>(), jsonData)
+    this.items = Object.assign(new Array<Func>(), jsonData)
     this.items.forEach((item) => this.builtItems.set(`${item?.name}!`, item))
   }
 
-  splitParam(fun: Fun) {
+  splitParam(fun: Func) {
     fun.paramValue = fun.params.map((param) => {
       const values = param.trim().split(/\s+/)
       return values[1]
@@ -49,8 +50,8 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
       }
     }
     const range = document.getWordRangeAtPosition(position.with(position.line, position.character - 1), /[a-zA-Z_][0-9a-zA-Z_]*!?/i)
-    const word = document.getText(range)
-    const item = this.builtItems.get(word)
+    const funcName = document.getText(range)
+    const item = this.builtItems.get(funcName)
     const signature = new SignatureHelp()
     if (item) {
       this.splitParam(item)
@@ -59,11 +60,31 @@ export class RalphSignatureHelpProvider extends Filter implements vscode.Signatu
       signature.signatures.push(info)
       return signature
     }
+    if (funcName.endsWith('!')) {
+      return this.tryGetContractBuiltIn(document, range, funcName)
+    }
     const callMethod = this.callChain(document, position.with(position.line, position.character - 1))
     if (callMethod && callMethod.semanticsKind === SemanticsKind.Def) {
       signature.signatures.push(callMethod.signatureInformation!())
       return signature
     }
     return undefined
+  }
+
+  private tryGetContractBuiltIn(
+    document: vscode.TextDocument,
+    range: vscode.Range | undefined,
+    funcName: string
+  ): SignatureHelp | undefined {
+    if (range === undefined) {
+      return undefined
+    }
+    const func = tryGetContractBuiltInFunction(document, range, funcName)
+    if (func === undefined) {
+      return undefined
+    }
+    const signature = new SignatureHelp()
+    signature.signatures.push(new SignatureInformation(func.signature))
+    return signature
   }
 }

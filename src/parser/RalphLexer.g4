@@ -41,6 +41,8 @@ BYTE                   :'Byte';
 BYTEVEC                :'ByteVec';
 ADDRESS                :'Address';
 
+STDANNOTATION          :'@std';
+
 ATUNUSED               :'@unused';
 UNUSED                 :'unused';
 

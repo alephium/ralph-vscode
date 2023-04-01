@@ -1,5 +1,5 @@
 // https://raw.githubusercontent.com/alephium/alephium/master/protocol/src/main/resources/ralph-built-in-functions.json
-export interface Fun {
+export interface Func {
   name: string
 
   category: string

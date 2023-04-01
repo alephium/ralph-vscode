@@ -156,8 +156,10 @@ implements
     : IMPLEMENTS IDENTIFIER
     ;
 
+stdAnnotation: STDANNOTATION L_PAREN expressionList R_PAREN;
+
 interface
-    : INTERFACE IDENTIFIER (EXTENDS IDENTIFIER)? typeStructBody // # interfaceDeclStmt
+    : (stdAnnotation)? INTERFACE IDENTIFIER (EXTENDS IDENTIFIER)? typeStructBody // # interfaceDeclStmt
     ;
 
 event: EVENT IDENTIFIER L_PAREN paramList R_PAREN;
