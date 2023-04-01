@@ -132,8 +132,8 @@
     "update-builtin-schema": "curl -o ./src/provider/builtin/ralph-built-in-functions.json https://raw.githubusercontent.com/alephium/alephium/v${npm_package_config_alephium_version}/protocol/src/main/resources/ralph-built-in-functions.json"
   },
   "dependencies": {
-    "@alephium/cli": "^0.8.0",
-    "@alephium/web3": "^0.8.0",
+    "@alephium/cli": "^0.9.1",
+    "@alephium/web3": "^0.9.1",
     "antlr4ts": "0.5.0-alpha.4",
     "execa": "^6.1.0",
     "immutable": "^4.2.1",
