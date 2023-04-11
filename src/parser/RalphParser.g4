@@ -143,7 +143,7 @@ assetScript
     ;
 
 contract
-    : ABSTRACT? CONTRACT IDENTIFIER (L_PAREN paramList R_PAREN)? extends? implements? typeStructBody // # contractDeclStmt
+    : (stdAnnotation)? ABSTRACT? CONTRACT IDENTIFIER (L_PAREN paramList R_PAREN)? extends? implements? typeStructBody // # contractDeclStmt
     ;
 
 extends

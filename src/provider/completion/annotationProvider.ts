@@ -5,7 +5,7 @@ import { Filter } from '../filter'
 
 const annotations: Map<string, string[]> = new Map([
   ['using', ['preapprovedAssets', 'assetsInContract', 'checkExternalCaller', 'updateFields']],
-  ['std', ['id']],
+  ['std', ['id', 'enabled']],
   ['unused', []],
 ])
 
