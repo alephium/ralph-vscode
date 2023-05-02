@@ -2,7 +2,7 @@
   "name": "ralph-vscode-alephium",
   "displayName": "Ralph (Alephium)",
   "description": "Alephium Ralph language for Visual Studio code",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "engines": {
     "vscode": "^1.69.0",
     "node": ">=v18.0.0"
