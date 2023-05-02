@@ -7,14 +7,15 @@ import { Func } from './func'
 export const ContractBuiltInFuncs: Record<string, (c: Contract) => Func> = {
   encodeImmFields: getEncodeImmFieldsFunc,
   encodeMutFields: getEncodeMutFieldsFunc,
+  encodeFields: getEncodeFieldsFunc,
 }
 
 export const ContractBuiltInFuncNames = Object.keys(ContractBuiltInFuncs)
 
-export function getEncodeFunc(fields: Property[], funcName: string, doc: string): Func {
+function getEncodeFunc(fields: Property[], funcName: string, returnTypes: string, doc: string, returns: string): Func {
   const fieldsNameAndType = fields.map((field) => [field.name!, field.type_!.name!])
   const fieldsSig = fieldsNameAndType.map(([name, type]) => `${name}:${type}`).join(', ')
-  const signature = `fn ${funcName}(${fieldsSig}) -> (ByteVec)`
+  const signature = `fn ${funcName}(${fieldsSig}) -> ${returnTypes}`
   return {
     name: funcName,
     category: 'Contract',
@@ -22,22 +23,45 @@ export function getEncodeFunc(fields: Property[], funcName: string, doc: string)
     doc,
     params: fieldsNameAndType.map(([name, type]) => `${name}: ${type}`),
     paramNames: fieldsNameAndType.map(([name, _]) => name),
-    returns: '@returns a ByteVec encoding the inputs',
+    returns,
   }
 }
 
 export function getEncodeImmFieldsFunc(contract: Contract): Func {
   const immFields = contract.getImmutableFields()
-  return getEncodeFunc(immFields, 'encodeImmFields', 'Encode contract immutable fields to bytevec')
+  return getEncodeFunc(
+    immFields,
+    'encodeImmFields',
+    'ByteVec',
+    'Encode contract immutable fields to bytevec',
+    '@returns a ByteVec encoding the inputs'
+  )
 }
 
 export function getEncodeMutFieldsFunc(contract: Contract): Func {
   const mutFields = contract.getMutableFields()
-  return getEncodeFunc(mutFields, 'encodeMutFields', 'Encode contract mutable fields to bytevec')
+  return getEncodeFunc(
+    mutFields,
+    'encodeMutFields',
+    'ByteVec',
+    'Encode contract mutable fields to bytevec',
+    '@returns a ByteVec encoding the inputs'
+  )
+}
+
+export function getEncodeFieldsFunc(contract: Contract): Func {
+  const fields = contract.getFields()
+  return getEncodeFunc(
+    fields,
+    'encodeFields',
+    '(ByteVec, ByteVec)',
+    'Encode contract fields',
+    '@returns two ByteVec values, where the first is the encoded immutable fields and the second is the encoded mutable fields'
+  )
 }
 
 export function getContractBiltInFunction(contract: Contract): Func[] {
-  return [getEncodeImmFieldsFunc(contract), getEncodeMutFieldsFunc(contract)]
+  return [getEncodeImmFieldsFunc(contract), getEncodeMutFieldsFunc(contract), getEncodeFieldsFunc(contract)]
 }
 
 export function tryGetContractBuiltInFunction(
