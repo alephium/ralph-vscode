@@ -21,6 +21,9 @@ import cache from './cache/cache'
 import { EmitProvider } from './provider/completion/emitProvider'
 import { parser, registerEvent } from './event'
 import { ContractBuiltInProvider } from './provider/completion/contractBuiltinProvider'
+import {LanguageClient, LanguageClientOptions, ServerOptions, TransportKind} from 'vscode-languageclient/node';
+
+let client: LanguageClient;
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -41,32 +44,48 @@ export async function activate(context: vscode.ExtensionContext) {
   })
 
   const selector = { scheme: 'file', language: 'ralph' }
-  hoverProvider().forEach((value) => context.subscriptions.push(vscode.languages.registerHoverProvider(selector, value)))
   context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(selector, new FormatterProvider()))
   context.subscriptions.push(vscode.languages.registerDocumentSymbolProvider(selector, new SymbolProvider()))
   context.subscriptions.push(vscode.languages.registerWorkspaceSymbolProvider(new SymbolProvider()))
-  // context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new GlobalProvider()))
-  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new ContractBuiltInProvider(), '.'))
-  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new BuiltInProvider()))
-  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new IdentifierProvider()))
-  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new EmitProvider(), 'emit'))
-  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new AnnotationProvider(), '@', '(', ')'))
-  // context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new EnumProvider(), '.'))
-  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(selector, new MemberProvider(), '.'))
-  context.subscriptions.push(vscode.languages.registerDefinitionProvider(selector, new DefinitionProvider()))
-  context.subscriptions.push(vscode.languages.registerRenameProvider(selector, new RalphRenameProvider()))
-  context.subscriptions.push(vscode.languages.registerSignatureHelpProvider(selector, new RalphSignatureHelpProvider(), '(', ')', ','))
-  context.subscriptions.push(vscode.languages.registerImplementationProvider(selector, new RalphImplementationProvider()))
-  context.subscriptions.push(vscode.languages.registerTypeDefinitionProvider(selector, new RalphTypeDefinitionProvider()))
-  context.subscriptions.push(vscode.languages.registerReferenceProvider(selector, new RalphReferenceProvider()))
-  context.subscriptions.push(vscode.languages.registerTypeHierarchyProvider(selector, new RalphTypeHierarchyProvider()))
 
   console.log('register push completed!')
+
+  console.log("Activating Ralph LSP client");
+
+    const serverOptions: ServerOptions = {
+       command: "ralph-lsp",
+       transport: TransportKind.stdio,
+        options: {
+          shell: true
+        }
+    };
+
+    const clientOptions: LanguageClientOptions = {
+        documentSelector: [
+            {pattern: '**/*.ral'},
+            {language: 'json', pattern: '**/ralph.json'},
+        ]
+    };
+
+    // Create the client and store it.
+    client = new LanguageClient(
+        'ralph-lsp',
+        'Ralph LSP',
+        serverOptions,
+        clientOptions
+    );
+
+    // Start the client.
+    client.start();
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
   clearInterval(timerId)
+  if (!client) {
+      return undefined;
+  }
+  return client.stop();
 }
 
 async function init() {

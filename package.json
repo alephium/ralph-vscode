@@ -128,7 +128,6 @@
     "lint": "eslint src --ext ts,js --fix",
     "fmt": "prettier --write .",
     "test": "jest",
-    "antlr4ts": "antlr4ts -visitor ./src/parser/*.g4",
     "update-builtin-schema": "curl -o ./src/provider/builtin/ralph-built-in-functions.json https://raw.githubusercontent.com/alephium/alephium/v${npm_package_config_alephium_version}/protocol/src/main/resources/ralph-built-in-functions.json"
   },
   "dependencies": {
@@ -141,12 +140,13 @@
     "prettier": "^2.8.1",
     "request": "^2.88.2",
     "request-progress": "^3.0.0",
-    "request-promise-native": "^1.0.9"
+    "request-promise-native": "^1.0.9",
+    "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/crypto-js": "^4.1.1",
-    "@types/node": "^18.11.18",
+    "@types/node": "^18.19.31",
     "@types/prettier": "^2.7.2",
     "@types/request": "^2.48.8",
     "@types/request-promise-native": "^1.0.18",
